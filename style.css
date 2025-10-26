@@ -308,6 +308,83 @@ input:checked + .slider:before {
     display: block;
 }
 
+/* --- Style Tooltipa i Ostrzeżeń --- */
+.label-with-tooltip {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.tooltip-trigger {
+    position: relative;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-color: var(--text-secondary);
+    color: var(--calc-bg);
+    border-radius: 50%;
+    text-align: center;
+    font-size: 0.8em;
+    font-weight: 700;
+    line-height: 18px;
+    cursor: help;
+    user-select: none;
+}
+
+.tooltip-trigger[data-tooltip]:hover::before,
+.tooltip-trigger[data-tooltip]:hover::after {
+    visibility: visible;
+    opacity: 1;
+    z-index: 100;
+}
+
+.tooltip-trigger[data-tooltip]::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 150%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--calc-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px;
+    width: 280px;
+    font-size: 0.9em;
+    font-weight: 500;
+    text-align: left;
+    line-height: 1.4;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s, visibility 0.2s;
+    box-shadow: var(--shadow);
+}
+
+.tooltip-trigger[data-tooltip]::after {
+    content: '';
+    position: absolute;
+    bottom: 150%;
+    left: 50%;
+    transform: translateX(-50%) translateY(100%) rotate(180deg);
+    border-width: 6px;
+    border-style: solid;
+    border-color: var(--border-color) transparent transparent transparent;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s, visibility 0.2s;
+}
+
+.warning-text {
+    font-size: 0.85em;
+    font-weight: 600;
+    color: #e67e22;
+    margin-top: 6px;
+    margin-bottom: 0;
+    height: 1.2em;
+    transition: color 0.3s;
+}
+
 
 /* --- Style Przycisku Donacji --- */
 .donation-link {
