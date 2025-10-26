@@ -78,7 +78,6 @@ body {
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-/* PRZYWRÓCONE STYLE DLA H1 */
 h1 {
     text-align: center;
     color: #ffffff;
@@ -228,4 +227,25 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+/* --- NOWE STYLE: Przycisk Donacji --- */
+.donation-link {
+    display: block;
+    text-align: center;
+    margin-top: 24px;
+    padding: 10px;
+    background-color: var(--input-bg); /* Jasne tło w obu trybach */
+    color: var(--text-secondary); /* Ciemniejszy tekst w obu trybach */
+    border: 1px dashed var(--border-color); /* Lepsze niż 'solid' dla odróżnienia */
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: 600;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.donation-link:hover {
+    background-color: var(--result-bg); /* Lekka zmiana koloru tła przy najechaniu */
+    color: var(--result-text);
 }
