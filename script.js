@@ -6,10 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const resultDiv = document.getElementById("result");
 
     form.addEventListener("submit", (e) => {
-        // Zatrzymaj domyślną akcję formularza (przeładowanie strony)
         e.preventDefault();
-
-        // Pobierz wartości z pól formularza
+        // ... (cała logika obliczeń SAC pozostaje bez zmian) ...
         const p1 = parseFloat(document.getElementById("p1").value);
         const p2 = parseFloat(document.getElementById("p2").value);
         const vb = parseFloat(document.getElementById("vb").value);
@@ -17,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const time = parseFloat(document.getElementById("time").value);
         const waterType = document.getElementById("waterType").value;
 
-        // Prosta walidacja
         if (p1 <= p2) {
             alert("Ciśnienie początkowe musi być większe niż końcowe.");
             return;
@@ -27,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // --- Logika Obliczeń SAC ---
         const pressurePerMeter = (waterType === 'salt') ? 10.0 : 10.3;
         const pAbs = (depth / pressurePerMeter) + 1;
         const pressureUsed = p1 - p2;
@@ -35,7 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const sac = gasVolumeAtSurface / (time * pAbs);
         const sacRounded = sac.toFixed(1);
 
-        // --- Wyświetl wynik ---
         resultDiv.innerHTML = `
             <p>Twoje powierzchniowe zużycie gazu (SAC):</p>
             <span>${sacRounded} l/min</span>
@@ -43,7 +38,40 @@ document.addEventListener("DOMContentLoaded", () => {
         resultDiv.style.display = "block";
     });
 
-    // --- LOGIKA: Dark Mode (bez zmian) ---
+    // --- NOWA LOGIKA: Przełączanie Zakładek ---
+
+    // 1. Znajdź wszystkie przyciski zakładek
+    const tabButtons = document.querySelectorAll(".tab-button");
+    // 2. Znajdź wszystkie kontenery z treścią zakładek
+    const tabContents = document.querySelectorAll(".tab-content");
+
+    // 3. Dodaj "nasłuchiwanie" na kliknięcie do każdego przycisku
+    tabButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            
+            // A. Usuń klasę 'active' ze WSZYSTKICH przycisków
+            tabButtons.forEach(btn => btn.classList.remove("active"));
+            
+            // B. Dodaj klasę 'active' tylko do KLIKNIĘTEGO przycisku
+            button.classList.add("active");
+
+            // C. Pobierz docelowy ID treści z atrybutu "data-tab"
+            const targetTabId = button.getAttribute("data-tab"); // np. "nitrox-calculator"
+
+            // D. Ukryj WSZYSTKIE treści zakładek
+            tabContents.forEach(content => {
+                content.classList.remove("active-tab");
+            });
+
+            // E. Pokaż tylko tę treść, która pasuje do ID
+            const activeTab = document.getElementById(targetTabId);
+            activeTab.classList.add("active-tab");
+        });
+    });
+    // --- KONIEC LOGIKI ZAKŁADEK ---
+
+
+    // --- Logika Dark Mode (bez zmian) ---
     const themeToggle = document.getElementById("theme-toggle");
     const body = document.body;
 

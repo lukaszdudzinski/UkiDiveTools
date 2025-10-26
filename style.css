@@ -229,15 +229,64 @@ input:checked + .slider:before {
     border-radius: 50%;
 }
 
-/* --- NOWE STYLE: Przycisk Donacji --- */
+/* --- NOWE STYLE: Zakładki (Tabs) --- */
+.tab-nav {
+    display: flex;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    flex-grow: 1; /* Obie zakładki zajmują po 50% szerokości */
+    padding: 10px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 3px solid transparent; /* Domyślnie brak podkreślenia */
+    color: var(--text-secondary);
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.3s, border-bottom-color 0.3s;
+    margin-bottom: -2px; /* Aby dolna ramka nachodziła na ramkę .tab-nav */
+}
+
+.tab-button:hover {
+    color: var(--text-primary);
+}
+
+/* Styl dla aktywnej zakładki */
+.tab-button.active {
+    color: var(--btn-bg); /* Kolor aktywnego przycisku z naszej palety */
+    border-bottom-color: var(--btn-bg);
+}
+
+/* --- NOWE STYLE: Treść Zakładek --- */
+.tab-content {
+    display: none; /* Domyślnie ukryj całą zawartość zakładek */
+}
+
+.tab-content.active-tab {
+    display: block; /* Pokaż tylko aktywną zakładkę */
+}
+
+/* Tekst dla zaślepek */
+.placeholder-text {
+    text-align: center;
+    font-size: 1.1em;
+    color: var(--text-secondary);
+    padding: 40px 0;
+}
+
+
+/* --- Style Przycisku Donacji (Bez zmian) --- */
 .donation-link {
     display: block;
     text-align: center;
     margin-top: 24px;
     padding: 10px;
-    background-color: var(--input-bg); /* Jasne tło w obu trybach */
-    color: var(--text-secondary); /* Ciemniejszy tekst w obu trybach */
-    border: 1px dashed var(--border-color); /* Lepsze niż 'solid' dla odróżnienia */
+    background-color: var(--input-bg);
+    color: var(--text-secondary);
+    border: 1px dashed var(--border-color);
     border-radius: 8px;
     text-decoration: none;
     font-size: 0.9em;
@@ -246,6 +295,6 @@ input:checked + .slider:before {
 }
 
 .donation-link:hover {
-    background-color: var(--result-bg); /* Lekka zmiana koloru tła przy najechaniu */
+    background-color: var(--result-bg);
     color: var(--result-text);
 }

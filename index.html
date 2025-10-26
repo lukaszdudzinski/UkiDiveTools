@@ -21,50 +21,68 @@
             <label for="theme-toggle" class="theme-label">Tryb Ciemny</label>
         </div>
 
-        <form id="sacForm">
-            <div class="input-group">
-                <label for="p1">Ciśnienie startowe (bar)</label>
-                <input type="number" id="p1" required>
+        <nav class="tab-nav">
+            <button class="tab-button active" data-tab="sac-calculator">
+                Kalkulator SAC
+            </button>
+            <button class="tab-button" data-tab="nitrox-calculator">
+                Kalkulator Nitrox
+            </button>
+        </nav>
+        <div class="tab-content-wrapper">
+
+            <div id="sac-calculator" class="tab-content active-tab">
+                <form id="sacForm">
+                    <div class="input-group">
+                        <label for="p1">Ciśnienie startowe (bar)</label>
+                        <input type="number" id="p1" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="p2">Ciśnienie końcowe (bar)</label>
+                        <input type="number" id="p2" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="vb">Pojemność butli (l)</label>
+                        <input type="number" id="vb" value="11" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="depth">Średnia głębokość (m)</label>
+                        <input type="number" id="depth" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="time">Czas pomiaru (min)</label>
+                        <input type="number" id="time" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="waterType">Rodaj wody</label>
+                        <select id="waterType">
+                            <option value="salt">Woda słona</option>
+                            <option value="fresh">Woda słodka</option>
+                        </select>
+                    </div>
+
+                    <button type="submit">Oblicz SAC</button>
+                </form>
+
+                <div id="result" class="result-container">
+                    </div>
             </div>
 
-            <div class="input-group">
-                <label for="p2">Ciśnienie końcowe (bar)</label>
-                <input type="number" id="p2" required>
-            </div>
+            <div id="nitrox-calculator" class="tab-content">
+                <p class="placeholder-text">Kalkulator Nitrox (MOD / EAD) już wkrótce!</p>
+                </div>
 
-            <div class="input-group">
-                <label for="vb">Pojemność butli (l)</label>
-                <input type="number" id="vb" value="11" required>
-            </div>
-
-            <div class="input-group">
-                <label for="depth">Średnia głębokość (m)</label>
-                <input type="number" id="depth" required>
-            </div>
-
-            <div class="input-group">
-                <label for="time">Czas pomiaru (min)</label>
-                <input type="number" id="time" required>
-            </div>
-
-            <div class="input-group">
-                <label for="waterType">Rodzaj wody</label>
-                <select id="waterType">
-                    <option value="salt">Woda słona</option>
-                    <option value="fresh">Woda słodka</option>
-                </select>
-            </div>
-
-            <button type="submit">Oblicz SAC</button>
-        </form>
-
-        <div id="result" class="result-container">
-            </div>
-
+        </div>
         <a href="#" id="donation-link" class="donation-link">
             ☕ Podoba Ci się to narzędzie? Postaw mi kawę!
             </a>
-        </div>
+
+    </div>
 
     <script src="script.js"></script>
 </body>
