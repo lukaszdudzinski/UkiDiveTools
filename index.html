@@ -29,6 +29,7 @@
                 Kalkulator Nitrox
             </button>
         </nav>
+        
         <div class="tab-content-wrapper">
 
             <div id="sac-calculator" class="tab-content active-tab">
@@ -37,27 +38,22 @@
                         <label for="p1">Ciśnienie startowe (bar)</label>
                         <input type="number" id="p1" required>
                     </div>
-
                     <div class="input-group">
                         <label for="p2">Ciśnienie końcowe (bar)</label>
                         <input type="number" id="p2" required>
                     </div>
-
                     <div class="input-group">
                         <label for="vb">Pojemność butli (l)</label>
                         <input type="number" id="vb" value="11" required>
                     </div>
-
                     <div class="input-group">
                         <label for="depth">Średnia głębokość (m)</label>
                         <input type="number" id="depth" required>
                     </div>
-
                     <div class="input-group">
                         <label for="time">Czas pomiaru (min)</label>
                         <input type="number" id="time" required>
                     </div>
-
                     <div class="input-group">
                         <label for="waterType">Rodaj wody</label>
                         <select id="waterType">
@@ -65,22 +61,65 @@
                             <option value="fresh">Woda słodka</option>
                         </select>
                     </div>
-
                     <button type="submit">Oblicz SAC</button>
                 </form>
-
                 <div id="result" class="result-container">
                     </div>
             </div>
 
             <div id="nitrox-calculator" class="tab-content">
-                <p class="placeholder-text">Kalkulator Nitrox (MOD / EAD) już wkrótce!</p>
+                
+                <nav class="sub-tab-nav">
+                    <button class="sub-tab-button active" data-subtab="mod-calculator" title="Oblicza maksymalną głębokość">
+                        Oblicz MOD
+                    </button>
+                    <button class="sub-tab-button" data-subtab="ead-calculator" title="Oblicza równoważną głębokość powietrzną">
+                        Oblicz EAD
+                    </button>
+                </nav>
+
+                <div class="sub-tab-content-wrapper">
+
+                    <div id="mod-calculator" class="sub-tab-content active-sub-tab">
+                        <form id="modForm">
+                            <div class="input-group">
+                                <label for="modO2">Procent tlenu (O₂%)</label>
+                                <input type="number" id="modO2" value="32" min="21" max="100" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="modPO2">Ciśnienie parcjalne (PPO₂)</label>
+                                <input type="number" id="modPO2" value="1.4" step="0.1" min="1.0" max="1.6" required>
+                            </div>
+                            <button type="submit">Oblicz MOD</button>
+                        </form>
+                        <div id="modResult" class="result-container">
+                            </div>
+                    </div>
+
+                    <div id="ead-calculator" class="sub-tab-content">
+                        <form id="eadForm">
+                            <div class="input-group">
+                                <label for="eadO2">Procent tlenu (O₂%)</label>
+                                <input type="number" id="eadO2" value="32" min="21" max="100" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="eadDepth">Planowana głębokość (m)</label>
+                                <input type="number" id="eadDepth" min="1" required>
+                            </div>
+                            <button type="submit">Oblicz EAD</button>
+                        </form>
+                        <div id="eadResult" class="result-container">
+                            </div>
+                    </div>
+
                 </div>
+            </div>
 
         </div>
+
         <a href="#" id="donation-link" class="donation-link">
             ☕ Podoba Ci się to narzędzie? Postaw mi kawę!
-            </a>
+        </a>
 
     </div>
 
