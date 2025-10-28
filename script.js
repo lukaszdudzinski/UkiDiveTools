@@ -91,10 +91,63 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // --- Logika Kalkulatora Rock Bottom ---
+    const rbForm = document.getElementById("rbForm");
+    const rbResultDiv = document.getElementById("rbResult");
+
+    if (rbForm && rbResultDiv) {
+        rbForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            // Pobierz wartości z formularza
+            const sac = parseFloat(document.getElementById("rbSAC").value) || 0;
+            const depth = parseFloat(document.getElementById("rbDepth").value) || 0;
+            const volume = parseFloat(document.getElementById("rbVolume").value) || 0;
+            const stopDepth = parseFloat(document.getElementById("rbStopDepth").value) || 0;
+            const ascentRate = parseFloat(document.getElementById("rbAscentRate").value) || 10;
+            const stressFactor = parseFloat(document.getElementById("rbStressFactor").value) || 2;
+            const divers = parseInt(document.getElementById("rbDivers").value) || 2;
+            const emergencyTime = parseFloat(document.getElementById("rbEmergencyTime").value) || 2;
+            const safetyMargin = parseFloat(document.getElementById("rbSafetyMargin").value) || 10;
+
+            // Walidacja podstawowa
+            if (sac <= 0 || depth <= 0 || volume <= 0 || stopDepth < 0 || ascentRate <= 0 || stressFactor < 1 || divers < 1 || emergencyTime < 0 || safetyMargin < 0) {
+                alert("Wprowadź poprawne, dodatnie wartości we wszystkich polach.");
+                return;
+            }
+             if (stopDepth >= depth) {
+                alert("Głębokość przystanku musi być mniejsza niż maksymalna głębokość.");
+                return;
+            }
+
+            // Obliczenia krok po kroku
+            const pBottom = (depth / 10) + 1;
+            const consumptionRateStressed = sac * pBottom * stressFactor;
+            const gasEmergency = consumptionRateStressed * divers * emergencyTime;
+            const ascentTime = (depth - stopDepth) / ascentRate;
+            const avgAscentDepth = (depth + stopDepth) / 2;
+            const pAvgAscent = (avgAscentDepth / 10) + 1;
+            const consumptionRateAscent = sac * pAvgAscent * stressFactor;
+            const gasAscent = consumptionRateAscent * divers * ascentTime;
+            const rbLiters = gasEmergency + gasAscent;
+            const rbPressure = rbLiters / volume;
+            const rbFinalPressure = Math.ceil(rbPressure + safetyMargin); 
+
+            // Wyświetl wynik
+            rbResultDiv.innerHTML = `
+                <p>Minimalne Ciśnienie Rock Bottom:</p>
+                <span>${rbFinalPressure} bar</span>
+            `;
+            rbResultDiv.style.display = "block";
+        });
+    }
+
+
     // --- Logika Przełączania Zakładek (Głównych) ---
     const tabButtons = document.querySelectorAll(".tab-button");
     const tabContents = document.querySelectorAll(".tab-content");
-    if (tabButtons.length > 0) {
+    
+    if (tabButtons.length > 0 && tabContents.length > 0) { 
         tabButtons.forEach(button => {
             button.addEventListener("click", () => {
                 tabButtons.forEach(btn => btn.classList.remove("active"));
@@ -104,7 +157,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     content.classList.remove("active-tab");
                 });
                 const targetElement = document.getElementById(targetTabId);
-                if (targetElement) targetElement.classList.add("active-tab");
+                if (targetElement) { 
+                    targetElement.classList.add("active-tab");
+                } else {
+                    console.error("Nie znaleziono kontenera dla zakładki o ID: " + targetTabId);
+                }
             });
         });
     }

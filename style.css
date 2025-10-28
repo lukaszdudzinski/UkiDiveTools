@@ -425,6 +425,64 @@ input:checked + .slider:before {
     transition: color 0.3s;
 }
 
+.button-with-tooltip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+.button-with-tooltip > button[type="submit"] {
+    flex-grow: 1; 
+    margin-top: 0;
+}
+.tooltip-button {
+    position: relative; 
+}
+.tooltip-button > .tooltip-content {
+     width: 320px;
+}
+
+#gas-planning-calculator h3 {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 1.3em;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* === Style: Układ dwukolumnowy dla RB === */
+.two-column-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-column {
+    flex: 1;
+    min-width: 150px;
+}
+
+.form-full-width {
+    flex-basis: 100%;
+}
+
+/* === Style: Responsywność dla mobilnych === */
+@media (max-width: 600px) {
+    .two-column-form {
+        flex-direction: column;
+        gap: 0;
+    }
+    .form-column {
+       min-width: auto; 
+    }
+    
+    /* Zwiększamy max-width na mobilnych, aby zmieścić większe kolumny */
+    .calculator {
+        max-width: 500px;
+    }
+}
+
 /* --- Style Przycisku Donacji --- */
 .donation-link {
     display: block;

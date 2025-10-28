@@ -37,6 +37,9 @@
             <button class="tab-button" data-tab="nitrox-calculator">
                 Kalkulator Nitrox
             </button>
+            <button class="tab-button" data-tab="gas-planning-calculator">
+                Planowanie Gazu
+            </button>
         </nav>
         
         <div class="tab-content-wrapper">
@@ -145,6 +148,82 @@
                     </div>
                 </div>
             </div>
+            
+            <div id="gas-planning-calculator" class="tab-content">
+                <h3>Kalkulator Rock Bottom (RB)</h3>
+                <form id="rbForm" class="two-column-form"> 
+                    
+                    <div class="form-column">
+                        <div class="input-group">
+                            <label for="rbSAC">Twój SAC (l/min)</label>
+                            <input type="number" id="rbSAC" value="20" step="0.1" min="5" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="rbDepth">Maksymalna Głębokość (m)</label>
+                            <input type="number" id="rbDepth" value="40" min="1" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="rbVolume">Całkowita Pojemność Butli (l)</label>
+                            <input type="number" id="rbVolume" value="24" min="1" required title="Suma pojemności wszystkich butli z gazem dennym (np. 2x12=24)">
+                        </div>
+                         <div class="input-group">
+                            <div class="label-with-tooltip">
+                                <label for="rbStopDepth">Głęb. Pierwszego Przystanku/Zmiany Gazu (m)</label> <span class="tooltip-trigger" data-tooltip="Głębokość, do której musisz bezpiecznie dotrzeć używając gazu dennego w sytuacji awaryjnej.">?</span>
+                            </div>
+                            <input type="number" id="rbStopDepth" value="6" min="0" required>
+                        </div>
+                         <div class="input-group">
+                            <label for="rbAscentRate">Prędkość Wynurzania (m/min)</label>
+                            <input type="number" id="rbAscentRate" value="10" min="1" max="18" required>
+                        </div>
+                    </div>
+
+                    <div class="form-column">
+                         <div class="input-group">
+                             <div class="label-with-tooltip">
+                                <label for="rbStressFactor">Mnożnik SAC (Stres)</label>
+                                 <span class="tooltip-trigger" data-tooltip="Jak bardzo wzrasta zużycie gazu w sytuacji stresowej (awarii). Standardowo przyjmuje się 2x.">?</span>
+                            </div>
+                            <input type="number" id="rbStressFactor" value="2" step="0.1" min="1" max="3" required>
+                        </div>
+                         <div class="input-group">
+                            <label for="rbDivers">Liczba Nurków</label>
+                            <input type="number" id="rbDivers" value="2" min="1" max="2" required title="Ilu nurków będzie oddychać z rezerwy (zwykle 2: Ty i partner)">
+                        </div>
+                         <div class="input-group">
+                            <div class="label-with-tooltip">
+                                <label for="rbEmergencyTime">Czas Reakcji na Dnie (min)</label>
+                                 <span class="tooltip-trigger" data-tooltip="Czas potrzebny na rozpoznanie problemu, zlokalizowanie partnera, rozpoczęcie dzielenia gazem i podjęcie decyzji o wynurzeniu (standardowo 1-2 min).">?</span>
+                            </div>
+                            <input type="number" id="rbEmergencyTime" value="2" min="0" max="5" required>
+                        </div>
+                        <div class="input-group">
+                             <div class="label-with-tooltip">
+                                <label for="rbSafetyMargin">Dodatkowy Bufor (bar)</label>
+                                 <span class="tooltip-trigger" data-tooltip="Dodatkowy zapas ciśnienia na nieprzewidziane sytuacje lub np. zapewnienie przepływu gazu (często 10 bar).">?</span>
+                            </div>
+                            <input type="number" id="rbSafetyMargin" value="10" min="0" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-full-width">
+                        <div class="button-with-tooltip">
+                            <button type="submit">Oblicz Rock Bottom</button>
+                            <span class="tooltip-trigger tooltip-button">
+                                  ?
+                                  <div class="tooltip-content">
+                                    <h4>Czym jest Rock Bottom?</h4>
+                                    <p>Rock Bottom (RB) to zasada planowania rezerwy gazu. Jest to <strong>minimalna ilość gazu</strong>, którą musi posiadać nurek (lub zespół) w najgorszym możliwym scenariuszu awaryjnym (np. utrata gazu przez partnera na maksymalnej głębokości).</p>
+                                    <p>Celem metody jest zapewnienie wystarczającej ilości gazu, aby zespół nurkowy mógł <strong>bezpiecznie zakończyć nurkowanie</strong>, realizując zaplanowany profil dekompresji (lub wynurzenie do przystanku ze zmianą gazu), uwzględniając jednocześnie czynnik stresu.</p>
+                                    <p>Metoda RB jest przeznaczona do nurkowań głębokich i technicznych, gdzie tradycyjna "Reguła 50 BAR" się nie nadaje.</p>
+                                  </div>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+                <div id="rbResult" class="result-container"></div>
+            </div>
+
         </div>
 
         <a href="#" id="donation-link" class="donation-link">
