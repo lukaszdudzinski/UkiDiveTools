@@ -249,8 +249,7 @@ input:checked + .slider:before {
     margin-bottom: -2px;
     display: flex; 
     align-items: center; 
-    justify-content: center; 
-    gap: 5px; 
+    justify-content: center;
 }
 .tab-button:hover {
     color: var(--text-primary);
@@ -387,21 +386,6 @@ input:checked + .slider:before {
     opacity: 0;
     transition: opacity 0.2s, visibility 0.2s;
     z-index: 101; 
-}
-
-.tooltip-tab {
-    position: relative; 
-    top: 1px; 
-}
-.tooltip-content-tab {
-    bottom: auto; 
-    top: 150%; 
-    transform: translateX(-50%); 
-}
-.tooltip-tab::after {
-    bottom: auto;
-    top: 150%; 
-    transform: translateX(-50%) translateY(-100%) rotate(0deg); 
 }
 
 .result-with-tooltip-wrapper {

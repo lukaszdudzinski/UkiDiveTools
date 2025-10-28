@@ -23,16 +23,7 @@
 
         <nav class="tab-nav">
             <button class="tab-button active" data-tab="sac-calculator">
-                <span>Kalkulator SAC</span> 
-                <span class="tooltip-trigger tooltip-tab">
-                      ?
-                      <div class="tooltip-content tooltip-content-tab">
-                        <h4>SAC (Surface Air Consumption)</h4>
-                        <p><strong>Co to jest?</strong> SAC to skrót od angielskiego terminu Surface Air Consumption, co po polsku oznacza powierzchniowe zużycie gazu.</p>
-                        <p><strong>Po co to liczymy?</strong> Jest to podstawowy i niezbędny parametr używany do obliczania zapasu powietrza na nurkowanie.</p>
-                        <p><strong>Definicja:</strong> SAC to ilość gazu (pod ciśnieniem atmosferycznym, wyrażona w litrach) zużywana przez nurka podczas oddychania w ciągu jednej minuty na powierzchni.</p>
-                      </div>
-                </span>
+                Kalkulator SAC
             </button>
             <button class="tab-button" data-tab="nitrox-calculator">
                 Kalkulator Nitrox
@@ -72,7 +63,19 @@
                             <option value="fresh">Woda słodka</option>
                         </select>
                     </div>
-                    <button type="submit">Oblicz SAC</button>
+                    
+                    <div class="button-with-tooltip">
+                        <button type="submit">Oblicz SAC</button>
+                        <span class="tooltip-trigger tooltip-button">
+                              ?
+                              <div class="tooltip-content">
+                                <h4>SAC (Surface Air Consumption)</h4>
+                                <p><strong>Co to jest?</strong> SAC to skrót od angielskiego terminu Surface Air Consumption, co po polsku oznacza powierzchniowe zużycie gazu.</p>
+                                <p><strong>Po co to liczymy?</strong> Jest to podstawowy i niezbędny parametr używany do obliczania zapasu powietrza na nurkowanie.</p>
+                                <p><strong>Definicja:</strong> SAC to ilość gazu (pod ciśnieniem atmosferycznym, wyrażona w litrach) zużywana przez nurka podczas oddychania w ciągu jednej minuty na powierzchni.</p>
+                              </div>
+                        </span>
+                    </div>
                 </form>
                 <div id="result" class="result-container"></div>
             </div>
@@ -103,7 +106,7 @@
                                           <div class="tooltip-content">
                                             <h4>PPO₂ (Ciśnienie Parcjalne Tlenu)</h4>
                                             <p><strong>Co to jest?</strong> To faktyczna "dawka" tlenu, którą przyjmuje organizm pod wodą. Im głębiej, tym dawka jest wyższa.</p>
-                                            <p><strong>Dlaczego to limit?</strong> Zbyt wysoka dawka tlenu staje się toksyczna dla układu nerwowego (CNS), co grozi utratą przytomności i konwulsjami tlenowymi.</p>
+                                            <p><strong>Dlaczego to limit?</strong> Zbyt wysoka dawka tlenu staje się toksyczna dla układu nerwowogo (CNS), co grozi utratą przytomności i konwulsjami tlenowymi.</p>
                                             <p><strong>Zalecane Limity w kalkulatorze (MOD):</strong></p>
                                             <ul>
                                                 <li><strong>1,4 bar/ATA (Zalecane):</strong> Jest to bezpieczny limit dla nurkowań dennych/rekreacyjnych. Zapewnia dodatkowy margines bezpieczeństwa i pozwala na dłuższą ekspozycję (do 150 minut).</li>
@@ -213,6 +216,7 @@
                                   ?
                                   <div class="tooltip-content">
                                     <h4>Czym jest Rock Bottom?</h4>
+                                    <p><strong>Obliczenie RB pozwala wyznaczyć graniczne ciśnienie odejścia z głębokości (Minimum Operating Pressure).</strong></p>
                                     <p>Rock Bottom (RB) to zasada planowania rezerwy gazu. Jest to <strong>minimalna ilość gazu</strong>, którą musi posiadać nurek (lub zespół) w najgorszym możliwym scenariuszu awaryjnym (np. utrata gazu przez partnera na maksymalnej głębokości).</p>
                                     <p>Celem metody jest zapewnienie wystarczającej ilości gazu, aby zespół nurkowy mógł <strong>bezpiecznie zakończyć nurkowanie</strong>, realizując zaplanowany profil dekompresji (lub wynurzenie do przystanku ze zmianą gazu), uwzględniając jednocześnie czynnik stresu.</p>
                                     <p>Metoda RB jest przeznaczona do nurkowań głębokich i technicznych, gdzie tradycyjna "Reguła 50 BAR" się nie nadaje.</p>
