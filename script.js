@@ -1,13 +1,11 @@
-// Czekaj, aż cała strona się załaduje
 document.addEventListener("DOMContentLoaded", () => {
     
-    // --- Logika Kalkulatora SAC (bez zmian) ---
+    // --- Logika Kalkulatora SAC ---
     const sacForm = document.getElementById("sacForm");
     const sacResultDiv = document.getElementById("result");
     if (sacForm) {
         sacForm.addEventListener("submit", (e) => {
             e.preventDefault();
-            // ... (logika SAC bez zmian) ...
             const p1 = parseFloat(document.getElementById("p1").value);
             const p2 = parseFloat(document.getElementById("p2").value);
             const vb = parseFloat(document.getElementById("vb").value);
@@ -36,13 +34,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- Logika Kalkulatora MOD (bez zmian) ---
+    // --- Logika Kalkulatora MOD ---
     const modForm = document.getElementById("modForm");
     const modResultDiv = document.getElementById("modResult");
     if (modForm) {
         modForm.addEventListener("submit", (e) => {
             e.preventDefault();
-            // ... (logika MOD bez zmian) ...
             const o2 = parseFloat(document.getElementById("modO2").value) / 100;
             const po2 = parseFloat(document.getElementById("modPO2").value);
             const pAbs = po2 / o2;
@@ -56,13 +53,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- Logika Kalkulatora EAD (bez zmian) ---
+    // --- Logika Kalkulatora EAD ---
     const eadForm = document.getElementById("eadForm");
     const eadResultDiv = document.getElementById("eadResult");
     if (eadForm) {
         eadForm.addEventListener("submit", (e) => {
             e.preventDefault();
-            // ... (logika EAD bez zmian) ...
             const o2 = parseFloat(document.getElementById("eadO2").value) / 100;
             const depth = parseFloat(document.getElementById("eadDepth").value);
             const fN2 = 1 - o2;
@@ -72,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p>Równoważna Głębokość Powietrzna (EAD):</p>
                 <span>${eadRounded} m</span>
             `;
-            eadResultDiv.style.display = "block";
+            if (eadResultDiv) eadResultDiv.style.display = "block";
         });
     }
 
@@ -83,12 +79,9 @@ document.addEventListener("DOMContentLoaded", () => {
         modPO2Input.addEventListener("input", () => {
             const po2Value = parseFloat(modPO2Input.value);
             
-            // === ZMIANA TUTAJ ===
             if (po2Value > 1.4 && po2Value <= 1.6) {
-                // Zmieniony, jaśniejszy komunikat
-                ppo2Warning.textContent = "Ostrożnie! Wartość > 1.4 skraca bezpieczny czas nurkowania (ryzyko CNS).";
+                ppo2Warning.textContent = "Ostrożnie! Wartość > 1.4 skraca bezpieczny czas nurkowania (ryzyko CNS - wystąpienia toksyczności tlenowej).";
             } else if (po2Value > 1.6) {
-            // === KONIEC ZMIANY ===
                 ppo2Warning.textContent = "BŁĄD: Wartość PPO₂ nie może przekraczać 1.6!";
                 ppo2Warning.style.color = "#c0392b";
             } else {
@@ -98,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- Logika Przełączania Zakładek (Głównych) (bez zmian) ---
+    // --- Logika Przełączania Zakładek (Głównych) ---
     const tabButtons = document.querySelectorAll(".tab-button");
     const tabContents = document.querySelectorAll(".tab-content");
     if (tabButtons.length > 0) {
@@ -110,12 +103,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 tabContents.forEach(content => {
                     content.classList.remove("active-tab");
                 });
-                document.getElementById(targetTabId).classList.add("active-tab");
+                const targetElement = document.getElementById(targetTabId);
+                if (targetElement) targetElement.classList.add("active-tab");
             });
         });
     }
 
-    // --- Logika Przełączanie Pod-zakładek (dla Nitrox) (bez zmian) ---
+    // --- Logika Przełączanie Pod-zakładek (dla Nitrox) ---
     const subTabButtons = document.querySelectorAll(".sub-tab-button");
     const subTabContents = document.querySelectorAll(".sub-tab-content");
     if (subTabButtons.length > 0) {
@@ -127,12 +121,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 subTabContents.forEach(content => {
                     content.classList.remove("active-sub-tab");
                 });
-                document.getElementById(targetSubTabId).classList.add("active-sub-tab");
+                const targetElement = document.getElementById(targetSubTabId);
+                if(targetElement) targetElement.classList.add("active-sub-tab");
             });
         });
     }
 
-    // --- Logika Dark Mode (bez zmian) ---
+    // --- Logika Dark Mode ---
     const themeToggle = document.getElementById("theme-toggle");
     const body = document.body;
     if (themeToggle && body) {

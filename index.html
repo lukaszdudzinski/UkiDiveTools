@@ -23,7 +23,16 @@
 
         <nav class="tab-nav">
             <button class="tab-button active" data-tab="sac-calculator">
-                Kalkulator SAC
+                <span>Kalkulator SAC</span> 
+                <span class="tooltip-trigger tooltip-tab">
+                      ?
+                      <div class="tooltip-content tooltip-content-tab">
+                        <h4>SAC (Surface Air Consumption)</h4>
+                        <p><strong>Co to jest?</strong> SAC to skrót od angielskiego terminu Surface Air Consumption, co po polsku oznacza powierzchniowe zużycie gazu.</p>
+                        <p><strong>Po co to liczymy?</strong> Jest to podstawowy i niezbędny parametr używany do obliczania zapasu powietrza na nurkowanie.</p>
+                        <p><strong>Definicja:</strong> SAC to ilość gazu (pod ciśnieniem atmosferycznym, wyrażona w litrach) zużywana przez nurka podczas oddychania w ciągu jednej minuty na powierzchni.</p>
+                      </div>
+                </span>
             </button>
             <button class="tab-button" data-tab="nitrox-calculator">
                 Kalkulator Nitrox
@@ -31,7 +40,6 @@
         </nav>
         
         <div class="tab-content-wrapper">
-
             <div id="sac-calculator" class="tab-content active-tab">
                 <form id="sacForm">
                     <div class="input-group">
@@ -63,12 +71,10 @@
                     </div>
                     <button type="submit">Oblicz SAC</button>
                 </form>
-                <div id="result" class="result-container">
-                    </div>
+                <div id="result" class="result-container"></div>
             </div>
 
             <div id="nitrox-calculator" class="tab-content">
-                
                 <nav class="sub-tab-nav">
                     <button class="sub-tab-button active" data-subtab="mod-calculator" title="Oblicza maksymalną głębokość">
                         Oblicz MOD
@@ -79,7 +85,6 @@
                 </nav>
 
                 <div class="sub-tab-content-wrapper">
-
                     <div id="mod-calculator" class="sub-tab-content active-sub-tab">
                         <form id="modForm">
                             <div class="input-group">
@@ -90,18 +95,27 @@
                             <div class="input-group">
                                 <div class="label-with-tooltip">
                                     <label for="modPO2">Ciśnienie parcjalne (PPO₂)</label>
-                                    <span class="tooltip-trigger" 
-                                          data-tooltip="Zalecane PPO₂ operacyjne to 1.4 bar (do 150 min ekspozycji). Absolutny limit to 1.6 bar (tylko 45 min), używany głównie do dekompresji.">
+                                    <span class="tooltip-trigger">
                                           ?
+                                          <div class="tooltip-content">
+                                            <h4>PPO₂ (Ciśnienie Parcjalne Tlenu)</h4>
+                                            <p><strong>Co to jest?</strong> To faktyczna "dawka" tlenu, którą przyjmuje organizm pod wodą. Im głębiej, tym dawka jest wyższa.</p>
+                                            <p><strong>Dlaczego to limit?</strong> Zbyt wysoka dawka tlenu staje się toksyczna dla układu nerwowego (CNS), co grozi utratą przytomności i konwulsjami tlenowymi.</p>
+                                            <p><strong>Zalecane Limity w kalkulatorze (MOD):</strong></p>
+                                            <ul>
+                                                <li><strong>1,4 bar/ATA (Zalecane):</strong> Jest to bezpieczny limit dla nurkowań dennych/rekreacyjnych. Zapewnia dodatkowy margines bezpieczeństwa i pozwala na dłuższą ekspozycję (do 150 minut).</li>
+                                                <li><strong>1,6 bar/ATA (Maksymalny Limit):</strong> To nieprzekraczalna granica bezpieczeństwa. Używany jest zwykle tylko do przystanków dekompresyjnych. Przy tym ciśnieniu maksymalny czas ekspozycji to zaledwie 45 minut.</li>
+                                            </ul>
+                                          </div>
                                     </span>
                                 </div>
                                 <input type="number" id="modPO2" value="1.4" step="0.1" min="1.0" max="1.6" required>
                                 <p id="ppo2-warning" class="warning-text"></p>
                             </div>
+
                             <button type="submit">Oblicz MOD</button>
                         </form>
-                        <div id="modResult" class="result-container">
-                            </div>
+                        <div id="modResult" class="result-container"></div>
                     </div>
 
                     <div id="ead-calculator" class="sub-tab-content">
@@ -116,19 +130,26 @@
                             </div>
                             <button type="submit">Oblicz EAD</button>
                         </form>
-                        <div id="eadResult" class="result-container">
-                            </div>
+                        <div class="result-with-tooltip-wrapper">
+                            <div id="eadResult" class="result-container"></div>
+                             <span class="tooltip-trigger tooltip-result">
+                                ?
+                                <div class="tooltip-content">
+                                    <h4>Równoważna Głębokość Powietrzna (EAD)</h4>
+                                    <p><strong>Co to jest?</strong> To hipotetyczna, płytsza głębokość, na której nurkowanie z użyciem powietrza (21% tlenu) spowodowałoby takie samo nasycenie organizmu azotem jak nurkowanie na rzeczywistej głębokości z użyciem Twojej mieszanki Nitrox.</p>
+                                    <p><strong>Dlaczego to liczymy?</strong> Ponieważ Nitrox zawiera mniej azotu niż powietrze, EAD jest zawsze mniejsze niż faktyczna głębokość. Używamy tej płytszej wartości EAD w standardowych (powietrznych) tabelach nurkowych, aby bezpiecznie wydłużyć czas, jaki możemy spędzić pod wodą bez dekompresji.</p>
+                                    <p><strong>Pamiętaj:</strong> EAD dotyczy tylko azotu. Wciąż musisz przestrzegać Maksymalnej Głębokości Operacyjnej (MOD) narzuconej przez limit tlenu (PPO₂)!</p>
+                                </div>
+                            </span>
+                        </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
 
         <a href="#" id="donation-link" class="donation-link">
             ☕ Podoba Ci się to narzędzie? Postaw mi kawę!
         </a>
-
     </div>
 
     <script src="script.js"></script>
