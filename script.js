@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (modForm) {
         modForm.addEventListener("submit", (e) => {
             e.preventDefault();
-            const o2 = parseFloat(document.getElementById("modO2").value) / 100;
+            const o2 = parseFloat(document.getElementById("nitroxO2").value) / 100; 
             const po2 = parseFloat(document.getElementById("modPO2").value);
             const pAbs = po2 / o2;
             const mod = (pAbs - 1) * 10;
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (eadForm) {
         eadForm.addEventListener("submit", (e) => {
             e.preventDefault();
-            const o2 = parseFloat(document.getElementById("eadO2").value) / 100;
+            const o2 = parseFloat(document.getElementById("nitroxO2").value) / 100; 
             const depth = parseFloat(document.getElementById("eadDepth").value);
             const fN2 = 1 - o2;
             const ead = ((fN2 / 0.79) * (depth + 10)) - 10;
@@ -161,14 +161,19 @@ document.addEventListener("DOMContentLoaded", () => {
             const reservePressure = parseFloat(document.getElementById("gcReserve").value);
             const tankSize = parseFloat(document.getElementById("gcTankSize").value);
             const divers = parseInt(document.getElementById("gcDivers").value);
+            const pStart = parseFloat(document.getElementById("gcStartPressure").value); // NOWE POLE
 
             // Walidacja
-            if (sac <= 0 || depth <= 0 || bottomTime <= 0 || descentRate <= 0 || ascentRate <= 0 || stopDepth < 0 || stopTime < 0 || reservePressure < 0 || tankSize <= 0 || divers <= 0) {
+            if (sac <= 0 || depth <= 0 || bottomTime <= 0 || descentRate <= 0 || ascentRate <= 0 || stopDepth < 0 || stopTime < 0 || reservePressure < 0 || tankSize <= 0 || divers <= 0 || pStart <= 0) {
                 alert("Wprowadź poprawne, dodatnie wartości we wszystkich polach.");
                 return;
             }
              if (stopDepth >= depth) {
                 alert("Głębokość przystanku musi być mniejsza niż maksymalna głębokość.");
+                return;
+            }
+             if (pStart <= reservePressure) {
+                alert("Ciśnienie początkowe musi być większe niż ciśnienie rezerwy.");
                 return;
             }
 
@@ -208,18 +213,32 @@ document.addEventListener("DOMContentLoaded", () => {
             // Uwzględnienie liczby nurków
             const finalTotalGasConsumptionLiters = totalGasConsumption * divers;
 
-            // Oblicz wymagane ciśnienie startowe w butli
-            const requiredPressure = (finalTotalGasConsumptionLiters / tankSize) + reservePressure;
+            // --- NOWA LOGIKA WYNIKU ---
+            // Przelicz zużycie na bary
+            const gasCalculatedForUse = finalTotalGasConsumptionLiters / tankSize;
+            
+            // Oblicz dostępny gaz do zużycia (ponad rezerwę)
+            const gasAvailableForUse = pStart - reservePressure;
+            
+            // Porównaj
+            const isSufficient = gasAvailableForUse >= gasCalculatedForUse;
+            const statusColor = isSufficient ? 'style="color: #2ecc71;"' : 'style="color: #e74c3c;"'; // Zielony lub Czerwony
+            const surplusOrDeficitLiters = (gasAvailableForUse - gasCalculatedForUse) * tankSize;
 
             gcResultDiv.innerHTML = `
-                <p>Całkowite zużycie gazu:</p>
-                <span>${finalTotalGasConsumptionLiters.toFixed(0)} litrów</span>
-                <p>Wymagane ciśnienie startowe w butli (z rezerwą):</p>
-                <span>${requiredPressure.toFixed(1)} bar</span>
+                <p>Obliczone zużycie gazu:</p>
+                <span>${finalTotalGasConsumptionLiters.toFixed(0)} litrów (${gasCalculatedForUse.toFixed(1)} bar)</span>
+                <p>Dostępny gaz do zużycia (Start - Rezerwa):</p>
+                <span>${gasAvailableForUse.toFixed(1)} bar</span>
+                <p ${statusColor}><strong>${isSufficient ? 'WYSTARCZY' : 'NIE WYSTARCZY'}</strong></p>
+                <p style="font-size: 0.9em; margin-top: 10px;">
+                    ${isSufficient ? `Zapas gazu: +${surplusOrDeficitLiters.toFixed(0)} litrów` : `Brak gazu: ${surplusOrDeficitLiters.toFixed(0)} litrów`}
+                </p>
             `;
             gcResultDiv.style.display = "block";
         });
     }
+
 
     // --- Logika Przełączania Zakładek (Głównych) ---
     const tabButtons = document.querySelectorAll(".tab-button");

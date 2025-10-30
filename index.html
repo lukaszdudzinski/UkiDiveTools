@@ -81,6 +81,12 @@
             </div>
 
             <div id="nitrox-calculator" class="tab-content">
+                
+                <div class="input-group">
+                    <label for="nitroxO2">Procent tlenu (O₂%)</label>
+                    <input type="number" id="nitroxO2" value="32" min="21" max="100" required>
+                </div>
+
                 <nav class="sub-tab-nav">
                     <button class="sub-tab-button active" data-subtab="mod-calculator" title="Oblicza maksymalną głębokość">
                         Oblicz MOD
@@ -93,10 +99,6 @@
                 <div class="sub-tab-content-wrapper">
                     <div id="mod-calculator" class="sub-tab-content active-sub-tab">
                         <form id="modForm">
-                            <div class="input-group">
-                                <label for="modO2">Procent tlenu (O₂%)</label>
-                                <input type="number" id="modO2" value="32" min="21" max="100" required>
-                            </div>
                             
                             <div class="input-group">
                                 <div class="label-with-tooltip">
@@ -126,10 +128,7 @@
 
                     <div id="ead-calculator" class="sub-tab-content">
                         <form id="eadForm">
-                            <div class="input-group">
-                                <label for="eadO2">Procent tlenu (O₂%)</label>
-                                <input type="number" id="eadO2" value="32" min="21" max="100" required>
-                            </div>
+                            
                             <div class="input-group">
                                 <label for="eadDepth">Planowana głębokość (m)</label>
                                 <input type="number" id="eadDepth" min="1" required>
@@ -274,16 +273,20 @@
                                         <input type="number" id="gcStopTime" value="3" min="0" required>
                                     </div>
                                     <div class="input-group">
-                                        <label for="gcReserve">Ciśnienie Rezerwy (bar)</label>
-                                        <input type="number" id="gcReserve" value="50" min="0" required>
-                                    </div>
-                                    <div class="input-group">
                                         <label for="gcTankSize">Pojemność Butli (l)</label>
                                         <input type="number" id="gcTankSize" value="12" min="1" required>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="gcStartPressure">Ciśnienie początkowe (bar)</label>
+                                        <input type="number" id="gcStartPressure" value="200" min="50" required>
                                     </div>
                                 </div>
                             </div>
                             
+                            <div class="input-group">
+                                <label for="gcReserve">Ciśnienie Rezerwy (bar)</label>
+                                <input type="number" id="gcReserve" value="50" min="0" required>
+                            </div>
                             <div class="input-group">
                                 <label for="gcDivers">Liczba Nurków (do pomnożenia wyniku)</label>
                                 <input type="number" id="gcDivers" value="1" min="1" max="10" required>
