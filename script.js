@@ -142,6 +142,84 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // --- Logika Kalkulatora Całkowitego Zużycia Gazu ---
+    const gasConsumptionForm = document.getElementById("gasConsumptionForm");
+    const gcResultDiv = document.getElementById("gcResult");
+
+    if (gasConsumptionForm && gcResultDiv) {
+        gasConsumptionForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            // 1. Pobierz zmienne z formularza
+            const sac = parseFloat(document.getElementById("gcSAC").value);
+            const depth = parseFloat(document.getElementById("gcDepth").value);
+            const bottomTime = parseFloat(document.getElementById("gcBottomTime").value);
+            const descentRate = parseFloat(document.getElementById("gcDescentRate").value);
+            const ascentRate = parseFloat(document.getElementById("gcAscentRate").value);
+            const stopDepth = parseFloat(document.getElementById("gcStopDepth").value);
+            const stopTime = parseFloat(document.getElementById("gcStopTime").value);
+            const reservePressure = parseFloat(document.getElementById("gcReserve").value);
+            const tankSize = parseFloat(document.getElementById("gcTankSize").value);
+            const divers = parseInt(document.getElementById("gcDivers").value);
+
+            // Walidacja
+            if (sac <= 0 || depth <= 0 || bottomTime <= 0 || descentRate <= 0 || ascentRate <= 0 || stopDepth < 0 || stopTime < 0 || reservePressure < 0 || tankSize <= 0 || divers <= 0) {
+                alert("Wprowadź poprawne, dodatnie wartości we wszystkich polach.");
+                return;
+            }
+             if (stopDepth >= depth) {
+                alert("Głębokość przystanku musi być mniejsza niż maksymalna głębokość.");
+                return;
+            }
+
+            // Funkcja do obliczania ciśnienia absolutnego (zakładamy wodę słoną 10m=1bar)
+            const calculatePressure = (d) => (d / 10) + 1;
+
+            let totalGasConsumption = 0; // w litrach
+
+            // Krok 1: Faza Zanurzania (Z)
+            const descentTime = depth / descentRate;
+            const avgPressureDescent = (calculatePressure(0) + calculatePressure(depth)) / 2;
+            const gasDescent = sac * avgPressureDescent * descentTime;
+            totalGasConsumption += gasDescent;
+
+            // Krok 2: Faza denna (D)
+            const pressureBottom = calculatePressure(depth);
+            const gasBottom = sac * pressureBottom * bottomTime;
+            totalGasConsumption += gasBottom;
+
+            // Krok 3: Faza Wynurzania do Przystanku (W1)
+            const ascentToStopTime = (depth - stopDepth) / ascentRate;
+            const avgPressureAscentToStop = (calculatePressure(depth) + calculatePressure(stopDepth)) / 2;
+            const gasAscentToStop = sac * avgPressureAscentToStop * ascentToStopTime;
+            totalGasConsumption += gasAscentToStop;
+
+            // Krok 4: Przystanek Bezpieczeństwa (SS)
+            const pressureStop = calculatePressure(stopDepth);
+            const gasStop = sac * pressureStop * stopTime;
+            totalGasConsumption += gasStop;
+
+            // Krok 5: Faza Wynurzania do Powierzchni (W2)
+            const ascentToSurfaceTime = stopDepth / ascentRate;
+            const avgPressureAscentToSurface = (calculatePressure(stopDepth) + calculatePressure(0)) / 2;
+            const gasAscentToSurface = sac * avgPressureAscentToSurface * ascentToSurfaceTime;
+            totalGasConsumption += gasAscentToSurface;
+
+            // Uwzględnienie liczby nurków
+            const finalTotalGasConsumptionLiters = totalGasConsumption * divers;
+
+            // Oblicz wymagane ciśnienie startowe w butli
+            const requiredPressure = (finalTotalGasConsumptionLiters / tankSize) + reservePressure;
+
+            gcResultDiv.innerHTML = `
+                <p>Całkowite zużycie gazu:</p>
+                <span>${finalTotalGasConsumptionLiters.toFixed(0)} litrów</span>
+                <p>Wymagane ciśnienie startowe w butli (z rezerwą):</p>
+                <span>${requiredPressure.toFixed(1)} bar</span>
+            `;
+            gcResultDiv.style.display = "block";
+        });
+    }
 
     // --- Logika Przełączania Zakładek (Głównych) ---
     const tabButtons = document.querySelectorAll(".tab-button");
@@ -166,20 +244,29 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- Logika Przełączanie Pod-zakładek (dla Nitrox) ---
+    // --- Logika Przełączanie Pod-zakładek (dla Nitrox i Planowania Gazu) ---
     const subTabButtons = document.querySelectorAll(".sub-tab-button");
     const subTabContents = document.querySelectorAll(".sub-tab-content");
     if (subTabButtons.length > 0) {
         subTabButtons.forEach(button => {
             button.addEventListener("click", () => {
-                subTabButtons.forEach(btn => btn.classList.remove("active"));
-                button.classList.add("active");
-                const targetSubTabId = button.getAttribute("data-subtab");
-                subTabContents.forEach(content => {
-                    content.classList.remove("active-sub-tab");
-                });
-                const targetElement = document.getElementById(targetSubTabId);
-                if(targetElement) targetElement.classList.add("active-sub-tab");
+                const parentSubNav = button.closest('.sub-tab-nav');
+                if (parentSubNav) {
+                    parentSubNav.querySelectorAll('.sub-tab-button').forEach(btn => btn.classList.remove("active"));
+                    button.classList.add("active");
+
+                    const targetSubTabId = button.getAttribute("data-subtab");
+                    // Poprawka: szukaj w najbliższym .tab-content, aby znaleźć wrapper
+                    const parentContentWrapper = button.closest('.tab-content').querySelector('.sub-tab-content-wrapper');
+                    
+                    if (parentContentWrapper) {
+                        parentContentWrapper.querySelectorAll('.sub-tab-content').forEach(content => {
+                            content.classList.remove("active-sub-tab");
+                        });
+                        const targetElement = parentContentWrapper.querySelector(`#${targetSubTabId}`);
+                        if(targetElement) targetElement.classList.add("active-sub-tab");
+                    }
+                }
             });
         });
     }

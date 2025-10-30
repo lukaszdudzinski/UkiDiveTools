@@ -247,10 +247,8 @@ input:checked + .slider:before {
     cursor: pointer;
     transition: color 0.3s, border-bottom-color 0.3s;
     margin-bottom: -2px;
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
 }
+
 .tab-button:hover {
     color: var(--text-primary);
 }
@@ -388,6 +386,8 @@ input:checked + .slider:before {
     z-index: 101; 
 }
 
+/* Usunięte style .tooltip-tab */
+
 .result-with-tooltip-wrapper {
     display: flex;
     align-items: center;
@@ -411,20 +411,21 @@ input:checked + .slider:before {
 
 .button-with-tooltip {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
+    align-items: center; 
+    gap: 10px; 
+    margin-top: 10px; 
 }
 .button-with-tooltip > button[type="submit"] {
     flex-grow: 1; 
-    margin-top: 0;
+    margin-top: 0; 
 }
 .tooltip-button {
     position: relative; 
 }
 .tooltip-button > .tooltip-content {
-     width: 320px;
+     width: 320px; 
 }
+
 
 #gas-planning-calculator h3 {
     text-align: center;
@@ -435,23 +436,19 @@ input:checked + .slider:before {
     font-weight: 600;
 }
 
-/* === Style: Układ dwukolumnowy dla RB === */
+/* Style dla układu dwukolumnowego RB */
 .two-column-form {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
 }
-
 .form-column {
     flex: 1;
     min-width: 150px;
 }
-
 .form-full-width {
     flex-basis: 100%;
 }
-
-/* === Style: Responsywność dla mobilnych === */
 @media (max-width: 600px) {
     .two-column-form {
         flex-direction: column;
@@ -460,12 +457,8 @@ input:checked + .slider:before {
     .form-column {
        min-width: auto; 
     }
-    
-    /* Zwiększamy max-width na mobilnych, aby zmieścić większe kolumny */
-    .calculator {
-        max-width: 500px;
-    }
 }
+
 
 /* --- Style Przycisku Donacji --- */
 .donation-link {
