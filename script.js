@@ -60,6 +60,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const wallpaperThumbs = document.querySelectorAll('.wallpaper-thumb');
     const defaultWallpaper = "url('background_uki.jpg')"; 
     
+    // ZMIANA: Dodano globalne ustawienia wody
+    const globalWaterTypeSelect = document.getElementById('global-water-type');
+    const sacWaterType = document.getElementById('waterType');
+    const ballastWaterType = document.getElementById('ballastWater');
+
     // Motyw
     function setTheme(isDark) {
         if (isDark) {
@@ -102,6 +107,25 @@ document.addEventListener('DOMContentLoaded', (event) => {
         glassToggle.addEventListener('change', () => setLiquidGlass(glassToggle.checked));
     }
 
+    // ZMIANA: Funkcja i listenery globalnego ustawienia wody
+    function setWaterType(water) {
+        if (globalWaterTypeSelect) globalWaterTypeSelect.value = water;
+        if (sacWaterType) sacWaterType.value = water;
+        if (ballastWaterType) ballastWaterType.value = water;
+        localStorage.setItem('uki-water-type', water);
+    }
+
+    if (globalWaterTypeSelect) {
+        globalWaterTypeSelect.addEventListener('change', () => setWaterType(globalWaterTypeSelect.value));
+    }
+    if (sacWaterType) {
+        sacWaterType.addEventListener('change', () => setWaterType(sacWaterType.value));
+    }
+    if (ballastWaterType) {
+        ballastWaterType.addEventListener('change', () => setWaterType(ballastWaterType.value));
+    }
+
+
     // --- Inicjalizacja przy starcie ---
     const savedTheme = localStorage.getItem('theme');
     setTheme(savedTheme === 'dark' || savedTheme === null); 
@@ -111,9 +135,51 @@ document.addEventListener('DOMContentLoaded', (event) => {
     
     const savedGlass = localStorage.getItem('uki-liquid-glass');
     setLiquidGlass(savedGlass === 'on' || savedGlass === null);
+
+    // ZMIANA: Inicjalizacja wody
+    const savedWater = localStorage.getItem('uki-water-type');
+    setWaterType(savedWater || 'fresh'); // Domyślnie Słodka
     
     
-    // --- 4. LOGIKA PRZYCISKU "KAWY" (NAPRAWIA BŁĄD) ---
+    // --- 4. ZMIANA: NOWA LOGIKA GLOBALNEGO TOOLTIPA (MODAL) ---
+    const globalTooltip = document.getElementById('global-tooltip');
+    const tooltipOverlay = document.getElementById('tooltip-overlay');
+    const tooltipBody = document.getElementById('tooltip-body');
+    const tooltipCloseBtn = document.getElementById('tooltip-close-btn');
+    const allTriggers = document.querySelectorAll('.tooltip-trigger');
+
+    function showTooltip(contentHTML) {
+        tooltipBody.innerHTML = contentHTML;
+        globalTooltip.style.display = 'block';
+        tooltipOverlay.style.display = 'block';
+    }
+
+    function hideTooltip() {
+        globalTooltip.style.display = 'none';
+        tooltipOverlay.style.display = 'none';
+        tooltipBody.innerHTML = '';
+    }
+
+    allTriggers.forEach(trigger => {
+        const contentDiv = trigger.querySelector('.tooltip-content');
+        if (!contentDiv) return;
+        const tooltipHTML = contentDiv.innerHTML;
+
+        // Używamy 'click' zamiast 'mouseover' dla modala
+        trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation(); // Zapobiegaj propagacji kliknięcia
+            showTooltip(tooltipHTML);
+        });
+    });
+
+    // Dodajemy listenery do zamykania
+    tooltipCloseBtn.addEventListener('click', hideTooltip);
+    tooltipOverlay.addEventListener('click', hideTooltip);
+
+    
+    
+    // --- 5. LOGIKA PRZYCISKU "KAWY" (NAPRAWIA BŁĄD) ---
     const donationLink = document.getElementById('donation-link');
     if (donationLink) {
         donationLink.addEventListener('click', function(e) {
@@ -124,7 +190,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
     
     
-    // --- 5. PEŁNA LOGIKA KALKULATORÓW ---
+    // --- 6. PEŁNA LOGIKA KALKULATORÓW ---
     
     // --- FUNKCJE WSPÓŁDZIELONE ---
     function calculateRockBottom(params) {
@@ -238,8 +304,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // --- Listener 1: Kalkulator Rock Bottom ---
     const rbForm = document.getElementById('rbForm');
     const rbResultContainer = document.getElementById('rbResult');
-    const gcReserveInput = document.getElementById('gcReserve'); 
-    if (rbForm && rbResultContainer && gcReserveInput) {
+    // ZMIANA: Usunięto 'gcReserveInput'
+    if (rbForm && rbResultContainer) {
         rbForm.addEventListener('submit', function(e) { 
             e.preventDefault(); 
             try { 
@@ -257,15 +323,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const rbResult = calculateRockBottom(params); 
                 rbResultContainer.innerHTML = `<p class="result-label">Minimalne ciśnienie w Twoim zestawie na max zaplanowanej głębokości ${params.depth} m dla metody Rock Bottom:</p><p class="result-value">${rbResult.roundedBars} bar</p>`; 
                 rbResultContainer.style.display = 'block'; 
-                gcReserveInput.value = rbResult.roundedBars; 
+                // ZMIANA: Usunięto auto-wypełnianie pola rezerwy
+                // gcReserveInput.value = rbResult.roundedBars; 
                 
-                // ZMIANA: Przewiń do wyników
                 rbResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } catch (error) { 
                 rbResultContainer.innerHTML = `<p class="result-error">${error.message}</p>`; 
                 rbResultContainer.style.display = 'block'; 
                 
-                // ZMIANA: Przewiń do błędu
                 rbResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } 
         });
@@ -299,13 +364,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const consumptionResult = calculateGasConsumption(consumptionParams); 
                 renderConsumptionResult(gcResultContainer, { ...consumptionResult, tankSize: tankSize }, reserveParams, null); 
                 
-                // ZMIANA: Przewiń do wyników
                 gcResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } catch (error) { 
                 gcResultContainer.innerHTML = `<p class="result-error">${error.message}</p>`; 
                 gcResultContainer.style.display = 'block'; 
                 
-                // ZMIANA: Przewiń do błędu
                 gcResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } 
         });
@@ -358,13 +421,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 }; 
                 renderConsumptionResult(proResultContainer, { ...consumptionResult, tankSize: tankSize }, reserveParams, rbInfo); 
                 
-                // ZMIANA: Przewiń do wyników
                 proResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } catch (error) { 
                 proResultContainer.innerHTML = `<p class="result-error">${error.message}</p>`; 
                 proResultContainer.style.display = 'block'; 
                 
-                // ZMIANA: Przewiń do błędu
                 proResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } 
         });
@@ -384,15 +445,40 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const ballastResultContainer = document.getElementById('ballastResult');
     const ballastSuitSelect = document.getElementById('ballastSuit');
     const ballastWarmerGroup = document.getElementById('ballast-warmer-group');
-    if (ballastSuitSelect && ballastWarmerGroup) {
-        ballastSuitSelect.addEventListener('change', function() {
-            if (this.value === 'dryTri' || this.value === 'dryNeo') {
-                ballastWarmerGroup.style.display = 'block';
-            } else {
-                ballastWarmerGroup.style.display = 'none';
-            }
-        });
+    // ZMIANA: Nowe stałe dla logiki płyty
+    const ballastTankSelect = document.getElementById('ballastTank');
+    const ballastPlateGroup = document.getElementById('ballast-plate-group');
+
+    // ZMIANA: Scentralizowana funkcja do pokazywania/ukrywania pól balastu
+    function updateBallastDependents() {
+        const suit = ballastSuitSelect.value;
+        const tank = ballastTankSelect.value;
+
+        // Pokaż/Ukryj Ocieplacz
+        if (suit === 'dryTri' || suit === 'dryNeo' || suit === 'dryCrash') {
+            ballastWarmerGroup.style.display = 'block';
+        } else {
+            ballastWarmerGroup.style.display = 'none';
+        }
+        
+        // Pokaż/Ukryj Płytę
+        if (tank.startsWith('twin')) { // ZMIANA: Sprawdza czy zaczyna się od "twin"
+            ballastPlateGroup.style.display = 'block';
+        } else {
+            ballastPlateGroup.style.display = 'none';
+        }
     }
+    
+    if (ballastSuitSelect && ballastWarmerGroup && ballastTankSelect && ballastPlateGroup) {
+        // Listenery
+        ballastSuitSelect.addEventListener('change', updateBallastDependents);
+        ballastTankSelect.addEventListener('change', updateBallastDependents);
+        
+        // Uruchomienie przy ładowaniu strony
+        updateBallastDependents();
+    }
+
+
     if (ballastForm && ballastResultContainer) {
         ballastForm.addEventListener('submit', function(e) { 
             e.preventDefault(); 
@@ -402,37 +488,58 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const warmer = document.getElementById('ballastWarmer').value; 
                 const tank = document.getElementById('ballastTank').value; 
                 const water = document.getElementById('ballastWater').value; 
+                const plate = document.getElementById('ballastPlate').value;
+
                 if (isNaN(weight) || weight <= 0) { 
                     throw new Error("Proszę podać poprawną wagę."); 
                 } 
                 let ballast = weight * 0.10; 
+                
                 switch (suit) { 
                     case 'foam3': ballast -= 3; break; 
                     case 'foam5': ballast -= 2; break; 
                     case 'foam7': break; 
+                    case 'dryCrash': // ZMIANA: Dodano Crash Neopren
                     case 'dryTri': ballast += (warmer === 'thick' ? 6 : 4); break; 
                     case 'dryNeo': ballast += (warmer === 'thick' ? 8 : 7); break; 
                 } 
+                
+                // ZMIANA: Zaktualizowana logika balastu dla butli i płyty
                 switch (tank) { 
-                    case 'alu11': break; 
-                    case 'steel12': ballast -= 3; break; 
-                    case 'steel15': ballast -= 4; break; 
-                    case 'twin12': ballast -= 7; break; 
+                    case 'alu11': ballast += 1; break; // Lekko dodatnia
+                    case 'steel12': ballast -= 3; break;
+                    case 'steel15': ballast -= 4; break;
+                    // ZMIANA: Dodano nowe twinsety
+                    case 'twin7':
+                        ballast -= 4; // Estymowana waga (pływalność ujemna) butli 2x7
+                        if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
+                        break; 
+                    case 'twin85':
+                        ballast -= 5; // Estymowana waga (pływalność ujemna) butli 2x8.5
+                        if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
+                        break; 
+                    case 'twin10':
+                        ballast -= 6; // Estymowana waga (pływalność ujemna) butli 2x10
+                        if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
+                        break; 
+                    case 'twin12': 
+                        ballast -= 8; // Estymowana waga (pływalność ujemna) butli 2x12
+                        if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
+                        break; 
                 } 
                 if (water === 'fresh') { 
                     ballast -= 2; 
                 } 
                 if (ballast < 0) ballast = 0; 
+                
                 ballastResultContainer.innerHTML = `<p class="result-label">Sugerowany punkt startowy balastu:</p><p class="result-value">${ballast.toFixed(1)} kg</p><p class="result-warning">⚠️ <strong>Pamiętaj:</strong> To only sugestia. Zawsze wykonaj kontrolę pływalności (check-dive) przed nurkowaniem, aby precyjnie dobrać ostateczną ilość obciążenia.</p>`; 
                 ballastResultContainer.style.display = 'block'; 
                 
-                // ZMIANA: Przewiń do wyników
                 ballastResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } catch (error) { 
                 ballastResultContainer.innerHTML = `<p class="result-error">${error.message}</p>`; 
                 ballastResultContainer.style.display = 'block'; 
                 
-                // ZMIANA: Przewiń do błędu
                 ballastResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } 
         });
@@ -469,14 +576,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 resultDiv.innerHTML = `<p class="result-label">Twoje powierzchniowe zużycie gazu (SAC):</p><p class="result-value">${sac.toFixed(1)} l/min</p>`;
                 resultDiv.style.display = 'block';
                 
-                // ZMIANA: Przewiń do wyników
                 resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 
             } catch (error) {
                 resultDiv.innerHTML = `<p class="result-error">${error.message}</p>`;
                 resultDiv.style.display = 'block';
                 
-                // ZMIANA: Przewiń do błędu
                 resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         });
@@ -502,13 +607,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 modResult.innerHTML = `<p class="result-label">Maksymalna Głębokość (MOD) dla EAN${o2_percent}% przy PPO₂ ${ppo2}:</p><p class="result-value">${mod.toFixed(1)} m</p>`;
                 modResult.style.display = 'block';
                 
-                // ZMIANA: Przewiń do wyników
                 modResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } catch (error) {
                 modResult.innerHTML = `<p class="result-error">${error.message}</p>`;
                 modResult.style.display = 'block';
                 
-                // ZMIANA: Przewiń do błędu
                 modResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         });
@@ -534,13 +637,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 eadResult.innerHTML = `<p class="result-label">Równoważna Głębokość Powietrzna (EAD) na ${depth} m z EAN${o2_percent}%:</p><p class="result-value">${ead.toFixed(1)} m</p>`;
                 eadResult.style.display = 'block';
                 
-                // ZMIANA: Przewiń do wyników
                 eadResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } catch (error) {
                 eadResult.innerHTML = `<p class="result-error">${error.message}</p>`;
                 eadResult.style.display = 'block';
                 
-                // ZMIANA: Przewiń do błędu
                 eadResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         });

@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
+    <div id="tooltip-overlay"></div>
+    <div id="global-tooltip" class="tooltip-content" style="display: none;">
+        <button id="tooltip-close-btn">&times;</button>
+        <div id="tooltip-body"></div>
+    </div>
+
     <div class="overlay"></div> 
 
     <div class="app-wrapper">
@@ -48,15 +54,25 @@
                         <div class="form-column">
                             <div class="input-group"><label for="p1">Ciśnienie startowe (bar)</label><input type="number" id="p1" required></div>
                             <div class="input-group"><label for="p2">Ciśnienie końcowe (bar)</label><input type="number" id="p2" required></div>
-                            <div class="input-group"><label for="vb">Pojemność butli (l)</label><input type="number" id="vb" value="11" required></div>
+                            <div class="input-group"><label for="vb">Pojemność butli (l)</label><input type="number" id="vb" value="15" required></div>
                         </div>
                         <div class="form-column">
                             <div class="input-group"><label for="depth">Średnia głębokość (m)</label><input type="number" id="depth" required></div>
                             <div class="input-group"><label for="time">Czas pomiaru (min)</label><input type="number" id="time" required></div>
-                            <div class="input-group"><label for="waterType">Rodaj wody</label><select id="waterType"><option value="salt">Woda słona</option><option value="fresh">Woda słodka</option></select></div>
+                            <div class="input-group"><label for="waterType">Rodaj wody</label><select id="waterType"><option value="salt">Woda słona</option><option value="fresh" selected>Woda słodka</option></select></div>
                         </div>
                         <div class="form-full-width">
-                            <div class="button-with-tooltip"><button type="submit">Oblicz SAC</button><span class="tooltip-trigger tooltip-button">? <div class="tooltip-content"><h4>SAC (Surface Air Consumption)</h4><p>...</p></div></span></div>
+                            <div class="button-with-tooltip">
+                                <span class="tooltip-trigger tooltip-button">? 
+                                    <div class="tooltip-content">
+                                        <h4>SAC (Surface Air Consumption)</h4>
+                                        <p><strong>Co to jest?</strong> SAC to skrót od angielskiego terminu Surface Air Consumption, co po polsku oznacza powierzchniowe zużycie gazu.</p>
+                                        <p><strong>Po co to liczymy?</strong> Jest to podstawowy i niezbędny parametr używany do obliczania zapasu powietrza na nurkowanie.</p>
+                                        <p><strong>Definicja:</strong> SAC to ilość gazu (pod ciśnieniem atmosferycznym, wyrażona w litrach) zużywana przez nurka podczas oddychania w ciągu jednej minuty na powierzchni.</p>
+                                    </div>
+                                </span>
+                                <button type="submit">Oblicz SAC</button>
+                            </div>
                         </div>
                     </form>
                     <div id="result" class="result-container"></div>
@@ -66,8 +82,46 @@
                     <div class="input-group"><label for="nitroxO2">Procent tlenu (O₂%)</label><input type="number" id="nitroxO2" value="32" min="21" max="100" required></div>
                     <nav class="sub-tab-nav"><button class="sub-tab-button active" data-subtab="mod-calculator" title="Oblicza maksymalną głębokość">Oblicz MOD</button><button class="sub-tab-button" data-subtab="ead-calculator" title="Oblicza równoważną głębokość powietrzną">Oblicz EAD</button></nav>
                     <div class="sub-tab-content-wrapper">
-                        <div id="mod-calculator" class="sub-tab-content active-sub-tab"><form id="modForm"><div class="input-group"><div class="label-with-tooltip"><label for="modPO2">Ciśnienie parcjalne (PPO₂)</label><span class="tooltip-trigger">? <div class="tooltip-content"><h4>PPO₂ (Ciśnienie Parcjalne Tlenu)</h4><p>...</p></div></span></div><input type="number" id="modPO2" value="1.4" step="0.1" min="1.0" max="1.6" required><p id="ppo2-warning" class="warning-text"></p></div><button type="submit">Oblicz MOD</button></form><div id="modResult" class="result-container"></div></div>
-                        <div id="ead-calculator" class="sub-tab-content"><form id="eadForm"><div class="input-group"><label for="eadDepth">Planowana głębokość (m)</label><input type="number" id="eadDepth" min="1" required></div><div class="button-with-tooltip"><button type="submit">Oblicz EAD</button><span class="tooltip-trigger tooltip-button">? <div class="tooltip-content"><h4>Równoważna Głębokość Powietrzna (EAD)</h4><p>...</p></div></span></div></form><div id="eadResult" class="result-container"></div></div>
+                        <div id="mod-calculator" class="sub-tab-content active-sub-tab">
+                            <form id="modForm">
+                                <div class="input-group">
+                                    <div class="label-with-tooltip">
+                                        <label for="modPO2">Ciśnienie parcjalne (PPO₂)</label>
+                                        <span class="tooltip-trigger">? 
+                                            <div class="tooltip-content">
+                                                <h4>PPO₂ (Ciśnienie Parcjalne Tlenu)</h4>
+                                                <p><strong>Co to jest?</strong> To faktyczna "dawka" tlenu, którą przyjmuje organizm pod wodą. Im głębiej, tym dawka jest wyższa.</p>
+                                                <p><strong>Dlaczego to limit?</strong> Zbyt wysoka dawka tlenu staje się toksyczna dla układu nerwowego (CNS), co grozi utratą przytomności i konwulsjami tlenowymi.</p>
+                                                <p><strong>Zalecane Limity w kalkulatorze (MOD):</strong></p>
+                                                <ul>
+                                                    <li><strong>1,4 bar/ATA (Zalecane):</strong> Jest to bezpieczny limit dla nurkowań dennych/rekreacyjnych.</li>
+                                                    <li><strong>1,6 bar/ATA (Maksymalny Limit):</strong> To nieprzekraczalna granica bezpieczeństwa. Używany jest zwykle tylko do przystanków dekompresyjnych.</li>
+                                                </ul>
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <input type="number" id="modPO2" value="1.4" step="0.1" min="1.0" max="1.6" required><p id="ppo2-warning" class="warning-text"></p>
+                                </div>
+                                <button type="submit">Oblicz MOD</button>
+                            </form>
+                            <div id="modResult" class="result-container"></div>
+                        </div>
+                        <div id="ead-calculator" class="sub-tab-content">
+                            <form id="eadForm">
+                                <div class="input-group"><label for="eadDepth">Planowana głębokość (m)</label><input type="number" id="eadDepth" min="1" required></div>
+                                <div class="button-with-tooltip">
+                                    <span class="tooltip-trigger tooltip-button">?
+                                        <div class="tooltip-content">
+                                            <h4>Równoważna Głębokość Powietrzna (EAD)</h4>
+                                            <p><strong>Co to jest?</strong> To hipotetyczna, płytsza głębokość, na której nurkowanie z użyciem powietrza (21% tlenu) spowodowałoby takie samo nasycenie organizmu azotem jak nurkowanie na rzeczywistej głębokości z użyciem Twojej mieszanki Nitrox.</p>
+                                            <p><strong>Dlaczego to liczymy?</strong> Używamy tej płytszej wartości EAD w standardowych (powietrznych) tabelach nurkowych, aby bezpiecznie wydłużyć czas, jaki możemy spędzić pod wodą bez dekompresji.</p>
+                                        </div>
+                                    </span>
+                                    <button type="submit">Oblicz EAD</button>
+                                </div>
+                            </form>
+                            <div id="eadResult" class="result-container"></div>
+                        </div>
                     </div>
                 </div>
                 
@@ -79,7 +133,17 @@
                             <form id="rbForm" class="two-column-form"> 
                                 <div class="form-column"><div class="input-group"><label for="rbSAC">Twój SAC (l/min)</label><input type="number" id="rbSAC" value="20" step="0.1" min="5" required></div><div class="input-group"><label for="rbDepth">Maksymalna Głębokość (m)</label><input type="number" id="rbDepth" value="40" min="1" required></div><div class="input-group"><label for="rbVolume">Całkowita Pojemność Butli (l)</label><input type="number" id="rbVolume" value="24" min="1" required title="Suma pojemności wszystkich butli z gazem dennym (np. 2x12=24)"></div><div class="input-group"><div class="label-with-tooltip"><label for="rbStopDepth">Głęb. Pierwszego Przystanku/Zmiany Gazu (m)</label> </div><input type="number" id="rbStopDepth" value="6" min="0" required></div><div class="input-group"><label for="rbAscentRate">Prędkość Wynurzania (m/min)</label><input type="number" id="rbAscentRate" value="10" min="1" max="18" required></div></div>
                                 <div class="form-column"><div class="input-group"><div class="label-with-tooltip"><label for="rbStressFactor">Mnożnik SAC (Stres)</label></div><input type="number" id="rbStressFactor" value="2" step="0.1" min="1" max="3" required></div><div class="input-group"><label for="rbDivers">Liczba Nurków</label><input type="number" id="rbDivers" value="2" min="1" max="2" required title="Ilu nurków będzie oddychać z rezerwy (zwykle 2: Ty i partner)"></div><div class="input-group"><div class="label-with-tooltip"><label for="rbEmergencyTime">Czas Reakcji na Dnie (min)</label></div><input type="number" id="rbEmergencyTime" value="2" min="0" max="5" required></div><div class="input-group"><div class="label-with-tooltip"><label for="rbSafetyMargin">Dodatkowy Bufor (bar)</label></div><input type="number" id="rbSafetyMargin" value="10" min="0" required></div></div>
-                                <div class="form-full-width"><div class="button-with-tooltip"><button type="submit">Oblicz Rock Bottom</button><span class="tooltip-trigger tooltip-button">? <div class="tooltip-content"><h4>Czym jest Rock Bottom?</h4><p>...</p></div></span></div></div>
+                                <div class="form-full-width">
+                                    <div class="button-with-tooltip">
+                                        <span class="tooltip-trigger tooltip-button">?
+                                            <div class="tooltip-content">
+                                                <h4>Czym jest Rock Bottom?</h4>
+                                                <p>Rock Bottom (RB) to zasada planowania rezerwy gazu. Jest to <strong>minimalna ilość gazu</strong>, którą musi posiadać nurek (lub zespół) w najgorszym możliwym scenariuszu awaryjnym (np. utrata gazu przez partnera na maksymalnej głębokości).</p>
+                                            </div>
+                                        </span>
+                                        <button type="submit">Oblicz Rock Bottom</button>
+                                    </div>
+                                </div>
                             </form>
                             <div id="rbResult" class="result-container"></div>
                         </div>
@@ -87,9 +151,23 @@
                             <h3>Kalkulator Całkowitego Zużycia Gazu</h3>
                             <form id="gasConsumptionForm" class="two-column-form">
                                 <div class="form-column"><div class="input-group"><label for="gcSAC">Twój SAC (l/min)</label><input type="number" id="gcSAC" value="20" step="0.1" min="5" required></div><div class="input-group"><label for="gcDepth">Maksymalna Głębokość (m)</label><input type="number" id="gcDepth" value="30" min="1" required></div><div class="input-group"><label for="gcBottomTime">Planowany Czas Denny (min)</label><input type="number" id="gcBottomTime" value="20" min="1" required></div><div class="input-group"><label for="gcDescentRate">Prędkość Zanurzania (m/min)</label><input type="number" id="gcDescentRate" value="15" min="1" required></div><div class="input-group"><label for="gcAscentRate">Prędkość Wynurzania (m/min)</label><input type="number" id="gcAscentRate" value="10" min="1" max="18" required></div></div>
-                                <div class="form-column"><div class="input-group"><label for="gcStopDepth">Głęb. Przystanku Bezp. (m)</label><input type="number" id="gcStopDepth" value="5" min="0" required></div><div class="input-group"><label for="gcStopTime">Czas Przystanku Bezp. (min)</label><input type="number" id="gcStopTime" value="3" min="0" required></div><div class="input-group"><label for="gcTankSize">Pojemność Butli (l)</label><input type="number" id="gcTankSize" value="12" min="1" required></div><div class="input-group"><label for="gcStartPressure">Ciśnienie początkowe (bar)</label><input type="number" id="gcStartPressure" value="200" min="50" required></div><div class="input-group"><label for="gcReserve">Wymagane Ciśnienie Rezerwy (bar)</label><input type="number" id="gcReserve" value="50" min="0" required></div></div>
+                                <div class="form-column"><div class="input-group"><label for="gcStopDepth">Głęb. Przystanku Bezp. (m)</label><input type="number" id="gcStopDepth" value="5" min="0" required></div><div class="input-group"><label for="gcStopTime">Czas Przystanku Bezp. (min)</label><input type="number" id="gcStopTime" value="3" min="0" required></div>
+                                    <div class="input-group"><label for="gcTankSize">Pojemność Butli (l)</label><input type="number" id="gcTankSize" value="15" min="1" required></div>
+                                    <div class="input-group"><label for="gcStartPressure">Ciśnienie początkowe (bar)</label><input type="number" id="gcStartPressure" value="200" min="50" required></div>
+                                    <div class="input-group"><label for="gcReserve">Wymagane Ciśnienie Rezerwy (bar)</label><input type="number" id="gcReserve" value="50" min="0" required></div>
+                                </div>
                                 <input type="hidden" id="gcDivers" value="1">
-                                <div class="form-full-width"><div class="button-with-tooltip"><button type="submit">Oblicz Zużycie</button><span class="tooltip-trigger tooltip-button">? <div class="tooltip-content"><h4>Planowanie Zużycia Gazu</h4><p>...</p></div></span></div></div>
+                                <div class="form-full-width">
+                                    <div class="button-with-tooltip">
+                                        <span class="tooltip-trigger tooltip-button">?
+                                            <div class="tooltip-content">
+                                                <h4>Planowanie Zużycia Gazu</h4>
+                                                <p>Ten kalkulator oszacuje całkowite zużycie gazu na nurkowanie (faza po fazie) i porówna je z Twoim zapasem, aby sprawdzić, czy zostaje Ci wymagana rezerwa.</p>
+                                            </div>
+                                        </span>
+                                        <button type="submit">Oblicz Zużycie</button>
+                                    </div>
+                                </div>
                             </form>
                             <div id="gcResult" class="result-container"></div>
                         </div>
@@ -103,7 +181,10 @@
                             <h3>Kalkulator Zużycia Gazu (z rezerwą RB)</h3>
                             <form id="proGasForm" class="two-column-form">
                                 <div class="form-column"><div class="input-group"><label for="gcSAC_pro">Twój SAC (l/min)</label><input type="number" id="gcSAC_pro" value="20" step="0.1" min="5" required></div><div class="input-group"><label for="gcDepth_pro">Maksymalna Głębokość (m)</label><input type="number" id="gcDepth_pro" value="30" min="1" required></div><div class="input-group"><label for="gcBottomTime_pro">Planowany Czas Denny (min)</label><input type="number" id="gcBottomTime_pro" value="20" min="1" required></div><div class="input-group"><label for="gcDescentRate_pro">Prędkość Zanurzania (m/min)</label><input type="number" id="gcDescentRate_pro" value="15" min="1" required></div><div class="input-group"><label for="gcAscentRate_pro">Prędkość Wynurzania (m/min)</label><input type="number" id="gcAscentRate_pro" value="10" min="1" max="18" required></div><div class="input-group"><label for="gcStopDepth_pro">Głęb. Przystanku Bezp. (m)</label><input type="number" id="gcStopDepth_pro" value="5" min="0" required></div></div>
-                                <div class="form-column"><div class="input-group"><label for="gcStopTime_pro">Czas Przystanku Bezp. (min)</label><input type="number" id="gcStopTime_pro" value="3" min="0" required></div><div class="input-group"><label for="gcTankSize_pro">Pojemność Butli (l)</label><input type="number" id="gcTankSize_pro" value="12" min="1" required></div><div class="input-group"><label for="gcStartPressure_pro">Ciśnienie początkowe (bar)</label><input type="number" id="gcStartPressure_pro" value="200" min="50" required></div><div class="input-group"><div class="label-with-tooltip"><label for="rbStressFactor_pro">Mnożnik SAC (Stres)</label></div><input type="number" id="rbStressFactor_pro" value="2" step="0.1" min="1" max="3" required></div><div class="input-group"><label for="rbDivers_pro">Liczba Nurków (do rezerwy)</label><input type="number" id="rbDivers_pro" value="2" min="1" max="2" required title="Ilu nurków będzie oddychać z rezerwy (zwykle 2: Ty i partner)"></div><div class="input-group"><div class="label-with-tooltip"><label for="rbEmergencyTime_pro">Czas Reakcji na Dnie (min)</label></div><input type="number" id="rbEmergencyTime_pro" value="2" min="0" max="5" required></div><div class="input-group"><div class="label-with-tooltip"><label for="rbSafetyMargin_pro">Dodatkowy Bufor (bar)</label></div><input type="number" id="rbSafetyMargin_pro" value="10" min="0" required></div></div>
+                                <div class="form-column"><div class="input-group"><label for="gcStopTime_pro">Czas Przystanku Bezp. (min)</label><input type="number" id="gcStopTime_pro" value="3" min="0" required></div>
+                                    <div class="input-group"><label for="gcTankSize_pro">Pojemność Butli (l)</label><input type="number" id="gcTankSize_pro" value="15" min="1" required></div>
+                                    <div class="input-group"><label for="gcStartPressure_pro">Ciśnienie początkowe (bar)</label><input type="number" id="gcStartPressure_pro" value="200" min="50" required></div>
+                                    <div class="input-group"><div class="label-with-tooltip"><label for="rbStressFactor_pro">Mnożnik SAC (Stres)</label></div><input type="number" id="rbStressFactor_pro" value="2" step="0.1" min="1" max="3" required></div><div class="input-group"><label for="rbDivers_pro">Liczba Nurków (do rezerwy)</label><input type="number" id="rbDivers_pro" value="2" min="1" max="2" required title="Ilu nurków będzie oddychać z rezerwy (zwykle 2: Ty i partner)"></div><div class="input-group"><div class="label-with-tooltip"><label for="rbEmergencyTime_pro">Czas Reakcji na Dnie (min)</label></div><input type="number" id="rbEmergencyTime_pro" value="2" min="0" max="5" required></div><div class="input-group"><div class="label-with-tooltip"><label for="rbSafetyMargin_pro">Dodatkowy Bufor (bar)</label></div><input type="number" id="rbSafetyMargin_pro" value="10" min="0" required></div></div>
                                 <div class="form-full-width"><div class="button-with-tooltip"><button type="submit">Oblicz Zużycie z Rezerwą RB</button></div></div>
                             </form>
                             <div id="proGasResult" class="result-container"></div>
@@ -115,8 +196,43 @@
                     <h3>Kalkulator Balastu</h3>
                     <p style="color: #b0b0b0; margin-top: -10px; margin-bottom: 20px; font-size: 0.9em;">Oblicz sugerowany punkt startowy dla Twojego obciążenia.</p>
                     <form id="ballastForm" class="two-column-form">
-                        <div class="form-column"><div class="input-group"><label for="ballastWeight">Twoja waga (kg)</label><input type="number" id="ballastWeight" min="40" value="75" required></div><div class="input-group"><label for="ballastSuit">Rodzaj Skafandra</label><select id="ballastSuit" required><option value="foam3">Pianka 3mm (lub mniej)</option><option value="foam5">Pianka 5mm</option><option value="foam7" selected>Pianka 7mm (lub 2x5mm)</option><option value="dryTri">Suchy skafander (Trylaminat)</option><option value="dryNeo">Suchy skafander (Neopren)</option></select></div><div class="input-group" id="ballast-warmer-group"><label for="ballastWarmer">Ocieplacz (dla suchego)</label><select id="ballastWarmer"><option value="thin" selected>Cienki (do 200g)</option><option value="thick">Gruby (400g+)</option></select></div></div>
-                        <div class="form-column"><div class="input-group"><label for="ballastTank">Rodzaj Butli (Główna)</label><select id="ballastTank" required><option value="alu11" selected>Aluminiowa 11L (S80)</option><option value="steel12">Stalowa 10L / 12L</option><option value="steel15">Stalowa 15L</option><option value="twin12">Twinset Stalowy (np. 2x12)</option></select></div><div class="input-group"><label for="ballastWater">Rodaj Wody</label><select id="ballastWater" required><option value="salt" selected>Woda słona</option><option value="fresh">Woda słodka</option></select></div></div>
+                        <div class="form-column">
+                            <div class="input-group"><label for="ballastWeight">Twoja waga (kg)</label><input type="number" id="ballastWeight" min="40" value="75" required></div>
+                            <div class="input-group">
+                                <label for="ballastSuit">Rodzaj Skafandra</label>
+                                <select id="ballastSuit" required>
+                                    <option value="foam3">Pianka 3mm (lub mniej)</option>
+                                    <option value="foam5">Pianka 5mm</option>
+                                    <option value="foam7" selected>Pianka 7mm (lub 2x5mm)</option>
+                                    <option value="dryTri">Suchy skafander (Trylaminat)</option>
+                                    <option value="dryCrash">Suchy skafander (Crash Neopren)</option>
+                                    <option value="dryNeo">Suchy skafander (Neopren)</option>
+                                </select>
+                            </div>
+                            <div class="input-group" id="ballast-warmer-group"><label for="ballastWarmer">Ocieplacz (dla suchego)</label><select id="ballastWarmer"><option value="thin" selected>Cienki (do 200g)</option><option value="thick">Gruby (400g+)</option></select></div>
+                        </div>
+                        <div class="form-column">
+                            <div class="input-group">
+                                <label for="ballastTank">Rodzaj Butli (Główna)</label>
+                                <select id="ballastTank" required>
+                                    <option value="alu11">Aluminiowa 11L (S80)</option>
+                                    <option value="steel12">Stalowa 10L / 12L</option>
+                                    <option value="steel15" selected>Stalowa 15L</option>
+                                    <option value="twin7">Twinset Stalowy (2x7L)</option>
+                                    <option value="twin85">Twinset Stalowy (2x8.5L)</option>
+                                    <option value="twin10">Twinset Stalowy (2x10L)</option>
+                                    <option value="twin12">Twinset Stalowy (np. 2x12)</option>
+                                </select>
+                            </div>
+                            <div class="input-group" id="ballast-plate-group" style="display: none;">
+                                <label for="ballastPlate">Rodzaj Płyty (dla Twinsetu)</label>
+                                <select id="ballastPlate">
+                                    <option value="alu">Aluminiowa (~0.85kg)</option>
+                                    <option value="steel" selected>Stalowa (~2kg)</option>
+                                </select>
+                            </div>
+                            <div class="input-group"><label for="ballastWater">Rodaj Wody</label><select id="ballastWater" required><option value="salt">Woda słona</option><option value="fresh" selected>Woda słodka</option></select></div>
+                        </div>
                         <div class="form-full-width"><button type="submit">Oblicz Sugestię Balastu</button></div>
                     </form>
                     <div id="ballastResult" class="result-container" style="margin-top: 20px;"></div>
@@ -131,6 +247,14 @@
                             <input type="checkbox" id="glass-toggle" />
                             <span class="slider round"></span>
                         </label>
+                    </div>
+
+                    <div class="settings-toggle-row">
+                        <label for="global-water-type">Domyślny Rodzaj Wody</label>
+                        <select id="global-water-type" class="settings-select">
+                            <option value="fresh">Woda słodka</option>
+                            <option value="salt">Woda słona</option>
+                        </select>
                     </div>
 
                     <h4>Zmień Tapetę</h4>
@@ -165,6 +289,7 @@
             </div>
         </main>
     </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
