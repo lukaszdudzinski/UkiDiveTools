@@ -258,9 +258,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 rbResultContainer.innerHTML = `<p class="result-label">Minimalne ciśnienie w Twoim zestawie na max zaplanowanej głębokości ${params.depth} m dla metody Rock Bottom:</p><p class="result-value">${rbResult.roundedBars} bar</p>`; 
                 rbResultContainer.style.display = 'block'; 
                 gcReserveInput.value = rbResult.roundedBars; 
+                
+                // ZMIANA: Przewiń do wyników
+                rbResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } catch (error) { 
                 rbResultContainer.innerHTML = `<p class="result-error">${error.message}</p>`; 
                 rbResultContainer.style.display = 'block'; 
+                
+                // ZMIANA: Przewiń do błędu
+                rbResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } 
         });
     }
@@ -292,9 +298,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 }; 
                 const consumptionResult = calculateGasConsumption(consumptionParams); 
                 renderConsumptionResult(gcResultContainer, { ...consumptionResult, tankSize: tankSize }, reserveParams, null); 
+                
+                // ZMIANA: Przewiń do wyników
+                gcResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } catch (error) { 
                 gcResultContainer.innerHTML = `<p class="result-error">${error.message}</p>`; 
                 gcResultContainer.style.display = 'block'; 
+                
+                // ZMIANA: Przewiń do błędu
+                gcResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } 
         });
     }
@@ -345,9 +357,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     roundedBars: rbResult.roundedBars 
                 }; 
                 renderConsumptionResult(proResultContainer, { ...consumptionResult, tankSize: tankSize }, reserveParams, rbInfo); 
+                
+                // ZMIANA: Przewiń do wyników
+                proResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } catch (error) { 
                 proResultContainer.innerHTML = `<p class="result-error">${error.message}</p>`; 
                 proResultContainer.style.display = 'block'; 
+                
+                // ZMIANA: Przewiń do błędu
+                proResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } 
         });
     }
@@ -407,9 +425,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 if (ballast < 0) ballast = 0; 
                 ballastResultContainer.innerHTML = `<p class="result-label">Sugerowany punkt startowy balastu:</p><p class="result-value">${ballast.toFixed(1)} kg</p><p class="result-warning">⚠️ <strong>Pamiętaj:</strong> To only sugestia. Zawsze wykonaj kontrolę pływalności (check-dive) przed nurkowaniem, aby precyjnie dobrać ostateczną ilość obciążenia.</p>`; 
                 ballastResultContainer.style.display = 'block'; 
+                
+                // ZMIANA: Przewiń do wyników
+                ballastResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } catch (error) { 
                 ballastResultContainer.innerHTML = `<p class="result-error">${error.message}</p>`; 
                 ballastResultContainer.style.display = 'block'; 
+                
+                // ZMIANA: Przewiń do błędu
+                ballastResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } 
         });
     }
@@ -445,9 +469,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 resultDiv.innerHTML = `<p class="result-label">Twoje powierzchniowe zużycie gazu (SAC):</p><p class="result-value">${sac.toFixed(1)} l/min</p>`;
                 resultDiv.style.display = 'block';
                 
+                // ZMIANA: Przewiń do wyników
+                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
             } catch (error) {
                 resultDiv.innerHTML = `<p class="result-error">${error.message}</p>`;
                 resultDiv.style.display = 'block';
+                
+                // ZMIANA: Przewiń do błędu
+                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         });
     }
@@ -471,9 +501,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 
                 modResult.innerHTML = `<p class="result-label">Maksymalna Głębokość (MOD) dla EAN${o2_percent}% przy PPO₂ ${ppo2}:</p><p class="result-value">${mod.toFixed(1)} m</p>`;
                 modResult.style.display = 'block';
+                
+                // ZMIANA: Przewiń do wyników
+                modResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } catch (error) {
                 modResult.innerHTML = `<p class="result-error">${error.message}</p>`;
                 modResult.style.display = 'block';
+                
+                // ZMIANA: Przewiń do błędu
+                modResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         });
     }
@@ -497,9 +533,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 
                 eadResult.innerHTML = `<p class="result-label">Równoważna Głębokość Powietrzna (EAD) na ${depth} m z EAN${o2_percent}%:</p><p class="result-value">${ead.toFixed(1)} m</p>`;
                 eadResult.style.display = 'block';
+                
+                // ZMIANA: Przewiń do wyników
+                eadResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } catch (error) {
                 eadResult.innerHTML = `<p class="result-error">${error.message}</p>`;
                 eadResult.style.display = 'block';
+                
+                // ZMIANA: Przewiń do błędu
+                eadResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         });
     }
