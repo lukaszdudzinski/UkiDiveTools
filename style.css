@@ -84,9 +84,10 @@ body {
   100% { box-shadow: 0 0 5px rgba(0, 209, 178, 0.4); }
 }
 @keyframes pulse-glow-light {
-  0% { box-shadow: 0 0 4px rgba(0, 0, 0, 0.1); }
-  50% { box-shadow: 0 0 12px rgba(0, 0, 0, 0.2); }
-  100% { box-shadow: 0 0 4px rgba(0, 0, 0, 0.1); }
+  /* ZMIANA: Używamy tego samego koloru co w dark-mode, aby był widoczny */
+  0% { box-shadow: 0 0 5px rgba(0, 209, 178, 0.4); }
+  50% { box-shadow: 0 0 15px rgba(0, 209, 178, 0.9); }
+  100% { box-shadow: 0 0 5px rgba(0, 209, 178, 0.4); }
 }
 
 .donation-wrapper {
@@ -632,59 +633,79 @@ body:not(.dark-theme) .app-content {
   -webkit-backdrop-filter: blur(30px);
 }
 
+/* ZMIANA: Poprawka czytelności dla trybu jasnego - jasny tekst + cień */
 body:not(.dark-theme) h1,
 body:not(.dark-theme) h3,
 body:not(.dark-theme) .theme-label,
 body:not(.dark-theme) .settings-toggle-row label,
 body:not(.dark-theme) #settings-panel h4 {
-  color: #2c2c2c;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 body:not(.dark-theme) .sidebar-nav li a {
-  color: #4a4a4a;
+  color: #e0e0e0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 body:not(.dark-theme) .sidebar-nav li a:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-  color: #1e1e1e;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
 }
+/* Ten styl (aktywny przycisk) musi zostać bez zmian - ciemny tekst na jasnym tle */
 body:not(.dark-theme) .sidebar-nav li a.active {
   background-color: #00d1b2;
   color: #1e1e1e;
+  text-shadow: none;
 }
 
 body:not(.dark-theme) .donation-wrapper {
-  background: rgba(255, 255, 255, 0.8);
-  animation: pulse-glow-light 3s infinite ease-in-out;
+  background: rgba(255, 255, 255, 0.3); /* Lepszy kontrast dla tekstu */
+  animation: pulse-glow-dark 3s infinite ease-in-out; /* ZMIANA: Użycie tej samej poświaty */
 }
 body:not(.dark-theme) .donation-wrapper a {
-  color: #4a4a4a;
+  color: #e0e0e0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 body:not(.dark-theme) label,
 body:not(.dark-theme) .label-with-tooltip label,
 body:not(.dark-theme) p,
 body:not(.dark-theme) .result-warning {
-  color: #363636;
+  color: #f0f0f0; /* ZMIANA: z #363636 */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
+/* Tekst wewnątrz pól input musi pozostać ciemny! */
 body:not(.dark-theme) .input-group input,
 body:not(.dark-theme) .input-group select,
-body:not(.dark-theme) .settings-select { /* ZMIANA: Dodano .settings-select */
+body:not(.dark-theme) .settings-select {
   background-color: rgba(255, 255, 255, 0.9);
   border: 1px solid #cccccc;
   color: #2c2c2c;
+  text-shadow: none; /* Reset cienia wewnątrz inputów */
 }
 body:not(.dark-theme) .input-group input::placeholder { color: #999; }
 
+/* ZMIANA: Poprawka zakładek w trybie jasnym */
 body:not(.dark-theme) .sub-tab-nav {
-  border-bottom-color: #ddd;
-  background-color: rgba(255,255,255,0.4);
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
-body:not(.dark-theme) .sub-tab-button { color: #555; }
-body:not(.dark-theme) .sub-tab-button:hover { color: #1e1e1e; }
+body:not(.dark-theme) .sub-tab-button {
+  color: #4a4a4a;
+  text-shadow: none;
+}
+body:not(.dark-theme) .sub-tab-button:hover {
+  color: #1e1e1e;
+  background-color: rgba(255, 255, 255, 0.3);
+}
 body:not(.dark-theme) .sub-tab-button.active { 
-  color: #009e86; /* Ciemniejszy turkus */
-  background-color: rgba(255,255,255,0.7);
+  background-color: #00d1b2;
+  color: #1e1e1e;
+  text-shadow: none;
+  font-weight: bold;
 }
+/* === KONIEC ZMIAN ZAKŁADEK === */
+
 
 /* POPRAWKA: Paywall PRO w trybie jasnym */
 body:not(.dark-theme) .pro-overlay {
@@ -692,16 +713,18 @@ body:not(.dark-theme) .pro-overlay {
 }
 body:not(.dark-theme) .pro-overlay h4 {
   color: #009e86;
+  text-shadow: none; /* Poprawka cienia */
 }
 body:not(.dark-theme) .pro-overlay p {
   color: #363636;
+  text-shadow: none; /* Poprawka cienia */
 }
 
 /* POPRAWKA: Wyniki w trybie jasnym */
 
 /* ZMIANA: Dodano styl poświaty dla trybu jasnego */
 body:not(.dark-theme) .result-container {
-  animation-name: pulse-glow-light;
+  animation-name: pulse-glow-dark; /* ZMIANA: Ta sama poświata */
 }
 
 /* ZMIANA: Styl globalnego tooltipa (jasny motyw) */
@@ -710,27 +733,29 @@ body:not(.dark-theme) #global-tooltip.tooltip-content {
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   border: 1px solid rgba(0, 0, 0, 0.1);
-  color: #2c2c2c;
-  animation-name: pulse-glow-light;
+  color: #f0f0f0; /* ZMIANA: Na jasny tekst */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); /* ZMIANA: Dodano cień */
+  animation-name: pulse-glow-dark; /* ZMIANA: Ta sama poświata */
 }
-body:not(.dark-theme) #global-tooltip.tooltip-content h4 { color: #009e86; }
-body:not(.dark-theme) #tooltip-close-btn { color: #2c2c2c; }
-body:not(.dark-theme) #tooltip-close-btn:hover { color: #009e86; }
+body:not(.dark-theme) #global-tooltip.tooltip-content h4 { color: #00d1b2; } /* Turkusowy zostaje, ma cień */
+body:not(.dark-theme) #tooltip-close-btn { color: #f0f0f0; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); } /* ZMIANA: Jasny + cień */
+body:not(.dark-theme) #tooltip-close-btn:hover { color: #00d1b2; }
 
 
-body:not(.dark-theme) #proGasResult .rb-info-section .result-label { color: #4a4a4a; }
+body:not(.dark-theme) #proGasResult .rb-info-section .result-label { color: #f0f0f0; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); } /* ZMIANA */
 body:not(.dark-theme) #gcResult .result-value-main, 
 body:not(.dark-theme) #proGasResult .result-value-main,
 body:not(.dark-theme) #rbResult .result-value,
 body:not(.dark-theme) #result .result-value,
 body:not(.dark-theme) #modResult .result-value,
 body:not(.dark-theme) #eadResult .result-value { 
-  color: #2c2c2c; 
+  color: #ffffff;  /* ZMIANA: Czysta biel */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 /* Usunięto .result-value-bars dla trybu jasnego */
 body:not(.dark-theme) .result-value-sub strong {
-  color: #1e1e1e;
+  color: #ffffff; /* ZMIANA: z #1e1e1e */
 }
 
 body:not(.dark-theme) #rbResult .result-label,
@@ -740,9 +765,11 @@ body:not(.dark-theme) #ballastResult .result-label,
 body:not(.dark-theme) #result .result-label,
 body:not(.dark-theme) #modResult .result-label,
 body:not(.dark-theme) #eadResult .result-label { 
-  color: #363636; 
+  color: #f0f0f0; /* ZMIANA: z #363636 */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 body:not(.dark-theme) #gcResult .result-value-sub, 
 body:not(.dark-theme) #proGasResult .result-value-sub {
-  color: #555;
+  color: #e0e0e0; /* ZMIANA: z #555 */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
