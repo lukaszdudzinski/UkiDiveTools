@@ -620,14 +620,14 @@ body.glass-off:not(.dark-theme) #global-tooltip.tooltip-content {
 
 body:not(.dark-theme) .sidebar-nav {
   /* ZMIANA: Zwiększony efekt "liquid glass" w trybie jasnym */
-  background-color: rgba(255, 255, 255, 0.35); /* ZMIANA: 0.5 -> 0.35 */
+  background-color: rgba(255, 255, 255, 0.15); /* ZMIANA: 0.35 -> 0.15 */
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 body:not(.dark-theme) .app-content {
   /* ZMIANA: Zwiększony efekt "liquid glass" w trybie jasnym */
-  background-color: rgba(255, 255, 255, 0.45); /* ZMIANA: 0.6 -> 0.45 */
+  background-color: rgba(255, 255, 255, 0.25); /* ZMIANA: 0.45 -> 0.25 */
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
 }
@@ -706,7 +706,7 @@ body:not(.dark-theme) .result-container {
 
 /* ZMIANA: Styl globalnego tooltipa (jasny motyw) */
 body:not(.dark-theme) #global-tooltip.tooltip-content {
-  background-color: rgba(255, 255, 255, 0.55); /* ZMIANA: 0.7 -> 0.55 */
+  background-color: rgba(255, 255, 255, 0.2); /* ZMIANA: 0.55 -> 0.2 */
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   border: 1px solid rgba(0, 0, 0, 0.1);
