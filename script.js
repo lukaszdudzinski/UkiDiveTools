@@ -1,328 +1,508 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', (event) => {
     
-    // --- Logika Kalkulatora SAC ---
-    const sacForm = document.getElementById("sacForm");
-    const sacResultDiv = document.getElementById("result");
-    if (sacForm) {
-        sacForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            const p1 = parseFloat(document.getElementById("p1").value);
-            const p2 = parseFloat(document.getElementById("p2").value);
-            const vb = parseFloat(document.getElementById("vb").value);
-            const depth = parseFloat(document.getElementById("depth").value);
-            const time = parseFloat(document.getElementById("time").value);
-            const waterType = document.getElementById("waterType").value;
-            if (p1 <= p2) {
-                alert("Ciśnienie początkowe musi być większe niż końcowe.");
-                return;
-            }
-            if (depth <= 0 || time <= 0 || vb <= 0) {
-                alert("Wszystkie wartości muszą być dodatnie.");
-                return;
-            }
-            const pressurePerMeter = (waterType === 'salt') ? 10.0 : 10.3;
-            const pAbs = (depth / pressurePerMeter) + 1;
-            const pressureUsed = p1 - p2;
-            const gasVolumeAtSurface = pressureUsed * vb;
-            const sac = gasVolumeAtSurface / (time * pAbs);
-            const sacRounded = sac.toFixed(1);
-            sacResultDiv.innerHTML = `
-                <p>Twoje powierzchniowe zużycie gazu (SAC):</p>
-                <span>${sacRounded} l/min</span>
-            `;
-            sacResultDiv.style.display = "block";
-        });
-    }
-
-    // --- Logika Kalkulatora MOD ---
-    const modForm = document.getElementById("modForm");
-    const modResultDiv = document.getElementById("modResult");
-    if (modForm) {
-        modForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            const o2 = parseFloat(document.getElementById("nitroxO2").value) / 100; 
-            const po2 = parseFloat(document.getElementById("modPO2").value);
-            const pAbs = po2 / o2;
-            const mod = (pAbs - 1) * 10;
-            const modRounded = mod.toFixed(1);
-            modResultDiv.innerHTML = `
-                <p>Maksymalna Głębokość Operacyjna (MOD):</p>
-                <span>${modRounded} m</span>
-            `;
-            modResultDiv.style.display = "block";
-        });
-    }
-
-    // --- Logika Kalkulatora EAD ---
-    const eadForm = document.getElementById("eadForm");
-    const eadResultDiv = document.getElementById("eadResult");
-    if (eadForm) {
-        eadForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            const o2 = parseFloat(document.getElementById("nitroxO2").value) / 100; 
-            const depth = parseFloat(document.getElementById("eadDepth").value);
-            const fN2 = 1 - o2;
-            const ead = ((fN2 / 0.79) * (depth + 10)) - 10;
-            const eadRounded = ead < 0 ? 0 : ead.toFixed(1);
-            eadResultDiv.innerHTML = `
-                <p>Równoważna Głębokość Powietrzna (EAD):</p>
-                <span>${eadRounded} m</span>
-            `;
-            if (eadResultDiv) eadResultDiv.style.display = "block";
-        });
-    }
-
-    // --- Logika: Dynamiczne ostrzeżenie PPO2 ---
-    const modPO2Input = document.getElementById("modPO2");
-    const ppo2Warning = document.getElementById("ppo2-warning");
-    if (modPO2Input && ppo2Warning) {
-        modPO2Input.addEventListener("input", () => {
-            const po2Value = parseFloat(modPO2Input.value);
-            
-            if (po2Value > 1.4 && po2Value <= 1.6) {
-                ppo2Warning.textContent = "Ostrożnie! Wartość > 1.4 skraca bezpieczny czas nurkowania (ryzyko CNS - wystąpienia toksyczności tlenowej).";
-            } else if (po2Value > 1.6) {
-                ppo2Warning.textContent = "BŁĄD: Wartość PPO₂ nie może przekraczać 1.6!";
-                ppo2Warning.style.color = "#c0392b";
-            } else {
-                ppo2Warning.textContent = "";
-                ppo2Warning.style.color = "#e67e22";
-            }
-        });
-    }
-
-    // --- Logika Kalkulatora Rock Bottom ---
-    const rbForm = document.getElementById("rbForm");
-    const rbResultDiv = document.getElementById("rbResult");
-
-    if (rbForm && rbResultDiv) {
-        rbForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-
-            // Pobierz wartości z formularza
-            const sac = parseFloat(document.getElementById("rbSAC").value) || 0;
-            const depth = parseFloat(document.getElementById("rbDepth").value) || 0;
-            const volume = parseFloat(document.getElementById("rbVolume").value) || 0;
-            const stopDepth = parseFloat(document.getElementById("rbStopDepth").value) || 0;
-            const ascentRate = parseFloat(document.getElementById("rbAscentRate").value) || 10;
-            const stressFactor = parseFloat(document.getElementById("rbStressFactor").value) || 2;
-            const divers = parseInt(document.getElementById("rbDivers").value) || 2;
-            const emergencyTime = parseFloat(document.getElementById("rbEmergencyTime").value) || 2;
-            const safetyMargin = parseFloat(document.getElementById("rbSafetyMargin").value) || 10;
-
-            // Walidacja podstawowa
-            if (sac <= 0 || depth <= 0 || volume <= 0 || stopDepth < 0 || ascentRate <= 0 || stressFactor < 1 || divers < 1 || emergencyTime < 0 || safetyMargin < 0) {
-                alert("Wprowadź poprawne, dodatnie wartości we wszystkich polach.");
-                return;
-            }
-             if (stopDepth >= depth) {
-                alert("Głębokość przystanku musi być mniejsza niż maksymalna głębokość.");
-                return;
-            }
-
-            // Obliczenia krok po kroku
-            const pBottom = (depth / 10) + 1;
-            const consumptionRateStressed = sac * pBottom * stressFactor;
-            const gasEmergency = consumptionRateStressed * divers * emergencyTime;
-            const ascentTime = (depth - stopDepth) / ascentRate;
-            const avgAscentDepth = (depth + stopDepth) / 2;
-            const pAvgAscent = (avgAscentDepth / 10) + 1;
-            const consumptionRateAscent = sac * pAvgAscent * stressFactor;
-            const gasAscent = consumptionRateAscent * divers * ascentTime;
-            const rbLiters = gasEmergency + gasAscent;
-            const rbPressure = rbLiters / volume;
-            const rbFinalPressure = Math.ceil(rbPressure + safetyMargin); 
-
-            // Wyświetl wynik
-            rbResultDiv.innerHTML = `
-                <p>Minimalne Ciśnienie Rock Bottom:</p>
-                <span>${rbFinalPressure} bar</span>
-            `;
-            rbResultDiv.style.display = "block";
-        });
-    }
-
-    // --- Logika Kalkulatora Całkowitego Zużycia Gazu ---
-    const gasConsumptionForm = document.getElementById("gasConsumptionForm");
-    const gcResultDiv = document.getElementById("gcResult");
-
-    if (gasConsumptionForm && gcResultDiv) {
-        gasConsumptionForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-
-            // 1. Pobierz zmienne z formularza
-            const sac = parseFloat(document.getElementById("gcSAC").value);
-            const depth = parseFloat(document.getElementById("gcDepth").value);
-            const bottomTime = parseFloat(document.getElementById("gcBottomTime").value);
-            const descentRate = parseFloat(document.getElementById("gcDescentRate").value);
-            const ascentRate = parseFloat(document.getElementById("gcAscentRate").value);
-            const stopDepth = parseFloat(document.getElementById("gcStopDepth").value);
-            const stopTime = parseFloat(document.getElementById("gcStopTime").value);
-            const reservePressure = parseFloat(document.getElementById("gcReserve").value);
-            const tankSize = parseFloat(document.getElementById("gcTankSize").value);
-            const divers = parseInt(document.getElementById("gcDivers").value);
-            const pStart = parseFloat(document.getElementById("gcStartPressure").value); // NOWE POLE
-
-            // Walidacja
-            if (sac <= 0 || depth <= 0 || bottomTime <= 0 || descentRate <= 0 || ascentRate <= 0 || stopDepth < 0 || stopTime < 0 || reservePressure < 0 || tankSize <= 0 || divers <= 0 || pStart <= 0) {
-                alert("Wprowadź poprawne, dodatnie wartości we wszystkich polach.");
-                return;
-            }
-             if (stopDepth >= depth) {
-                alert("Głębokość przystanku musi być mniejsza niż maksymalna głębokość.");
-                return;
-            }
-             if (pStart <= reservePressure) {
-                alert("Ciśnienie początkowe musi być większe niż ciśnienie rezerwy.");
-                return;
-            }
-
-            // Funkcja do obliczania ciśnienia absolutnego (zakładamy wodę słoną 10m=1bar)
-            const calculatePressure = (d) => (d / 10) + 1;
-
-            let totalGasConsumption = 0; // w litrach
-
-            // Krok 1: Faza Zanurzania (Z)
-            const descentTime = depth / descentRate;
-            const avgPressureDescent = (calculatePressure(0) + calculatePressure(depth)) / 2;
-            const gasDescent = sac * avgPressureDescent * descentTime;
-            totalGasConsumption += gasDescent;
-
-            // Krok 2: Faza denna (D)
-            const pressureBottom = calculatePressure(depth);
-            const gasBottom = sac * pressureBottom * bottomTime;
-            totalGasConsumption += gasBottom;
-
-            // Krok 3: Faza Wynurzania do Przystanku (W1)
-            const ascentToStopTime = (depth - stopDepth) / ascentRate;
-            const avgPressureAscentToStop = (calculatePressure(depth) + calculatePressure(stopDepth)) / 2;
-            const gasAscentToStop = sac * avgPressureAscentToStop * ascentToStopTime;
-            totalGasConsumption += gasAscentToStop;
-
-            // Krok 4: Przystanek Bezpieczeństwa (SS)
-            const pressureStop = calculatePressure(stopDepth);
-            const gasStop = sac * pressureStop * stopTime;
-            totalGasConsumption += gasStop;
-
-            // Krok 5: Faza Wynurzania do Powierzchni (W2)
-            const ascentToSurfaceTime = stopDepth / ascentRate;
-            const avgPressureAscentToSurface = (calculatePressure(stopDepth) + calculatePressure(0)) / 2;
-            const gasAscentToSurface = sac * avgPressureAscentToSurface * ascentToSurfaceTime;
-            totalGasConsumption += gasAscentToSurface;
-
-            // Uwzględnienie liczby nurków
-            const finalTotalGasConsumptionLiters = totalGasConsumption * divers;
-
-            // --- NOWA LOGIKA WYNIKU ---
-            // Przelicz zużycie na bary
-            const gasCalculatedForUse = finalTotalGasConsumptionLiters / tankSize;
-            
-            // Oblicz dostępny gaz do zużycia (ponad rezerwę)
-            const gasAvailableForUse = pStart - reservePressure;
-            
-            // Porównaj
-            const isSufficient = gasAvailableForUse >= gasCalculatedForUse;
-            const statusColor = isSufficient ? 'style="color: #2ecc71;"' : 'style="color: #e74c3c;"'; // Zielony lub Czerwony
-            const surplusOrDeficitLiters = (gasAvailableForUse - gasCalculatedForUse) * tankSize;
-
-            gcResultDiv.innerHTML = `
-                <p>Obliczone zużycie gazu:</p>
-                <span>${finalTotalGasConsumptionLiters.toFixed(0)} litrów (${gasCalculatedForUse.toFixed(1)} bar)</span>
-                <p>Dostępny gaz do zużycia (Start - Rezerwa):</p>
-                <span>${gasAvailableForUse.toFixed(1)} bar</span>
-                <p ${statusColor}><strong>${isSufficient ? 'WYSTARCZY' : 'NIE WYSTARCZY'}</strong></p>
-                <p style="font-size: 0.9em; margin-top: 10px;">
-                    ${isSufficient ? `Zapas gazu: +${surplusOrDeficitLiters.toFixed(0)} litrów` : `Brak gazu: ${surplusOrDeficitLiters.toFixed(0)} litrów`}
-                </p>
-            `;
-            gcResultDiv.style.display = "block";
-        });
-    }
-
-
-    // --- Logika Przełączania Zakładek (Głównych) ---
-    const tabButtons = document.querySelectorAll(".tab-button");
-    const tabContents = document.querySelectorAll(".tab-content");
-    
-    if (tabButtons.length > 0 && tabContents.length > 0) { 
-        tabButtons.forEach(button => {
-            button.addEventListener("click", () => {
-                tabButtons.forEach(btn => btn.classList.remove("active"));
-                button.classList.add("active");
-                const targetTabId = button.getAttribute("data-tab");
-                tabContents.forEach(content => {
-                    content.classList.remove("active-tab");
-                });
-                const targetElement = document.getElementById(targetTabId);
-                if (targetElement) { 
-                    targetElement.classList.add("active-tab");
-                } else {
-                    console.error("Nie znaleziono kontenera dla zakładki o ID: " + targetTabId);
-                }
-            });
-        });
-    }
-
-    // --- Logika Przełączanie Pod-zakładek (dla Nitrox i Planowania Gazu) ---
-    const subTabButtons = document.querySelectorAll(".sub-tab-button");
-    const subTabContents = document.querySelectorAll(".sub-tab-content");
-    if (subTabButtons.length > 0) {
-        subTabButtons.forEach(button => {
-            button.addEventListener("click", () => {
-                const parentSubNav = button.closest('.sub-tab-nav');
-                if (parentSubNav) {
-                    parentSubNav.querySelectorAll('.sub-tab-button').forEach(btn => btn.classList.remove("active"));
-                    button.classList.add("active");
-
-                    const targetSubTabId = button.getAttribute("data-subtab");
-                    // Poprawka: szukaj w najbliższym .tab-content, aby znaleźć wrapper
-                    const parentContentWrapper = button.closest('.tab-content').querySelector('.sub-tab-content-wrapper');
-                    
-                    if (parentContentWrapper) {
-                        parentContentWrapper.querySelectorAll('.sub-tab-content').forEach(content => {
-                            content.classList.remove("active-sub-tab");
-                        });
-                        const targetElement = parentContentWrapper.querySelector(`#${targetSubTabId}`);
-                        if(targetElement) targetElement.classList.add("active-sub-tab");
-                    }
-                }
-            });
-        });
-    }
-
-    // --- Logika Dark Mode ---
-    const themeToggle = document.getElementById("theme-toggle");
     const body = document.body;
-    if (themeToggle && body) {
-        function setTheme(isDark) {
-            if (isDark) {
-                body.classList.add("dark-mode");
-                localStorage.setItem("theme", "dark");
-                themeToggle.checked = true;
-            } else {
-                body.classList.remove("dark-mode");
-                localStorage.setItem("theme", "light");
-                themeToggle.checked = false;
+    
+    // --- 1. LOGIKA NAWIGACJI GŁÓWNEJ (Sidebar) ---
+    const navLinks = document.querySelectorAll('.sidebar-nav a');
+    const tabContents = document.querySelectorAll('.app-content > .tab-content-wrapper > .tab-content'); // Precyzyjny selektor
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            navLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+            const tabId = link.getAttribute('data-tab');
+            tabContents.forEach(content => {
+                content.classList.remove('active-tab');
+                content.style.display = 'none';
+            });
+            const activeContent = document.getElementById(tabId);
+            if (activeContent) {
+                activeContent.classList.add('active-tab');
+                activeContent.style.display = 'block';
             }
-        }
-        const savedTheme = localStorage.getItem("theme");
-        const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === "dark") {
-            setTheme(true);
-        } else if (savedTheme === "light") {
-            setTheme(false);
-        } else if (userPrefersDark) {
-            setTheme(true);
-        } else {
-            setTheme(false);
-        }
-        themeToggle.addEventListener("change", () => {
-            setTheme(themeToggle.checked);
         });
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-            if (!localStorage.getItem("theme")) { 
-                setTheme(e.matches);
+    });
+
+    // --- 2. LOGIKA POD-ZAKŁADEK (NAPRAWIA PRO I NITROX) ---
+    const subTabButtons = document.querySelectorAll('.sub-tab-button');
+    subTabButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const subTabId = this.getAttribute('data-subtab');
+            const parentWrapper = this.closest('.tab-content'); 
+            
+            if (!subTabId) return;
+            
+            const subTabToShow = document.getElementById(subTabId);
+            if (!subTabToShow) return;
+
+            // Ukryj wszystkie pod-zakładki w tej sekcji
+            parentWrapper.querySelectorAll('.sub-tab-content').forEach(content => {
+                content.classList.remove('active-sub-tab');
+            });
+            
+            // Usuń 'active' ze wszystkich przycisków w tej sekcji
+            parentWrapper.querySelectorAll('.sub-tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Pokaż wybraną pod-zakładkę
+            subTabToShow.classList.add('active-sub-tab');
+            this.classList.add('active');
+        });
+    });
+
+
+    // --- 3. LOGIKA USTAWIEŃ (Motyw, Tapeta, Szkło) ---
+    const themeToggle = document.getElementById('theme-toggle');
+    const glassToggle = document.getElementById('glass-toggle'); 
+    const wallpaperThumbs = document.querySelectorAll('.wallpaper-thumb');
+    const defaultWallpaper = "url('background_uki.jpg')"; 
+    
+    // Motyw
+    function setTheme(isDark) {
+        if (isDark) {
+            body.classList.add('dark-theme');
+            if (themeToggle) themeToggle.checked = true;
+        } else {
+            body.classList.remove('dark-theme');
+            if (themeToggle) themeToggle.checked = false;
+        }
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
+    if (themeToggle) {
+        themeToggle.addEventListener('change', () => setTheme(themeToggle.checked));
+    }
+
+    // Tapeta
+    function setWallpaper(wallpaperUrl) {
+        body.style.backgroundImage = wallpaperUrl;
+        localStorage.setItem('uki-wallpaper', wallpaperUrl);
+        wallpaperThumbs.forEach(thumb => {
+            thumb.classList.toggle('active', thumb.getAttribute('data-wallpaper') === wallpaperUrl);
+        });
+    }
+    wallpaperThumbs.forEach(thumb => {
+        thumb.addEventListener('click', () => setWallpaper(thumb.getAttribute('data-wallpaper')));
+    });
+
+    // "Liquid Glass"
+    function setLiquidGlass(isEnabled) {
+        if (isEnabled) {
+            body.classList.remove('glass-off');
+            if (glassToggle) glassToggle.checked = true;
+        } else {
+            body.classList.add('glass-off');
+            if (glassToggle) glassToggle.checked = false;
+        }
+        localStorage.setItem('uki-liquid-glass', isEnabled ? 'on' : 'off');
+    }
+    if (glassToggle) {
+        glassToggle.addEventListener('change', () => setLiquidGlass(glassToggle.checked));
+    }
+
+    // --- Inicjalizacja przy starcie ---
+    const savedTheme = localStorage.getItem('theme');
+    setTheme(savedTheme === 'dark' || savedTheme === null); 
+    
+    const savedWallpaper = localStorage.getItem('uki-wallpaper');
+    setWallpaper(savedWallpaper || defaultWallpaper);
+    
+    const savedGlass = localStorage.getItem('uki-liquid-glass');
+    setLiquidGlass(savedGlass === 'on' || savedGlass === null);
+    
+    
+    // --- 4. LOGIKA PRZYCISKU "KAWY" (NAPRAWIA BŁĄD) ---
+    const donationLink = document.getElementById('donation-link');
+    if (donationLink) {
+        donationLink.addEventListener('click', function(e) {
+            e.preventDefault(); 
+            // Tutaj w przyszłości można otworzyć link do płatności
+            console.log('Donation link clicked');
+        });
+    }
+    
+    
+    // --- 5. PEŁNA LOGIKA KALKULATORÓW ---
+    
+    // --- FUNKCJE WSPÓŁDZIELONE ---
+    function calculateRockBottom(params) {
+        const { sac, depth, stopDepth, ascentRate, stressFactor, divers, emergencyTime, volume, safetyMargin } = params;
+        if ([sac, depth, stopDepth, ascentRate, stressFactor, divers, emergencyTime, volume, safetyMargin].some(v => v === undefined || isNaN(v))) {
+            throw new Error("Brakujące lub nieprawidłowe dane do obliczenia Rock Bottom.");
+        }
+        if (ascentRate <= 0 || volume <= 0) {
+             throw new Error("Prędkość wynurzania i pojemność butli muszą być większe od zera.");
+        }
+        const P_depth = (depth / 10) + 1;
+        const P_stop = (stopDepth / 10) + 1;
+        const P_avg_ascent = (P_depth + P_stop) / 2;
+        const T_ascent = (depth - stopDepth) / ascentRate;
+        const SAC_stressed = sac * stressFactor;
+        const Gas_reaction = SAC_stressed * P_depth * emergencyTime * divers;
+        const Gas_ascent = SAC_stressed * P_avg_ascent * T_ascent * divers;
+        const TotalGasLiters = Gas_reaction + Gas_ascent;
+        const RB_pressure = TotalGasLiters / volume;
+        const FinalRB = RB_pressure + safetyMargin;
+        return {
+            liters: (FinalRB * volume),
+            bars: FinalRB,
+            roundedBars: Math.ceil(FinalRB)
+        };
+    }
+    
+    function calculateGasConsumption(params) {
+        const { sac, depth, bottomTime, descentRate, ascentRate, stopDepth, stopTime, tankSize, startPressure, divers } = params;
+        if ([sac, depth, bottomTime, descentRate, ascentRate, stopDepth, stopTime, tankSize, startPressure, divers].some(v => v === undefined || isNaN(v))) {
+            throw new Error("Brakujące lub nieprawidłowe dane do obliczenia zużycia gazu.");
+        }
+        const P_surface = 1.0;
+        const P_bottom = (depth / 10) + 1;
+        const P_stop = (stopDepth / 10) + 1;
+        const P_avg_descent = (P_surface + P_bottom) / 2;
+        const P_avg_ascent_to_stop = (P_bottom + P_stop) / 2;
+        const P_avg_ascent_to_surface = (P_stop + P_surface) / 2;
+        const T_descent = depth / descentRate;
+        const T_bottom = bottomTime;
+        const T_ascent_to_stop = (depth - stopDepth) / ascentRate;
+        const T_stop = stopTime;
+        const T_ascent_to_surface = stopDepth / ascentRate;
+        const L_descent = sac * P_avg_descent * T_descent * divers;
+        const L_bottom = sac * P_bottom * T_bottom * divers;
+        const L_ascent_to_stop = sac * P_avg_ascent_to_stop * T_ascent_to_stop * divers;
+        const L_stop = sac * P_stop * T_stop * divers;
+        const L_ascent_to_surface = sac * P_avg_ascent_to_surface * T_ascent_to_surface * divers;
+        const totalDemandLiters = L_descent + L_bottom + L_ascent_to_stop + L_stop + L_ascent_to_surface;
+        const totalDemandBars = totalDemandLiters / tankSize;
+        const totalSupplyLiters = tankSize * startPressure;
+        const totalSupplyBars = startPressure;
+        return {
+            totalDemandLiters,
+            totalDemandBars,
+            totalSupplyLiters,
+            totalSupplyBars
+        };
+    }
+    
+    // === PRZYWRÓCONA FUNKCJA RENDEROWANIA ===
+    function renderConsumptionResult(container, consumptionData, reserveData, rockBottomInfo = null) {
+        const { totalDemandLiters, totalDemandBars, totalSupplyLiters, totalSupplyBars } = consumptionData;
+        const { requiredReserveLiters, requiredReserveBars } = reserveData;
+        const remainingLiters = totalSupplyLiters - totalDemandLiters;
+        const remainingBars = remainingLiters / (consumptionData.tankSize || totalSupplyLiters / totalSupplyBars);
+        const isSafe = (remainingLiters >= requiredReserveLiters);
+        let rbHtml = '';
+        if (rockBottomInfo) {
+            rbHtml = `
+                <div class="result-section rb-info-section">
+                    <p class="result-label">Minimalna Rezerwa (Rock Bottom) na głębokości ${rockBottomInfo.depth} m:</p>
+                    <p class="result-value-main">${rockBottomInfo.roundedBars} bar</p>
+                </div>
+            `;
+        }
+        let verdictHTML = '';
+        if (isSafe) {
+            verdictHTML = `<div class="result-verdict result-verdict-ok">WYSTARCZY</div>`;
+        } else {
+            const deficitLiters = requiredReserveLiters - remainingLiters;
+            verdictHTML = `
+                <div class="result-verdict result-verdict-bad">NIE WYSTARCZY</div>
+                <p class="result-value-sub">Do bezpiecznego nurkowania (Plan + Rezerwa) brakuje Ci: <strong>${deficitLiters.toFixed(0)} litrów</strong></p>
+            `;
+        }
+        
+        // Przywrócona struktura HTML dla wyników
+        container.innerHTML = `
+            ${rbHtml} 
+            <div class="result-section">
+                <p class="result-label">Twoje zapotrzebowanie na gaz (Plan):</p>
+                <p class="result-value-main"><span class="liters">${totalDemandLiters.toFixed(0)} litrów</span> (${totalDemandBars.toFixed(1)} bar)</p>
+            </div>
+            <div class="result-section">
+                <p class="result-label">Ilość gazu jaka faktycznie masz (Start):</p>
+                <p class="result-value-main">${totalSupplyLiters.toFixed(0)} litrów (${totalSupplyBars.toFixed(1)} bar)</p>
+            </div>
+            <div class="result-section">
+                <p class="result-label">Gaz pozostały po nurkowaniu (Plan):</p>
+                <p class="result-value-main">${remainingLiters.toFixed(0)} litrów (${remainingBars.toFixed(1)} bar)</p>
+                <p class="result-value-sub">(Wymagana rezerwa to: ${requiredReserveLiters.toFixed(0)} l / ${requiredReserveBars.toFixed(1)} bar)</p>
+            </div>
+            ${verdictHTML}
+        `;
+        container.style.display = 'block';
+    }
+    // === KONIEC PRZYWRÓCONEJ FUNKCJI ===
+
+
+    // --- Listener 1: Kalkulator Rock Bottom ---
+    const rbForm = document.getElementById('rbForm');
+    const rbResultContainer = document.getElementById('rbResult');
+    const gcReserveInput = document.getElementById('gcReserve'); 
+    if (rbForm && rbResultContainer && gcReserveInput) {
+        rbForm.addEventListener('submit', function(e) { 
+            e.preventDefault(); 
+            try { 
+                const params = { 
+                    sac: parseFloat(document.getElementById('rbSAC').value), 
+                    depth: parseFloat(document.getElementById('rbDepth').value), 
+                    stopDepth: parseFloat(document.getElementById('rbStopDepth').value), 
+                    ascentRate: parseFloat(document.getElementById('rbAscentRate').value), 
+                    stressFactor: parseFloat(document.getElementById('rbStressFactor').value), 
+                    divers: parseInt(document.getElementById('rbDivers').value), 
+                    emergencyTime: parseFloat(document.getElementById('rbEmergencyTime').value), 
+                    volume: parseFloat(document.getElementById('rbVolume').value), 
+                    safetyMargin: parseFloat(document.getElementById('rbSafetyMargin').value) 
+                }; 
+                const rbResult = calculateRockBottom(params); 
+                rbResultContainer.innerHTML = `<p class="result-label">Minimalne ciśnienie w Twoim zestawie na max zaplanowanej głębokości ${params.depth} m dla metody Rock Bottom:</p><p class="result-value">${rbResult.roundedBars} bar</p>`; 
+                rbResultContainer.style.display = 'block'; 
+                gcReserveInput.value = rbResult.roundedBars; 
+            } catch (error) { 
+                rbResultContainer.innerHTML = `<p class="result-error">${error.message}</p>`; 
+                rbResultContainer.style.display = 'block'; 
+            } 
+        });
+    }
+
+    // --- Listener 2: Kalkulator Zużycia Gazu ---
+    const gcForm = document.getElementById('gasConsumptionForm');
+    const gcResultContainer = document.getElementById('gcResult');
+    if (gcForm && gcResultContainer) {
+        gcForm.addEventListener('submit', function(e) { 
+            e.preventDefault(); 
+            try { 
+                const tankSize = parseFloat(document.getElementById('gcTankSize').value); 
+                const reservePressure = parseFloat(document.getElementById('gcReserve').value); 
+                const consumptionParams = { 
+                    sac: parseFloat(document.getElementById('gcSAC').value), 
+                    depth: parseFloat(document.getElementById('gcDepth').value), 
+                    bottomTime: parseFloat(document.getElementById('gcBottomTime').value), 
+                    descentRate: parseFloat(document.getElementById('gcDescentRate').value), 
+                    ascentRate: parseFloat(document.getElementById('gcAscentRate').value), 
+                    stopDepth: parseFloat(document.getElementById('gcStopDepth').value), 
+                    stopTime: parseFloat(document.getElementById('gcStopTime').value), 
+                    tankSize: tankSize, 
+                    startPressure: parseFloat(document.getElementById('gcStartPressure').value), 
+                    divers: 1 
+                }; 
+                const reserveParams = { 
+                    requiredReserveLiters: tankSize * reservePressure, 
+                    requiredReserveBars: reservePressure 
+                }; 
+                const consumptionResult = calculateGasConsumption(consumptionParams); 
+                renderConsumptionResult(gcResultContainer, { ...consumptionResult, tankSize: tankSize }, reserveParams, null); 
+            } catch (error) { 
+                gcResultContainer.innerHTML = `<p class="result-error">${error.message}</p>`; 
+                gcResultContainer.style.display = 'block'; 
+            } 
+        });
+    }
+    
+    // --- Listener 3: Kalkulator PRO ---
+    const proForm = document.getElementById('proGasForm');
+    const proResultContainer = document.getElementById('proGasResult');
+    if (proForm && proResultContainer) {
+        proForm.addEventListener('submit', function(e) { 
+            e.preventDefault(); 
+            try { 
+                const sac = parseFloat(document.getElementById('gcSAC_pro').value); 
+                const depth = parseFloat(document.getElementById('gcDepth_pro').value); 
+                const tankSize = parseFloat(document.getElementById('gcTankSize_pro').value); 
+                const ascentRate = parseFloat(document.getElementById('gcAscentRate_pro').value); 
+                const stopDepth = parseFloat(document.getElementById('gcStopDepth_pro').value); 
+                const rbParams = { 
+                    sac: sac, 
+                    depth: depth, 
+                    stopDepth: stopDepth, 
+                    ascentRate: ascentRate, 
+                    stressFactor: parseFloat(document.getElementById('rbStressFactor_pro').value), 
+                    divers: parseInt(document.getElementById('rbDivers_pro').value), 
+                    emergencyTime: parseFloat(document.getElementById('rbEmergencyTime_pro').value), 
+                    volume: tankSize, 
+                    safetyMargin: parseFloat(document.getElementById('rbSafetyMargin_pro').value) 
+                }; 
+                const rbResult = calculateRockBottom(rbParams); 
+                const reserveParams = { 
+                    requiredReserveLiters: rbResult.liters, 
+                    requiredReserveBars: rbResult.bars 
+                }; 
+                const consumptionParams = { 
+                    sac: sac, 
+                    depth: depth, 
+                    bottomTime: parseFloat(document.getElementById('gcBottomTime_pro').value), 
+                    descentRate: parseFloat(document.getElementById('gcDescentRate_pro').value), 
+                    ascentRate: ascentRate, 
+                    stopDepth: stopDepth, 
+                    stopTime: parseFloat(document.getElementById('gcStopTime_pro').value), 
+                    tankSize: tankSize, 
+                    startPressure: parseFloat(document.getElementById('gcStartPressure_pro').value), 
+                    divers: 1 
+                }; 
+                const consumptionResult = calculateGasConsumption(consumptionParams); 
+                const rbInfo = { 
+                    depth: rbParams.depth, 
+                    roundedBars: rbResult.roundedBars 
+                }; 
+                renderConsumptionResult(proResultContainer, { ...consumptionResult, tankSize: tankSize }, reserveParams, rbInfo); 
+            } catch (error) { 
+                proResultContainer.innerHTML = `<p class="result-error">${error.message}</p>`; 
+                proResultContainer.style.display = 'block'; 
+            } 
+        });
+    }
+    
+    // --- Listener 4: Mock Paywall ---
+    const unlockButton = document.getElementById('unlockProButton');
+    const proTabContent = document.getElementById('pro-gas-calculator');
+    if(unlockButton && proTabContent) {
+        unlockButton.addEventListener('click', function() {
+            proTabContent.classList.add('unlocked');
+        });
+    }
+    
+    // --- Listener 5: Kalkulator Balastu ---
+    const ballastForm = document.getElementById('ballastForm');
+    const ballastResultContainer = document.getElementById('ballastResult');
+    const ballastSuitSelect = document.getElementById('ballastSuit');
+    const ballastWarmerGroup = document.getElementById('ballast-warmer-group');
+    if (ballastSuitSelect && ballastWarmerGroup) {
+        ballastSuitSelect.addEventListener('change', function() {
+            if (this.value === 'dryTri' || this.value === 'dryNeo') {
+                ballastWarmerGroup.style.display = 'block';
+            } else {
+                ballastWarmerGroup.style.display = 'none';
             }
         });
     }
+    if (ballastForm && ballastResultContainer) {
+        ballastForm.addEventListener('submit', function(e) { 
+            e.preventDefault(); 
+            try { 
+                const weight = parseFloat(document.getElementById('ballastWeight').value); 
+                const suit = document.getElementById('ballastSuit').value; 
+                const warmer = document.getElementById('ballastWarmer').value; 
+                const tank = document.getElementById('ballastTank').value; 
+                const water = document.getElementById('ballastWater').value; 
+                if (isNaN(weight) || weight <= 0) { 
+                    throw new Error("Proszę podać poprawną wagę."); 
+                } 
+                let ballast = weight * 0.10; 
+                switch (suit) { 
+                    case 'foam3': ballast -= 3; break; 
+                    case 'foam5': ballast -= 2; break; 
+                    case 'foam7': break; 
+                    case 'dryTri': ballast += (warmer === 'thick' ? 6 : 4); break; 
+                    case 'dryNeo': ballast += (warmer === 'thick' ? 8 : 7); break; 
+                } 
+                switch (tank) { 
+                    case 'alu11': break; 
+                    case 'steel12': ballast -= 3; break; 
+                    case 'steel15': ballast -= 4; break; 
+                    case 'twin12': ballast -= 7; break; 
+                } 
+                if (water === 'fresh') { 
+                    ballast -= 2; 
+                } 
+                if (ballast < 0) ballast = 0; 
+                ballastResultContainer.innerHTML = `<p class="result-label">Sugerowany punkt startowy balastu:</p><p class="result-value">${ballast.toFixed(1)} kg</p><p class="result-warning">⚠️ <strong>Pamiętaj:</strong> To only sugestia. Zawsze wykonaj kontrolę pływalności (check-dive) przed nurkowaniem, aby precyjnie dobrać ostateczną ilość obciążenia.</p>`; 
+                ballastResultContainer.style.display = 'block'; 
+            } catch (error) { 
+                ballastResultContainer.innerHTML = `<p class="result-error">${error.message}</p>`; 
+                ballastResultContainer.style.display = 'block'; 
+            } 
+        });
+    }
+
+    // --- Listener 6: Kalkulator SAC ---
+    const sacForm = document.getElementById('sacForm');
+    const resultDiv = document.getElementById('result');
+    if (sacForm && resultDiv) {
+        sacForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            try {
+                const p1 = parseFloat(document.getElementById('p1').value);
+                const p2 = parseFloat(document.getElementById('p2').value);
+                const vb = parseFloat(document.getElementById('vb').value);
+                const depth = parseFloat(document.getElementById('depth').value);
+                const time = parseFloat(document.getElementById('time').value);
+
+                if ([p1, p2, vb, depth, time].some(isNaN)) {
+                    throw new Error("Wypełnij wszystkie pola poprawnymi liczbami.");
+                }
+                if (time <= 0 || vb <= 0 || depth < 0) {
+                    throw new Error("Czas, pojemność butli i głębokość muszą być dodatnie.");
+                }
+                
+                const waterType = document.getElementById('waterType').value;
+                const pressureConversion = (waterType === 'fresh') ? (9.8 / 10) : 1.0; 
+                
+                const pressureUsed = p1 - p2;
+                const litersUsed = pressureUsed * vb;
+                const avgPressure = (depth / 10 * pressureConversion) + 1; 
+                const sac = (litersUsed / avgPressure) / time;
+                
+                resultDiv.innerHTML = `<p class="result-label">Twoje powierzchniowe zużycie gazu (SAC):</p><p class="result-value">${sac.toFixed(1)} l/min</p>`;
+                resultDiv.style.display = 'block';
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<p class="result-error">${error.message}</p>`;
+                resultDiv.style.display = 'block';
+            }
+        });
+    }
+    
+    // --- Listener 7: Kalkulator MOD/EAD ---
+    const modForm = document.getElementById('modForm');
+    const modResult = document.getElementById('modResult');
+    if (modForm && modResult) {
+        modForm.addEventListener('submit', function(e) { 
+            e.preventDefault(); 
+            try {
+                const o2_percent = parseFloat(document.getElementById('nitroxO2').value);
+                const o2 = o2_percent / 100;
+                const ppo2 = parseFloat(document.getElementById('modPO2').value);
+                
+                if (isNaN(o2) || isNaN(ppo2) || o2 < 0.21 || o2 > 1.0) {
+                     throw new Error("Wprowadź poprawny % tlenu (21-100).");
+                }
+                
+                const mod = ((ppo2 / o2) - 1) * 10;
+                
+                modResult.innerHTML = `<p class="result-label">Maksymalna Głębokość (MOD) dla EAN${o2_percent}% przy PPO₂ ${ppo2}:</p><p class="result-value">${mod.toFixed(1)} m</p>`;
+                modResult.style.display = 'block';
+            } catch (error) {
+                modResult.innerHTML = `<p class="result-error">${error.message}</p>`;
+                modResult.style.display = 'block';
+            }
+        });
+    }
+    
+    const eadForm = document.getElementById('eadForm');
+    const eadResult = document.getElementById('eadResult');
+    if (eadForm && eadResult) {
+        eadForm.addEventListener('submit', function(e) { 
+            e.preventDefault(); 
+            try {
+                const o2_percent = parseFloat(document.getElementById('nitroxO2').value);
+                const o2 = o2_percent / 100;
+                const depth = parseFloat(document.getElementById('eadDepth').value);
+                const n2 = 1.0 - o2;
+                
+                if (isNaN(o2) || isNaN(depth) || o2 < 0.21 || o2 > 1.0 || depth <= 0) {
+                     throw new Error("Wprowadź poprawny % tlenu (21-100) i głębokość.");
+                }
+                
+                const ead = ((depth + 10) * (n2 / 0.79)) - 10;
+                
+                eadResult.innerHTML = `<p class="result-label">Równoważna Głębokość Powietrzna (EAD) na ${depth} m z EAN${o2_percent}%:</p><p class="result-value">${ead.toFixed(1)} m</p>`;
+                eadResult.style.display = 'block';
+            } catch (error) {
+                eadResult.innerHTML = `<p class="result-error">${error.message}</p>`;
+                eadResult.style.display = 'block';
+            }
+        });
+    }
+
+    // --- Koniec DOMContentLoaded ---
 });

@@ -1,482 +1,645 @@
-/* --- Definicja zmiennych kolorów (Tryb Jasny) --- */
-:root {
-    --calc-bg: rgba(255, 255, 255, 0.9);
-    --text-primary: #333;
-    --text-secondary: #555;
-    --text-title: #005f73;
-    --border-color: #ccc;
-    --input-bg: #ffffff;
-    --result-bg: rgba(230, 247, 255, 0.9);
-    --result-border: #b3e0ff;
-    --result-text: #005f73;
-    --result-value: #0077b6;
-    --btn-bg: #0077b6;
-    --btn-bg-hover: #005f73;
-    --btn-text: #ffffff;
-    --shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-    --switch-bg: #ccc;
-    --overlay-color: rgba(0, 0, 0, 0.3);
-}
-
-/* --- Definicja zmiennych (Tryb Ciemny) --- */
-body.dark-mode {
-    --calc-bg: rgba(30, 30, 30, 0.95);
-    --text-primary: #e0e0e0;
-    --text-secondary: #aaaaaa;
-    --text-title: #00adb5;
-    --border-color: #444;
-    --input-bg: #2a2a2a;
-    --result-bg: rgba(42, 59, 71, 0.9);
-    --result-border: #3b5363;
-    --result-text: #cce7f5;
-    --result-value: #00c4d4;
-    --btn-bg: #00adb5;
-    --btn-bg-hover: #00c4d4;
-    --btn-text: #121212;
-    --shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-    --switch-bg: var(--btn-bg);
-    --overlay-color: rgba(0, 0, 0, 0.6);
-}
-
-/* --- Style Podstawowe --- */
+/* ============================================================
+   PODSTAWOWE STYLE
+   ============================================================ */
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-image: url('background_uki.jpg');
-    background-size: cover;
-    background-position: center;
-    color: var(--text-primary);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    position: relative;
-    z-index: 1;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #e0e0e0;
+  transition: background-image 0.5s ease-in-out;
+  
+  /* Domyślna tapeta - zostanie nadpisana przez JS */
+  background-image: url('background_uki.jpg'); 
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
 }
 
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--overlay-color);
-    z-index: -1;
-    transition: background-color 0.3s;
+/* --- GŁÓWNY UKŁAD APLIKACJI --- */
+.app-wrapper {
+  display: flex;
+  max-width: 1200px;
+  margin: 5vh auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* POPRAWKA: Stała wysokość, aby okno nie "skakało" */
+  height: 90vh; 
 }
 
-.calculator {
-    background-color: var(--calc-bg);
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    padding: 24px;
-    width: 100%;
-    max-width: 400px;
-    margin: 20px;
-    position: relative;
-    z-index: 2;
-    transition: background-color 0.3s, box-shadow 0.3s;
+/* --- BELKA BOCZNA (SIDEBAR) --- */
+.sidebar-nav {
+  width: 260px;
+  /* POPRAWKA: Zwiększony efekt "liquid glass" */
+  background-color: rgba(30, 30, 30, 0.55); 
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 25px;
+  flex-shrink: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  height: 100%;
+  overflow-y: auto;
+  transition: background-color 0.3s, backdrop-filter 0.3s;
 }
 
-h1 {
-    text-align: center;
-    color: #ffffff;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 2.2em;
-    font-weight: 700;
+.sidebar-nav h1 {
+  font-size: 1.8em; color: #ffffff; margin-bottom: 20px; text-align: left;
+}
+.sidebar-nav .theme-switch-wrapper {
+  margin-bottom: 30px; display: flex; align-items: center;
+}
+.sidebar-nav .theme-label {
+  color: #e0e0e0; margin-left: 10px;
 }
 
-.input-group {
-    margin-bottom: 16px;
+/* --- NAWIGACJA (Usunięto ikony) --- */
+.sidebar-nav ul { list-style: none; padding: 0; margin: 0; }
+.sidebar-nav li a {
+  display: block;
+  padding: 12px 20px;
+  color: #e0e0e0;
+  text-decoration: none;
+  font-size: 1.1em;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: all 0.2s ease-in-out;
 }
 
-.input-group label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 600;
-    font-size: 0.9em;
-    color: var(--text-secondary);
-    transition: color 0.3s;
+.sidebar-nav li a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 
-input[type="number"],
-select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    box-sizing: border-box;
-    font-size: 1.1em;
-    background-color: var(--input-bg);
-    color: var(--text-primary);
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+.sidebar-nav li a.active {
+  background-color: #00d1b2;
+  color: #1e1e1e;
+  font-weight: bold;
 }
 
-select option {
-    background-color: var(--calc-bg);
-    color: var(--text-primary);
+/* --- Przycisk "Postaw mi kawę" (Dopieszczony) --- */
+@keyframes pulse-glow-dark {
+  0% { box-shadow: 0 0 5px rgba(0, 209, 178, 0.4); }
+  50% { box-shadow: 0 0 15px rgba(0, 209, 178, 0.9); }
+  100% { box-shadow: 0 0 5px rgba(0, 209, 178, 0.4); }
+}
+@keyframes pulse-glow-light {
+  0% { box-shadow: 0 0 4px rgba(0, 0, 0, 0.1); }
+  50% { box-shadow: 0 0 12px rgba(0, 0, 0, 0.2); }
+  100% { box-shadow: 0 0 4px rgba(0, 0, 0, 0.1); }
 }
 
-button[type="submit"] {
-    width: 100%;
-    padding: 14px;
-    background-color: var(--btn-bg);
-    color: var(--btn-text);
-    border: none;
-    border-radius: 8px;
-    font-size: 1.2em;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background-color 0.2s, color 0.2s;
+.donation-wrapper {
+  background: rgba(40, 40, 40, 0.7);
+  border-radius: 8px;
+  padding: 15px;
+  margin-top: 30px;
+  /* POPRAWKA: Wyrównanie do środka */
+  text-align: center; 
+  animation: pulse-glow-dark 3s infinite ease-in-out;
+}
+.donation-wrapper a {
+  color: #e0e0e0;
+  text-decoration: none;
+  font-size: 0.9em;
+  display: block; /* Umożliwia text-align */
+}
+.donation-wrapper a strong {
+  color: #00d1b2;
+  font-size: 1.1em;
+  display: block;
+  margin-top: 4px;
+}
+/* POPRAWKA: Przywrócono emoji, bo SVG się nie sprawdza */
+.donation-wrapper a::before {
+  content: '☕'; 
+  font-size: 1.2em;
+  margin-right: 10px;
+  color: #00d1b2;
 }
 
-button[type="submit"]:hover {
-    background-color: var(--btn-bg-hover);
+/* --- KONTENER TREŚCI --- */
+.app-content {
+  flex: 1;
+  background-color: rgba(30, 30, 30, 0.65); 
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 0; /* Padding przeniesiony do .tab-content-wrapper */
+  height: 100%; 
+  overflow: hidden; 
+  transition: background-color 0.3s, backdrop-filter 0.3s;
 }
 
-.result-container {
-    margin-top: 24px;
-    background-color: var(--result-bg);
-    border: 1px solid var(--result-border);
-    border-radius: 8px;
-    padding: 16px;
-    text-align: center;
-    display: none;
-    transition: background-color 0.3s, border-color 0.3s;
+/* POPRAWKA: Wrapper z paddingiem i przewijaniem (Naprawia skakanie) */
+.tab-content-wrapper {
+  padding: 25px 40px;
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box; /* Kluczowe dla 100% wysokości */
 }
 
-.result-container p {
-    margin: 0;
-    font-size: 1.1em;
-    color: var(--result-text);
-    transition: color 0.3s;
-}
-
-.result-container span {
-    font-size: 2.2em;
-    font-weight: 700;
-    color: var(--result-value);
-    display: block;
-    margin-top: 8px;
-    transition: color 0.3s;
-}
-
-/* --- Style przełącznika Dark Mode --- */
-.theme-switch-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
-.theme-label {
-    margin-left: 10px;
-    font-size: 0.9em;
-    color: var(--text-secondary);
-    cursor: pointer;
-}
-
-.theme-switch {
-    position: relative;
-    display: inline-block;
-    width: 44px;
-    height: 24px;
-}
-
-.theme-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 18px;
-    width: 18px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    transition: .4s;
-}
-
-input:checked + .slider {
-    background-color: var(--switch-bg);
-}
-
-input:checked + .slider:before {
-    transform: translateX(20px);
-}
-
-.slider.round {
-    border-radius: 34px;
-}
-
-.slider.round:before {
-    border-radius: 50%;
-}
-
-/* --- Style Zakładek (Tabs) --- */
-.tab-nav {
-    display: flex;
-    border-bottom: 2px solid var(--border-color);
-    margin-bottom: 20px;
-}
-.tab-button {
-    flex-grow: 1;
-    padding: 10px;
-    background-color: transparent;
-    border: none;
-    border-bottom: 3px solid transparent;
-    color: var(--text-secondary);
-    font-size: 1.1em;
-    font-weight: 600;
-    cursor: pointer;
-    transition: color 0.3s, border-bottom-color 0.3s;
-    margin-bottom: -2px;
-}
-
-.tab-button:hover {
-    color: var(--text-primary);
-}
-.tab-button.active {
-    color: var(--btn-bg);
-    border-bottom-color: var(--btn-bg);
-}
-
-/* --- Style Treści Zakładek --- */
+/* POPRAWKA: Zakładki już nie skaczą */
 .tab-content {
-    display: none;
+  display: none;
+  /* min-height: 100%; Usunięto - to powodowało błąd ucinania przycisku */
 }
-.tab-content.active-tab {
-    display: block;
-}
-.placeholder-text {
-    text-align: center;
-    font-size: 1.1em;
-    color: var(--text-secondary);
-    padding: 40px 0;
+.tab-content.active-tab { 
+  display: block; 
 }
 
-/* --- Style Pod-zakładek (dla Nitrox) --- */
+/* Ukrycie starych elementów nawigacji */
+.app-content > h1,
+.app-content > .theme-switch-wrapper,
+.app-content > .tab-nav {
+    display: none !important;
+}
+
+/* --- Style Pod-Zakładek (Graficzne) --- */
 .sub-tab-nav {
-    display: flex;
-    background-color: var(--result-bg);
-    border-radius: 8px;
-    padding: 4px;
-    margin-bottom: 20px;
+  display: flex;
+  margin-bottom: 25px;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  border: 1px solid #4a4a4a;
 }
 .sub-tab-button {
-    flex: 1;
-    padding: 8px;
-    background-color: transparent;
-    border: none;
-    border-radius: 6px;
-    color: var(--text-secondary);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
+  background: none;
+  border: none;
+  color: #888;
+  padding: 12px 15px;
+  font-size: 1em;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s;
+  flex: 1; /* Równy podział */
+  text-align: center;
+}
+.sub-tab-button:hover {
+  color: #e0e0e0;
+  background-color: rgba(255, 255, 255, 0.05);
 }
 .sub-tab-button.active {
-    background-color: var(--calc-bg);
-    color: var(--btn-bg);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  color: #ffffff;
+  font-weight: bold;
+  background-color: #333;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
+/* Usunięto ::after, teraz całe tło jest aktywne */
 
-/* --- Style Treści Pod-zakładek --- */
 .sub-tab-content {
-    display: none;
+  display: none;
 }
 .sub-tab-content.active-sub-tab {
-    display: block;
+  display: block;
 }
 
-/* --- Style Tooltipa i Ostrzeżeń --- */
-.label-with-tooltip {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+/* --- Style Formularzy --- */
+.input-group {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+}
+.input-group label {
+  margin-bottom: 6px;
+  font-size: 0.9em;
+  color: #b0b0b0;
+}
+.input-group input,
+.input-group select {
+  background-color: #333;
+  border: 1px solid #4a4a4a;
+  color: #e0e0e0;
+  padding: 12px 10px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  width: 100%;
+  box-sizing: border-box;
+}
+.input-group input:focus,
+.input-group select:focus {
+  outline: none;
+  border-color: #00d1b2;
+  box-shadow: 0 0 5px rgba(0, 209, 178, 0.5);
 }
 
-.tooltip-trigger {
-    position: relative; 
-    display: inline-block;
-    width: 18px;
-    height: 18px;
-    background-color: var(--text-secondary);
-    color: var(--calc-bg);
-    border-radius: 50%;
-    text-align: center;
-    font-size: 0.8em;
-    font-weight: 700;
-    line-height: 18px;
-    cursor: help;
-    user-select: none;
-    flex-shrink: 0; 
-}
-.tooltip-content {
-    position: absolute;
-    bottom: 150%; 
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--calc-bg);
-    color: var(--text-primary);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 12px;
-    width: 300px; 
-    text-align: left;
-    line-height: 1.4;
-    visibility: hidden; 
-    opacity: 0;
-    transition: opacity 0.2s, visibility 0.2s;
-    box-shadow: var(--shadow);
-    z-index: 100; 
-}
-.tooltip-content h4 {
-    margin-top: 0;
-    margin-bottom: 8px;
-    color: var(--btn-bg); 
-}
-.tooltip-content p {
-    font-size: 0.9em;
-    font-weight: 500;
-    margin: 0 0 8px 0;
-}
-.tooltip-content ul {
-    font-size: 0.9em;
-    font-weight: 500;
-    margin: 0 0 0 16px;
-    padding: 0;
-}
-.tooltip-content li {
-    margin-bottom: 5px;
-}
-.tooltip-trigger:hover .tooltip-content,
-.tooltip-trigger:hover::after {
-    visibility: visible;
-    opacity: 1;
-}
-.tooltip-trigger::after {
-    content: '';
-    position: absolute;
-    bottom: 150%;
-    left: 50%;
-    transform: translateX(-50%) translateY(100%) rotate(180deg); 
-    border-width: 6px;
-    border-style: solid;
-    border-color: var(--border-color) transparent transparent transparent;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.2s, visibility 0.2s;
-    z-index: 101; 
+/* Unifikacja koloru głównych przycisków */
+.app-content button[type="submit"] {
+  background-color: #00d1b2 !important;
+  color: #1e1e1e !important;
+  font-weight: bold !important;
+  padding: 12px 20px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
 }
 
-/* Usunięte style .tooltip-tab */
-
-.result-with-tooltip-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 24px;
-}
-.result-with-tooltip-wrapper > .result-container {
-    margin-top: 0; 
-    flex-grow: 1;
-}
-
-.warning-text {
-    font-size: 0.85em;
-    font-weight: 600;
-    color: #e67e22; 
-    margin-top: 6px;
-    margin-bottom: 0;
-    min-height: 1.2em; 
-    transition: color 0.3s;
-}
-
-.button-with-tooltip {
-    display: flex;
-    align-items: center; 
-    gap: 10px; 
-    margin-top: 10px; 
-}
-.button-with-tooltip > button[type="submit"] {
-    flex-grow: 1; 
-    margin-top: 0; 
-}
-.tooltip-button {
-    position: relative; 
-}
-.tooltip-button > .tooltip-content {
-     width: 320px; 
-}
-
-
-#gas-planning-calculator h3 {
-    text-align: center;
-    color: var(--text-secondary);
-    font-size: 1.3em;
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-weight: 600;
-}
-
-/* Style dla układu dwukolumnowego RB */
+/* Układ dwukolumnowy */
 .two-column-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 .form-column {
-    flex: 1;
-    min-width: 150px;
+  flex: 1;
+  min-width: 250px;
 }
 .form-full-width {
-    flex-basis: 100%;
-}
-@media (max-width: 600px) {
-    .two-column-form {
-        flex-direction: column;
-        gap: 0;
-    }
-    .form-column {
-       min-width: auto; 
-    }
+  flex-basis: 100%;
 }
 
+/* Tooltipy */
+.label-with-tooltip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tooltip-trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #4a4a4a;
+  color: #e0e0e0;
+  font-size: 0.8em;
+  font-weight: bold;
+  cursor: help;
+}
+.tooltip-content {
+  display: none;
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  background-color: #2c2c2c;
+  border: 1px solid #4a4a4a;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  z-index: 100;
+  color: #e0e0e0;
+  font-size: 0.9em;
+  text-align: left;
+}
+.tooltip-trigger:hover .tooltip-content {
+  display: block;
+}
+.tooltip-content h4 { margin: 0 0 10px 0; color: #00d1b2; }
+.tooltip-content p { margin: 5px 0; }
+.tooltip-content ul { margin: 10px 0 0 20px; padding: 0; }
 
-/* --- Style Przycisku Donacji --- */
-.donation-link {
-    display: block;
-    text-align: center;
-    margin-top: 24px;
-    padding: 10px;
-    background-color: var(--input-bg);
-    color: var(--text-secondary);
-    border: 1px dashed var(--border-color);
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: 0.9em;
-    font-weight: 600;
-    transition: background-color 0.3s, color 0.3s;
+.button-with-tooltip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.button-with-tooltip button {
+  flex: 1;
+}
+.button-with-tooltip .tooltip-button {
+  flex-shrink: 0;
 }
 
-.donation-link:hover {
-    background-color: var(--result-bg);
-    color: var(--result-text);
+/* --- Style Panelu Ustawień --- */
+#settings-panel h4 {
+  font-size: 1.2em; color: #e0e0e0; margin-top: 25px; margin-bottom: 10px;
+  padding-bottom: 10px; border-bottom: 1px solid #4a4a4a;
+}
+.wallpaper-options { display: flex; flex-wrap: wrap; gap: 12px; }
+.wallpaper-thumb {
+  width: 120px; height: 75px; object-fit: cover; border-radius: 6px;
+  cursor: pointer; border: 2px solid #4a4a4a; transition: all 0.2s ease;
+}
+.wallpaper-thumb:hover { border-color: #e0e0e0; transform: scale(1.05); }
+.wallpaper-thumb.active {
+  border-color: #00d1b2; box-shadow: 0 0 10px rgba(0, 209, 178, 0.5);
+}
+.settings-toggle-row {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;
+}
+.settings-toggle-row label {
+  margin-bottom: 0; color: #e0e0e0;
+}
+
+/* --- Style Wyników (POPRAWKA: Przywrócono graficzne style) --- */
+.result-container {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid #4a4a4a;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+  display: none;
+  /* ZMIANA: Dodano animację poświaty */
+  animation: pulse-glow-dark 3s infinite ease-in-out;
+}
+
+/* === ZMIANA: Bardziej kompaktowe wyniki dla SAC, MOD, EAD, Ballast === */
+#result .result-label,
+#modResult .result-label,
+#eadResult .result-label,
+#ballastResult .result-label {
+  font-size: 1.1em;
+  text-align: center;
+  line-height: 1.5;
+  color: #b0b0b0;
+}
+#result .result-value,
+#modResult .result-value,
+#eadResult .result-value,
+#ballastResult .result-value {
+  font-size: 2.8em;
+  font-weight: bold;
+  color: #00d1b2;
+  margin-top: 2px; /* Zmniejszono z 8px */
+  text-align: center;
+}
+#ballastResult .result-warning { 
+  font-size: 0.9em; 
+  text-align: center; 
+  margin-top: 10px; /* Zmniejszono z 15px */
+  border-top: 1px solid #4a4a4a; 
+  padding-top: 10px; /* Zmniejszono z 15px */
+}
+
+/* === ZMIANA: Bardziej kompaktowe wyniki dla RB === */
+#rbResult .result-label { font-size: 1em; color: #b0b0b0; margin: 0; padding: 0; text-align: center; line-height: 1.4; }
+#rbResult .result-value { 
+  font-size: 2.5em; 
+  font-weight: bold; 
+  color: #00d1b2; 
+  margin-top: 2px; /* Zmniejszono z 8px */
+  text-align: center; 
+}
+/* Błędy */
+#rbResult .result-error, #gcResult .result-error, #proGasResult .result-error, #ballastResult .result-error { font-size: 1em; color: #ff3860; font-weight: bold; text-align: center; }
+
+/* === ZMIANA: Bardziej kompaktowe wyniki dla GC i PRO === */
+#gcResult .result-section, #proGasResult .result-section { 
+  margin-bottom: 4px; /* Zmniejszono z 8px */
+  padding-bottom: 4px; /* Zmniejszono z 8px */
+  border-bottom: 1px solid #4a4a4a; 
+}
+#gcResult .result-section:last-child, #proGasResult .result-section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+#gcResult .result-label, #proGasResult .result-label { 
+  font-size: 0.9em; 
+  color: #b0b0b0; 
+  text-align: center; 
+  margin-bottom: 2px; /* Zmniejszono z 4px */
+  text-transform: uppercase; 
+}
+
+/* Przywrócony styl dla .result-value-main */
+#gcResult .result-value-main, #proGasResult .result-value-main {
+  font-size: 1.8em;
+  font-weight: bold; 
+  color: #ffffff; 
+  text-align: center;
+}
+#gcResult .result-value-main .liters, #proGasResult .result-value-main .liters { color: #00d1b2; }
+
+/* Przywrócony styl dla 'Wymagana rezerwa' */
+#gcResult .result-value-sub, #proGasResult .result-value-sub {
+  font-size: 1.1em;
+  color: #b0b0b0; 
+  text-align: center; 
+  margin-top: 2px; /* Zmniejszono z 5px */
+}
+.result-value-sub strong {
+  color: #ffffff;
+}
+
+#gcResult .result-verdict, #proGasResult .result-verdict { 
+  font-size: 1.5em; 
+  font-weight: bold; 
+  text-align: center; 
+  margin-top: 6px; /* Zmniejszono z 8px */
+  padding: 5px; 
+  border-radius: 5px; 
+}
+#gcResult .result-verdict-ok, #proGasResult .result-verdict-ok { color: #23d160; background-color: rgba(35, 209, 96, 0.1); }
+#gcResult .result-verdict-bad, #proGasResult .result-verdict-bad { color: #ff3860; background-color: rgba(255, 56, 96, 0.1); }
+
+/* ZMIANA: Bardziej kompaktowa sekcja RB w PRO */
+#proGasResult .rb-info-section { 
+  background-color: rgba(0, 0, 0, 0.2); 
+  border: 1px solid #00d1b2; 
+  padding: 6px 8px; /* Zmniejszono z 8px */
+  border-radius: 8px; 
+  margin-bottom: 6px; /* Zmniejszono z 10px */
+}
+#proGasResult .rb-info-section .result-label { 
+  font-size: 1em;
+  text-transform: none;
+  color: #e0e0e0;
+}
+#proGasResult .rb-info-section .result-value-main { 
+  color: #00d1b2; 
+  font-size: 2em;
+  margin-top: 2px; /* Zmniejszono z 5px */
+}
+/* === KONIEC ZMIAN === */
+
+
+/* Funkcja PRO Paywall */
+.sub-tab-button .pro-badge { font-size: 0.6em; background-color: #00d1b2; color: #1e1e1e; padding: 3px 6px; border-radius: 4px; margin-left: 5px; vertical-align: middle; font-weight: bold; }
+.pro-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(30, 30, 30, 0.85); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 10; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; border-radius: 8px; }
+.pro-overlay h4 { color: #00d1b2; font-size: 1.5em; margin-bottom: 10px; }
+.pro-overlay p { font-size: 1.1em; color: #e0e0e0; max-width: 400px; margin-bottom: 25px; }
+.pro-overlay-button { background-color: #00d1b2; color: #1e1e1e; font-weight: bold; border: none; padding: 12px 25px; font-size: 1.1em; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+.pro-overlay-button:hover { background-color: #ffffff; }
+.sub-tab-content.unlocked .pro-overlay { display: none; }
+
+/* === ZMIANA: Zmniejszony przełącznik (Toggle) === */
+.theme-switch { 
+  position: relative; 
+  display: inline-block; 
+  width: 44px; /* Zmniejszono z 50px */
+  height: 24px; /* Zmniejszono z 28px */
+}
+.theme-switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #4a4a4a; transition: .4s; }
+.slider:before { 
+  position: absolute; 
+  content: ""; 
+  height: 18px; /* Zmniejszono z 20px */
+  width: 18px; /* Zmniejszono z 20px */
+  left: 3px; /* Zmniejszono z 4px */
+  bottom: 3px; /* Zmniejszono z 4px */
+  background-color: white; 
+  transition: .4s; 
+}
+input:checked + .slider { background-color: #00d1b2; }
+input:focus + .slider { box-shadow: 0 0 1px #00d1b2; }
+input:checked + .slider:before { 
+  transform: translateX(20px); /* Zmniejszono z 22px */
+}
+.slider.round { border-radius: 24px; /* Zmniejszono z 28px */ }
+.slider.round:before { border-radius: 50%; }
+/* === KONIEC ZMIAN === */
+
+
+/* --- Wyłączenie "Liquid Glass" --- */
+body.glass-off .sidebar-nav,
+body.glass-off .app-content {
+  background-color: #1e1e1e;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+body.glass-off:not(.dark-theme) .sidebar-nav,
+body.glass-off:not(.dark-theme) .app-content {
+  background-color: #f4f4f4;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* ============================================================
+   RESPONSIVE CSS (MOBILE)
+   ============================================================ */
+@media (max-width: 768px) {
+  .app-wrapper {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    margin: 0;
+    border-radius: 0;
+  }
+  .sidebar-nav {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .app-content {
+    width: 100%;
+    height: auto;
+    flex-grow: 1;
+    overflow-y: visible;
+    max-height: none;
+    min-height: auto; 
+  }
+  .tab-content {
+    min-height: auto; /* Reset min-height na mobile */
+  }
+  .tab-content-wrapper {
+    height: auto;
+    overflow-y: visible;
+  }
+}
+
+/* ============================================================
+   TRYB JASNY (LIGHT MODE) - POPRAWKI CZYTELNOŚCI
+   ============================================================ */
+
+body:not(.dark-theme) .sidebar-nav {
+  background-color: rgba(255, 255, 255, 0.65);
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+body:not(.dark-theme) .app-content {
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+body:not(.dark-theme) h1,
+body:not(.dark-theme) h3,
+body:not(.dark-theme) .theme-label,
+body:not(.dark-theme) .settings-toggle-row label,
+body:not(.dark-theme) #settings-panel h4 {
+  color: #2c2c2c;
+}
+
+body:not(.dark-theme) .sidebar-nav li a {
+  color: #4a4a4a;
+}
+body:not(.dark-theme) .sidebar-nav li a:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #1e1e1e;
+}
+body:not(.dark-theme) .sidebar-nav li a.active {
+  background-color: #00d1b2;
+  color: #1e1e1e;
+}
+
+body:not(.dark-theme) .donation-wrapper {
+  background: rgba(255, 255, 255, 0.8);
+  animation: pulse-glow-light 3s infinite ease-in-out;
+}
+body:not(.dark-theme) .donation-wrapper a {
+  color: #4a4a4a;
+}
+
+body:not(.dark-theme) label,
+body:not(.dark-theme) .label-with-tooltip label,
+body:not(.dark-theme) p,
+body:not(.dark-theme) .result-warning {
+  color: #363636;
+}
+body:not(.dark-theme) .input-group input,
+body:not(.dark-theme) .input-group select {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #cccccc;
+  color: #2c2c2c;
+}
+body:not(.dark-theme) .input-group input::placeholder { color: #999; }
+
+body:not(.dark-theme) .sub-tab-nav {
+  border-bottom-color: #ddd;
+  background-color: rgba(255,255,255,0.4);
+}
+body:not(.dark-theme) .sub-tab-button { color: #555; }
+body:not(.dark-theme) .sub-tab-button:hover { color: #1e1e1e; }
+body:not(.dark-theme) .sub-tab-button.active { 
+  color: #009e86; /* Ciemniejszy turkus */
+  background-color: rgba(255,255,255,0.7);
+}
+
+/* POPRAWKA: Paywall PRO w trybie jasnym */
+body:not(.dark-theme) .pro-overlay {
+  background-color: rgba(255, 255, 255, 0.85);
+}
+body:not(.dark-theme) .pro-overlay h4 {
+  color: #009e86;
+}
+body:not(.dark-theme) .pro-overlay p {
+  color: #363636;
+}
+
+/* POPRAWKA: Wyniki w trybie jasnym */
+
+/* ZMIANA: Dodano styl poświaty dla trybu jasnego */
+body:not(.dark-theme) .result-container {
+  animation-name: pulse-glow-light;
+}
+
+body:not(.dark-theme) #proGasResult .rb-info-section .result-label { color: #4a4a4a; }
+body:not(.dark-theme) #gcResult .result-value-main, 
+body:not(.dark-theme) #proGasResult .result-value-main,
+body:not(.dark-theme) #rbResult .result-value,
+body:not(.dark-theme) #result .result-value,
+body:not(.dark-theme) #modResult .result-value,
+body:not(.dark-theme) #eadResult .result-value { 
+  color: #2c2c2c; 
+}
+
+/* Usunięto .result-value-bars dla trybu jasnego */
+body:not(.dark-theme) .result-value-sub strong {
+  color: #1e1e1e;
+}
+
+body:not(.dark-theme) #rbResult .result-label,
+body:not(.dark-theme) #gcResult .result-label, 
+body:not(.dark-theme) #proGasResult .result-label,
+body:not(.dark-theme) #ballastResult .result-label,
+body:not(.dark-theme) #result .result-label,
+body:not(.dark-theme) #modResult .result-label,
+body:not(.dark-theme) #eadResult .result-label { 
+  color: #363636; 
+}
+body:not(.dark-theme) #gcResult .result-value-sub, 
+body:not(.dark-theme) #proGasResult .result-value-sub {
+  color: #555;
 }

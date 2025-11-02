@@ -4,850 +4,167 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Uki's Dive Tools</title>
-    <link rel="stylesheet" href="style.css">
-
-    <style>
-      .calculator {
-        max-width: 800px !important; /* Zwiększona szerokość dla układu 2-kolumnowego */
-      }
-
-      /* --- Style dla wyniku Rock Bottom --- */
-      #rbResult .result-label {
-        font-size: 1em; color: #b0b0b0; margin: 0; padding: 0; text-align: center; line-height: 1.4;
-      }
-      #rbResult .result-value {
-        font-size: 2.5em; font-weight: bold; color: #00d1b2; margin-top: 8px; text-align: center;
-      }
-      #rbResult .result-error,
-      #gcResult .result-error,
-      #proGasResult .result-error { /* Dodano proGasResult */
-        font-size: 1em; color: #ff3860; font-weight: bold; text-align: center;
-      }
-      
-      /* --- Style dla wyników Zużycia Gazu (współdzielone przez gcResult i proGasResult) --- */
-      #gcResult .result-section,
-      #proGasResult .result-section {
-        margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #4a4a4a;
-      }
-      #gcResult .result-section:last-child,
-      #proGasResult .result-section:last-child {
-        margin-bottom: 0; padding-bottom: 0; border-bottom: none;
-      }
-      #gcResult .result-label,
-      #proGasResult .result-label {
-        font-size: 0.9em; color: #b0b0b0; text-align: center; margin-bottom: 4px; text-transform: uppercase;
-      }
-      #gcResult .result-value-main,
-      #proGasResult .result-value-main {
-        font-size: 1.8em; font-weight: bold; color: #ffffff; text-align: center;
-      }
-       #gcResult .result-value-main .liters,
-       #proGasResult .result-value-main .liters {
-         color: #00d1b2; /* Turkusowy dla litrów */
-       }
-      #gcResult .result-value-sub,
-      #proGasResult .result-value-sub {
-        font-size: 1.1em; color: #b0b0b0; text-align: center; margin-top: 5px;
-      }
-      #gcResult .result-verdict,
-      #proGasResult .result-verdict {
-        font-size: 1.5em; font-weight: bold; text-align: center; margin-top: 10px; padding: 5px; border-radius: 5px;
-      }
-      #gcResult .result-verdict-ok,
-      #proGasResult .result-verdict-ok {
-        color: #23d160; background-color: rgba(35, 209, 96, 0.1);
-      }
-      #gcResult .result-verdict-bad,
-      #proGasResult .result-verdict-bad {
-        color: #ff3860; background-color: rgba(255, 56, 96, 0.1);
-      }
-      
-      /* --- NOWA SEKCJA W WYNIKU PRO (dla info o RB) --- */
-      #proGasResult .rb-info-section {
-        background-color: rgba(0, 0, 0, 0.2);
-        border: 1px solid #00d1b2;
-        padding: 10px;
-        border-radius: 8px;
-        margin-bottom: 15px;
-      }
-      #proGasResult .rb-info-section .result-label {
-        font-size: 1em; /* Większa etykieta dla tej sekcji */
-        text-transform: none; /* Normalny tekst */
-        color: #e0e0e0;
-      }
-      #proGasResult .rb-info-section .result-value-main {
-        color: #00d1b2; /* Turkusowy dla wartości RB */
-        font-size: 2em; /* Duża wartość */
-        margin-top: 5px;
-      }
-      
-
-      /* --- Style dla funkcji PRO --- */
-      .sub-tab-content {
-        position: relative;
-        min-height: 400px;
-      }
-      
-      .sub-tab-button .pro-badge {
-        font-size: 0.6em;
-        background-color: #00d1b2;
-        color: #1e1e1e;
-        padding: 3px 6px; /* Lekko powiększony padding */
-        border-radius: 4px;
-        margin-left: 5px;
-        vertical-align: middle;
-        font-weight: bold;
-      }
-      
-      /* Nakładka blokująca "Paywall" */
-      .pro-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(30, 30, 30, 0.85);
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
-        z-index: 10;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 20px;
-        border-radius: 8px; 
-      }
-      .pro-overlay h4 {
-        color: #00d1b2;
-        font-size: 1.5em;
-        margin-bottom: 10px;
-      }
-      .pro-overlay p {
-        font-size: 1.1em;
-        color: #e0e0e0;
-        max-width: 400px;
-        margin-bottom: 25px;
-      }
-      .pro-overlay-button {
-        background-color: #00d1b2;
-        color: #1e1e1e;
-        font-weight: bold;
-        border: none;
-        padding: 12px 25px;
-        font-size: 1.1em;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-      .pro-overlay-button:hover {
-        background-color: #ffffff;
-      }
-      .sub-tab-content.unlocked .pro-overlay {
-        display: none;
-      }
-
-    </style>
+    <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
-    <div class="overlay"></div>
+    <div class="overlay"></div> 
 
-    <div class="calculator">
+    <div class="app-wrapper">
         
-        <h1>Uki's Dive Tools</h1>
+        <nav class="sidebar-nav">
+            <h1>Uki's Dive Tools</h1>
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="theme-toggle"><input type="checkbox" id="theme-toggle" /><span class="slider round"></span></label>
+                <label for="theme-toggle" class="theme-label">Tryb Ciemny</label>
+            </div>
 
-        <div class="theme-switch-wrapper">
-            <label class="theme-switch" for="theme-toggle">
-                <input type="checkbox" id="theme-toggle" />
-                <span class="slider round"></span>
-            </label>
-            <label for="theme-toggle" class="theme-label">Tryb Ciemny</label>
-        </div>
-
-        <nav class="tab-nav">
-            <button class="tab-button active" data-tab="sac-calculator">
-                Kalkulator SAC
-            </button>
-            <button class="tab-button" data-tab="nitrox-calculator">
-                Kalkulator Nitrox
-            </button>
-            <button class="tab-button" data-tab="gas-planning-calculator">
-                Planowanie Gazu
-            </button>
+            <ul>
+                <li><a href="#" class="active" data-tab="sac-calculator">Kalkulator SAC</a></li>
+                <li><a href="#" data-tab="nitrox-calculator">Kalkulator Nitrox</a></li>
+                <li><a href="#" data-tab="gas-planning-calculator">Planowanie Gazu</a></li>
+                <li><a href="#" data-tab="ballast-calculator">Kalkulator Balastu</a></li>
+                <li><a href="#" data-tab="settings-panel">Ustawienia</a></li>
+            </ul>
+            
+            <div class="donation-wrapper">
+                <a href="#" id="donation-link">
+                    Podoba Ci się to narzędzie?
+                    <strong>Postaw mi kawę!</strong>
+                </a>
+            </div>
         </nav>
-        
-        <div class="tab-content-wrapper">
-            <div id="sac-calculator" class="tab-content active-tab">
-                <form id="sacForm">
-                    <div class="input-group">
-                        <label for="p1">Ciśnienie startowe (bar)</label>
-                        <input type="number" id="p1" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="p2">Ciśnienie końcowe (bar)</label>
-                        <input type="number" id="p2" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="vb">Pojemność butli (l)</label>
-                        <input type="number" id="vb" value="11" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="depth">Średnia głębokość (m)</label>
-                        <input type="number" id="depth" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="time">Czas pomiaru (min)</label>
-                        <input type="number" id="time" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="waterType">Rodaj wody</label>
-                        <select id="waterType">
-                            <option value="salt">Woda słona</option>
-                            <option value="fresh">Woda słodka</option>
-                        </select>
-                    </div>
-                    
-                    <div class="button-with-tooltip">
-                        <button type="submit">Oblicz SAC</button>
-                        <span class="tooltip-trigger tooltip-button">
-                              ?
-                              <div class="tooltip-content">
-                                <h4>SAC (Surface Air Consumption)</h4>
-                                <p><strong>Co to jest?</strong> SAC to skrót od angielskiego terminu Surface Air Consumption, co po polsku oznacza powierzchniowe zużycie gazu.</p>
-                                <p><strong>Po co to liczymy?</strong> Jest to podstawowy i niezbędny parametr używany do obliczania zapasu powietrza na nurkowanie.</p>
-                                <p><strong>Definicja:</strong> SAC to ilość gazu (pod ciśnieniem atmosferycznym, wyrażona w litrach) zużywana przez nurka podczas oddychania w ciągu jednej minuty na powierzchni.</p>
-                              </div>
-                        </span>
-                    </div>
-                </form>
-                <div id="result" class="result-container"></div>
-            </div>
 
-            <div id="nitrox-calculator" class="tab-content">
-                <div class="input-group">
-                    <label for="nitroxO2">Procent tlenu (O₂%)</label>
-                    <input type="number" id="nitroxO2" value="32" min="21" max="100" required>
-                </div>
-
-                <nav class="sub-tab-nav">
-                    <button class="sub-tab-button active" data-subtab="mod-calculator" title="Oblicza maksymalną głębokość">
-                        Oblicz MOD
-                    </button>
-                    <button class="sub-tab-button" data-subtab="ead-calculator" title="Oblicza równoważną głębokość powietrzną">
-                        Oblicz EAD
-                    </button>
-                </nav>
-
-                <div class="sub-tab-content-wrapper">
-                    <div id="mod-calculator" class="sub-tab-content active-sub-tab">
-                        <form id="modForm">
-                            
-                            <div class="input-group">
-                                <div class="label-with-tooltip">
-                                    <label for="modPO2">Ciśnienie parcjalne (PPO₂)</label>
-                                    <span class="tooltip-trigger">
-                                          ?
-                                          <div class="tooltip-content">
-                                            <h4>PPO₂ (Ciśnienie Parcjalne Tlenu)</h4>
-                                            <p><strong>Co to jest?</strong> To faktyczna "dawka" tlenu, którą przyjmuje organizm pod wodą. Im głębiej, tym dawka jest wyższa.</p>
-                                            <p><strong>Dlaczego to limit?</strong> Zbyt wysoka dawka tlenu staje się toksyczna dla układu nerwowego (CNS), co grozi utratą przytomności i konwulsjami tlenowymi.</p>
-                                            <p><strong>Zalecane Limity w kalkulatorze (MOD):</strong></p>
-                                            <ul>
-                                                <li><strong>1,4 bar/ATA (Zalecane):</strong> Jest to bezpieczny limit dla nurkowań dennych/rekreacyjnych. Zapewnia dodatkowy margines bezpieczeństwa i pozwala na dłuższą ekspozycję (do 150 minut).</li>
-                                                <li><strong>1,6 bar/ATA (Maksymalny Limit):</strong> To nieprzekraczalna granica bezpieczeństwa. Używany jest zwykle tylko do przystanków dekompresyjnych. Przy tym ciśnieniu maksymalny czas ekspozycji to zaledwie 45 minut.</li>
-                                            </ul>
-                                          </div>
-                                    </span>
-                                </div>
-                                <input type="number" id="modPO2" value="1.4" step="0.1" min="1.0" max="1.6" required>
-                                <p id="ppo2-warning" class="warning-text"></p>
-                            </div>
-
-                            <button type="submit">Oblicz MOD</button>
-                        </form>
-                        <div id="modResult" class="result-container"></div>
-                    </div>
-
-                    <div id="ead-calculator" class="sub-tab-content">
-                        <form id="eadForm">
-                            
-                            <div class="input-group">
-                                <label for="eadDepth">Planowana głębokość (m)</label>
-                                <input type="number" id="eadDepth" min="1" required>
-                            </div>
-                            <div class="button-with-tooltip">
-                                <button type="submit">Oblicz EAD</button>
-                                <span class="tooltip-trigger tooltip-button">
-                                    ?
-                                    <div class="tooltip-content">
-                                        <h4>Równoważna Głębokość Powietrzna (EAD)</h4>
-                                        <p><strong>Co to jest?</strong> To hipotetyczna, płytsza głębokość, na której nurkowanie z użyciem powietrza (21% tlenu) spowodowałoby takie samo nasycenie organizmu azotem jak nurkowanie na rzeczywistej głębokości z użyciem Twojej mieszanki Nitrox.</p>
-                                        <p><strong>Dlaczego to liczymy?</strong> Ponieważ Nitrox zawiera mniej azotu niż powietrze, EAD jest zawsze mniejsze niż faktyczna głębokość. Używamy tej płytszej wartości EAD w standardowych (powietrznych) tabelach nurkowych, aby bezpiecznie wydłużyć czas, jaki możemy spędzić pod wodą bez dekompresji.</p>
-                                        <p><strong>Pamiętaj:</strong> EAD dotyczy tylko azotu. Wciąż musisz przestrzegać Maksymalnej Głębokości Operacyjnej (MOD) narzuconej przez limit tlenu (PPO₂)!</p>
-                                    </div>
-                                </span>
-                            </div>
-                        </form>
-                        <div id="eadResult" class="result-container"></div>
-                    </div>
-                </div>
-            </div>
+        <main class="app-content">
             
-            <div id="gas-planning-calculator" class="tab-content">
+            <h1 style="display: none;">Uki's Dive Tools</h1>
+            <div class="theme-switch-wrapper" style="display: none;"></div>
+            <nav class="tab-nav" style="display: none;"></nav>
+
+            <div class="tab-content-wrapper">
                 
-                <nav class="sub-tab-nav">
-                    <button class="sub-tab-button active" data-subtab="rb-calculator">
-                        Oblicz Rock Bottom
-                    </button>
-                    <button class="sub-tab-button" data-subtab="consumption-calculator">
-                        Oblicz Zużycie Gazu
-                    </button>
-                    <button class="sub-tab-button" data-subtab="pro-gas-calculator">
-                        Oblicz Zużycie <span class="pro-badge">Uki's PRO</span>
-                    </button>
-                </nav>
-
-                <div class="sub-tab-content-wrapper">
-                    
-                    <div id="rb-calculator" class="sub-tab-content active-sub-tab">
-                        <h3>Kalkulator Rock Bottom (RB)</h3>
-                        <form id="rbForm" class="two-column-form"> 
-                            <div class="form-column">
-                                <div class="input-group">
-                                    <label for="rbSAC">Twój SAC (l/min)</label>
-                                    <input type="number" id="rbSAC" value="20" step="0.1" min="5" required>
-                                </div>
-                                <div class="input-group">
-                                    <label for="rbDepth">Maksymalna Głębokość (m)</label>
-                                    <input type="number" id="rbDepth" value="40" min="1" required>
-                                </div>
-                                <div class="input-group">
-                                    <label for="rbVolume">Całkowita Pojemność Butli (l)</label>
-                                    <input type="number" id="rbVolume" value="24" min="1" required title="Suma pojemności wszystkich butli z gazem dennym (np. 2x12=24)">
-                                </div>
-                                 <div class="input-group">
-                                    <div class="label-with-tooltip">
-                                        <label for="rbStopDepth">Głęb. Pierwszego Przystanku/Zmiany Gazu (m)</label> 
-                                    </div>
-                                    <input type="number" id="rbStopDepth" value="6" min="0" required>
-                                </div>
-                                 <div class="input-group">
-                                    <label for="rbAscentRate">Prędkość Wynurzania (m/min)</label>
-                                    <input type="number" id="rbAscentRate" value="10" min="1" max="18" required>
-                                 </div>
-                            </div>
-                            <div class="form-column">
-                                 <div class="input-group">
-                                     <div class="label-with-tooltip">
-                                        <label for="rbStressFactor">Mnożnik SAC (Stres)</label>
-                                    </div>
-                                    <input type="number" id="rbStressFactor" value="2" step="0.1" min="1" max="3" required>
-                                </div>
-                                 <div class="input-group">
-                                    <label for="rbDivers">Liczba Nurków</label>
-                                    <input type="number" id="rbDivers" value="2" min="1" max="2" required title="Ilu nurków będzie oddychać z rezerwy (zwykle 2: Ty i partner)">
-                                </div>
-                                 <div class="input-group">
-                                    <div class="label-with-tooltip">
-                                        <label for="rbEmergencyTime">Czas Reakcji na Dnie (min)</label>
-                                    </div>
-                                    <input type="number" id="rbEmergencyTime" value="2" min="0" max="5" required>
-                                </div>
-                                <div class="input-group">
-                                     <div class="label-with-tooltip">
-                                        <label for="rbSafetyMargin">Dodatkowy Bufor (bar)</label>
-                                    </div>
-                                    <input type="number" id="rbSafetyMargin" value="10" min="0" required>
-                                </div>
-                            </div>
-                            <div class="form-full-width">
-                                <div class="button-with-tooltip">
-                                    <button type="submit">Oblicz Rock Bottom</button>
-                                    <span class="tooltip-trigger tooltip-button">
-                                          ?
-                                          <div class="tooltip-content">
-                                            <h4>Czym jest Rock Bottom?</h4>
-                                            <p>Rock Bottom (RB) to zasada planowania rezerwy gazu. Jest to <strong>minimalna ilość gazu</strong>, którą musi posiadać nurek (lub zespół) w najgorszym możliwym scenariuszu awaryjnym (np. utrata gazu przez partnera na maksymalnej głębokości).</p>
-                                          </div>
-                                    </span>
-                                </div>
-                            </div>
-                        </form>
-                        <div id="rbResult" class="result-container"></div>
-                    </div>
-
-                    <div id="consumption-calculator" class="sub-tab-content">
-                        <h3>Kalkulator Całkowitego Zużycia Gazu</h3>
-                        <form id="gasConsumptionForm" class="two-column-form">
-                            <div class="form-column">
-                                <div class="input-group">
-                                    <label for="gcSAC">Twój SAC (l/min)</label>
-                                    <input type="number" id="gcSAC" value="20" step="0.1" min="5" required>
-                                </div>
-                                <div class="input-group">
-                                    <label for="gcDepth">Maksymalna Głębokość (m)</label>
-                                    <input type="number" id="gcDepth" value="30" min="1" required>
-                                </div>
-                                <div class="input-group">
-                                    <label for="gcBottomTime">Planowany Czas Denny (min)</label>
-                                    <input type="number" id="gcBottomTime" value="20" min="1" required>
-                                </div>
-                                <div class="input-group">
-                                    <label for="gcDescentRate">Prędkość Zanurzania (m/min)</label>
-                                    <input type="number" id="gcDescentRate" value="15" min="1" required>
-                                </div>
-                                <div class="input-group">
-                                    <label for="gcAscentRate">Prędkość Wynurzania (m/min)</label>
-                                    <input type="number" id="gcAscentRate" value="10" min="1" max="18" required>
-                                </div>
-                            </div>
-                            <div class="form-column">
-                                <div class="input-group">
-                                    <label for="gcStopDepth">Głęb. Przystanku Bezp. (m)</label>
-                                    <input type="number" id="gcStopDepth" value="5" min="0" required>
-                                </div>
-                                <div class="input-group">
-                                    <label for="gcStopTime">Czas Przystanku Bezp. (min)</label>
-                                    <input type="number" id="gcStopTime" value="3" min="0" required>
-                                </div>
-                                <div class="input-group">
-                                    <label for="gcTankSize">Pojemność Butli (l)</label>
-                                    <input type="number" id="gcTankSize" value="12" min="1" required>
-                                </div>
-                                <div class="input-group">
-                                    <label for="gcStartPressure">Ciśnienie początkowe (bar)</label>
-                                    <input type="number" id="gcStartPressure" value="200" min="50" required>
-                                </div>
-                                <div class="input-group">
-                                    <label for="gcReserve">Wymagane Ciśnienie Rezerwy (bar)</label>
-                                    <input type="number" id="gcReserve" value="50" min="0" required>
-                                </div>
-                            </div>
-                            <input type="hidden" id="gcDivers" value="1">
-                            <div class="form-full-width">
-                                <div class="button-with-tooltip">
-                                    <button type="submit">Oblicz Zużycie</button>
-                                    <span class="tooltip-trigger tooltip-button">
-                                          ?
-                                          <div class="tooltip-content">
-                                            <h4>Planowanie Zużycia Gazu</h4>
-                                            <p>Ten kalkulator oszacuje całkowite zużycie gazu na nurkowanie (faza po fazie) i porówna je z Twoim zapasem, aby sprawdzić, czy zostaje Ci wymagana rezerwa.</p>
-                                          </div>
-                                    </span>
-                                </div>
-                            </div>
-                        </form>
-                        <div id="gcResult" class="result-container"></div>
-                    </div>
-
-                    <div id="pro-gas-calculator" class="sub-tab-content">
-                        
-                        <div class="pro-overlay">
-                            <h4>Uki's Dive Tools PRO</h4>
-                            <p>To jest funkcja PRO. Łączy ona planowanie zużycia z automatycznym obliczaniem rezerwy Rock Bottom dla pełnego planu.</p>
-                            <p><strong>Odblokuj tę funkcję stawiając mi kawę! ☕</strong></p>
-                            <button id="unlockProButton" class="pro-overlay-button">Odblokuj (Mock)</button>
+                <div id="sac-calculator" class="tab-content active-tab">
+                    <h3>Kalkulator SAC</h3>
+                    <form id="sacForm" class="two-column-form">
+                        <div class="form-column">
+                            <div class="input-group"><label for="p1">Ciśnienie startowe (bar)</label><input type="number" id="p1" required></div>
+                            <div class="input-group"><label for="p2">Ciśnienie końcowe (bar)</label><input type="number" id="p2" required></div>
+                            <div class="input-group"><label for="vb">Pojemność butli (l)</label><input type="number" id="vb" value="11" required></div>
                         </div>
-                        
-                        <h3>Kalkulator Zużycia Gazu (z rezerwą RB)</h3>
-                        <form id="proGasForm" class="two-column-form">
-                            
-                            <div class="form-column">
-                                <div class="input-group">
-                                    <label for="gcSAC_pro">Twój SAC (l/min)</label>
-                                    <input type="number" id="gcSAC_pro" value="20" step="0.1" min="5" required>
-                                </div>
-                                <div class="input-group">
-                                    <label for="gcDepth_pro">Maksymalna Głębokość (m)</label>
-                                    <input type="number" id="gcDepth_pro" value="30" min="1" required>
-                                </div>
-                                <div class="input-group">
-                                    <label for="gcBottomTime_pro">Planowany Czas Denny (min)</label>
-                                    <input type="number" id="gcBottomTime_pro" value="20" min="1" required>
-                                </div> <div class="input-group">
-                                    <label for="gcDescentRate_pro">Prędkość Zanurzania (m/min)</label>
-                                    <input type="number" id="gcDescentRate_pro" value="15" min="1" required>
-                                </div>
-                                <div class="input-group">
-                                    <label for="gcAscentRate_pro">Prędkość Wynurzania (m/min)</label>
-                                    <input type="number" id="gcAscentRate_pro" value="10" min="1" max="18" required>
-                                </div>
-                                <div class="input-group">
-                                    <label for="gcStopDepth_pro">Głęb. Przystanku Bezp. (m)</label>
-                                    <input type="number" id="gcStopDepth_pro" value="5" min="0" required>
-                                </div>
-                            </div>
-                            
-                            <div class="form-column">
-                                <div class="input-group">
-                                    <label for="gcStopTime_pro">Czas Przystanku Bezp. (min)</label>
-                                    <input type="number" id="gcStopTime_pro" value="3" min="0" required>
-                                </div>
-                                <div class="input-group">
-                                    <label for="gcTankSize_pro">Pojemność Butli (l)</label>
-                                    <input type="number" id="gcTankSize_pro" value="12" min="1" required>
-                                </div>
-                                <div class="input-group">
-                                    <label for="gcStartPressure_pro">Ciśnienie początkowe (bar)</label>
-                                    <input type="number" id="gcStartPressure_pro" value="200" min="50" required>
-                                </div>
-                                
-                                <div class="input-group">
-                                     <div class="label-with-tooltip">
-                                        <label for="rbStressFactor_pro">Mnożnik SAC (Stres)</label>
-                                    </div>
-                                    <input type="number" id="rbStressFactor_pro" value="2" step="0.1" min="1" max="3" required>
-                                </div>
-                                 <div class="input-group">
-                                    <label for="rbDivers_pro">Liczba Nurków (do rezerwy)</label>
-                                    <input type="number" id="rbDivers_pro" value="2" min="1" max="2" required title="Ilu nurków będzie oddychać z rezerwy (zwykle 2: Ty i partner)">
-                                </div>
-                                 <div class="input-group">
-                                    <div class="label-with-tooltip">
-                                        <label for="rbEmergencyTime_pro">Czas Reakcji na Dnie (min)</label>
-                                    </div>
-                                    <input type="number" id="rbEmergencyTime_pro" value="2" min="0" max="5" required>
-                                </div>
-                                <div class="input-group">
-                                     <div class="label-with-tooltip">
-                                        <label for="rbSafetyMargin_pro">Dodatkowy Bufor (bar)</label>
-                                    </div>
-                                    <input type="number" id="rbSafetyMargin_pro" value="10" min="0" required>
-                                </div>
-                            </div>
+                        <div class="form-column">
+                            <div class="input-group"><label for="depth">Średnia głębokość (m)</label><input type="number" id="depth" required></div>
+                            <div class="input-group"><label for="time">Czas pomiaru (min)</label><input type="number" id="time" required></div>
+                            <div class="input-group"><label for="waterType">Rodaj wody</label><select id="waterType"><option value="salt">Woda słona</option><option value="fresh">Woda słodka</option></select></div>
+                        </div>
+                        <div class="form-full-width">
+                            <div class="button-with-tooltip"><button type="submit">Oblicz SAC</button><span class="tooltip-trigger tooltip-button">? <div class="tooltip-content"><h4>SAC (Surface Air Consumption)</h4><p>...</p></div></span></div>
+                        </div>
+                    </form>
+                    <div id="result" class="result-container"></div>
+                </div>
 
-                            <div class="form-full-width">
-                                <div class="button-with-tooltip">
-                                    <button type="submit">Oblicz Zużycie z Rezerwą RB</button>
-                                </div>
+                <div id="nitrox-calculator" class="tab-content">
+                    <div class="input-group"><label for="nitroxO2">Procent tlenu (O₂%)</label><input type="number" id="nitroxO2" value="32" min="21" max="100" required></div>
+                    <nav class="sub-tab-nav"><button class="sub-tab-button active" data-subtab="mod-calculator" title="Oblicza maksymalną głębokość">Oblicz MOD</button><button class="sub-tab-button" data-subtab="ead-calculator" title="Oblicza równoważną głębokość powietrzną">Oblicz EAD</button></nav>
+                    <div class="sub-tab-content-wrapper">
+                        <div id="mod-calculator" class="sub-tab-content active-sub-tab"><form id="modForm"><div class="input-group"><div class="label-with-tooltip"><label for="modPO2">Ciśnienie parcjalne (PPO₂)</label><span class="tooltip-trigger">? <div class="tooltip-content"><h4>PPO₂ (Ciśnienie Parcjalne Tlenu)</h4><p>...</p></div></span></div><input type="number" id="modPO2" value="1.4" step="0.1" min="1.0" max="1.6" required><p id="ppo2-warning" class="warning-text"></p></div><button type="submit">Oblicz MOD</button></form><div id="modResult" class="result-container"></div></div>
+                        <div id="ead-calculator" class="sub-tab-content"><form id="eadForm"><div class="input-group"><label for="eadDepth">Planowana głębokość (m)</label><input type="number" id="eadDepth" min="1" required></div><div class="button-with-tooltip"><button type="submit">Oblicz EAD</button><span class="tooltip-trigger tooltip-button">? <div class="tooltip-content"><h4>Równoważna Głębokość Powietrzna (EAD)</h4><p>...</p></div></span></div></form><div id="eadResult" class="result-container"></div></div>
+                    </div>
+                </div>
+                
+                <div id="gas-planning-calculator" class="tab-content">
+                    <nav class="sub-tab-nav"><button class="sub-tab-button active" data-subtab="rb-calculator">Oblicz Rock Bottom</button><button class="sub-tab-button" data-subtab="consumption-calculator">Oblicz Zużycie Gazu</button><button class="sub-tab-button" data-subtab="pro-gas-calculator">Oblicz Zużycie <span class="pro-badge">Uki's PRO</span></button></nav>
+                    <div class="sub-tab-content-wrapper">
+                        <div id="rb-calculator" class="sub-tab-content active-sub-tab">
+                            <h3>Kalkulator Rock Bottom (RB)</h3>
+                            <form id="rbForm" class="two-column-form"> 
+                                <div class="form-column"><div class="input-group"><label for="rbSAC">Twój SAC (l/min)</label><input type="number" id="rbSAC" value="20" step="0.1" min="5" required></div><div class="input-group"><label for="rbDepth">Maksymalna Głębokość (m)</label><input type="number" id="rbDepth" value="40" min="1" required></div><div class="input-group"><label for="rbVolume">Całkowita Pojemność Butli (l)</label><input type="number" id="rbVolume" value="24" min="1" required title="Suma pojemności wszystkich butli z gazem dennym (np. 2x12=24)"></div><div class="input-group"><div class="label-with-tooltip"><label for="rbStopDepth">Głęb. Pierwszego Przystanku/Zmiany Gazu (m)</label> </div><input type="number" id="rbStopDepth" value="6" min="0" required></div><div class="input-group"><label for="rbAscentRate">Prędkość Wynurzania (m/min)</label><input type="number" id="rbAscentRate" value="10" min="1" max="18" required></div></div>
+                                <div class="form-column"><div class="input-group"><div class="label-with-tooltip"><label for="rbStressFactor">Mnożnik SAC (Stres)</label></div><input type="number" id="rbStressFactor" value="2" step="0.1" min="1" max="3" required></div><div class="input-group"><label for="rbDivers">Liczba Nurków</label><input type="number" id="rbDivers" value="2" min="1" max="2" required title="Ilu nurków będzie oddychać z rezerwy (zwykle 2: Ty i partner)"></div><div class="input-group"><div class="label-with-tooltip"><label for="rbEmergencyTime">Czas Reakcji na Dnie (min)</label></div><input type="number" id="rbEmergencyTime" value="2" min="0" max="5" required></div><div class="input-group"><div class="label-with-tooltip"><label for="rbSafetyMargin">Dodatkowy Bufor (bar)</label></div><input type="number" id="rbSafetyMargin" value="10" min="0" required></div></div>
+                                <div class="form-full-width"><div class="button-with-tooltip"><button type="submit">Oblicz Rock Bottom</button><span class="tooltip-trigger tooltip-button">? <div class="tooltip-content"><h4>Czym jest Rock Bottom?</h4><p>...</p></div></span></div></div>
+                            </form>
+                            <div id="rbResult" class="result-container"></div>
+                        </div>
+                        <div id="consumption-calculator" class="sub-tab-content">
+                            <h3>Kalkulator Całkowitego Zużycia Gazu</h3>
+                            <form id="gasConsumptionForm" class="two-column-form">
+                                <div class="form-column"><div class="input-group"><label for="gcSAC">Twój SAC (l/min)</label><input type="number" id="gcSAC" value="20" step="0.1" min="5" required></div><div class="input-group"><label for="gcDepth">Maksymalna Głębokość (m)</label><input type="number" id="gcDepth" value="30" min="1" required></div><div class="input-group"><label for="gcBottomTime">Planowany Czas Denny (min)</label><input type="number" id="gcBottomTime" value="20" min="1" required></div><div class="input-group"><label for="gcDescentRate">Prędkość Zanurzania (m/min)</label><input type="number" id="gcDescentRate" value="15" min="1" required></div><div class="input-group"><label for="gcAscentRate">Prędkość Wynurzania (m/min)</label><input type="number" id="gcAscentRate" value="10" min="1" max="18" required></div></div>
+                                <div class="form-column"><div class="input-group"><label for="gcStopDepth">Głęb. Przystanku Bezp. (m)</label><input type="number" id="gcStopDepth" value="5" min="0" required></div><div class="input-group"><label for="gcStopTime">Czas Przystanku Bezp. (min)</label><input type="number" id="gcStopTime" value="3" min="0" required></div><div class="input-group"><label for="gcTankSize">Pojemność Butli (l)</label><input type="number" id="gcTankSize" value="12" min="1" required></div><div class="input-group"><label for="gcStartPressure">Ciśnienie początkowe (bar)</label><input type="number" id="gcStartPressure" value="200" min="50" required></div><div class="input-group"><label for="gcReserve">Wymagane Ciśnienie Rezerwy (bar)</label><input type="number" id="gcReserve" value="50" min="0" required></div></div>
+                                <input type="hidden" id="gcDivers" value="1">
+                                <div class="form-full-width"><div class="button-with-tooltip"><button type="submit">Oblicz Zużycie</button><span class="tooltip-trigger tooltip-button">? <div class="tooltip-content"><h4>Planowanie Zużycia Gazu</h4><p>...</p></div></span></div></div>
+                            </form>
+                            <div id="gcResult" class="result-container"></div>
+                        </div>
+                        <div id="pro-gas-calculator" class="sub-tab-content">
+                            <div class="pro-overlay">
+                                <h4>Uki's Dive Tools PRO</h4>
+                                <p>To jest funkcja PRO. Łączy ona planowanie zużycia z automatycznym obliczaniem rezerwy Rock Bottom dla pełnego planu.</p>
+                                <p><strong>Odblokuj tę funkcję stawiając mi kawę! ☕</strong></p>
+                                <button id="unlockProButton" class="pro-overlay-button">Odblokuj (Mock)</button>
                             </div>
-                        </form>
-                        <div id="proGasResult" class="result-container"></div>
+                            <h3>Kalkulator Zużycia Gazu (z rezerwą RB)</h3>
+                            <form id="proGasForm" class="two-column-form">
+                                <div class="form-column"><div class="input-group"><label for="gcSAC_pro">Twój SAC (l/min)</label><input type="number" id="gcSAC_pro" value="20" step="0.1" min="5" required></div><div class="input-group"><label for="gcDepth_pro">Maksymalna Głębokość (m)</label><input type="number" id="gcDepth_pro" value="30" min="1" required></div><div class="input-group"><label for="gcBottomTime_pro">Planowany Czas Denny (min)</label><input type="number" id="gcBottomTime_pro" value="20" min="1" required></div><div class="input-group"><label for="gcDescentRate_pro">Prędkość Zanurzania (m/min)</label><input type="number" id="gcDescentRate_pro" value="15" min="1" required></div><div class="input-group"><label for="gcAscentRate_pro">Prędkość Wynurzania (m/min)</label><input type="number" id="gcAscentRate_pro" value="10" min="1" max="18" required></div><div class="input-group"><label for="gcStopDepth_pro">Głęb. Przystanku Bezp. (m)</label><input type="number" id="gcStopDepth_pro" value="5" min="0" required></div></div>
+                                <div class="form-column"><div class="input-group"><label for="gcStopTime_pro">Czas Przystanku Bezp. (min)</label><input type="number" id="gcStopTime_pro" value="3" min="0" required></div><div class="input-group"><label for="gcTankSize_pro">Pojemność Butli (l)</label><input type="number" id="gcTankSize_pro" value="12" min="1" required></div><div class="input-group"><label for="gcStartPressure_pro">Ciśnienie początkowe (bar)</label><input type="number" id="gcStartPressure_pro" value="200" min="50" required></div><div class="input-group"><div class="label-with-tooltip"><label for="rbStressFactor_pro">Mnożnik SAC (Stres)</label></div><input type="number" id="rbStressFactor_pro" value="2" step="0.1" min="1" max="3" required></div><div class="input-group"><label for="rbDivers_pro">Liczba Nurków (do rezerwy)</label><input type="number" id="rbDivers_pro" value="2" min="1" max="2" required title="Ilu nurków będzie oddychać z rezerwy (zwykle 2: Ty i partner)"></div><div class="input-group"><div class="label-with-tooltip"><label for="rbEmergencyTime_pro">Czas Reakcji na Dnie (min)</label></div><input type="number" id="rbEmergencyTime_pro" value="2" min="0" max="5" required></div><div class="input-group"><div class="label-with-tooltip"><label for="rbSafetyMargin_pro">Dodatkowy Bufor (bar)</label></div><input type="number" id="rbSafetyMargin_pro" value="10" min="0" required></div></div>
+                                <div class="form-full-width"><div class="button-with-tooltip"><button type="submit">Oblicz Zużycie z Rezerwą RB</button></div></div>
+                            </form>
+                            <div id="proGasResult" class="result-container"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ballast-calculator" class="tab-content">
+                    <h3>Kalkulator Balastu</h3>
+                    <p style="color: #b0b0b0; margin-top: -10px; margin-bottom: 20px; font-size: 0.9em;">Oblicz sugerowany punkt startowy dla Twojego obciążenia.</p>
+                    <form id="ballastForm" class="two-column-form">
+                        <div class="form-column"><div class="input-group"><label for="ballastWeight">Twoja waga (kg)</label><input type="number" id="ballastWeight" min="40" value="75" required></div><div class="input-group"><label for="ballastSuit">Rodzaj Skafandra</label><select id="ballastSuit" required><option value="foam3">Pianka 3mm (lub mniej)</option><option value="foam5">Pianka 5mm</option><option value="foam7" selected>Pianka 7mm (lub 2x5mm)</option><option value="dryTri">Suchy skafander (Trylaminat)</option><option value="dryNeo">Suchy skafander (Neopren)</option></select></div><div class="input-group" id="ballast-warmer-group"><label for="ballastWarmer">Ocieplacz (dla suchego)</label><select id="ballastWarmer"><option value="thin" selected>Cienki (do 200g)</option><option value="thick">Gruby (400g+)</option></select></div></div>
+                        <div class="form-column"><div class="input-group"><label for="ballastTank">Rodzaj Butli (Główna)</label><select id="ballastTank" required><option value="alu11" selected>Aluminiowa 11L (S80)</option><option value="steel12">Stalowa 10L / 12L</option><option value="steel15">Stalowa 15L</option><option value="twin12">Twinset Stalowy (np. 2x12)</option></select></div><div class="input-group"><label for="ballastWater">Rodaj Wody</label><select id="ballastWater" required><option value="salt" selected>Woda słona</option><option value="fresh">Woda słodka</option></select></div></div>
+                        <div class="form-full-width"><button type="submit">Oblicz Sugestię Balastu</button></div>
+                    </form>
+                    <div id="ballastResult" class="result-container" style="margin-top: 20px;"></div>
+                </div>
+
+                <div id="settings-panel" class="tab-content">
+                    <h3>Ustawienia</h3>
+                    
+                    <div class="settings-toggle-row">
+                        <label for="glass-toggle">Efekt Szklany (Liquid Glass)</label>
+                        <label class="theme-switch" for="glass-toggle">
+                            <input type="checkbox" id="glass-toggle" />
+                            <span class="slider round"></span>
+                        </label>
                     </div>
 
+                    <h4>Zmień Tapetę</h4>
+                    <div class="wallpaper-options">
+                        <img src="background_uki.jpg" 
+                             alt="Główna tapeta" 
+                             class="wallpaper-thumb"
+                             data-wallpaper="url('background_uki.jpg')">
+                             
+                        <img src="Gemini_Generated_Image_31b0jp31b0jp31b0 (1).png" 
+                             alt="Zachód słońca 1" 
+                             class="wallpaper-thumb"
+                             data-wallpaper="url('Gemini_Generated_Image_31b0jp31b0jp31b0 (1).png')">
+                             
+                        <img src="Gemini_Generated_Image_31b0jp31b0jp31b0 (2).png" 
+                             alt="Zachód słońca 2" 
+                             class="wallpaper-thumb"
+                             data-wallpaper="url('Gemini_Generated_Image_31b0jp31b0jp31b0 (2).png')">
+                             
+                        <img src="Generated Image September 22, 2025 - 3_04PM.png" 
+                             alt="Zatoka" 
+                             class="wallpaper-thumb"
+                             data-wallpaper="url('Generated Image September 22, 2025 - 3_04PM.png')">
+                             
+                        <img src="Gemini_Generated_Image_8bkms38bkms38bkm.png" 
+                             alt="Plaża z rybkami" 
+                             class="wallpaper-thumb"
+                             data-wallpaper="url('Gemini_Generated_Image_8bkms38bkms38bkm.png')">
+                    </div>
                 </div>
+
             </div>
-
-        </div>
-
-        <a href="#" id="donation-link" class="donation-link">
-            ☕ Podoba Ci się to narzędzie? Postaw mi kawę!
-        </a>
+        </main>
     </div>
-
     <script src="script.js"></script>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        
-        // --- FUNKCJE WSPÓŁDZIELONE ---
-
-        /**
-         * Oblicza rezerwę Rock Bottom.
-         * @returns {object} { liters: number, bars: number, roundedBars: number }
-         */
-        function calculateRockBottom(params) {
-            const { sac, depth, stopDepth, ascentRate, stressFactor, divers, emergencyTime, volume, safetyMargin } = params;
-            
-            if ([sac, depth, stopDepth, ascentRate, stressFactor, divers, emergencyTime, volume, safetyMargin].some(v => v === undefined || isNaN(v))) {
-                throw new Error("Brakujące lub nieprawidłowe dane do obliczenia Rock Bottom.");
-            }
-            if (ascentRate <= 0 || volume <= 0) {
-                 throw new Error("Prędkość wynurzania i pojemność butli muszą być większe od zera.");
-            }
-
-            const P_depth = (depth / 10) + 1;
-            const P_stop = (stopDepth / 10) + 1;
-            const P_avg_ascent = (P_depth + P_stop) / 2;
-            const T_ascent = (depth - stopDepth) / ascentRate;
-            const SAC_stressed = sac * stressFactor;
-            
-            const Gas_reaction = SAC_stressed * P_depth * emergencyTime * divers;
-            const Gas_ascent = SAC_stressed * P_avg_ascent * T_ascent * divers;
-            
-            const TotalGasLiters = Gas_reaction + Gas_ascent;
-            const RB_pressure = TotalGasLiters / volume;
-            const FinalRB = RB_pressure + safetyMargin;
-            
-            return {
-                liters: (FinalRB * volume), // Litry z uwzględnieniem bufora
-                bars: FinalRB,
-                roundedBars: Math.ceil(FinalRB)
-            };
-        }
-
-        /**
-         * Oblicza całkowite zużycie gazu dla planu nurkowania.
-         * @returns {object} Obiekt z wynikami (demandLiters, demandBars, etc.)
-         */
-        function calculateGasConsumption(params) {
-            const { sac, depth, bottomTime, descentRate, ascentRate, stopDepth, stopTime, tankSize, startPressure, divers } = params;
-
-            if ([sac, depth, bottomTime, descentRate, ascentRate, stopDepth, stopTime, tankSize, startPressure, divers].some(v => v === undefined || isNaN(v))) {
-                throw new Error("Brakujące lub nieprawidłowe dane do obliczenia zużycia gazu.");
-            }
-
-            // Ciśnienia (ATA)
-            const P_surface = 1.0;
-            const P_bottom = (depth / 10) + 1;
-            const P_stop = (stopDepth / 10) + 1;
-            
-            // Średnie ciśnienia dla faz
-            const P_avg_descent = (P_surface + P_bottom) / 2;
-            const P_avg_ascent_to_stop = (P_bottom + P_stop) / 2;
-            const P_avg_ascent_to_surface = (P_stop + P_surface) / 2;
-
-            // Czasy (min)
-            const T_descent = depth / descentRate;
-            const T_bottom = bottomTime;
-            const T_ascent_to_stop = (depth - stopDepth) / ascentRate;
-            const T_stop = stopTime;
-            const T_ascent_to_surface = stopDepth / ascentRate;
-
-            // Obliczenie zużycia w litrach dla każdej fazy
-            const L_descent = sac * P_avg_descent * T_descent * divers;
-            const L_bottom = sac * P_bottom * T_bottom * divers;
-            const L_ascent_to_stop = sac * P_avg_ascent_to_stop * T_ascent_to_stop * divers;
-            const L_stop = sac * P_stop * T_stop * divers;
-            const L_ascent_to_surface = sac * P_avg_ascent_to_surface * T_ascent_to_surface * divers;
-            
-            const totalDemandLiters = L_descent + L_bottom + L_ascent_to_stop + L_stop + L_ascent_to_surface;
-            const totalDemandBars = totalDemandLiters / tankSize;
-            const totalSupplyLiters = tankSize * startPressure;
-            const totalSupplyBars = startPressure;
-            
-            return {
-                totalDemandLiters,
-                totalDemandBars,
-                totalSupplyLiters,
-                totalSupplyBars
-            };
-        }
-
-        /**
-         * ZMODYFIKOWANA FUNKCJA: Renderuje "idiotoodporny" wynik w kontenerze.
-         * Przyjmuje nowy, opcjonalny argument 'rockBottomInfo'
-         */
-        function renderConsumptionResult(container, consumptionData, reserveData, rockBottomInfo = null) {
-            const { totalDemandLiters, totalDemandBars, totalSupplyLiters, totalSupplyBars } = consumptionData;
-            const { requiredReserveLiters, requiredReserveBars } = reserveData;
-            
-            const remainingLiters = totalSupplyLiters - totalDemandLiters;
-            const remainingBars = remainingLiters / (consumptionData.tankSize || totalSupplyLiters / totalSupplyBars); // tankSize
-            
-            const isSafe = (remainingLiters >= requiredReserveLiters);
-            
-            // 1. Stwórz blok z info o RB (jeśli dane zostały przekazane)
-            let rbHtml = '';
-            if (rockBottomInfo) {
-                rbHtml = `
-                    <div class="result-section rb-info-section">
-                        <p class="result-label">Minimalna Rezerwa (Rock Bottom) na głębokości ${rockBottomInfo.depth} m:</p>
-                        <p class="result-value-main">${rockBottomInfo.roundedBars} bar</p>
-                    </div>
-                `;
-            }
-            
-            // 2. Stwórz blok z werdyktem
-            let verdictHTML = '';
-            if (isSafe) {
-                verdictHTML = `<div class="result-verdict result-verdict-ok">WYSTARCZY</div>`;
-            } else {
-                const deficitLiters = requiredReserveLiters - remainingLiters;
-                verdictHTML = `
-                    <div class="result-verdict result-verdict-bad">NIE WYSTARCZY</div>
-                    <p class="result-value-sub">Do bezpiecznego nurkowania (Plan + Rezerwa) brakuje Ci: <strong>${deficitLiters.toFixed(0)} litrów</strong></p>
-                `;
-            }
-
-            // 3. Złóż cały HTML wyniku
-            container.innerHTML = `
-                ${rbHtml} 
-
-                <div class="result-section">
-                    <p class="result-label">Twoje zapotrzebowanie na gaz (Plan):</p>
-                    <p class="result-value-main"><span class="liters">${totalDemandLiters.toFixed(0)} litrów</span> (${totalDemandBars.toFixed(1)} bar)</p>
-                </div>
-                
-                <div class="result-section">
-                    <p class="result-label">Ilość gazu jaka faktycznie masz (Start):</p>
-                    <p class="result-value-main">${totalSupplyLiters.toFixed(0)} litrów (${totalSupplyBars.toFixed(1)} bar)</p>
-                </div>
-
-                <div class="result-section">
-                    <p class="result-label">Gaz pozostały po nurkowaniu (Plan):</p>
-                    <p class="result-value-main">${remainingLiters.toFixed(0)} litrów (${remainingBars.toFixed(1)} bar)</p>
-                    <p class="result-value-sub">(Wymagana rezerwa to: ${requiredReserveLiters.toFixed(0)} l / ${requiredReserveBars.toFixed(1)} bar)</p>
-                </div>
-                
-                ${verdictHTML}
-            `;
-            container.style.display = 'block';
-        }
-
-
-        // --- Listener 1: Kalkulator Rock Bottom (Używa funkcji) ---
-        
-        const rbForm = document.getElementById('rbForm');
-        const rbResultContainer = document.getElementById('rbResult');
-        const gcReserveInput = document.getElementById('gcReserve'); 
-
-        if (rbForm && rbResultContainer && gcReserveInput) {
-            rbForm.addEventListener('submit', function(e) {
-                e.preventDefault(); 
-                try {
-                    const params = {
-                        sac: parseFloat(document.getElementById('rbSAC').value),
-                        depth: parseFloat(document.getElementById('rbDepth').value),
-                        stopDepth: parseFloat(document.getElementById('rbStopDepth').value),
-                        ascentRate: parseFloat(document.getElementById('rbAscentRate').value),
-                        stressFactor: parseFloat(document.getElementById('rbStressFactor').value),
-                        divers: parseInt(document.getElementById('rbDivers').value),
-                        emergencyTime: parseFloat(document.getElementById('rbEmergencyTime').value),
-                        volume: parseFloat(document.getElementById('rbVolume').value),
-                        safetyMargin: parseFloat(document.getElementById('rbSafetyMargin').value)
-                    };
-                    
-                    const rbResult = calculateRockBottom(params);
-
-                    rbResultContainer.innerHTML = `
-                        <p class="result-label">Minimalne ciśnienie w Twoim zestawie na max zaplanowanej głębokości ${params.depth} m dla metody Rock Bottom:</p>
-                        <p class="result-value">${rbResult.roundedBars} bar</p>
-                    `;
-                    rbResultContainer.style.display = 'block'; 
-
-                    gcReserveInput.value = rbResult.roundedBars;
-
-                } catch (error) {
-                    rbResultContainer.innerHTML = `<p class="result-error">${error.message}</p>`;
-                    rbResultContainer.style.display = 'block';
-                }
-            });
-        }
-
-        // --- Listener 2: Kalkulator Zużycia Gazu (Używa funkcji) ---
-        
-        const gcForm = document.getElementById('gasConsumptionForm');
-        const gcResultContainer = document.getElementById('gcResult');
-
-        if (gcForm && gcResultContainer) {
-            gcForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                try {
-                    const tankSize = parseFloat(document.getElementById('gcTankSize').value);
-                    const reservePressure = parseFloat(document.getElementById('gcReserve').value);
-                    
-                    const consumptionParams = {
-                        sac: parseFloat(document.getElementById('gcSAC').value),
-                        depth: parseFloat(document.getElementById('gcDepth').value),
-                        bottomTime: parseFloat(document.getElementById('gcBottomTime').value),
-                        descentRate: parseFloat(document.getElementById('gcDescentRate').value),
-                        ascentRate: parseFloat(document.getElementById('gcAscentRate').value),
-                        stopDepth: parseFloat(document.getElementById('gcStopDepth').value),
-                        stopTime: parseFloat(document.getElementById('gcStopTime').value),
-                        tankSize: tankSize,
-                        startPressure: parseFloat(document.getElementById('gcStartPressure').value),
-                        divers: 1 
-                    };
-                    
-                    const reserveParams = {
-                        requiredReserveLiters: tankSize * reservePressure,
-                        requiredReserveBars: reservePressure
-                    };
-
-                    const consumptionResult = calculateGasConsumption(consumptionParams);
-                    // Wywołanie renderowania BEZ info o RB
-                    renderConsumptionResult(gcResultContainer, { ...consumptionResult, tankSize: tankSize }, reserveParams, null); 
-
-                } catch (error) {
-                    gcResultContainer.innerHTML = `<p class="result-error">${error.message}</p>`;
-                    gcResultContainer.style.display = 'block';
-                }
-            });
-        }
-        
-        // --- Listener 3: NOWY Kalkulator PRO (Używa obu funkcji) ---
-        
-        const proForm = document.getElementById('proGasForm');
-        const proResultContainer = document.getElementById('proGasResult');
-        
-        if (proForm && proResultContainer) {
-            proForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                try {
-                    // Pobierz wszystkie wartości z formularza PRO
-                    const sac = parseFloat(document.getElementById('gcSAC_pro').value);
-                    const depth = parseFloat(document.getElementById('gcDepth_pro').value);
-                    const tankSize = parseFloat(document.getElementById('gcTankSize_pro').value);
-                    const ascentRate = parseFloat(document.getElementById('gcAscentRate_pro').value);
-                    const stopDepth = parseFloat(document.getElementById('gcStopDepth_pro').value);
-                    
-                    // 1. Oblicz Rock Bottom (wewnętrznie)
-                    const rbParams = {
-                        sac: sac,
-                        depth: depth,
-                        stopDepth: stopDepth, // Użyj głębokości przystanku z planu
-                        ascentRate: ascentRate, // Użyj prędkości wynurzania z planu
-                        stressFactor: parseFloat(document.getElementById('rbStressFactor_pro').value),
-                        divers: parseInt(document.getElementById('rbDivers_pro').value),
-                        emergencyTime: parseFloat(document.getElementById('rbEmergencyTime_pro').value),
-                        volume: tankSize, // Użyj pojemności butli z planu
-                        safetyMargin: parseFloat(document.getElementById('rbSafetyMargin_pro').value)
-                    };
-                    
-                    const rbResult = calculateRockBottom(rbParams);
-                    
-                    // Przygotuj dane o rezerwie
-                    const reserveParams = {
-                        requiredReserveLiters: rbResult.liters,
-                        requiredReserveBars: rbResult.bars
-                    };
-                    
-                    // 2. Oblicz Zużycie Gazu
-                    const consumptionParams = {
-                        sac: sac,
-                        depth: depth,
-                        bottomTime: parseFloat(document.getElementById('gcBottomTime_pro').value),
-                        descentRate: parseFloat(document.getElementById('gcDescentRate_pro').value),
-                        ascentRate: ascentRate,
-                        stopDepth: stopDepth,
-                        stopTime: parseFloat(document.getElementById('gcStopTime_pro').value),
-                        tankSize: tankSize,
-                        startPressure: parseFloat(document.getElementById('gcStartPressure_pro').value),
-                        divers: 1
-                    };
-                    
-                    const consumptionResult = calculateGasConsumption(consumptionParams);
-                    
-                    // 3. Przygotuj info o RB do wyświetlenia
-                    const rbInfo = {
-                        depth: rbParams.depth,
-                        roundedBars: rbResult.roundedBars
-                    };
-
-                    // 4. Renderuj wynik (Z info o RB)
-                    renderConsumptionResult(proResultContainer, { ...consumptionResult, tankSize: tankSize }, reserveParams, rbInfo);
-                    
-                } catch (error) {
-                    proResultContainer.innerHTML = `<p class="result-error">${error.message}</p>`;
-                    proResultContainer.style.display = 'block';
-                }
-            });
-        }
-        
-        // --- Listener 4: Mock Paywall ---
-        
-        const unlockButton = document.getElementById('unlockProButton');
-        const proTabContent = document.getElementById('pro-gas-calculator');
-        
-        if(unlockButton && proTabContent) {
-            unlockButton.addEventListener('click', function() {
-                // W prawdziwej aplikacji tutaj byłaby integracja z płatnością
-                proTabContent.classList.add('unlocked');
-            });
-        }
-        
-    });
-    </script>
 </body>
 </html>
