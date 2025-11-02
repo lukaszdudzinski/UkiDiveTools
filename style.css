@@ -31,10 +31,10 @@ body {
 /* --- BELKA BOCZNA (SIDEBAR) --- */
 .sidebar-nav {
   width: 260px;
-  /* POPRAWKA: Zwiększony efekt "liquid glass" */
-  background-color: rgba(30, 30, 30, 0.55); 
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  /* ZMIANA: Zwiększony efekt "liquid glass" kosztem czytelności */
+  background-color: rgba(30, 30, 30, 0.4); /* Bardziej przezroczyste tło */
+  backdrop-filter: blur(30px); /* Większe rozmycie */
+  -webkit-backdrop-filter: blur(30px); /* Większe rozmycie */
   padding: 25px;
   flex-shrink: 0;
   border-right: 1px solid rgba(255, 255, 255, 0.1);
@@ -121,9 +121,10 @@ body {
 /* --- KONTENER TREŚCI --- */
 .app-content {
   flex: 1;
-  background-color: rgba(30, 30, 30, 0.65); 
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  /* ZMIANA: Zwiększony efekt "liquid glass" kosztem czytelności */
+  background-color: rgba(30, 30, 30, 0.5); /* Bardziej przezroczyste tło */
+  backdrop-filter: blur(30px); /* Większe rozmycie */
+  -webkit-backdrop-filter: blur(30px); /* Większe rozmycie */
   padding: 0; /* Padding przeniesiony do .tab-content-wrapper */
   height: 100%; 
   overflow: hidden; 
@@ -299,10 +300,10 @@ body {
   font-size: 0.9em;
   text-align: left;
   
-  /* Domyślny styl liquid glass */
-  background-color: rgba(30, 30, 30, 0.75); /* Ciemniejsze tło */
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  /* ZMIANA: Domyślny styl liquid glass dla tooltipa */
+  background-color: rgba(30, 30, 30, 0.6); /* Bardziej przezroczyste tło */
+  backdrop-filter: blur(30px); /* Większe rozmycie */
+  -webkit-backdrop-filter: blur(30px); /* Większe rozmycie */
   border: 1px solid rgba(255, 255, 255, 0.1);
 
   /* Dodanie animacji poświaty */
@@ -618,11 +619,17 @@ body.glass-off:not(.dark-theme) #global-tooltip.tooltip-content {
    ============================================================ */
 
 body:not(.dark-theme) .sidebar-nav {
-  background-color: rgba(255, 255, 255, 0.65);
+  /* ZMIANA: Zwiększony efekt "liquid glass" w trybie jasnym */
+  background-color: rgba(255, 255, 255, 0.35); /* ZMIANA: 0.5 -> 0.35 */
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
   border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 body:not(.dark-theme) .app-content {
-  background-color: rgba(255, 255, 255, 0.75);
+  /* ZMIANA: Zwiększony efekt "liquid glass" w trybie jasnym */
+  background-color: rgba(255, 255, 255, 0.45); /* ZMIANA: 0.6 -> 0.45 */
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
 }
 
 body:not(.dark-theme) h1,
@@ -699,7 +706,9 @@ body:not(.dark-theme) .result-container {
 
 /* ZMIANA: Styl globalnego tooltipa (jasny motyw) */
 body:not(.dark-theme) #global-tooltip.tooltip-content {
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(255, 255, 255, 0.55); /* ZMIANA: 0.7 -> 0.55 */
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
   border: 1px solid rgba(0, 0, 0, 0.1);
   color: #2c2c2c;
   animation-name: pulse-glow-light;

@@ -445,9 +445,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const ballastResultContainer = document.getElementById('ballastResult');
     const ballastSuitSelect = document.getElementById('ballastSuit');
     const ballastWarmerGroup = document.getElementById('ballast-warmer-group');
-    // ZMIANA: Nowe stałe dla logiki płyty
     const ballastTankSelect = document.getElementById('ballastTank');
     const ballastPlateGroup = document.getElementById('ballast-plate-group');
+    const ballastBodyTypeSelect = document.getElementById('ballastBodyType'); // ZMIANA: Dodano BodyType
 
     // ZMIANA: Scentralizowana funkcja do pokazywania/ukrywania pól balastu
     function updateBallastDependents() {
@@ -462,7 +462,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
         
         // Pokaż/Ukryj Płytę
-        if (tank.startsWith('twin')) { // ZMIANA: Sprawdza czy zaczyna się od "twin"
+        if (tank.includes('twin')) { // ZMIANA: Sprawdza czy string zawiera "twin"
             ballastPlateGroup.style.display = 'block';
         } else {
             ballastPlateGroup.style.display = 'none';
@@ -483,7 +483,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         ballastForm.addEventListener('submit', function(e) { 
             e.preventDefault(); 
             try { 
-                const weight = parseFloat(document.getElementById('ballastWeight').value); 
+                const weight = parseFloat(document.getElementById('ballastWeight').value);
+                // ZMIANA: Dodano typ budowy
+                const bodyType = document.getElementById('ballastBodyType').value;
                 const suit = document.getElementById('ballastSuit').value; 
                 const warmer = document.getElementById('ballastWarmer').value; 
                 const tank = document.getElementById('ballastTank').value; 
@@ -509,27 +511,58 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     case 'alu11': ballast += 1; break; // Lekko dodatnia
                     case 'steel12': ballast -= 3; break;
                     case 'steel15': ballast -= 4; break;
-                    // ZMIANA: Dodano nowe twinsety
-                    case 'twin7':
-                        ballast -= 4; // Estymowana waga (pływalność ujemna) butli 2x7
+                    
+                    // NOWE 200/232b
+                    case 'twin7_200':
+                        ballast -= 4; // Estymacja
                         if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
                         break; 
-                    case 'twin85':
-                        ballast -= 5; // Estymowana waga (pływalność ujemna) butli 2x8.5
+                    case 'twin85_200':
+                        ballast -= 5; // Estymacja
                         if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
                         break; 
-                    case 'twin10':
-                        ballast -= 6; // Estymowana waga (pływalność ujemna) butli 2x10
+                    case 'twin10_200':
+                        ballast -= 6; // Estymacja
                         if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
                         break; 
-                    case 'twin12': 
-                        ballast -= 8; // Estymowana waga (pływalność ujemna) butli 2x12
+                    case 'twin12_200': 
+                        ballast -= 8; 
+                        if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
+                        break;
+                    
+                    // NOWE 300b (cięższe)
+                    case 'twin7_300':
+                        ballast -= 6; // Estymacja (2kg cięższe)
+                        if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
+                        break; 
+                    // ZMIANA: Dodano brakującą logikę
+                    case 'twin85_300':
+                        ballast -= 7; // Estymacja (2kg cięższe)
+                        if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
+                        break; 
+                    case 'twin10_300':
+                        ballast -= 8; // Estymacja (2kg cięższe)
+                        if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
+                        break; 
+                    case 'twin12_300':
+                        ballast -= 10; // Estymacja (2kg cięższe)
                         if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
                         break; 
                 } 
+                
                 if (water === 'fresh') { 
                     ballast -= 2; 
                 } 
+                
+                // ZMIANA: Modyfikator budowy ciała
+                switch (bodyType) {
+                    case 'slim': ballast += 2; break;
+                    case 'athletic': ballast -= 3; break;
+                    case 'overweight': ballast += 3; break;
+                    case 'average':
+                    default: break;
+                }
+
                 if (ballast < 0) ballast = 0; 
                 
                 ballastResultContainer.innerHTML = `<p class="result-label">Sugerowany punkt startowy balastu:</p><p class="result-value">${ballast.toFixed(1)} kg</p><p class="result-warning">⚠️ <strong>Pamiętaj:</strong> To only sugestia. Zawsze wykonaj kontrolę pływalności (check-dive) przed nurkowaniem, aby precyjnie dobrać ostateczną ilość obciążenia.</p>`; 
@@ -566,7 +599,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 }
                 
                 const waterType = document.getElementById('waterType').value;
-                const pressureConversion = (waterType === 'fresh') ? (9.8 / 10) : 1.0; 
+                // ZMIANA: Użycie globalnego przelicznika ciśnienia
+                const pressureConversion = (waterType === 'fresh') ? (10 / 10.3) : 1.0; // Bardziej precyzyjny przelicznik
                 
                 const pressureUsed = p1 - p2;
                 const litersUsed = pressureUsed * vb;

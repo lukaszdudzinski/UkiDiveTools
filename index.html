@@ -57,7 +57,7 @@
                             <div class="input-group"><label for="vb">Pojemność butli (l)</label><input type="number" id="vb" value="15" required></div>
                         </div>
                         <div class="form-column">
-                            <div class="input-group"><label for="depth">Średnia głębokość (m)</label><input type="number" id="depth" required></div>
+                            <div class="input-group"><label for="depth">Średnia głębokość (m)</label><input type="number" id="depth" step="0.1" required></div>
                             <div class="input-group"><label for="time">Czas pomiaru (min)</label><input type="number" id="time" required></div>
                             <div class="input-group"><label for="waterType">Rodaj wody</label><select id="waterType"><option value="salt">Woda słona</option><option value="fresh" selected>Woda słodka</option></select></div>
                         </div>
@@ -199,6 +199,15 @@
                         <div class="form-column">
                             <div class="input-group"><label for="ballastWeight">Twoja waga (kg)</label><input type="number" id="ballastWeight" min="40" value="75" required></div>
                             <div class="input-group">
+                                <label for="ballastBodyType">Typ Budowy Ciała</label>
+                                <select id="ballastBodyType" required>
+                                    <option value="slim">Szczupła</option>
+                                    <option value="athletic">Atletyczna</option>
+                                    <option value="average" selected>Średnia</option>
+                                    <option value="overweight">Nadwaga</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
                                 <label for="ballastSuit">Rodzaj Skafandra</label>
                                 <select id="ballastSuit" required>
                                     <option value="foam3">Pianka 3mm (lub mniej)</option>
@@ -218,10 +227,14 @@
                                     <option value="alu11">Aluminiowa 11L (S80)</option>
                                     <option value="steel12">Stalowa 10L / 12L</option>
                                     <option value="steel15" selected>Stalowa 15L</option>
-                                    <option value="twin7">Twinset Stalowy (2x7L)</option>
-                                    <option value="twin85">Twinset Stalowy (2x8.5L)</option>
-                                    <option value="twin10">Twinset Stalowy (2x10L)</option>
-                                    <option value="twin12">Twinset Stalowy (np. 2x12)</option>
+                                    <option value="twin7_200">Twinset Stalowy 2x7L (232b)</option>
+                                    <option value="twin85_200">Twinset Stalowy 2x8.5L (232b)</option>
+                                    <option value="twin10_200">Twinset Stalowy 2x10L (232b)</option>
+                                    <option value="twin12_200">Twinset Stalowy 2x12L (232b)</option>
+                                    <option value="twin7_300">Twinset Stalowy 2x7L (300b)</option>
+                                    <option value="twin85_300">Twinset Stalowy 2x8.5L (300b)</option>
+                                    <option value="twin10_300">Twinset Stalowy 2x10L (300b)</option>
+                                    <option value="twin12_300">Twinset Stalowy 2x12L (300b)</option>
                                 </select>
                             </div>
                             <div class="input-group" id="ballast-plate-group" style="display: none;">
