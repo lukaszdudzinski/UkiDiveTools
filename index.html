@@ -29,6 +29,7 @@
                 <li><a href="#" data-tab="nitrox-calculator">Kalkulator Nitrox</a></li>
                 <li><a href="#" data-tab="gas-planning-calculator">Planowanie Gazu</a></li>
                 <li><a href="#" data-tab="ballast-calculator">Kalkulator Balastu</a></li>
+                <li><a href="#" data-tab="science-of-diving">Wiedza Nurkowa</a></li>
                 <li><a href="#" data-tab="settings-panel">Ustawienia</a></li>
             </ul>
             
@@ -176,7 +177,7 @@
                                 <h4>Uki's Dive Tools PRO</h4>
                                 <p>To jest funkcja PRO. Łączy ona planowanie zużycia z automatycznym obliczaniem rezerwy Rock Bottom dla pełnego planu.</p>
                                 <p><strong>Odblokuj tę funkcję stawiając mi kawę! ☕</strong></p>
-                                <button id="unlockProButton" class="pro-overlay-button">Odblokuj (Mock)</button>
+                                <button class="unlockProButton pro-overlay-button">Odblokuj (Mock)</button>
                             </div>
                             <h3>Kalkulator Zużycia Gazu (z rezerwą RB)</h3>
                             <form id="proGasForm" class="two-column-form">
@@ -249,6 +250,135 @@
                         <div class="form-full-width"><button type="submit">Oblicz Sugestię Balastu</button></div>
                     </form>
                     <div id="ballastResult" class="result-container" style="margin-top: 20px;"></div>
+                </div>
+
+                <div id="science-of-diving" class="tab-content">
+                    <h3>Wiedza Nurkowa</h3>
+                    
+                    <nav class="sub-tab-nav">
+                        <button class="sub-tab-button active" data-subtab="sod-sac">SAC</button>
+                        <button class="sub-tab-button" data-subtab="sod-nitrox">Nitrox (MOD/EAD)</button>
+                        <button class="sub-tab-button" data-subtab="sod-gas">Planowanie Gazu <span class="pro-badge">Uki's PRO</span></button>
+                        <button class="sub-tab-button" data-subtab="sod-ballast">Balast <span class="pro-badge">Uki's PRO</span></button>
+                    </nav>
+                    
+                    <div class="sub-tab-content-wrapper">
+                        
+                        <div id="sod-sac" class="sub-tab-content active-sub-tab">
+                            <div class="science-content">
+                                <div class="formula-box">
+                                    <h5>SAC (Surface Air Consumption)</h5>
+                                    <p class="formula">SAC = ( (P1 - P2) &times; V<sub>b</sub> ) / ( P<sub>śr</sub> &times; T )</p>
+                                    <ul>
+                                        <li><strong>P1:</strong> Ciśnienie startowe (bar)</li>
+                                        <li><strong>P2:</strong> Ciśnienie końcowe (bar)</li>
+                                        <li><strong>V<sub>b</sub>:</strong> Pojemność butli (l)</li>
+                                        <li><strong>P<sub>śr</sub>:</strong> Średnie ciśnienie otoczenia (ATA) = (Głębokość / 10) + 1 (dla wody słonej) lub (Głębokość / 10.3) + 1 (dla wody słodkiej)</li>
+                                        <li><strong>T:</strong> Czas (min)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="sod-nitrox" class="sub-tab-content">
+                             <div class="science-content">
+                                <div class="formula-box">
+                                    <h5>MOD (Maximum Operating Depth)</h5>
+                                    <p class="formula">MOD (metry) = ( (PPO₂ / FO₂) - 1 ) &times; 10</p>
+                                    <ul>
+                                        <li><strong>PPO₂:</strong> Ciśnienie parcjalne tlenu (np. 1.4)</li>
+                                        <li><strong>FO₂:</strong> Frakcja tlenu (np. 0.32 dla EAN32)</li>
+                                    </ul>
+                                </div>
+                                <div class="formula-box">
+                                    <h5>EAD (Equivalent Air Depth)</h5>
+                                    <p class="formula">EAD (metry) = ( (Głębokość + 10) &times; FN₂ / 0.79 ) - 10</p>
+                                    <ul>
+                                        <li><strong>FN₂:</strong> Frakcja azotu (np. 0.68 dla EAN32)</li>
+                                        <li><strong>0.79:</strong> Frakcja azotu w powietrzu</li>
+                                    </ul>
+                                </div>
+                             </div>
+                        </div>
+                        
+                        <div id="sod-gas" class="sub-tab-content">
+                            <div class="pro-overlay">
+                                <h4>Uki's Dive Tools PRO</h4>
+                                <p>To jest funkcja PRO. Dostęp do zaawansowanej wiedzy jest odblokowywany po postawieniu kawy.</p>
+                                <p><strong>Odblokuj tę funkcję stawiając mi kawę! ☕</strong></p>
+                                <button class="unlockProButton pro-overlay-button">Odblokuj (Mock)</button>
+                            </div>
+                             <div class="science-content">
+                                <div class="formula-box">
+                                    <h5>Całkowite Zużycie Gazu (Plan)</h5>
+                                    <p>Suma gazu zużytego we wszystkich fazach nurkowania (dla 1 nurka):</p>
+                                    <p class="formula">L<sub>całkowite</sub> = L<sub>zanurzenie</sub> + L<sub>dno</sub> + L<sub>wynurzenie</sub> + L<sub>przystanek</sub></p>
+                                    <ul>
+                                        <li><strong>L<sub>zanurzenie</sub>:</strong> SAC &times; P<sub>śr-zanurzenie</sub> &times; T<sub>zanurzenie</sub></li>
+                                        <li><strong>L<sub>dno</sub>:</strong> SAC &times; P<sub>dno</sub> &times; T<sub>dno</sub></li>
+                                        <li><strong>L<sub>wynurzenie</sub>:</strong> SAC &times; P<sub>śr-wynurzenie</sub> &times; T<sub>wynurzenie</sub></li>
+                                        <li><strong>L<sub>przystanek</sub>:</strong> SAC &times; P<sub>przystanek</sub> &times; T<sub>przystanek</sub></li>
+                                    </ul>
+                                </div>
+                                <div class="formula-box">
+                                    <h5>Rezerwa Rock Bottom (RB)</h5>
+                                    <p>Suma gazu dla 2 nurków w stresie podczas awaryjnego wynurzenia:</p>
+                                    <p class="formula">L<sub>RB</sub> = (Gaz<sub>reakcja</sub> + Gaz<sub>wynurzenie</sub>) + Bufor</p>
+                                    <ul>
+                                        <li><strong>SAC<sub>stres</sub>:</strong> SAC &times; Mnożnik stresu (np. 2)</li>
+                                        <li><strong>Gaz<sub>reakcja</sub>:</strong> SAC<sub>stres</sub> &times; P<sub>dno</sub> &times; T<sub>reakcja</sub> &times; 2 nurków</li>
+                                        <li><strong>Gaz<sub>wynurzenie</sub>:</strong> SAC<sub>stres</sub> &times; P<sub>śr-wynurzenie</sub> &times; T<sub>wynurzenie</sub> &times; 2 nurków</li>
+                                        <li><strong>Bufor:</strong> Dodatkowe bary (np. 10 bar) &times; Pojemność butli</li>
+                                    </ul>
+                                </div>
+                             </div>
+                        </div>
+                        
+                        <div id="sod-ballast" class="sub-tab-content">
+                            <div class="pro-overlay">
+                                <h4>Uki's Dive Tools PRO</h4>
+                                <p>To jest funkcja PRO. Dostęp do zaawansowanej wiedzy jest odblokowywany po postawieniu kawy.</p>
+                                <p><strong>Odblokuj tę funkcję stawiając mi kawę! ☕</strong></p>
+                                <button class="unlockProButton pro-overlay-button">Odblokuj (Mock)</button>
+                            </div>
+                             <div class="science-content">
+                                <div class="formula-box">
+                                    <h5>Obliczanie Sugestii Balastu</h5>
+                                    <p>Obliczenie balastu to heurystyka (dobra zasada), a nie ścisły wzór. Zawsze wykonaj kontrolę pływalności.</p>
+                                    <p class="formula">Balast = Waga<sub>bazowa</sub> + Modyfikatory</p>
+                                    <ul>
+                                        <li><strong>Waga<sub>bazowa</sub>:</strong> 10% wagi ciała nurka</li>
+                                        <li>--- Modyfikatory Skafandra ---</li>
+                                        <li><strong>Pianka 3mm:</strong> -3 kg</li>
+                                        <li><strong>Pianka 5mm:</strong> -2 kg</li>
+                                        <li><strong>Pianka 7mm:</strong> 0 kg (baza)</li>
+                                        <li><strong>Suchy (Trylam/Crash):</strong> +4kg (Cienki ocieplacz) / +6kg (Gruby ocieplacz)</li>
+                                        <li><strong>Suchy (Neopren):</strong> +7kg (Cienki ocieplacz) / +8kg (Gruby ocieplacz)</li>
+                                        <li>--- Modyfikatory Butli (Pływalność Ujemna) ---</li>
+                                        <li><strong>Alu 11L (S80):</strong> +1 kg (jest dodatnia)</li>
+                                        <li><strong>Stal 12L:</strong> -3 kg</li>
+                                        <li><strong>Stal 15L:</strong> -4 kg</li>
+                                        <li><strong>Twin 2x7L (232b):</strong> -4 kg</li>
+                                        <li><strong>Twin 2x8.5L (232b):</strong> -5 kg</li>
+                                        <li><strong>Twin 2x10L (232b):</strong> -6 kg</li>
+                                        <li><strong>Twin 2x12L (232b):</strong> -8 kg</li>
+                                        <li><strong>Twin 2x7L (300b):</strong> -6 kg</li>
+                                        <li><strong>Twin 2x8.5L (300b):</strong> -7 kg</li>
+                                        <li><strong>Twin 2x10L (300b):</strong> -8 kg</li>
+                                        <li><strong>Twin 2x12L (300b):</strong> -10 kg</li>
+                                        <li><strong>Płyta Alu (dla Twina):</strong> -0.85 kg</li>
+                                        <li><strong>Płyta Stal (dla Twina):</strong> -2 kg</li>
+                                        <li>--- Modyfikatory Inne ---</li>
+                                        <li><strong>Woda Słodka:</strong> -2 kg</li>
+                                        <li><strong>Budowa Szczupła:</strong> +2 kg</li>
+                                        <li><strong>Budowa Atletyczna:</strong> -3 kg</li>
+                                        <li><strong>Budowa Nadwaga:</strong> +3 kg</li>
+                                    </ul>
+                                </div>
+                             </div>
+                        </div>
+                        
+                    </div>
                 </div>
 
                 <div id="settings-panel" class="tab-content">

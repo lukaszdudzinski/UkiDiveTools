@@ -432,11 +432,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
     
     // --- Listener 4: Mock Paywall ---
-    const unlockButton = document.getElementById('unlockProButton');
-    const proTabContent = document.getElementById('pro-gas-calculator');
-    if(unlockButton && proTabContent) {
-        unlockButton.addEventListener('click', function() {
-            proTabContent.classList.add('unlocked');
+    // ZMIANA: Używa teraz querySelectorAll dla wielu przycisków i wielu treści
+    const unlockButtons = document.querySelectorAll('.unlockProButton');
+    const proTabContents = document.querySelectorAll('#pro-gas-calculator, #sod-gas, #sod-ballast');
+    
+    if (unlockButtons.length > 0 && proTabContents.length > 0) {
+        unlockButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                proTabContents.forEach(content => {
+                    content.classList.add('unlocked');
+                });
+            });
         });
     }
     
