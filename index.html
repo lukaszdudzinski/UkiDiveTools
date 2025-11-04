@@ -81,7 +81,11 @@
 
                 <div id="nitrox-calculator" class="tab-content">
                     <div class="input-group"><label for="nitroxO2">Procent tlenu (O₂%)</label><input type="number" id="nitroxO2" value="32" min="21" max="100" required></div>
-                    <nav class="sub-tab-nav"><button class="sub-tab-button active" data-subtab="mod-calculator" title="Oblicza maksymalną głębokość">Oblicz MOD</button><button class="sub-tab-button" data-subtab="ead-calculator" title="Oblicza równoważną głębokość powietrzną">Oblicz EAD</button></nav>
+                    <nav class="sub-tab-nav">
+                        <button class="sub-tab-button active" data-subtab="mod-calculator" title="Oblicza maksymalną głębokość">Oblicz MOD</button>
+                        <button class="sub-tab-button" data-subtab="ead-calculator" title="Oblicza równoważną głębokość powietrzną">Oblicz EAD</button>
+                        <button class="sub-tab-button" data-subtab="best-mix-calculator" title="Oblicza najlepszą mieszankę na daną głębokość">Oblicz Best Mix</button>
+                    </nav>
                     <div class="sub-tab-content-wrapper">
                         <div id="mod-calculator" class="sub-tab-content active-sub-tab">
                             <form id="modForm">
@@ -122,6 +126,14 @@
                                 </div>
                             </form>
                             <div id="eadResult" class="result-container"></div>
+                        </div>
+                        <div id="best-mix-calculator" class="sub-tab-content">
+                            <form id="bestMixForm">
+                                <div class="input-group"><label for="bestMixDepth">Planowana głębokość (m)</label><input type="number" id="bestMixDepth" step="0.1" value="30" min="1" required></div>
+                                <div class="input-group"><label for="bestMixPO2">Maksymalne PPO₂ (bar)</label><input type="number" id="bestMixPO2" value="1.4" step="0.1" min="1.0" max="1.6" required></div>
+                                <button type="submit">Oblicz Best Mix</button>
+                            </form>
+                            <div id="bestMixResult" class="result-container"></div>
                         </div>
                     </div>
                 </div>
@@ -249,7 +261,7 @@
                         </div>
                         <div class="form-full-width"><button type="submit">Oblicz Sugestię Balastu</button></div>
                     </form>
-                    <div id="ballastResult" class="result-container"></div>
+                    <div id="ballastResult" class="result-container" style="margin-top: 20px;"></div>
                 </div>
 
                 <div id="science-of-diving" class="tab-content">

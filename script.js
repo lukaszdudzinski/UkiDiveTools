@@ -50,6 +50,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
             // Pokaż wybraną pod-zakładkę
             subTabToShow.classList.add('active-sub-tab');
             this.classList.add('active');
+            
+            // ZMIANA: Logika wyłączania/włączania pola O2%
+            if (parentWrapper.id === 'nitrox-calculator') {
+                const nitroxO2Input = document.getElementById('nitroxO2');
+                if (subTabId === 'best-mix-calculator') {
+                    nitroxO2Input.disabled = true;
+                } else {
+                    nitroxO2Input.disabled = false;
+                }
+            }
         });
     });
 
@@ -243,11 +253,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const totalDemandBars = totalDemandLiters / tankSize;
         const totalSupplyLiters = tankSize * startPressure;
         const totalSupplyBars = startPressure;
+        
+        // ZMIANA: Zwracamy breakdown do użycia w (i)
         return {
             totalDemandLiters,
             totalDemandBars,
             totalSupplyLiters,
-            totalSupplyBars
+            totalSupplyBars,
+            breakdown: { T_descent, L_descent, P_avg_descent, T_bottom, L_bottom, P_bottom, T_ascent_to_stop, L_ascent_to_stop, P_avg_ascent_to_stop, T_stop, L_stop, P_stop, T_ascent_to_surface, L_ascent_to_surface, P_avg_ascent_to_surface }
         };
     }
     
@@ -531,19 +544,28 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
     
     // --- Listener 4: Mock Paywall ---
-    // ZMIANA: Używa teraz querySelectorAll dla wielu przycisków i wielu treści
-    const unlockButtons = document.querySelectorAll('.unlockProButton');
+    // ZMIANA: Używa teraz delegacji zdarzeń, aby działać również w modalu
     const proTabContents = document.querySelectorAll('#pro-gas-calculator, #sod-gas, #sod-ballast');
-    
-    if (unlockButtons.length > 0 && proTabContents.length > 0) {
-        unlockButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                proTabContents.forEach(content => {
-                    content.classList.add('unlocked');
-                });
+
+    document.body.addEventListener('click', function(e) {
+        // Sprawdź, czy kliknięty element (lub jego rodzic) ma klasę .unlockProButton
+        const unlockButton = e.target.closest('.unlockProButton');
+        
+        if (unlockButton) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Odblokuj całą zawartość PRO
+            proTabContents.forEach(content => {
+                content.classList.add('unlocked');
             });
-        });
-    }
+            
+            // Jeśli przycisk był w modalu, zamknij modal
+            if (e.target.closest('#global-tooltip')) {
+                hideTooltip();
+            }
+        }
+    });
     
     // --- Listener 5: Kalkulator Balastu ---
     const ballastForm = document.getElementById('ballastForm');
@@ -602,26 +624,31 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 
                 let ballast = weight * 0.10; 
                 let explanationHTML = `<div class="formula-box-small"><h5>Logika Obliczeń Balastu</h5><ul>`;
-                explanationHTML += `<li>Waga bazowa (10%): ${ballast.toFixed(1)} kg</li>`;
+                explanationHTML += `<li>Waga bazowa (10% z ${weight}kg): ${ballast.toFixed(1)} kg</li>`;
 
+                let suitMod = 0;
                 switch (suit) { 
-                    case 'foam3': ballast -= 3; explanationHTML += `<li>Skafander (Pianka 3mm): -3 kg</li>`; break; 
-                    case 'foam5': ballast -= 2; explanationHTML += `<li>Skafander (Pianka 5mm): -2 kg</li>`; break; 
-                    case 'foam7': explanationHTML += `<li>Skafander (Pianka 7mm): 0 kg</li>`; break; 
+                    case 'foam3': suitMod = -3; break; 
+                    case 'foam5': suitMod = -2; break; 
+                    case 'foam7': suitMod = 0; break; 
                     case 'dryCrash': 
                     case 'dryTri': 
-                        const triMod = (warmer === 'thick' ? 6 : 4);
-                        ballast += triMod;
-                        explanationHTML += `<li>Skafander (Suchy Trylam/Crash + Ocieplacz ${warmer}): +${triMod} kg</li>`;
+                        suitMod = (warmer === 'thick' ? 6 : 4);
+                        explanationHTML += `<li>Skafander (Trylam/Crash + ${warmer}): +${suitMod} kg</li>`;
                         break; 
                     case 'dryNeo': 
-                        const neoMod = (warmer === 'thick' ? 8 : 7);
-                        ballast += neoMod;
-                        explanationHTML += `<li>Skafander (Suchy Neopren + Ocieplacz ${warmer}): +${neoMod} kg</li>`;
+                        suitMod = (warmer === 'thick' ? 8 : 7);
+                        explanationHTML += `<li>Skafander (Neopren + ${warmer}): +${suitMod} kg</li>`;
                         break; 
                 } 
+                if (suit.includes('foam')) {
+                     explanationHTML += `<li>Skafander (${suit}): ${suitMod} kg</li>`;
+                }
+                ballast += suitMod;
+                
                 
                 let tankMod = 0;
+                let plateMod = 0;
                 switch (tank) { 
                     case 'alu11': tankMod = 1; break;
                     case 'steel12': tankMod = -3; break;
@@ -630,26 +657,28 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     case 'twin85_200': tankMod = -5; break;
                     case 'twin10_200': tankMod = -6; break;
                     case 'twin12_200': tankMod = -8; break;
-                    case 'twin7_300': tankMod = -6; break;
-                    case 'twin85_300': tankMod = -7; break;
-                    case 'twin10_300': tankMod = -8; break;
+                    case 'twin7_300': tankMod = -6; break; 
+                    case 'twin85_300': tankMod = -7; break; 
+                    case 'twin10_300': tankMod = -8; break; 
                     case 'twin12_300': tankMod = -10; break; 
                 } 
                 ballast += tankMod;
                 explanationHTML += `<li>Butla (${tank}): ${tankMod} kg</li>`;
                 
                 if (tank.includes('twin')) {
-                    const plateMod = (plate === 'steel') ? -2 : -0.85;
+                    plateMod = (plate === 'steel') ? -2 : -0.85;
                     ballast += plateMod;
                     explanationHTML += `<li>Płyta (${plate}): ${plateMod} kg</li>`;
                 }
                 
+                let waterMod = 0;
                 if (water === 'fresh') { 
-                    ballast -= 2; 
+                    waterMod = -2;
                     explanationHTML += `<li>Woda (słodka): -2 kg</li>`;
                 } else {
                     explanationHTML += `<li>Woda (słona): 0 kg</li>`;
                 }
+                ballast += waterMod;
                 
                 let bodyMod = 0;
                 switch (bodyType) {
@@ -696,6 +725,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const depth = parseFloat(document.getElementById('depth').value);
                 const time = parseFloat(document.getElementById('time').value);
                 const waterType = document.getElementById('waterType').value;
+                
+                if ([p1, p2, vb, depth, time].some(isNaN)) {
+                    throw new Error("Wypełnij wszystkie pola poprawnymi liczbami.");
+                }
+                if (time <= 0 || vb <= 0 || depth < 0) {
+                    throw new Error("Czas, pojemność butli i głębokość muszą być dodatnie.");
+                }
+                
                 const pressureConversion = (waterType === 'fresh') ? (10 / 10.3) : 1.0; 
                 const avgPressure = (depth / 10 * pressureConversion) + 1; 
                 const sac = ( (p1 - p2) * vb ) / ( avgPressure * time );
@@ -828,7 +865,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
             const detailsHTML = detailsDiv.innerHTML;
             const isProFeature = e.target.dataset.proFeature === 'true';
-            const isUnlocked = document.querySelector('#pro-gas-calculator').classList.contains('unlocked'); // Sprawdź globalny stan odblokowania
+            
+            // Sprawdź globalny stan odblokowania
+            const isUnlocked = document.querySelector('#pro-gas-calculator').classList.contains('unlocked'); 
 
             if (!isProFeature || isUnlocked) {
                 // Pokaż obliczenia
@@ -841,5 +880,63 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
+    // ZMIANA: NOWY LISTENER DLA KALKULATORA BEST MIX
+    const bestMixForm = document.getElementById('bestMixForm');
+    const bestMixResult = document.getElementById('bestMixResult');
+    if (bestMixForm && bestMixResult) {
+        bestMixForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            try {
+                const depth = parseFloat(document.getElementById('bestMixDepth').value);
+                const ppo2 = parseFloat(document.getElementById('bestMixPO2').value);
+                
+                // Używamy globalnego ustawienia wody
+                const waterType = document.getElementById('global-water-type').value; 
+                
+                if (isNaN(depth) || isNaN(ppo2) || depth <= 0) {
+                    throw new Error("Wprowadź poprawną głębokość i PPO₂.");
+                }
+                
+                const pressureConversion = (waterType === 'fresh') ? (10 / 10.3) : 1.0;
+                const ata = (depth / 10 * pressureConversion) + 1;
+                const fo2 = (ppo2 / ata);
+                const bestMixPercent = Math.floor(fo2 * 100);
+
+                if (bestMixPercent > 100) {
+                     throw new Error("Nie można uzyskać PPO₂ na tej głębokości.");
+                }
+                if (bestMixPercent < 21) {
+                    throw new Error("Wynik poniżej 21%. Użyj powietrza.");
+                }
+                
+                 const explanationHTML = `
+                    <div class="formula-box-small">
+                        <h5>Obliczenia Best Mix</h5>
+                        <p class="formula">ATA = (Głębokość / ${waterType === 'fresh' ? '10.3' : '10'}) + 1</p>
+                        <p class="formula">ATA = (${depth} / ${waterType === 'fresh' ? '10.3' : '10'}) + 1 = ${ata.toFixed(2)}</p>
+                        <p class="formula">FO₂ = PPO₂ / ATA</p>
+                        <p class="formula">FO₂ = ${ppo2} / ${ata.toFixed(2)} = ${fo2.toFixed(3)}</p>
+                        <p class="formula">Wynik: EAN${bestMixPercent}</p>
+                    </div>
+                `;
+
+                bestMixResult.innerHTML = `
+                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
+                    <div class="calculation-details" style="display: none;">${explanationHTML}</div>
+                    <p class="result-label">Najlepszy mix (EAN) dla ${depth} m przy PPO₂ ${ppo2}:</p>
+                    <p class="result-value">EAN${bestMixPercent}</p>`;
+                bestMixResult.style.display = 'block';
+                
+                bestMixResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+            } catch (error) {
+                bestMixResult.innerHTML = `<p class="result-error">${error.message}</p>`;
+                bestMixResult.style.display = 'block';
+                
+                bestMixResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        });
+    }
+    
     // --- Koniec DOMContentLoaded ---
 });

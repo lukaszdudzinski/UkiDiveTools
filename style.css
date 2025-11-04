@@ -227,6 +227,12 @@ body {
   border-color: #00d1b2;
   box-shadow: 0 0 5px rgba(0, 209, 178, 0.5);
 }
+/* ZMIANA: Dodano styl dla wyłączonego (disabled) inputu */
+.input-group input:disabled {
+  opacity: 0.5;
+  background-color: #444;
+  cursor: not-allowed;
+}
 
 /* Unifikacja koloru głównych przycisków */
 .app-content button[type="submit"] {
@@ -302,7 +308,7 @@ body {
   z-index: 1000; /* Na sam wierzch */
   color: #e0e0e0;
   font-size: 0.9em;
-  text-align: left;
+  text-align: center; /* ZMIANA: z left na center */
   
   /* ZMIANA: Domyślny styl liquid glass dla tooltipa */
   background-color: rgba(30, 30, 30, 0.6); /* Bardziej przezroczyste tło */
@@ -345,7 +351,7 @@ body {
 /* Zachowujemy style dla H4, P, UL wewnątrz globalnego tooltipa */
 #global-tooltip.tooltip-content h4 { margin: 0 0 10px 0; color: #00d1b2; }
 #global-tooltip.tooltip-content p { margin: 5px 0; }
-#global-tooltip.tooltip-content ul { margin: 10px 0 0 20px; padding: 0; }
+#global-tooltip.tooltip-content ul { margin: 10px 0 0 20px; padding: 0; text-align: left; } /* Przywrócenie dla list */
 
 
 .button-with-tooltip {
@@ -408,8 +414,8 @@ body {
 /* ZMIANA: Dodano styl dla ikony (i) w wynikach */
 .result-info-icon {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 8px; /* ZMIANA: Przesunięcie z 5px */
+  right: 8px; /* ZMIANA: Przesunięcie z 5px */
   width: 20px;
   height: 20px;
   background-color: rgba(0, 0, 0, 0.3);
@@ -422,6 +428,7 @@ body {
   font-weight: bold;
   cursor: help;
   transition: all 0.2s ease;
+  z-index: 5; /* Upewnij się, że jest nad tłem */
 }
 .result-info-icon:hover {
   background-color: #00d1b2;
@@ -434,11 +441,13 @@ body {
   border-radius: 8px;
   padding: 10px 15px;
   margin-top: 10px;
+  text-align: left; /* ZMIANA: Przywrócenie dla listy */
 }
 #global-tooltip .formula-box-small h5 {
   margin: 0 0 8px 0;
   font-size: 1.1em;
   color: #ffffff;
+  text-align: center; /* ZMIANA: Wyśrodkowanie H5 */
 }
 #global-tooltip .formula-box-small .formula {
   font-family: 'Courier New', Courier, monospace;
@@ -449,6 +458,7 @@ body {
   background-color: rgba(0, 0, 0, 0.3);
   overflow-x: auto;
   margin-bottom: 8px;
+  text-align: center; /* ZMIANA: Wyśrodkowanie formuły */
 }
 #global-tooltip .formula-box-small ul {
   margin: 0 0 0 20px;
@@ -463,24 +473,26 @@ body {
 #result .result-label,
 #modResult .result-label,
 #eadResult .result-label,
-#ballastResult .result-label {
+#ballastResult .result-label,
+#bestMixResult .result-label { /* ZMIANA: Dodano Best Mix */
   font-size: 1.1em;
   text-align: center;
-  line-height: 1.1; /* ZMIANA: Zmniejszono z 1.2 */
+  line-height: 1.1;
   color: #b0b0b0;
   margin-bottom: 0; 
 }
 #result .result-value,
 #modResult .result-value,
 #eadResult .result-value,
-#ballastResult .result-value {
+#ballastResult .result-value,
+#bestMixResult .result-value { /* ZMIANA: Dodano Best Mix */
   font-size: 2.8em;
   font-weight: bold;
   color: #00d1b2;
   margin-top: 0; 
   text-align: center;
   line-height: 1.1;
-  margin-bottom: 0; /* ZMIANA: Dodano */
+  margin-bottom: 0;
 }
 /* ZMIANA: Kompaktyzacja wyniku Balastu */
 #ballastResult .result-warning { 
@@ -493,23 +505,29 @@ body {
 }
 
 /* === ZMIANA: Bardziej kompaktowe wyniki dla RB === */
-#rbResult .result-label { font-size: 1em; color: #b0b0b0; margin: 0; padding: 0; text-align: center; line-height: 1.1; /* ZMIANA: Zmniejszono z 1.2 */ }
+#rbResult .result-label { font-size: 1em; color: #b0b0b0; margin: 0; padding: 0; text-align: center; line-height: 1.1; }
 #rbResult .result-value { 
   font-size: 2.5em; 
   font-weight: bold; 
   color: #00d1b2; 
-  margin-top: 0; /* ZMIANA: Zmniejszono z 2px */
+  margin-top: 0;
   text-align: center; 
   line-height: 1.1;
-  margin-bottom: 0; /* ZMIANA: Dodano */
+  margin-bottom: 0;
 }
 /* Błędy */
-#rbResult .result-error, #gcResult .result-error, #proGasResult .result-error, #ballastResult .result-error { font-size: 1em; color: #ff3860; font-weight: bold; text-align: center; }
+#rbResult .result-error, #gcResult .result-error, #proGasResult .result-error, 
+#ballastResult .result-error, #bestMixResult .result-error { /* ZMIANA: Dodano Best Mix */
+  font-size: 1em; 
+  color: #ff3860; 
+  font-weight: bold; 
+  text-align: center; 
+}
 
 /* === ZMIANA: Bardziej kompaktowe wyniki dla GC i PRO === */
 #gcResult .result-section, #proGasResult .result-section { 
-  margin-bottom: 1px; /* ZMIANA: Zmniejszono z 2px */
-  padding-bottom: 1px; /* ZMIANA: Zmniejszono z 2px */
+  margin-bottom: 1px;
+  padding-bottom: 1px;
   border-bottom: 1px solid #4a4a4a; 
 }
 #gcResult .result-section:last-child, #proGasResult .result-section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
@@ -517,7 +535,7 @@ body {
   font-size: 0.9em; 
   color: #b0b0b0; 
   text-align: center; 
-  margin-bottom: 0; /* ZMIANA: Zmniejszono z 2px */
+  margin-bottom: 0;
   text-transform: uppercase; 
 }
 
@@ -535,7 +553,7 @@ body {
   font-size: 1.1em;
   color: #b0b0b0; 
   text-align: center; 
-  margin-top: 0; /* ZMIANA: Zmniejszono z 2px */
+  margin-top: 0;
 }
 .result-value-sub strong {
   color: #ffffff;
@@ -545,7 +563,7 @@ body {
   font-size: 1.5em; 
   font-weight: bold; 
   text-align: center; 
-  margin-top: 4px; /* ZMIANA: Zmniejszono z 6px */
+  margin-top: 4px;
   padding: 5px; 
   border-radius: 5px; 
 }
@@ -556,28 +574,41 @@ body {
 #proGasResult .rb-info-section { 
   background-color: rgba(0, 0, 0, 0.2); 
   border: 1px solid #00d1b2; 
-  padding: 2px 8px; /* ZMIANA: Zmniejszono z 4px 8px */
+  padding: 2px 8px;
   border-radius: 8px; 
-  margin-bottom: 2px; /* ZMIANA: Zmniejszono z 4px */
+  margin-bottom: 2px;
 }
 #proGasResult .rb-info-section .result-label { 
   font-size: 1em;
   text-transform: none;
   color: #e0e0e0;
-  line-height: 1.1; /* ZMIANA: Dodano */
+  line-height: 1.1;
 }
 #proGasResult .rb-info-section .result-value-main { 
   color: #00d1b2; 
   font-size: 2em;
-  margin-top: 0; /* ZMIANA: Zmniejszono z 2px */
-  line-height: 1.1; /* ZMIANA: Dodano */
+  margin-top: 0;
+  line-height: 1.1;
 }
 /* === KONIEC ZMIAN === */
 
 
 /* Funkcja PRO Paywall */
 .sub-tab-button .pro-badge { font-size: 0.6em; background-color: #00d1b2; color: #1e1e1e; padding: 3px 6px; border-radius: 4px; margin-left: 5px; vertical-align: middle; font-weight: bold; }
-.pro-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(30, 30, 30, 0.85); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 10; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; border-radius: 8px; }
+.pro-overlay { 
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0; 
+  background-color: rgba(30, 30, 30, 0.85); 
+  backdrop-filter: blur(5px); 
+  -webkit-backdrop-filter: blur(5px); 
+  z-index: 10; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+  text-align: center; /* ZMIANA: Dodano dla centrowania */
+  padding: 20px; 
+  border-radius: 8px; 
+}
 .pro-overlay h4 { color: #00d1b2; font-size: 1.5em; margin-bottom: 10px; }
 .pro-overlay p { font-size: 1.1em; color: #e0e0e0; max-width: 400px; margin-bottom: 25px; }
 .pro-overlay-button { background-color: #00d1b2; color: #1e1e1e; font-weight: bold; border: none; padding: 12px 25px; font-size: 1.1em; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
@@ -783,6 +814,12 @@ body:not(.dark-theme) .settings-select {
   text-shadow: none; /* Reset cienia wewnątrz inputów */
 }
 body:not(.dark-theme) .input-group input::placeholder { color: #999; }
+/* ZMIANA: Styl dla wyłączonego inputu w trybie jasnym */
+body:not(.dark-theme) .input-group input:disabled {
+  opacity: 0.6;
+  background-color: #eee;
+}
+
 
 /* ZMIANA: Poprawka zakładek w trybie jasnym */
 body:not(.dark-theme) .sub-tab-nav {
@@ -809,6 +846,7 @@ body:not(.dark-theme) .sub-tab-button.active {
 /* POPRAWKA: Paywall PRO w trybie jasnym */
 body:not(.dark-theme) .pro-overlay {
   background-color: rgba(255, 255, 255, 0.85);
+  text-align: center; /* ZMIANA: Dodano */
 }
 body:not(.dark-theme) .pro-overlay h4 {
   color: #009e86;
@@ -847,7 +885,8 @@ body:not(.dark-theme) #proGasResult .result-value-main,
 body:not(.dark-theme) #rbResult .result-value,
 body:not(.dark-theme) #result .result-value,
 body:not(.dark-theme) #modResult .result-value,
-body:not(.dark-theme) #eadResult .result-value { 
+body:not(.dark-theme) #eadResult .result-value,
+body:not(.dark-theme) #bestMixResult .result-value { /* ZMIANA: Dodano Best Mix */
   color: #ffffff;  /* ZMIANA: Czysta biel */
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
@@ -863,7 +902,8 @@ body:not(.dark-theme) #proGasResult .result-label,
 body:not(.dark-theme) #ballastResult .result-label,
 body:not(.dark-theme) #result .result-label,
 body:not(.dark-theme) #modResult .result-label,
-body:not(.dark-theme) #eadResult .result-label { 
+body:not(.dark-theme) #eadResult .result-label,
+body:not(.dark-theme) #bestMixResult .result-label { /* ZMIANA: Dodano Best Mix */
   color: #f0f0f0; /* ZMIANA: z #363636 */
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
