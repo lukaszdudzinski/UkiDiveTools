@@ -258,6 +258,24 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const remainingLiters = totalSupplyLiters - totalDemandLiters;
         const remainingBars = remainingLiters / (consumptionData.tankSize || totalSupplyLiters / totalSupplyBars);
         const isSafe = (remainingLiters >= requiredReserveLiters);
+        
+        // ZMIANA: Logika Explanation HTML przeniesiona tutaj
+        const { T_descent, L_descent, P_avg_descent, T_bottom, L_bottom, P_bottom, T_ascent_to_stop, L_ascent_to_stop, P_avg_ascent_to_stop, T_stop, L_stop, P_stop, T_ascent_to_surface, L_ascent_to_surface, P_avg_ascent_to_surface } = consumptionData.breakdown;
+        
+        const explanationHTML = `
+            <div class="formula-box-small">
+                <h5>Fazy Obliczeń Planu</h5>
+                <p class="formula">L<sub>całkowite</sub> = L<sub>zanurzenie</sub> + L<sub>dno</sub> + L<sub>wynurzenie</sub> + L<sub>przystanek</sub></p>
+                <ul>
+                    <li>Zanurzenie: ${L_descent.toFixed(0)} l (${consumptionData.sac} l/min &times; ${P_avg_descent.toFixed(1)} ATA &times; ${T_descent.toFixed(1)} min)</li>
+                    <li>Dno: ${L_bottom.toFixed(0)} l (${consumptionData.sac} l/min &times; ${P_bottom.toFixed(1)} ATA &times; ${T_bottom.toFixed(1)} min)</li>
+                    <li>Wynurzenie (do przystanku): ${L_ascent_to_stop.toFixed(0)} l (${consumptionData.sac} l/min &times; ${P_avg_ascent_to_stop.toFixed(1)} ATA &times; ${T_ascent_to_stop.toFixed(1)} min)</li>
+                    <li>Przystanek: ${L_stop.toFixed(0)} l (${consumptionData.sac} l/min &times; ${P_stop.toFixed(1)} ATA &times; ${T_stop.toFixed(1)} min)</li>
+                    <li>Wynurzenie (do pow.): ${L_ascent_to_surface.toFixed(0)} l (${consumptionData.sac} l/min &times; ${P_avg_ascent_to_surface.toFixed(1)} ATA &times; ${T_ascent_to_surface.toFixed(1)} min)</li>
+                </ul>
+            </div>
+        `;
+        
         let rbHtml = '';
         if (rockBottomInfo) {
             rbHtml = `
@@ -278,8 +296,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
             `;
         }
         
-        // Przywrócona struktura HTML dla wyników
+        // ZMIANA: Dodano ikonę (i) oraz div .calculation-details
         container.innerHTML = `
+            <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="true">i</div>
+            <div class="calculation-details" style="display: none;">${explanationHTML}</div>
             ${rbHtml} 
             <div class="result-section">
                 <p class="result-label">Twoje zapotrzebowanie na gaz (Plan):</p>
@@ -298,13 +318,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         `;
         container.style.display = 'block';
     }
-    // === KONIEC PRZYWRÓCONEJ FUNKCJI ===
+    // === KONIEC ZMODYFIKOWANEJ FUNKCJI ===
 
 
     // --- Listener 1: Kalkulator Rock Bottom ---
     const rbForm = document.getElementById('rbForm');
     const rbResultContainer = document.getElementById('rbResult');
-    // ZMIANA: Usunięto 'gcReserveInput'
+    
     if (rbForm && rbResultContainer) {
         rbForm.addEventListener('submit', function(e) { 
             e.preventDefault(); 
@@ -320,11 +340,42 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     volume: parseFloat(document.getElementById('rbVolume').value), 
                     safetyMargin: parseFloat(document.getElementById('rbSafetyMargin').value) 
                 }; 
-                const rbResult = calculateRockBottom(params); 
-                rbResultContainer.innerHTML = `<p class="result-label">Minimalne ciśnienie w Twoim zestawie na max zaplanowanej głębokości ${params.depth} m dla metody Rock Bottom:</p><p class="result-value">${rbResult.roundedBars} bar</p>`; 
+                
+                // ZMIANA: Przechwytywanie wartości do wyjaśnienia
+                const P_depth = (params.depth / 10) + 1;
+                const P_stop = (params.stopDepth / 10) + 1;
+                const P_avg_ascent = (P_depth + P_stop) / 2;
+                const T_ascent = (params.depth - params.stopDepth) / params.ascentRate;
+                const SAC_stressed = params.sac * params.stressFactor;
+                const Gas_reaction = SAC_stressed * P_depth * params.emergencyTime * params.divers;
+                const Gas_ascent = SAC_stressed * P_avg_ascent * T_ascent * params.divers;
+                const TotalGasLiters = Gas_reaction + Gas_ascent;
+                const RB_pressure = TotalGasLiters / params.volume;
+                const FinalRB = RB_pressure + params.safetyMargin;
+                
+                const rbResult = { roundedBars: Math.ceil(FinalRB) }; // Używamy już obliczonych
+                
+                const explanationHTML = `
+                    <div class="formula-box-small">
+                        <h5>Obliczenia Rock Bottom</h5>
+                        <p class="formula">L<sub>RB</sub> = (Gaz<sub>reakcja</sub> + Gaz<sub>wynurzenie</sub>) + Bufor</p>
+                        <ul>
+                            <li>SAC w stresie: ${params.sac} &times; ${params.stressFactor} = ${SAC_stressed.toFixed(1)} l/min</li>
+                            <li>Gaz (reakcja): ${SAC_stressed.toFixed(1)} &times; ${P_depth.toFixed(1)} ATA &times; ${params.emergencyTime} min &times; ${params.divers} = ${Gas_reaction.toFixed(0)} l</li>
+                            <li>Gaz (wynurzenie): ${SAC_stressed.toFixed(1)} &times; ${P_avg_ascent.toFixed(1)} ATA &times; ${T_ascent.toFixed(1)} min &times; ${params.divers} = ${Gas_ascent.toFixed(0)} l</li>
+                            <li>Suma (litry): ${Gas_reaction.toFixed(0)} + ${Gas_ascent.toFixed(0)} = ${TotalGasLiters.toFixed(0)} l</li>
+                            <li>Ciśnienie (bar): ${TotalGasLiters.toFixed(0)} l / ${params.volume} l = ${RB_pressure.toFixed(1)} bar</li>
+                            <li>Wynik (z buforem): ${RB_pressure.toFixed(1)} + ${params.safetyMargin} bar = <strong>${FinalRB.toFixed(1)} bar</strong> (Zaokrąglone: ${rbResult.roundedBars} bar)</li>
+                        </ul>
+                    </div>
+                `;
+
+                rbResultContainer.innerHTML = `
+                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="true">i</div>
+                    <div class="calculation-details" style="display: none;">${explanationHTML}</div>
+                    <p class="result-label">Minimalne ciśnienie w Twoim zestawie na max zaplanowanej głębokości ${params.depth} m dla metody Rock Bottom:</p>
+                    <p class="result-value">${rbResult.roundedBars} bar</p>`; 
                 rbResultContainer.style.display = 'block'; 
-                // ZMIANA: Usunięto auto-wypełnianie pola rezerwy
-                // gcReserveInput.value = rbResult.roundedBars; 
                 
                 rbResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } catch (error) { 
@@ -345,6 +396,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
             try { 
                 const tankSize = parseFloat(document.getElementById('gcTankSize').value); 
                 const reservePressure = parseFloat(document.getElementById('gcReserve').value); 
+                
+                // ZMIANA: Przechwytywanie wartości do wyjaśnienia
                 const consumptionParams = { 
                     sac: parseFloat(document.getElementById('gcSAC').value), 
                     depth: parseFloat(document.getElementById('gcDepth').value), 
@@ -357,11 +410,35 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     startPressure: parseFloat(document.getElementById('gcStartPressure').value), 
                     divers: 1 
                 }; 
+                
+                // Re-kalkulacja dla wyjaśnienia (bezpieczniejsze niż refaktoryzacja)
+                const P_surface = 1.0;
+                const P_bottom = (consumptionParams.depth / 10) + 1;
+                const P_stop = (consumptionParams.stopDepth / 10) + 1;
+                const P_avg_descent = (P_surface + P_bottom) / 2;
+                const P_avg_ascent_to_stop = (P_bottom + P_stop) / 2;
+                const P_avg_ascent_to_surface = (P_stop + P_surface) / 2;
+                const T_descent = consumptionParams.depth / consumptionParams.descentRate;
+                const T_bottom = consumptionParams.bottomTime;
+                const T_ascent_to_stop = (consumptionParams.depth - consumptionParams.stopDepth) / consumptionParams.ascentRate;
+                const T_stop = consumptionParams.stopTime;
+                const T_ascent_to_surface = consumptionParams.stopDepth / consumptionParams.ascentRate;
+                const L_descent = consumptionParams.sac * P_avg_descent * T_descent;
+                const L_bottom = consumptionParams.sac * P_bottom * T_bottom;
+                const L_ascent_to_stop = consumptionParams.sac * P_avg_ascent_to_stop * T_ascent_to_stop;
+                const L_stop = consumptionParams.sac * P_stop * T_stop;
+                const L_ascent_to_surface = consumptionParams.sac * P_avg_ascent_to_surface * T_ascent_to_surface;
+                
+                const consumptionResult = calculateGasConsumption(consumptionParams); 
+                // ZMIANA: Przekazanie wartości breakdown do funkcji renderującej
+                consumptionResult.breakdown = { T_descent, L_descent, P_avg_descent, T_bottom, L_bottom, P_bottom, T_ascent_to_stop, L_ascent_to_stop, P_avg_ascent_to_stop, T_stop, L_stop, P_stop, T_ascent_to_surface, L_ascent_to_surface, P_avg_ascent_to_surface };
+                consumptionResult.sac = consumptionParams.sac;
+
                 const reserveParams = { 
                     requiredReserveLiters: tankSize * reservePressure, 
                     requiredReserveBars: reservePressure 
                 }; 
-                const consumptionResult = calculateGasConsumption(consumptionParams); 
+                
                 renderConsumptionResult(gcResultContainer, { ...consumptionResult, tankSize: tankSize }, reserveParams, null); 
                 
                 gcResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -414,7 +491,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     startPressure: parseFloat(document.getElementById('gcStartPressure_pro').value), 
                     divers: 1 
                 }; 
+                
+                // ZMIANA: Re-kalkulacja dla wyjaśnienia
+                const P_surface = 1.0;
+                const P_bottom = (consumptionParams.depth / 10) + 1;
+                const P_stop = (consumptionParams.stopDepth / 10) + 1;
+                const P_avg_descent = (P_surface + P_bottom) / 2;
+                const P_avg_ascent_to_stop = (P_bottom + P_stop) / 2;
+                const P_avg_ascent_to_surface = (P_stop + P_surface) / 2;
+                const T_descent = consumptionParams.depth / consumptionParams.descentRate;
+                const T_bottom = consumptionParams.bottomTime;
+                const T_ascent_to_stop = (consumptionParams.depth - consumptionParams.stopDepth) / consumptionParams.ascentRate;
+                const T_stop = consumptionParams.stopTime;
+                const T_ascent_to_surface = consumptionParams.stopDepth / consumptionParams.ascentRate;
+                const L_descent = consumptionParams.sac * P_avg_descent * T_descent;
+                const L_bottom = consumptionParams.sac * P_bottom * T_bottom;
+                const L_ascent_to_stop = consumptionParams.sac * P_avg_ascent_to_stop * T_ascent_to_stop;
+                const L_stop = consumptionParams.sac * P_stop * T_stop;
+                const L_ascent_to_surface = consumptionParams.sac * P_avg_ascent_to_surface * T_ascent_to_surface;
+                
                 const consumptionResult = calculateGasConsumption(consumptionParams); 
+                consumptionResult.breakdown = { T_descent, L_descent, P_avg_descent, T_bottom, L_bottom, P_bottom, T_ascent_to_stop, L_ascent_to_stop, P_avg_ascent_to_stop, T_stop, L_stop, P_stop, T_ascent_to_surface, L_ascent_to_surface, P_avg_ascent_to_surface };
+                consumptionResult.sac = consumptionParams.sac;
+                
                 const rbInfo = { 
                     depth: rbParams.depth, 
                     roundedBars: rbResult.roundedBars 
@@ -490,7 +589,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             e.preventDefault(); 
             try { 
                 const weight = parseFloat(document.getElementById('ballastWeight').value);
-                // ZMIANA: Dodano typ budowy
                 const bodyType = document.getElementById('ballastBodyType').value;
                 const suit = document.getElementById('ballastSuit').value; 
                 const warmer = document.getElementById('ballastWarmer').value; 
@@ -501,77 +599,78 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 if (isNaN(weight) || weight <= 0) { 
                     throw new Error("Proszę podać poprawną wagę."); 
                 } 
+                
                 let ballast = weight * 0.10; 
-                
+                let explanationHTML = `<div class="formula-box-small"><h5>Logika Obliczeń Balastu</h5><ul>`;
+                explanationHTML += `<li>Waga bazowa (10%): ${ballast.toFixed(1)} kg</li>`;
+
                 switch (suit) { 
-                    case 'foam3': ballast -= 3; break; 
-                    case 'foam5': ballast -= 2; break; 
-                    case 'foam7': break; 
-                    case 'dryCrash': // ZMIANA: Dodano Crash Neopren
-                    case 'dryTri': ballast += (warmer === 'thick' ? 6 : 4); break; 
-                    case 'dryNeo': ballast += (warmer === 'thick' ? 8 : 7); break; 
+                    case 'foam3': ballast -= 3; explanationHTML += `<li>Skafander (Pianka 3mm): -3 kg</li>`; break; 
+                    case 'foam5': ballast -= 2; explanationHTML += `<li>Skafander (Pianka 5mm): -2 kg</li>`; break; 
+                    case 'foam7': explanationHTML += `<li>Skafander (Pianka 7mm): 0 kg</li>`; break; 
+                    case 'dryCrash': 
+                    case 'dryTri': 
+                        const triMod = (warmer === 'thick' ? 6 : 4);
+                        ballast += triMod;
+                        explanationHTML += `<li>Skafander (Suchy Trylam/Crash + Ocieplacz ${warmer}): +${triMod} kg</li>`;
+                        break; 
+                    case 'dryNeo': 
+                        const neoMod = (warmer === 'thick' ? 8 : 7);
+                        ballast += neoMod;
+                        explanationHTML += `<li>Skafander (Suchy Neopren + Ocieplacz ${warmer}): +${neoMod} kg</li>`;
+                        break; 
                 } 
                 
-                // ZMIANA: Zaktualizowana logika balastu dla butli i płyty
+                let tankMod = 0;
                 switch (tank) { 
-                    case 'alu11': ballast += 1; break; // Lekko dodatnia
-                    case 'steel12': ballast -= 3; break;
-                    case 'steel15': ballast -= 4; break;
-                    
-                    // NOWE 200/232b
-                    case 'twin7_200':
-                        ballast -= 4; // Estymacja
-                        if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
-                        break; 
-                    case 'twin85_200':
-                        ballast -= 5; // Estymacja
-                        if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
-                        break; 
-                    case 'twin10_200':
-                        ballast -= 6; // Estymacja
-                        if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
-                        break; 
-                    case 'twin12_200': 
-                        ballast -= 8; 
-                        if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
-                        break;
-                    
-                    // NOWE 300b (cięższe)
-                    case 'twin7_300':
-                        ballast -= 6; // Estymacja (2kg cięższe)
-                        if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
-                        break; 
-                    // ZMIANA: Dodano brakującą logikę
-                    case 'twin85_300':
-                        ballast -= 7; // Estymacja (2kg cięższe)
-                        if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
-                        break; 
-                    case 'twin10_300':
-                        ballast -= 8; // Estymacja (2kg cięższe)
-                        if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
-                        break; 
-                    case 'twin12_300':
-                        ballast -= 10; // Estymacja (2kg cięższe)
-                        if (plate === 'steel') { ballast -= 2; } else { ballast -= 0.85; }
-                        break; 
+                    case 'alu11': tankMod = 1; break;
+                    case 'steel12': tankMod = -3; break;
+                    case 'steel15': tankMod = -4; break;
+                    case 'twin7_200': tankMod = -4; break; 
+                    case 'twin85_200': tankMod = -5; break;
+                    case 'twin10_200': tankMod = -6; break;
+                    case 'twin12_200': tankMod = -8; break;
+                    case 'twin7_300': tankMod = -6; break;
+                    case 'twin85_300': tankMod = -7; break;
+                    case 'twin10_300': tankMod = -8; break;
+                    case 'twin12_300': tankMod = -10; break; 
                 } 
+                ballast += tankMod;
+                explanationHTML += `<li>Butla (${tank}): ${tankMod} kg</li>`;
+                
+                if (tank.includes('twin')) {
+                    const plateMod = (plate === 'steel') ? -2 : -0.85;
+                    ballast += plateMod;
+                    explanationHTML += `<li>Płyta (${plate}): ${plateMod} kg</li>`;
+                }
                 
                 if (water === 'fresh') { 
                     ballast -= 2; 
-                } 
+                    explanationHTML += `<li>Woda (słodka): -2 kg</li>`;
+                } else {
+                    explanationHTML += `<li>Woda (słona): 0 kg</li>`;
+                }
                 
-                // ZMIANA: Modyfikator budowy ciała
+                let bodyMod = 0;
                 switch (bodyType) {
-                    case 'slim': ballast += 2; break;
-                    case 'athletic': ballast -= 3; break;
-                    case 'overweight': ballast += 3; break;
+                    case 'slim': bodyMod = 2; break;
+                    case 'athletic': bodyMod = -3; break;
+                    case 'overweight': bodyMod = 3; break;
                     case 'average':
                     default: break;
                 }
+                ballast += bodyMod;
+                explanationHTML += `<li>Budowa ciała (${bodyType}): ${bodyMod} kg</li>`;
 
                 if (ballast < 0) ballast = 0; 
+                explanationHTML += `</ul><p class="formula">Sugerowany Balast: ${ballast.toFixed(1)} kg</p></div>`;
                 
-                ballastResultContainer.innerHTML = `<p class="result-label">Sugerowany punkt startowy balastu:</p><p class="result-value">${ballast.toFixed(1)} kg</p><p class="result-warning">⚠️ <strong>Pamiętaj:</strong> To only sugestia. Zawsze wykonaj kontrolę pływalności (check-dive) przed nurkowaniem, aby precyjnie dobrać ostateczną ilość obciążenia.</p>`; 
+                ballastResultContainer.innerHTML = `
+                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="true">i</div>
+                    <div class="calculation-details" style="display: none;">${explanationHTML}</div>
+                    <p class="result-label">Sugerowany punkt startowy balastu:</p>
+                    <p class="result-value">${ballast.toFixed(1)} kg</p>
+                    <p class="result-warning">⚠️ <strong>Pamiętaj:</strong> To only sugestia. Zawsze wykonaj kontrolę pływalności (check-dive) przed nurkowaniem, aby precyjnie dobrać ostateczną ilość obciążenia.</p>`; 
                 ballastResultContainer.style.display = 'block'; 
                 
                 ballastResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -596,24 +695,26 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const vb = parseFloat(document.getElementById('vb').value);
                 const depth = parseFloat(document.getElementById('depth').value);
                 const time = parseFloat(document.getElementById('time').value);
-
-                if ([p1, p2, vb, depth, time].some(isNaN)) {
-                    throw new Error("Wypełnij wszystkie pola poprawnymi liczbami.");
-                }
-                if (time <= 0 || vb <= 0 || depth < 0) {
-                    throw new Error("Czas, pojemność butli i głębokość muszą być dodatnie.");
-                }
-                
                 const waterType = document.getElementById('waterType').value;
-                // ZMIANA: Użycie globalnego przelicznika ciśnienia
-                const pressureConversion = (waterType === 'fresh') ? (10 / 10.3) : 1.0; // Bardziej precyzyjny przelicznik
-                
-                const pressureUsed = p1 - p2;
-                const litersUsed = pressureUsed * vb;
+                const pressureConversion = (waterType === 'fresh') ? (10 / 10.3) : 1.0; 
                 const avgPressure = (depth / 10 * pressureConversion) + 1; 
-                const sac = (litersUsed / avgPressure) / time;
+                const sac = ( (p1 - p2) * vb ) / ( avgPressure * time );
                 
-                resultDiv.innerHTML = `<p class="result-label">Twoje powierzchniowe zużycie gazu (SAC):</p><p class="result-value">${sac.toFixed(1)} l/min</p>`;
+                const explanationHTML = `
+                    <div class="formula-box-small">
+                        <h5>Obliczenia SAC</h5>
+                        <p class="formula">SAC = ( (P1 - P2) &times; V<sub>b</sub> ) / ( P<sub>śr</sub> &times; T )</p>
+                        <p class="formula">SAC = ( (${p1} - ${p2}) &times; ${vb} ) / ( ${avgPressure.toFixed(2)} &times; ${time} )</p>
+                        <p class="formula">SAC = ${((p1 - p2) * vb).toFixed(1)} / ${(avgPressure * time).toFixed(1)}</p>
+                        <p class="formula">SAC = ${sac.toFixed(2)} l/min</p>
+                    </div>
+                `;
+                
+                resultDiv.innerHTML = `
+                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
+                    <div class="calculation-details" style="display: none;">${explanationHTML}</div>
+                    <p class="result-label">Twoje powierzchniowe zużycie gazu (SAC):</p>
+                    <p class="result-value">${sac.toFixed(1)} l/min</p>`;
                 resultDiv.style.display = 'block';
                 
                 resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -644,7 +745,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 
                 const mod = ((ppo2 / o2) - 1) * 10;
                 
-                modResult.innerHTML = `<p class="result-label">Maksymalna Głębokość (MOD) dla EAN${o2_percent}% przy PPO₂ ${ppo2}:</p><p class="result-value">${mod.toFixed(1)} m</p>`;
+                const explanationHTML = `
+                    <div class="formula-box-small">
+                        <h5>Obliczenia MOD</h5>
+                        <p class="formula">MOD (m) = ( (PPO₂ / FO₂) - 1 ) &times; 10</p>
+                        <p class="formula">MOD = ( (${ppo2} / ${o2}) - 1 ) &times; 10</p>
+                        <p class="formula">MOD = ( ${ (ppo2 / o2).toFixed(2) } - 1 ) &times; 10</p>
+                        <p class="formula">MOD = ${mod.toFixed(1)} m</p>
+                    </div>
+                `;
+                
+                modResult.innerHTML = `
+                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
+                    <div class="calculation-details" style="display: none;">${explanationHTML}</div>
+                    <p class="result-label">Maksymalna Głębokość (MOD) dla EAN${o2_percent}% przy PPO₂ ${ppo2}:</p>
+                    <p class="result-value">${mod.toFixed(1)} m</p>`;
                 modResult.style.display = 'block';
                 
                 modResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -674,7 +789,22 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 
                 const ead = ((depth + 10) * (n2 / 0.79)) - 10;
                 
-                eadResult.innerHTML = `<p class="result-label">Równoważna Głębokość Powietrzna (EAD) na ${depth} m z EAN${o2_percent}%:</p><p class="result-value">${ead.toFixed(1)} m</p>`;
+                const explanationHTML = `
+                    <div class="formula-box-small">
+                        <h5>Obliczenia EAD</h5>
+                        <p class="formula">EAD (m) = ( (Głębokość + 10) &times; FN₂ / 0.79 ) - 10</p>
+                        <p class="formula">EAD = ( (${depth} + 10) &times; ${n2.toFixed(2)} / 0.79 ) - 10</p>
+                        <p class="formula">EAD = ( ${depth + 10} &times; ${(n2 / 0.79).toFixed(2)} ) - 10</p>
+                        <p class="formula">EAD = ${((depth + 10) * (n2 / 0.79)).toFixed(1)} - 10</p>
+                        <p class="formula">EAD = ${ead.toFixed(1)} m</p>
+                    </div>
+                `;
+                
+                eadResult.innerHTML = `
+                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
+                    <div class="calculation-details" style="display: none;">${explanationHTML}</div>
+                    <p class="result-label">Równoważna Głębokość Powietrzna (EAD) na ${depth} m z EAN${o2_percent}%:</p>
+                    <p class="result-value">${ead.toFixed(1)} m</p>`;
                 eadResult.style.display = 'block';
                 
                 eadResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -686,6 +816,30 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         });
     }
+
+    // ZMIANA: NOWY LISTENER DLA IKON (i)
+    document.querySelector('.app-content').addEventListener('click', function(e) {
+        if (e.target.classList.contains('result-info-icon')) {
+            const resultContainer = e.target.closest('.result-container');
+            if (!resultContainer) return;
+
+            const detailsDiv = resultContainer.querySelector('.calculation-details');
+            if (!detailsDiv) return;
+
+            const detailsHTML = detailsDiv.innerHTML;
+            const isProFeature = e.target.dataset.proFeature === 'true';
+            const isUnlocked = document.querySelector('#pro-gas-calculator').classList.contains('unlocked'); // Sprawdź globalny stan odblokowania
+
+            if (!isProFeature || isUnlocked) {
+                // Pokaż obliczenia
+                showTooltip(detailsHTML);
+            } else {
+                // Pokaż paywall
+                const proOverlayHTML = document.querySelector('#pro-gas-calculator .pro-overlay').innerHTML;
+                showTooltip(proOverlayHTML);
+            }
+        }
+    });
 
     // --- Koniec DOMContentLoaded ---
 });
