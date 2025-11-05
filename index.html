@@ -85,6 +85,7 @@
                         <button class="sub-tab-button active" data-subtab="mod-calculator" title="Oblicza maksymalną głębokość">Oblicz MOD</button>
                         <button class="sub-tab-button" data-subtab="ead-calculator" title="Oblicza równoważną głębokość powietrzną">Oblicz EAD</button>
                         <button class="sub-tab-button" data-subtab="best-mix-calculator" title="Oblicza najlepszą mieszankę na daną głębokość">Oblicz Best Mix</button>
+                        <button class="sub-tab-button" data-subtab="cns-calculator" title="Oblicza obciążenie tlenowe CNS%">Oblicz CNS%</button>
                     </nav>
                     <div class="sub-tab-content-wrapper">
                         <div id="mod-calculator" class="sub-tab-content active-sub-tab">
@@ -134,6 +135,32 @@
                                 <button type="submit">Oblicz Best Mix</button>
                             </form>
                             <div id="bestMixResult" class="result-container"></div>
+                        </div>
+                        <div id="cns-calculator" class="sub-tab-content">
+                            <form id="cnsForm">
+                                <div class="input-group"><label for="cnsDepth">Głębokość (m)</label><input type="number" id="cnsDepth" step="0.1" value="30" min="1" required></div>
+                                <div class="input-group"><label for="cnsTime">Czas na głębokości (min)</label><input type="number" id="cnsTime" value="20" min="1" required></div>
+                                
+                                <div class="form-full-width">
+                                    <div class="button-with-tooltip">
+                                        <span class="tooltip-trigger tooltip-button">?
+                                            <div class="tooltip-content">
+                                                <h4>Toksyczność Tlenowa (CNS%)</h4>
+                                                <p><strong>Co to jest?</strong> CNS to skrót od "Central Nervous System" (Ośrodkowy Układ Nerwowy). Ten wskaźnik to "zegar" śledzący, jak bardzo obciążyłeś swój układ nerwowy tlenem pod wysokim ciśnieniem (PPO₂).</p>
+                                                <p><strong>Dlaczego to liczymy?</strong> Zbyt długa ekspozycja na wysokie PPO₂ (nawet bezpieczne 1.4) staje się toksyczna. Przekroczenie limitów grozi konwulsjami tlenowymi pod wodą.</p>
+                                                <p><strong>Jak to działa?</strong></p>
+                                                <ul>
+                                                    <li>Kalkulator oblicza, jaki procent dopuszczalnego dziennego limitu zużyłeś podczas pobytu na danej głębokości.</li>
+                                                    <li>Na przykład, 45 minut przy PPO₂ 1.6 bar to 100% limitu.</li>
+                                                    <li><strong>100% to maksymalny limit</strong> na 24 godziny. Planowanie nurkowań powinno celować w znacznie niższe wartości, aby zostawić margines bezpieczeństwa.</li>
+                                                </ul>
+                                            </div>
+                                        </span>
+                                        <button type="submit">Oblicz CNS%</button>
+                                    </div>
+                                </div>
+                                </form>
+                            <div id="cnsResult" class="result-container"></div>
                         </div>
                     </div>
                 </div>
@@ -293,24 +320,24 @@
                         </div>
                         
                         <div id="sod-nitrox" class="sub-tab-content">
-                             <div class="science-content">
-                                <div class="formula-box">
-                                    <h5>MOD (Maximum Operating Depth)</h5>
-                                    <p class="formula">MOD (metry) = ( (PPO₂ / FO₂) - 1 ) &times; 10</p>
-                                    <ul>
-                                        <li><strong>PPO₂:</strong> Ciśnienie parcjalne tlenu (np. 1.4)</li>
-                                        <li><strong>FO₂:</strong> Frakcja tlenu (np. 0.32 dla EAN32)</li>
-                                    </ul>
+                                <div class="science-content">
+                                    <div class="formula-box">
+                                        <h5>MOD (Maximum Operating Depth)</h5>
+                                        <p class="formula">MOD (metry) = ( (PPO₂ / FO₂) - 1 ) &times; 10</p>
+                                        <ul>
+                                            <li><strong>PPO₂:</strong> Ciśnienie parcjalne tlenu (np. 1.4)</li>
+                                            <li><strong>FO₂:</strong> Frakcja tlenu (np. 0.32 dla EAN32)</li>
+                                        </ul>
+                                    </div>
+                                    <div class="formula-box">
+                                        <h5>EAD (Equivalent Air Depth)</h5>
+                                        <p class="formula">EAD (metry) = ( (Głębokość + 10) &times; FN₂ / 0.79 ) - 10</p>
+                                        <ul>
+                                            <li><strong>FN₂:</strong> Frakcja azotu (np. 0.68 dla EAN32)</li>
+                                            <li><strong>0.79:</strong> Frakcja azotu w powietrzu</li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div class="formula-box">
-                                    <h5>EAD (Equivalent Air Depth)</h5>
-                                    <p class="formula">EAD (metry) = ( (Głębokość + 10) &times; FN₂ / 0.79 ) - 10</p>
-                                    <ul>
-                                        <li><strong>FN₂:</strong> Frakcja azotu (np. 0.68 dla EAN32)</li>
-                                        <li><strong>0.79:</strong> Frakcja azotu w powietrzu</li>
-                                    </ul>
-                                </div>
-                             </div>
                         </div>
                         
                         <div id="sod-gas" class="sub-tab-content">
@@ -320,30 +347,30 @@
                                 <p><strong>Odblokuj tę funkcję stawiając mi kawę! ☕</strong></p>
                                 <button class="unlockProButton pro-overlay-button">Odblokuj (Mock)</button>
                             </div>
-                             <div class="science-content">
-                                <div class="formula-box">
-                                    <h5>Całkowite Zużycie Gazu (Plan)</h5>
-                                    <p>Suma gazu zużytego we wszystkich fazach nurkowania (dla 1 nurka):</p>
-                                    <p class="formula">L<sub>całkowite</sub> = L<sub>zanurzenie</sub> + L<sub>dno</sub> + L<sub>wynurzenie</sub> + L<sub>przystanek</sub></p>
-                                    <ul>
-                                        <li><strong>L<sub>zanurzenie</sub>:</strong> SAC &times; P<sub>śr-zanurzenie</sub> &times; T<sub>zanurzenie</sub></li>
-                                        <li><strong>L<sub>dno</sub>:</strong> SAC &times; P<sub>dno</sub> &times; T<sub>dno</sub></li>
-                                        <li><strong>L<sub>wynurzenie</sub>:</strong> SAC &times; P<sub>śr-wynurzenie</sub> &times; T<sub>wynurzenie</sub></li>
-                                        <li><strong>L<sub>przystanek</sub>:</strong> SAC &times; P<sub>przystanek</sub> &times; T<sub>przystanek</sub></li>
-                                    </ul>
+                                <div class="science-content">
+                                    <div class="formula-box">
+                                        <h5>Całkowite Zużycie Gazu (Plan)</h5>
+                                        <p>Suma gazu zużytego we wszystkich fazach nurkowania (dla 1 nurka):</p>
+                                        <p class="formula">L<sub>całkowite</sub> = L<sub>zanurzenie</sub> + L<sub>dno</sub> + L<sub>wynurzenie</sub> + L<sub>przystanek</sub></p>
+                                        <ul>
+                                            <li><strong>L<sub>zanurzenie</sub>:</strong> SAC &times; P<sub>śr-zanurzenie</sub> &times; T<sub>zanurzenie</sub></li>
+                                            <li><strong>L<sub>dno</sub>:</strong> SAC &times; P<sub>dno</sub> &times; T<sub>dno</sub></li>
+                                            <li><strong>L<sub>wynurzenie</sub>:</strong> SAC &times; P<sub>śr-wynurzenie</sub> &times; T<sub>wynurzenie</sub></li>
+                                            <li><strong>L<sub>przystanek</sub>:</strong> SAC &times; P<sub>przystanek</sub> &times; T<sub>przystanek</sub></li>
+                                        </ul>
+                                    </div>
+                                    <div class="formula-box">
+                                        <h5>Rezerwa Rock Bottom (RB)</h5>
+                                        <p>Suma gazu dla 2 nurków w stresie podczas awaryjnego wynurzenia:</p>
+                                        <p class="formula">L<sub>RB</sub> = (Gaz<sub>reakcja</sub> + Gaz<sub>wynurzenie</sub>) + Bufor</p>
+                                        <ul>
+                                            <li><strong>SAC<sub>stres</sub>:</strong> SAC &times; Mnożnik stresu (np. 2)</li>
+                                            <li><strong>Gaz<sub>reakcja</sub>:</strong> SAC<sub>stres</sub> &times; P<sub>dno</sub> &times; T<sub>reakcja</sub> &times; 2 nurków</li>
+                                            <li><strong>Gaz<sub>wynurzenie</sub>:</strong> SAC<sub>stres</sub> &times; P<sub>śr-wynurzenie</sub> &times; T<sub>wynurzenie</sub> &times; 2 nurków</li>
+                                            <li><strong>Bufor:</strong> Dodatkowe bary (np. 10 bar) &times; Pojemność butli</li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div class="formula-box">
-                                    <h5>Rezerwa Rock Bottom (RB)</h5>
-                                    <p>Suma gazu dla 2 nurków w stresie podczas awaryjnego wynurzenia:</p>
-                                    <p class="formula">L<sub>RB</sub> = (Gaz<sub>reakcja</sub> + Gaz<sub>wynurzenie</sub>) + Bufor</p>
-                                    <ul>
-                                        <li><strong>SAC<sub>stres</sub>:</strong> SAC &times; Mnożnik stresu (np. 2)</li>
-                                        <li><strong>Gaz<sub>reakcja</sub>:</strong> SAC<sub>stres</sub> &times; P<sub>dno</sub> &times; T<sub>reakcja</sub> &times; 2 nurków</li>
-                                        <li><strong>Gaz<sub>wynurzenie</sub>:</strong> SAC<sub>stres</sub> &times; P<sub>śr-wynurzenie</sub> &times; T<sub>wynurzenie</sub> &times; 2 nurków</li>
-                                        <li><strong>Bufor:</strong> Dodatkowe bary (np. 10 bar) &times; Pojemność butli</li>
-                                    </ul>
-                                </div>
-                             </div>
                         </div>
                         
                         <div id="sod-ballast" class="sub-tab-content">
@@ -353,41 +380,41 @@
                                 <p><strong>Odblokuj tę funkcję stawiając mi kawę! ☕</strong></p>
                                 <button class="unlockProButton pro-overlay-button">Odblokuj (Mock)</button>
                             </div>
-                             <div class="science-content">
-                                <div class="formula-box">
-                                    <h5>Obliczanie Sugestii Balastu</h5>
-                                    <p>Obliczenie balastu to heurystyka (dobra zasada), a nie ścisły wzór. Zawsze wykonaj kontrolę pływalności.</p>
-                                    <p class="formula">Balast = Waga<sub>bazowa</sub> + Modyfikatory</p>
-                                    <ul>
-                                        <li><strong>Waga<sub>bazowa</sub>:</strong> 10% wagi ciała nurka</li>
-                                        <li>--- Modyfikatory Skafandra ---</li>
-                                        <li><strong>Pianka 3mm:</strong> -3 kg</li>
-                                        <li><strong>Pianka 5mm:</strong> -2 kg</li>
-                                        <li><strong>Pianka 7mm:</strong> 0 kg (baza)</li>
-                                        <li><strong>Suchy (Trylam/Crash):</strong> +4kg (Cienki ocieplacz) / +6kg (Gruby ocieplacz)</li>
-                                        <li><strong>Suchy (Neopren):</strong> +7kg (Cienki ocieplacz) / +8kg (Gruby ocieplacz)</li>
-                                        <li>--- Modyfikatory Butli (Pływalność Ujemna) ---</li>
-                                        <li><strong>Alu 11L (S80):</strong> +1 kg (jest dodatnia)</li>
-                                        <li><strong>Stal 12L:</strong> -3 kg</li>
-                                        <li><strong>Stal 15L:</strong> -4 kg</li>
-                                        <li><strong>Twin 2x7L (232b):</strong> -4 kg</li>
-                                        <li><strong>Twin 2x8.5L (232b):</strong> -5 kg</li>
-                                        <li><strong>Twin 2x10L (232b):</strong> -6 kg</li>
-                                        <li><strong>Twin 2x12L (232b):</strong> -8 kg</li>
-                                        <li><strong>Twin 2x7L (300b):</strong> -6 kg</li>
-                                        <li><strong>Twin 2x8.5L (300b):</strong> -7 kg</li>
-                                        <li><strong>Twin 2x10L (300b):</strong> -8 kg</li>
-                                        <li><strong>Twin 2x12L (300b):</strong> -10 kg</li>
-                                        <li><strong>Płyta Alu (dla Twina):</strong> -0.85 kg</li>
-                                        <li><strong>Płyta Stal (dla Twina):</strong> -2 kg</li>
-                                        <li>--- Modyfikatory Inne ---</li>
-                                        <li><strong>Woda Słodka:</strong> -2 kg</li>
-                                        <li><strong>Budowa Szczupła:</strong> +2 kg</li>
-                                        <li><strong>Budowa Atletyczna:</strong> -3 kg</li>
-                                        <li><strong>Budowa Nadwaga:</strong> +3 kg</li>
-                                    </ul>
+                                <div class="science-content">
+                                    <div class="formula-box">
+                                        <h5>Obliczanie Sugestii Balastu</h5>
+                                        <p>Obliczenie balastu to heurystyka (dobra zasada), a nie ścisły wzór. Zawsze wykonaj kontrolę pływalności.</p>
+                                        <p class="formula">Balast = Waga<sub>bazowa</sub> + Modyfikatory</p>
+                                        <ul>
+                                            <li><strong>Waga<sub>bazowa</sub>:</strong> 10% wagi ciała nurka</li>
+                                            <li>--- Modyfikatory Skafandra ---</li>
+                                            <li><strong>Pianka 3mm:</strong> -3 kg</li>
+                                            <li><strong>Pianka 5mm:</strong> -2 kg</li>
+                                            <li><strong>Pianka 7mm:</strong> 0 kg (baza)</li>
+                                            <li><strong>Suchy (Trylam/Crash):</strong> +4kg (Cienki ocieplacz) / +6kg (Gruby ocieplacz)</li>
+                                            <li><strong>Suchy (Neopren):</strong> +7kg (Cienki ocieplacz) / +8kg (Gruby ocieplacz)</li>
+                                            <li>--- Modyfikatory Butli (Pływalność Ujemna) ---</li>
+                                            <li><strong>Alu 11L (S80):</strong> +1 kg (jest dodatnia)</li>
+                                            <li><strong>Stal 12L:</strong> -3 kg</li>
+                                            <li><strong>Stal 15L:</strong> -4 kg</li>
+                                            <li><strong>Twin 2x7L (232b):</strong> -4 kg</li>
+                                            <li><strong>Twin 2x8.5L (232b):</strong> -5 kg</li>
+                                            <li><strong>Twin 2x10L (232b):</strong> -6 kg</li>
+                                            <li><strong>Twin 2x12L (232b):</strong> -8 kg</li>
+                                            <li><strong>Twin 2x7L (300b):</strong> -6 kg</li>
+                                            <li><strong>Twin 2x8.5L (300b):</strong> -7 kg</li>
+                                            <li><strong>Twin 2x10L (300b):</strong> -8 kg</li>
+                                            <li><strong>Twin 2x12L (300b):</strong> -10 kg</li>
+                                            <li><strong>Płyta Alu (dla Twina):</strong> -0.85 kg</li>
+                                            <li><strong>Płyta Stal (dla Twina):</strong> -2 kg</li>
+                                            <li>--- Modyfikatory Inne ---</li>
+                                            <li><strong>Woda Słodka:</strong> -2 kg</li>
+                                            <li><strong>Budowa Szczupła:</strong> +2 kg</li>
+                                            <li><strong>Budowa Atletyczna:</strong> -3 kg</li>
+                                            <li><strong>Budowa Nadwaga:</strong> +3 kg</li>
+                                        </ul>
+                                    </div>
                                 </div>
-                             </div>
                         </div>
                         
                     </div>
@@ -418,22 +445,22 @@
                              alt="Główna tapeta" 
                              class="wallpaper-thumb"
                              data-wallpaper="url('background_uki.jpg')">
-                             
+                            
                         <img src="Gemini_Generated_Image_31b0jp31b0jp31b0 (1).png" 
                              alt="Zachód słońca 1" 
                              class="wallpaper-thumb"
                              data-wallpaper="url('Gemini_Generated_Image_31b0jp31b0jp31b0 (1).png')">
-                             
+                            
                         <img src="Gemini_Generated_Image_31b0jp31b0jp31b0 (2).png" 
                              alt="Zachód słońca 2" 
                              class="wallpaper-thumb"
                              data-wallpaper="url('Gemini_Generated_Image_31b0jp31b0jp31b0 (2).png')">
-                             
+                            
                         <img src="Generated Image September 22, 2025 - 3_04PM.png" 
                              alt="Zatoka" 
                              class="wallpaper-thumb"
                              data-wallpaper="url('Generated Image September 22, 2025 - 3_04PM.png')">
-                             
+                            
                         <img src="Gemini_Generated_Image_8bkms38bkms38bkm.png" 
                              alt="Plaża z rybkami" 
                              class="wallpaper-thumb"

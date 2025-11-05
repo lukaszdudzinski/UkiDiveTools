@@ -879,7 +879,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         }
     });
-
+    
     // ZMIANA: NOWY LISTENER DLA KALKULATORA BEST MIX
     const bestMixForm = document.getElementById('bestMixForm');
     const bestMixResult = document.getElementById('bestMixResult');
@@ -937,6 +937,110 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         });
     }
-    
+    // --- Listener 9: Kalkulator CNS% ---
+    const cnsForm = document.getElementById('cnsForm');
+    const cnsResult = document.getElementById('cnsResult');
+
+    // Funkcja pomocnicza do obliczania limitu czasu na podstawie PPO2 (interpolacja liniowa tabel NOAA)
+    function getCNSLimit(ppo2) {
+        // PPO2 / Czas Limitu (min)
+        const ppo2_limits = [1.6, 1.5, 1.4, 1.3, 1.2, 1.1, 1.0, 0.9, 0.8, 0.7, 0.6];
+        const time_limits = [45, 120, 150, 180, 210, 240, 300, 360, 450, 570, 720];
+
+        if (ppo2 > 1.6) return 45; // Max limit
+        if (ppo2 <= 0.6) return 720; // Min limit (najdłuższy czas)
+        
+        let i = 0;
+        // Znajdź przedział
+        while (i < ppo2_limits.length && ppo2_limits[i] > ppo2) {
+            i++;
+        }
+        
+        if (i === 0) return time_limits[0]; // Równe 1.6
+        
+        const x1 = ppo2_limits[i];     // Np. 1.5
+        const y1 = time_limits[i];     // Np. 120
+        const x2 = ppo2_limits[i-1];   // Np. 1.6
+        const y2 = time_limits[i-1];   // Np. 45
+        
+        // Interpolacja liniowa: y = y1 + (x - x1) * (y2 - y1) / (x2 - x1)
+        const t_limit = y1 + (ppo2 - x1) * (y2 - y1) / (x2 - x1);
+        
+        return t_limit;
+    }
+
+
+    if (cnsForm && cnsResult) {
+        cnsForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            try {
+                const depth = parseFloat(document.getElementById('cnsDepth').value);
+                const time = parseFloat(document.getElementById('cnsTime').value);
+                const o2_percent = parseFloat(document.getElementById('nitroxO2').value);
+                const o2 = o2_percent / 100;
+                
+                // Używamy globalnego ustawienia wody (z Ustawień)
+                const waterType = document.getElementById('global-water-type').value; 
+                
+                if (isNaN(depth) || isNaN(time) || isNaN(o2) || depth <= 0 || time <= 0) {
+                    throw new Error("Wprowadź poprawne dane (głębokość, czas, O2%).");
+                }
+                if (o2 < 0.21 || o2 > 1.0) {
+                    throw new Error("Wprowadź poprawny % tlenu (21-100).");
+                }
+
+                // Oblicz PPO2 na dnie
+                const pressureConversion = (waterType === 'fresh') ? (10 / 10.3) : 1.0;
+                const ata = (depth / 10 * pressureConversion) + 1;
+                const ppo2 = ata * o2;
+
+                if (ppo2 > 1.6) {
+                     // Sprawdzamy PPO2, ale pozwalamy na obliczenie, jeśli ktoś chce sprawdzić co się stanie
+                     cnsResult.innerHTML = `<p class="result-error">OSTRZEŻENIE: PPO₂ (${ppo2.toFixed(2)}) przekracza limit 1.6!</p>`;
+                }
+                
+                // Oblicz limit czasu (T_limit) dla tego PPO2
+                const t_limit = getCNSLimit(ppo2);
+                
+                // Oblicz % CNS
+                const cns_percentage = (time / t_limit) * 100;
+
+                const explanationHTML = `
+                    <div class="formula-box-small">
+                        <h5>Obliczenia CNS%</h5>
+                        <p class="formula">ATA = (Głębokość / ${waterType === 'fresh' ? '10.3' : '10'}) + 1 = ${ata.toFixed(2)}</p>
+                        <p class="formula">PPO₂ = ATA &times; FO₂ = ${ata.toFixed(2)} &times; ${o2.toFixed(2)} = ${ppo2.toFixed(2)}</p>
+                        <p class="formula">T_Limit (dla PPO₂ ${ppo2.toFixed(2)}) = ${t_limit.toFixed(0)} min</p>
+                        <p class="formula">CNS% = (Czas / T_Limit) &times; 100</p>
+                        <p class="formula">CNS% = (${time} / ${t_limit.toFixed(0)}) &times; 100 = ${cns_percentage.toFixed(1)}%</p>
+                    </div>
+                `;
+                
+                // Jeśli był błąd PPO2, dodaj wynik poniżej błędu, w przeciwnym razie wygeneruj normalny wynik
+                if (ppo2 > 1.6) {
+                     cnsResult.innerHTML += `
+                        <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
+                        <div class="calculation-details" style="display: none;">${explanationHTML}</div>
+                        <p class="result-label">Obciążenie tlenowe (CNS) dla ${time} min na ${depth} m (EAN${o2_percent}):</p>
+                        <p class="result-value">${cns_percentage.toFixed(1)}%</p>`;
+                } else {
+                    cnsResult.innerHTML = `
+                        <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
+                        <div class="calculation-details" style="display: none;">${explanationHTML}</div>
+                        <p class="result-label">Obciążenie tlenowe (CNS) dla ${time} min na ${depth} m (EAN${o2_percent}):</p>
+                        <p class="result-value">${cns_percentage.toFixed(1)}%</p>`;
+                }
+                
+                cnsResult.style.display = 'block';
+                cnsResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            } catch (error) {
+                cnsResult.innerHTML = `<p class="result-error">${error.message}</p>`;
+                cnsResult.style.display = 'block';
+                
+                cnsResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        });
+    }
     // --- Koniec DOMContentLoaded ---
 });
