@@ -496,6 +496,19 @@ body {
   line-height: 1.1;
   margin-bottom: 0;
 }
+/* ZMIANA: Dodano styl dla PPO2 w CNS */
+#cnsResult .result-sub-label {
+    text-align: center;
+    color: #b0b0b0;
+    font-size: 0.9em;
+    border-top: 1px solid #4a4a4a;
+    padding-top: 4px;
+    margin-top: 4px;
+    margin-bottom: 0;
+}
+#cnsResult .result-sub-label strong {
+    color: #ffffff;
+}
 /* ZMIANA: Kompaktyzacja wyniku Balastu */
 #ballastResult .result-warning { 
   font-size: 0.9em; 
@@ -519,28 +532,11 @@ body {
 }
 /* Błędy */
 #rbResult .result-error, #gcResult .result-error, #proGasResult .result-error, 
-#ballastResult .result-error, #bestMixResult .result-error, #cnsResult .result-error { /* ZMIANA: Dodano Best Mix i CNS */
+#ballastResult .result-error, #bestMixResult .result-error, #cnsResult .result-error { /* ZMIANA: Dodano CNS */
   font-size: 1em; 
   color: #ff3860; 
   font-weight: bold; 
   text-align: center; 
-}
-
-/* Ostrzeżenia (np. PPO2 > 1.4) */
-.result-container .result-warning {
-  font-size: 1em;
-  color: #ffa800; /* Pomarańczowy/żółty dla ostrzeżenia */
-  font-weight: bold;
-  text-align: center;
-  padding: 5px;
-  background-color: rgba(255, 168, 0, 0.1);
-  border-bottom: 1px solid #4a4a4a;
-}
-
-body:not(.dark-theme) .result-container .result-warning {
-   color: #cc8400;
-   text-shadow: 0 1px 1px rgba(255,255,255,0.3);
-   background-color: rgba(255, 168, 0, 0.2);
 }
 
 /* === ZMIANA: Bardziej kompaktowe wyniki dla GC i PRO === */
@@ -702,6 +698,89 @@ input:checked + .slider:before {
   color: #e0e0e0;
 }
 /* === KONIEC STYLI === */
+
+/* ============================================================
+    NOWE STYLE DLA CHECKLISTY (DM TOOLS)
+    ============================================================ */
+.checklist-group {
+  margin-bottom: 20px;
+  background-color: rgba(0, 0, 0, 0.2); /* v1 style */
+  border-radius: 8px;
+  padding: 10px 15px;
+  border: 1px solid #4a4a4a; /* v1 style */
+}
+.checklist-group h4 {
+  font-size: 1.2em;
+  color: #00d1b2; /* v1 style */
+  margin: 5px 0 10px 0;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #4a4a4a; /* v1 style */
+}
+.checklist-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+.checklist-item label {
+  color: #e0e0e0; /* v1 style */
+  margin-left: 10px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.checklist-item input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #555; /* v1 style */
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+  background-color: #333; /* v1 style */
+}
+.checklist-item input[type="checkbox"]:hover {
+  border-color: #00d1b2;
+}
+.checklist-item input[type="checkbox"]:checked {
+  background-color: #00d1b2;
+  border-color: #00d1b2;
+}
+.checklist-item input[type="checkbox"]:checked::after {
+  content: '\2713';
+  font-size: 18px;
+  font-weight: bold;
+  color: #1e1e1e; /* v1 style */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.checklist-item input[type="checkbox"]:checked + label {
+  color: #777; /* v1 style */
+  text-decoration: line-through;
+}
+
+/* Przycisk Reset */
+.checklist-reset-btn {
+  background-color: #666;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  font-size: 0.9em;
+  cursor: pointer;
+  float: right;
+  margin-bottom: 10px;
+  transition: background-color 0.2s;
+}
+.checklist-reset-btn:hover {
+  background-color: #ff3860;
+}
+/* ============================================================
+    KONIEC STYLI CHECKLISTY
+    ============================================================ */
 
 
 /* --- Wyłączenie "Liquid Glass" --- */
@@ -906,7 +985,7 @@ body:not(.dark-theme) #result .result-value,
 body:not(.dark-theme) #modResult .result-value,
 body:not(.dark-theme) #eadResult .result-value,
 body:not(.dark-theme) #bestMixResult .result-value,
-body:not(.dark-theme) #cnsResult .result-value { /* ZMIANA: Dodano Best Mix i CNS */
+body:not(.dark-theme) #cnsResult .result-value { /* ZMIANA: Dodano CNS */
   color: #ffffff;  /* ZMIANA: Czysta biel */
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
@@ -924,9 +1003,13 @@ body:not(.dark-theme) #result .result-label,
 body:not(.dark-theme) #modResult .result-label,
 body:not(.dark-theme) #eadResult .result-label,
 body:not(.dark-theme) #bestMixResult .result-label,
-body:not(.dark-theme) #cnsResult .result-label { /* ZMIANA: Dodano Best Mix i CNS */
+body:not(.dark-theme) #cnsResult .result-label, /* ZMIANA: Dodano CNS */
+body:not(.dark-theme) #cnsResult .result-sub-label { /* ZMIANA: Dodano CNS */
   color: #f0f0f0; /* ZMIANA: z #363636 */
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+body:not(.dark-theme) #cnsResult .result-sub-label strong { /* ZMIANA: Dodano CNS */
+    color: #ffffff;
 }
 body:not(.dark-theme) #gcResult .result-value-sub, 
 body:not(.dark-theme) #proGasResult .result-value-sub {
@@ -955,5 +1038,33 @@ body:not(.dark-theme) .formula-box ul li {
 }
 body:not(.dark-theme) .formula-box ul li strong {
   color: #ffffff;
+}
+/* === KONIEC ZMIAN === */
+
+/* ZMIANA: Style dla checklisty w trybie jasnym (v1) */
+body:not(.dark-theme) .checklist-group {
+  background-color: rgba(255, 255, 255, 0.2); /* v1 light style */
+  border-color: rgba(255, 255, 255, 0.3); /* v1 light style */
+}
+body:not(.dark-theme) .checklist-group h4 {
+  color: #00d1b2; /* v1 light style (turkusowy na jasnym tle z cieniem) */
+  border-bottom-color: rgba(255, 255, 255, 0.3); /* v1 light style */
+}
+body:not(.dark-theme) .checklist-item label {
+  color: #f0f0f0; /* v1 light style */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); /* v1 light style */
+}
+body:not(.dark-theme) .checklist-item input[type="checkbox"] {
+  border-color: #ccc;
+  background-color: rgba(255,255,255,0.3); /* v1 light style */
+}
+body:not(.dark-theme) .checklist-item input[type="checkbox"]:checked {
+  background-color: #00d1b2;
+  border-color: #00d1b2;
+}
+body:not(.dark-theme) .checklist-item input[type="checkbox"]:checked + label {
+  color: #ddd;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+  text-decoration: line-through;
 }
 /* === KONIEC ZMIAN === */

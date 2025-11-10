@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             throw new Error("Brakujące lub nieprawidłowe dane do obliczenia Rock Bottom.");
         }
         if (ascentRate <= 0 || volume <= 0) {
-             throw new Error("Prędkość wynurzania i pojemność butli muszą być większe od zera.");
+            	throw new Error("Prędkość wynurzania i pojemność butli muszą być większe od zera.");
         }
         const P_depth = (depth / 10) + 1;
         const P_stop = (stopDepth / 10) + 1;
@@ -642,7 +642,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         break; 
                 } 
                 if (suit.includes('foam')) {
-                     explanationHTML += `<li>Skafander (${suit}): ${suitMod} kg</li>`;
+                    explanationHTML += `<li>Skafander (${suit}): ${suitMod} kg</li>`;
                 }
                 ballast += suitMod;
                 
@@ -765,7 +765,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     }
     
-    // --- Listener 7: Kalkulator MOD/EAD ---
+    // --- Listener 7: Kalkulatory Nitrox (MOD, EAD, Best Mix, CNS) ---
     const modForm = document.getElementById('modForm');
     const modResult = document.getElementById('modResult');
     if (modForm && modResult) {
@@ -777,7 +777,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const ppo2 = parseFloat(document.getElementById('modPO2').value);
                 
                 if (isNaN(o2) || isNaN(ppo2) || o2 < 0.21 || o2 > 1.0) {
-                     throw new Error("Wprowadź poprawny % tlenu (21-100).");
+                    	throw new Error("Wprowadź poprawny % tlenu (21-100).");
                 }
                 
                 const mod = ((ppo2 / o2) - 1) * 10;
@@ -821,7 +821,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const n2 = 1.0 - o2;
                 
                 if (isNaN(o2) || isNaN(depth) || o2 < 0.21 || o2 > 1.0 || depth <= 0) {
-                     throw new Error("Wprowadź poprawny % tlenu (21-100) i głębokość.");
+                    	throw new Error("Wprowadź poprawny % tlenu (21-100) i głębokość.");
                 }
                 
                 const ead = ((depth + 10) * (n2 / 0.79)) - 10;
@@ -854,32 +854,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 
-    // ZMIANA: NOWY LISTENER DLA IKON (i)
-    document.querySelector('.app-content').addEventListener('click', function(e) {
-        if (e.target.classList.contains('result-info-icon')) {
-            const resultContainer = e.target.closest('.result-container');
-            if (!resultContainer) return;
-
-            const detailsDiv = resultContainer.querySelector('.calculation-details');
-            if (!detailsDiv) return;
-
-            const detailsHTML = detailsDiv.innerHTML;
-            const isProFeature = e.target.dataset.proFeature === 'true';
-            
-            // Sprawdź globalny stan odblokowania
-            const isUnlocked = document.querySelector('#pro-gas-calculator').classList.contains('unlocked'); 
-
-            if (!isProFeature || isUnlocked) {
-                // Pokaż obliczenia
-                showTooltip(detailsHTML);
-            } else {
-                // Pokaż paywall
-                const proOverlayHTML = document.querySelector('#pro-gas-calculator .pro-overlay').innerHTML;
-                showTooltip(proOverlayHTML);
-            }
-        }
-    });
-    
     // ZMIANA: NOWY LISTENER DLA KALKULATORA BEST MIX
     const bestMixForm = document.getElementById('bestMixForm');
     const bestMixResult = document.getElementById('bestMixResult');
@@ -903,13 +877,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const bestMixPercent = Math.floor(fo2 * 100);
 
                 if (bestMixPercent > 100) {
-                     throw new Error("Nie można uzyskać PPO₂ na tej głębokości.");
+                    	throw new Error("Nie można uzyskać PPO₂ na tej głębokości.");
                 }
                 if (bestMixPercent < 21) {
-                    throw new Error("Wynik poniżej 21%. Użyj powietrza.");
+                    	throw new Error("Wynik poniżej 21%. Użyj powietrza.");
                 }
                 
-                 const explanationHTML = `
+                	const explanationHTML = `
                     <div class="formula-box-small">
                         <h5>Obliczenia Best Mix</h5>
                         <p class="formula">ATA = (Głębokość / ${waterType === 'fresh' ? '10.3' : '10'}) + 1</p>
@@ -937,110 +911,165 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         });
     }
-    // --- Listener 9: Kalkulator CNS% ---
+    
+    // ==========================================================
+    // === NOWY LISTENER DLA KALKULATORA CNS% (NAPRAWIONY) ===
+    // ==========================================================
     const cnsForm = document.getElementById('cnsForm');
     const cnsResult = document.getElementById('cnsResult');
-
-    // Funkcja pomocnicza do obliczania limitu czasu na podstawie PPO2 (interpolacja liniowa tabel NOAA)
-    function getCNSLimit(ppo2) {
-        // PPO2 / Czas Limitu (min)
-        const ppo2_limits = [1.6, 1.5, 1.4, 1.3, 1.2, 1.1, 1.0, 0.9, 0.8, 0.7, 0.6];
-        const time_limits = [45, 120, 150, 180, 210, 240, 300, 360, 450, 570, 720];
-
-        if (ppo2 > 1.6) return 45; // Max limit
-        if (ppo2 <= 0.6) return 720; // Min limit (najdłuższy czas)
-        
-        let i = 0;
-        // Znajdź przedział
-        while (i < ppo2_limits.length && ppo2_limits[i] > ppo2) {
-            i++;
-        }
-        
-        if (i === 0) return time_limits[0]; // Równe 1.6
-        
-        const x1 = ppo2_limits[i];     // Np. 1.5
-        const y1 = time_limits[i];     // Np. 120
-        const x2 = ppo2_limits[i-1];   // Np. 1.6
-        const y2 = time_limits[i-1];   // Np. 45
-        
-        // Interpolacja liniowa: y = y1 + (x - x1) * (y2 - y1) / (x2 - x1)
-        const t_limit = y1 + (ppo2 - x1) * (y2 - y1) / (x2 - x1);
-        
-        return t_limit;
-    }
-
-
     if (cnsForm && cnsResult) {
         cnsForm.addEventListener('submit', function(e) {
             e.preventDefault();
             try {
-                const depth = parseFloat(document.getElementById('cnsDepth').value);
-                const time = parseFloat(document.getElementById('cnsTime').value);
                 const o2_percent = parseFloat(document.getElementById('nitroxO2').value);
                 const o2 = o2_percent / 100;
+                const depth = parseFloat(document.getElementById('cnsDepth').value);
+                const time = parseFloat(document.getElementById('cnsTime').value);
                 
-                // Używamy globalnego ustawienia wody (z Ustawień)
-                const waterType = document.getElementById('global-water-type').value; 
-                
-                if (isNaN(depth) || isNaN(time) || isNaN(o2) || depth <= 0 || time <= 0) {
-                    throw new Error("Wprowadź poprawne dane (głębokość, czas, O2%).");
-                }
-                if (o2 < 0.21 || o2 > 1.0) {
-                    throw new Error("Wprowadź poprawny % tlenu (21-100).");
+                // Używamy globalnego ustawienia wody
+                const waterType = document.getElementById('global-water-type').value;
+
+                if (isNaN(o2) || isNaN(depth) || isNaN(time) || o2 < 0.21 || o2 > 1.0 || depth <= 0 || time <= 0) {
+                    throw new Error("Wprowadź poprawne dane (O₂% 21-100, głębokość > 0, czas > 0).");
                 }
 
-                // Oblicz PPO2 na dnie
                 const pressureConversion = (waterType === 'fresh') ? (10 / 10.3) : 1.0;
-                const ata = (depth / 10 * pressureConversion) + 1;
-                const ppo2 = ata * o2;
+                const ppo2 = ((depth / 10 * pressureConversion) + 1) * o2;
 
-                if (ppo2 > 1.6) {
-                     // Sprawdzamy PPO2, ale pozwalamy na obliczenie, jeśli ktoś chce sprawdzić co się stanie
-                     cnsResult.innerHTML = `<p class="result-error">OSTRZEŻENIE: PPO₂ (${ppo2.toFixed(2)}) przekracza limit 1.6!</p>`;
+                // Tabela NOAA
+                const cnsRates = {
+                    0.6: 0.12, 0.7: 0.17, 0.8: 0.22, 0.9: 0.28,
+                    1.0: 0.33, 1.1: 0.40, 1.2: 0.48, 1.3: 0.56,
+                    1.4: 0.67, 1.5: 0.83, 1.6: 1.11,
+                };
+
+                let rateKey = (Math.floor(ppo2 * 10) / 10).toFixed(1);
+                let cnsPerMin;
+
+                if (rateKey < 0.6) {
+                    cnsPerMin = 0.0;
+                } else if (rateKey > 1.6) {
+                    cnsPerMin = 1.11; // Max stawka dla PPO2 > 1.6
+                } else {
+                    cnsPerMin = cnsRates[rateKey];
                 }
-                
-                // Oblicz limit czasu (T_limit) dla tego PPO2
-                const t_limit = getCNSLimit(ppo2);
-                
-                // Oblicz % CNS
-                const cns_percentage = (time / t_limit) * 100;
+
+                const cnsTotal = cnsPerMin * time;
 
                 const explanationHTML = `
                     <div class="formula-box-small">
                         <h5>Obliczenia CNS%</h5>
-                        <p class="formula">ATA = (Głębokość / ${waterType === 'fresh' ? '10.3' : '10'}) + 1 = ${ata.toFixed(2)}</p>
-                        <p class="formula">PPO₂ = ATA &times; FO₂ = ${ata.toFixed(2)} &times; ${o2.toFixed(2)} = ${ppo2.toFixed(2)}</p>
-                        <p class="formula">T_Limit (dla PPO₂ ${ppo2.toFixed(2)}) = ${t_limit.toFixed(0)} min</p>
-                        <p class="formula">CNS% = (Czas / T_Limit) &times; 100</p>
-                        <p class="formula">CNS% = (${time} / ${t_limit.toFixed(0)}) &times; 100 = ${cns_percentage.toFixed(1)}%</p>
+                        <p class="formula">PPO₂ = ( (Głębokość / ${waterType === 'fresh' ? '10.3' : '10'}) + 1 ) &times; FO₂</p>
+                        <p class="formula">PPO₂ = ( (${depth} / ${waterType === 'fresh' ? '10.3' : '10'}) + 1 ) &times; ${o2}</p>
+                        <p class="formula">PPO₂ = ${ppo2.toFixed(2)} ATA</p>
+                        <p class="formula">Stawka CNS dla ${ppo2.toFixed(2)} ATA (klucz ${rateKey}): ${cnsPerMin.toFixed(2)} %/min</p>
+                        <p class="formula">Suma: ${cnsPerMin.toFixed(2)} %/min &times; ${time} min</p>
+                        <p class="formula">Wynik: ${cnsTotal.toFixed(1)}%</p>
                     </div>
                 `;
-                
-                // Jeśli był błąd PPO2, dodaj wynik poniżej błędu, w przeciwnym razie wygeneruj normalny wynik
-                if (ppo2 > 1.6) {
-                     cnsResult.innerHTML += `
-                        <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
-                        <div class="calculation-details" style="display: none;">${explanationHTML}</div>
-                        <p class="result-label">Obciążenie tlenowe (CNS) dla ${time} min na ${depth} m (EAN${o2_percent}):</p>
-                        <p class="result-value">${cns_percentage.toFixed(1)}%</p>`;
-                } else {
-                    cnsResult.innerHTML = `
-                        <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
-                        <div class="calculation-details" style="display: none;">${explanationHTML}</div>
-                        <p class="result-label">Obciążenie tlenowe (CNS) dla ${time} min na ${depth} m (EAN${o2_percent}):</p>
-                        <p class="result-value">${cns_percentage.toFixed(1)}%</p>`;
-                }
-                
+
+                cnsResult.innerHTML = `
+                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
+                    <div class="calculation-details" style="display: none;">${explanationHTML}</div>
+                    <p class="result-label">Obciążenie tlenowe (CNS) dla EAN${o2_percent}%:</p>
+                    <p class="result-value">${cnsTotal.toFixed(1)}%</p>
+                    <p class="result-sub-label">Obliczone PPO₂: <strong>${ppo2.toFixed(2)} ATA</strong></p>
+                `;
                 cnsResult.style.display = 'block';
                 cnsResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
             } catch (error) {
                 cnsResult.innerHTML = `<p class="result-error">${error.message}</p>`;
                 cnsResult.style.display = 'block';
-                
                 cnsResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
         });
     }
+
+    
+    // --- Listener 8: Logika Checklist (localStorage) ---
+    const checklistContainer = document.getElementById('divemaster-tools');
+    
+    if (checklistContainer) {
+        const checklistCheckboxes = checklistContainer.querySelectorAll('input[type="checkbox"]');
+        const resetButtons = checklistContainer.querySelectorAll('.checklist-reset-btn');
+        const storageKey = 'uki-checklist-state-v1'; // Używamy v1, aby nie kolidować ze starymi danymi
+
+        // Funkcja do wczytania stanu
+        function loadChecklistState() {
+            const savedState = JSON.parse(localStorage.getItem(storageKey) || '{}');
+            checklistCheckboxes.forEach(checkbox => {
+                if (savedState[checkbox.id]) {
+                    checkbox.checked = true;
+                } else {
+                    checkbox.checked = false;
+                }
+            });
+        }
+
+        // Funkcja do zapisania stanu
+        function saveChecklistState() {
+            let state = {};
+            checklistCheckboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    state[checkbox.id] = true;
+                }
+            });
+            localStorage.setItem(storageKey, JSON.stringify(state));
+        }
+
+        // Listener dla każdego checkboxa
+        checklistCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', saveChecklistState);
+        });
+
+        // Listener dla przycisków Reset
+        resetButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const checklistId = this.getAttribute('data-checklist');
+                const checkboxesToReset = document.querySelectorAll(`#${checklistId} input[type="checkbox"]`);
+                
+                if (confirm('Czy na pewno chcesz zresetować tę listę?')) {
+                    checkboxesToReset.forEach(checkbox => {
+                        checkbox.checked = false;
+                    });
+                    // Zapisz zmiany (wyczyszczenie)
+                    saveChecklistState(); 
+                }
+            });
+        });
+
+        // Wczytaj stan przy ładowaniu
+        loadChecklistState();
+    }
+
+
+    // --- Listener 9: Delegacja dla ikon (i) w wynikach (PRZENIESIONY) ---
+    // ZMIANA: NOWY LISTENER DLA IKON (i)
+    document.querySelector('.app-content').addEventListener('click', function(e) {
+        if (e.target.classList.contains('result-info-icon')) {
+            const resultContainer = e.target.closest('.result-container');
+            if (!resultContainer) return;
+
+            const detailsDiv = resultContainer.querySelector('.calculation-details');
+            if (!detailsDiv) return;
+
+            const detailsHTML = detailsDiv.innerHTML;
+            const isProFeature = e.target.dataset.proFeature === 'true';
+            
+            // Sprawdź globalny stan odblokowania
+            const isUnlocked = document.querySelector('#pro-gas-calculator').classList.contains('unlocked'); 
+
+            if (!isProFeature || isUnlocked) {
+                // Pokaż obliczenia
+                showTooltip(detailsHTML);
+            } else {
+                // Pokaż paywall
+                const proOverlayHTML = document.querySelector('#pro-gas-calculator .pro-overlay').innerHTML;
+                showTooltip(proOverlayHTML);
+            }
+        }
+    });
+    
     // --- Koniec DOMContentLoaded ---
 });

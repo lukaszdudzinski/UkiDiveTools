@@ -29,6 +29,7 @@
                 <li><a href="#" data-tab="nitrox-calculator">Kalkulator Nitrox</a></li>
                 <li><a href="#" data-tab="gas-planning-calculator">Planowanie Gazu</a></li>
                 <li><a href="#" data-tab="ballast-calculator">Kalkulator Balastu</a></li>
+                <li><a href="#" data-tab="divemaster-tools">Narzędzia Divemastera</a></li>
                 <li><a href="#" data-tab="science-of-diving">Wiedza Nurkowa</a></li>
                 <li><a href="#" data-tab="settings-panel">Ustawienia</a></li>
             </ul>
@@ -140,26 +141,8 @@
                             <form id="cnsForm">
                                 <div class="input-group"><label for="cnsDepth">Głębokość (m)</label><input type="number" id="cnsDepth" step="0.1" value="30" min="1" required></div>
                                 <div class="input-group"><label for="cnsTime">Czas na głębokości (min)</label><input type="number" id="cnsTime" value="20" min="1" required></div>
-                                
-                                <div class="form-full-width">
-                                    <div class="button-with-tooltip">
-                                        <span class="tooltip-trigger tooltip-button">?
-                                            <div class="tooltip-content">
-                                                <h4>Toksyczność Tlenowa (CNS%)</h4>
-                                                <p><strong>Co to jest?</strong> CNS to skrót od "Central Nervous System" (Ośrodkowy Układ Nerwowy). Ten wskaźnik to "zegar" śledzący, jak bardzo obciążyłeś swój układ nerwowy tlenem pod wysokim ciśnieniem (PPO₂).</p>
-                                                <p><strong>Dlaczego to liczymy?</strong> Zbyt długa ekspozycja na wysokie PPO₂ (nawet bezpieczne 1.4) staje się toksyczna. Przekroczenie limitów grozi konwulsjami tlenowymi pod wodą.</p>
-                                                <p><strong>Jak to działa?</strong></p>
-                                                <ul>
-                                                    <li>Kalkulator oblicza, jaki procent dopuszczalnego dziennego limitu zużyłeś podczas pobytu na danej głębokości.</li>
-                                                    <li>Na przykład, 45 minut przy PPO₂ 1.6 bar to 100% limitu.</li>
-                                                    <li><strong>100% to maksymalny limit</strong> na 24 godziny. Planowanie nurkowań powinno celować w znacznie niższe wartości, aby zostawić margines bezpieczeństwa.</li>
-                                                </ul>
-                                            </div>
-                                        </span>
-                                        <button type="submit">Oblicz CNS%</button>
-                                    </div>
-                                </div>
-                                </form>
+                                <button type="submit">Oblicz CNS%</button>
+                            </form>
                             <div id="cnsResult" class="result-container"></div>
                         </div>
                     </div>
@@ -291,6 +274,110 @@
                     <div id="ballastResult" class="result-container" style="margin-top: 20px;"></div>
                 </div>
 
+                <div id="divemaster-tools" class="tab-content">
+                    <h3>Narzędzia Divemastera</h3>
+                    
+                    <nav class="sub-tab-nav">
+                        <button class="sub-tab-button active" data-subtab="briefing-checklist">Odprawa</button>
+                        <button class="sub-tab-button" data-subtab="packing-checklist">Pakowanie</button>
+                        <button class="sub-tab-button" data-subtab="buddy-check-list">Buddy Check</button>
+                    </nav>
+        
+                    <div class="sub-tab-content-wrapper">
+                        
+                        <div id="briefing-checklist" class="sub-tab-content active-sub-tab">
+                            <button class="checklist-reset-btn" data-checklist="briefing-checklist">Resetuj Listę</button>
+                            <div class="checklist-group">
+                                <h4>Wprowadzenie</h4>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-1"><label for="brief-cb-1">Przedstawienie (rola Przewodnika)</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-2"><label for="brief-cb-2">Cel nurkowania</label></div>
+                            </div>
+                            <div class="checklist-group">
+                                <h4>Organizacja</h4>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-3"><label for="brief-cb-3">Podział na zespoły partnerskie</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-4"><label for="brief-cb-4">Ustawienie grupy pod wodą</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-5"><label for="brief-cb-5">Wypełnienie dokumentacji (logbook)</label></div>
+                            </div>
+                            <div class="checklist-group">
+                                <h4>Warunki</h4>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-6"><label for="brief-cb-6">Opis miejsca nurkowego</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-7"><label for="brief-cb-7">Warunki (prąd, falowanie, wizura)</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-8"><label for="brief-cb-8">Zagrożenia (sieci, łodzie, fauna)</label></div>
+                            </div>
+                            <div class="checklist-group">
+                                <h4>Procedury i Limity</h4>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-9"><label for="brief-cb-9">Plan: Maks. głębokość i Czas denny</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-10"><label for="brief-cb-10">Limity gazu (ciśnienie zwrotne, rezerwa)</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-11"><label for="brief-cb-11">Limity Nitrox (MOD) - *jeśli dotyczy*</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-12"><label for="brief-cb-12">Przystanek bezpieczeństwa (Safety Stop)</label></div>
+                            </div>
+                             <div class="checklist-group">
+                                <h4>Komunikacja</h4>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-13"><label for="brief-cb-13">Powtórzenie kluczowych znaków nurkowych</label></div>
+                            </div>
+                            <div class="checklist-group">
+                                <h4>Plan Awaryjny (EAP)</h4>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-14"><label for="brief-cb-14">Procedura zgubienia partnera / braku gazu</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-15"><label for="brief-cb-15">Lokalizacja: Apteczka / Zestaw Tlenowy</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-16"><label for="brief-cb-16">Lokalizacja: Telefon / Radio (Kontakt EAP)</label></div>
+                            </div>
+                        </div>
+
+                        <div id="packing-checklist" class="sub-tab-content">
+                            <button class="checklist-reset-btn" data-checklist="packing-checklist">Resetuj Listę</button>
+                            <div class="checklist-group">
+                                <h4>Skafander i Ochrona</h4>
+                                <div class="checklist-item"><input type="checkbox" id="pack-cb-1"><label for="pack-cb-1">Skafander (Suchy / Pianka)</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="pack-cb-2"><label for="pack-cb-2">Buty</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="pack-cb-3"><label for="pack-cb-3">Kaptur</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="pack-cb-4"><label for="pack-cb-4">Rękawice</label></div>
+                            </div>
+                            <div class="checklist-group">
+                                <h4>Sprzęt Osobisty</h4>
+                                <div class="checklist-item"><input type="checkbox" id="pack-cb-5"><label for="pack-cb-5">Maska</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="pack-cb-6"><label for="pack-cb-6">Maska zapasowa</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="pack-cb-7"><label for="pack-cb-7">Płetwy</label></div>
+                            </div>
+                            <div class="checklist-group">
+                                <h4>Zestaw Nurkowy</h4>
+                                <div class="checklist-item"><input type="checkbox" id="pack-cb-8"><label for="pack-cb-8">Zestaw (Butla / Skrzydło / Jacket / Automat)</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="pack-cb-9"><label for="pack-cb-9">Balast</label></div>
+                            </div>
+                             <div class="checklist-group">
+                                <h4>Instrumenty i Bezpieczeństwo</h4>
+                                <div class="checklist-item"><input type="checkbox" id="pack-cb-10"><label for="pack-cb-10">Komputer nurkowy</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="pack-cb-11"><label for="pack-cb-11">Kompas</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="pack-cb-12"><label for="pack-cb-12">Latarka</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="pack-cb-13"><label for="pack-cb-13">Narzędzie tnące</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="pack-cb-14"><label for="pack-cb-14">Boja SMB i Szpulka</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="pack-cb-15"><label for="pack-cb-15">Tabliczka nurkowa</label></div>
+                            </div>
+                        </div>
+                        
+                        <div id="buddy-check-list" class="sub-tab-content">
+                             <button class="checklist-reset-btn" data-checklist="buddy-check-list">Resetuj Listę</button>
+                             <div class="checklist-group">
+                                <h4>Dokumenty i Plan</h4>
+                                <div class="checklist-item"><input type="checkbox" id="buddy-cb-1"><label for="buddy-cb-1">Sprawdzone Certyfikaty Nurkowe</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="buddy-cb-2"><label for="buddy-cb-2">Omówiony plan i limity z partnerem</label></div>
+                            </div>
+                            <div class="checklist-group">
+                                <h4>Gaz</h4>
+                                <div class="checklist-item"><input type="checkbox" id="buddy-cb-3"><label for="buddy-cb-3">Ciśnienie w butli (manometr)</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="buddy-cb-4"><label for="buddy-cb-4">Zawór butli (otwarty)</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="buddy-cb-5"><label for="buddy-cb-5">Analiza Nitrox (EANx) i MOD - *jeśli dotyczy*</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="buddy-cb-6"><label for="buddy-cb-6">Test automatu głównego i octopusa</label></div>
+                            </div>
+                            <div class="checklist-group">
+                                <h4>Pływalność i Balast</h4>
+                                <div class="checklist-item"><input type="checkbox" id="buddy-cb-7"><label for="buddy-cb-7">BCD (zapięcia, pasy)</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="buddy-cb-8"><label for="buddy-cb-8">Inflator (działanie przycisków)</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="buddy-cb-9"><label for="buddy-cb-9">Balast (zamocowany, system zrzutu)</label></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
                 <div id="science-of-diving" class="tab-content">
                     <h3>Wiedza Nurkowa</h3>
                     
