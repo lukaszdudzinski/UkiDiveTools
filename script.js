@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             throw new Error("Brakujące lub nieprawidłowe dane do obliczenia Rock Bottom.");
         }
         if (ascentRate <= 0 || volume <= 0) {
-            	throw new Error("Prędkość wynurzania i pojemność butli muszą być większe od zera.");
+                throw new Error("Prędkość wynurzania i pojemność butli muszą być większe od zera.");
         }
         const P_depth = (depth / 10) + 1;
         const P_stop = (stopDepth / 10) + 1;
@@ -777,7 +777,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const ppo2 = parseFloat(document.getElementById('modPO2').value);
                 
                 if (isNaN(o2) || isNaN(ppo2) || o2 < 0.21 || o2 > 1.0) {
-                    	throw new Error("Wprowadź poprawny % tlenu (21-100).");
+                        throw new Error("Wprowadź poprawny % tlenu (21-100).");
                 }
                 
                 const mod = ((ppo2 / o2) - 1) * 10;
@@ -821,7 +821,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const n2 = 1.0 - o2;
                 
                 if (isNaN(o2) || isNaN(depth) || o2 < 0.21 || o2 > 1.0 || depth <= 0) {
-                    	throw new Error("Wprowadź poprawny % tlenu (21-100) i głębokość.");
+                        throw new Error("Wprowadź poprawny % tlenu (21-100) i głębokość.");
                 }
                 
                 const ead = ((depth + 10) * (n2 / 0.79)) - 10;
@@ -877,10 +877,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const bestMixPercent = Math.floor(fo2 * 100);
 
                 if (bestMixPercent > 100) {
-                    	throw new Error("Nie można uzyskać PPO₂ na tej głębokości.");
+                        throw new Error("Nie można uzyskać PPO₂ na tej głębokości.");
                 }
                 if (bestMixPercent < 21) {
-                    	throw new Error("Wynik poniżej 21%. Użyj powietrza.");
+                        throw new Error("Wynik poniżej 21%. Użyj powietrza.");
                 }
                 
                 	const explanationHTML = `
@@ -992,7 +992,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     
     if (checklistContainer) {
         const checklistCheckboxes = checklistContainer.querySelectorAll('input[type="checkbox"]');
-        const resetButtons = checklistContainer.querySelectorAll('.checklist-reset-btn');
+        // ZMIANA: Usunięto 'resetButtons'
         const storageKey = 'uki-checklist-state-v1'; // Używamy v1, aby nie kolidować ze starymi danymi
 
         // Funkcja do wczytania stanu
@@ -1023,21 +1023,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
             checkbox.addEventListener('change', saveChecklistState);
         });
 
-        // Listener dla przycisków Reset
-        resetButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const checklistId = this.getAttribute('data-checklist');
-                const checkboxesToReset = document.querySelectorAll(`#${checklistId} input[type="checkbox"]`);
+        // ZMIANA: Listener dla globalnego przycisku Reset
+        const globalResetButton = document.getElementById('global-checklist-reset-btn');
+        
+        if (globalResetButton) {
+            globalResetButton.addEventListener('click', function() {
+                // 1. Znajdź aktywną listę wewnątrz 'divemaster-tools'
+                const activeSubTab = checklistContainer.querySelector('.sub-tab-content.active-sub-tab');
+                if (!activeSubTab) return; // Nic nie rób, jeśli nic nie jest aktywne
+
+                // 2. Znajdź checkbox-y tylko w tej aktywnej liście
+                const checkboxesToReset = activeSubTab.querySelectorAll('input[type="checkbox"]');
                 
-                if (confirm('Czy na pewno chcesz zresetować tę listę?')) {
+                if (checkboxesToReset.length > 0 && confirm('Czy na pewno chcesz zresetować tę listę?')) {
                     checkboxesToReset.forEach(checkbox => {
                         checkbox.checked = false;
                     });
-                    // Zapisz zmiany (wyczyszczenie)
+                    // 3. Zapisz stan (używamy istniejącej funkcji)
                     saveChecklistState(); 
                 }
             });
-        });
+        }
 
         // Wczytaj stan przy ładowaniu
         loadChecklistState();

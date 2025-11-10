@@ -282,11 +282,14 @@
                         <button class="sub-tab-button" data-subtab="packing-checklist">Pakowanie</button>
                         <button class="sub-tab-button" data-subtab="buddy-check-list">Buddy Check</button>
                     </nav>
+
+                    <div class="global-reset-wrapper">
+                        <button id="global-checklist-reset-btn" title="Resetuj aktywną listę">Resetuj Aktywną Listę</button>
+                    </div>
         
                     <div class="sub-tab-content-wrapper">
                         
                         <div id="briefing-checklist" class="sub-tab-content active-sub-tab">
-                            <button class="checklist-reset-btn" data-checklist="briefing-checklist">Resetuj Listę</button>
                             <div class="checklist-group">
                                 <h4>Wprowadzenie</h4>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-1"><label for="brief-cb-1">Przedstawienie (rola Przewodnika)</label></div>
@@ -324,7 +327,6 @@
                         </div>
 
                         <div id="packing-checklist" class="sub-tab-content">
-                            <button class="checklist-reset-btn" data-checklist="packing-checklist">Resetuj Listę</button>
                             <div class="checklist-group">
                                 <h4>Skafander i Ochrona</h4>
                                 <div class="checklist-item"><input type="checkbox" id="pack-cb-1"><label for="pack-cb-1">Skafander (Suchy / Pianka)</label></div>
@@ -355,7 +357,6 @@
                         </div>
                         
                         <div id="buddy-check-list" class="sub-tab-content">
-                             <button class="checklist-reset-btn" data-checklist="buddy-check-list">Resetuj Listę</button>
                              <div class="checklist-group">
                                 <h4>Dokumenty i Plan</h4>
                                 <div class="checklist-item"><input type="checkbox" id="buddy-cb-1"><label for="buddy-cb-1">Sprawdzone Certyfikaty Nurkowe</label></div>

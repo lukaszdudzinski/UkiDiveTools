@@ -90,6 +90,13 @@ body {
   100% { box-shadow: 0 0 5px rgba(0, 209, 178, 0.4); }
 }
 
+/* ZMIANA: NOWA ANIMACJA DLA PRZYCISKU RESET */
+@keyframes pulse-glow-red {
+  0% { box-shadow: 0 0 4px rgba(255, 56, 96, 0.5); }
+  50% { box-shadow: 0 0 12px rgba(255, 56, 96, 1); }
+  100% { box-shadow: 0 0 4px rgba(255, 56, 96, 0.5); }
+}
+
 .donation-wrapper {
   background: rgba(40, 40, 40, 0.7);
   border-radius: 8px;
@@ -762,21 +769,32 @@ input:checked + .slider:before {
   text-decoration: line-through;
 }
 
-/* Przycisk Reset */
-.checklist-reset-btn {
-  background-color: #666;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 15px;
-  font-size: 0.9em;
-  cursor: pointer;
-  float: right;
-  margin-bottom: 10px;
-  transition: background-color 0.2s;
+/* ZMIANA: Wrapper do centrowania przycisku reset */
+.global-reset-wrapper {
+    text-align: center;
+    margin-top: -10px; /* Podciąga przycisk bliżej paska */
+    margin-bottom: 15px; /* Odstęp od checklist */
 }
-.checklist-reset-btn:hover {
-  background-color: #ff3860;
+
+/* ZMIANA: Styl przycisku dopasowany do "Kawy" i Wyników */
+#global-checklist-reset-btn {
+    background-color: rgba(40, 40, 40, 0.7); /* Tło jak "Kawa" */
+    color: #00d1b2; /* Kolor tekstu jak "Wyniki" */
+    border: 1px solid #4a4a4a; /* Ramka jak "Wyniki" */
+    border-radius: 8px; /* Zaokrąglenie jak "Kawa" */
+    padding: 8px 20px;
+    font-size: 0.9em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    
+    /* KLUCZOWA ZMIANA: Użycie tej samej animacji poświaty */
+    animation: pulse-glow-dark 3s infinite ease-in-out;
+}
+#global-checklist-reset-btn:hover {
+    background-color: #00d1b2; /* Efekt hover */
+    color: #1e1e1e; /* Jak aktywna zakładka */
+    border-color: #00d1b2;
 }
 /* ============================================================
     KONIEC STYLI CHECKLISTY
