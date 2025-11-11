@@ -1,10 +1,41 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     
     const body = document.body;
+
+    // --- 0. LOGIKA MENU MOBILNEGO ---
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const sidebarNav = document.querySelector('.sidebar-nav');
+    const overlay = document.querySelector('.overlay');
+    const sidebarLinks = document.querySelectorAll('.sidebar-nav a'); 
+
+    function toggleMenu() {
+        sidebarNav.classList.toggle('active');
+        overlay.classList.toggle('active');
+    }
+
+    function closeMenu() {
+        sidebarNav.classList.remove('active');
+        overlay.classList.remove('active');
+    }
+
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMenu();
+        });
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', closeMenu);
+    }
+
+    sidebarLinks.forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
     
     // --- 1. LOGIKA NAWIGACJI GŁÓWNEJ (Sidebar) ---
     const navLinks = document.querySelectorAll('.sidebar-nav a');
-    const tabContents = document.querySelectorAll('.app-content > .tab-content-wrapper > .tab-content'); // Precyzyjny selektor
+    const tabContents = document.querySelectorAll('.app-content > .tab-content-wrapper > .tab-content'); 
     
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
@@ -24,7 +55,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     });
 
-    // --- 2. LOGIKA POD-ZAKŁADEK (NAPRAWIA PRO I NITROX) ---
+    // --- 2. LOGIKA POD-ZAKŁADEK ---
     const subTabButtons = document.querySelectorAll('.sub-tab-button');
     subTabButtons.forEach(button => {
         button.addEventListener('click', function(e) {
@@ -37,21 +68,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
             const subTabToShow = document.getElementById(subTabId);
             if (!subTabToShow) return;
 
-            // Ukryj wszystkie pod-zakładki w tej sekcji
             parentWrapper.querySelectorAll('.sub-tab-content').forEach(content => {
                 content.classList.remove('active-sub-tab');
             });
             
-            // Usuń 'active' ze wszystkich przycisków w tej sekcji
             parentWrapper.querySelectorAll('.sub-tab-button').forEach(btn => {
                 btn.classList.remove('active');
             });
             
-            // Pokaż wybraną pod-zakładkę
             subTabToShow.classList.add('active-sub-tab');
             this.classList.add('active');
             
-            // ZMIANA: Logika wyłączania/włączania pola O2%
             if (parentWrapper.id === 'nitrox-calculator') {
                 const nitroxO2Input = document.getElementById('nitroxO2');
                 if (subTabId === 'best-mix-calculator') {
@@ -64,18 +91,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
 
-    // --- 3. LOGIKA USTAWIEŃ (Motyw, Tapeta, Szkło) ---
+    // --- 3. LOGIKA USTAWIEŃ ---
     const themeToggle = document.getElementById('theme-toggle');
     const glassToggle = document.getElementById('glass-toggle'); 
     const wallpaperThumbs = document.querySelectorAll('.wallpaper-thumb');
     const defaultWallpaper = "url('background_uki.jpg')"; 
     
-    // ZMIANA: Dodano globalne ustawienia wody
     const globalWaterTypeSelect = document.getElementById('global-water-type');
     const sacWaterType = document.getElementById('waterType');
     const ballastWaterType = document.getElementById('ballastWater');
 
-    // Motyw
     function setTheme(isDark) {
         if (isDark) {
             body.classList.add('dark-theme');
@@ -90,7 +115,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         themeToggle.addEventListener('change', () => setTheme(themeToggle.checked));
     }
 
-    // Tapeta
     function setWallpaper(wallpaperUrl) {
         body.style.backgroundImage = wallpaperUrl;
         localStorage.setItem('uki-wallpaper', wallpaperUrl);
@@ -102,7 +126,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         thumb.addEventListener('click', () => setWallpaper(thumb.getAttribute('data-wallpaper')));
     });
 
-    // "Liquid Glass"
     function setLiquidGlass(isEnabled) {
         if (isEnabled) {
             body.classList.remove('glass-off');
@@ -117,7 +140,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         glassToggle.addEventListener('change', () => setLiquidGlass(glassToggle.checked));
     }
 
-    // ZMIANA: Funkcja i listenery globalnego ustawienia wody
     function setWaterType(water) {
         if (globalWaterTypeSelect) globalWaterTypeSelect.value = water;
         if (sacWaterType) sacWaterType.value = water;
@@ -146,12 +168,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const savedGlass = localStorage.getItem('uki-liquid-glass');
     setLiquidGlass(savedGlass === 'on' || savedGlass === null);
 
-    // ZMIANA: Inicjalizacja wody
     const savedWater = localStorage.getItem('uki-water-type');
-    setWaterType(savedWater || 'fresh'); // Domyślnie Słodka
+    setWaterType(savedWater || 'fresh');
     
     
-    // --- 4. ZMIANA: NOWA LOGIKA GLOBALNEGO TOOLTIPA (MODAL) ---
+    // --- 4. LOGIKA GLOBALNEGO TOOLTIPA (MODAL) ---
     const globalTooltip = document.getElementById('global-tooltip');
     const tooltipOverlay = document.getElementById('tooltip-overlay');
     const tooltipBody = document.getElementById('tooltip-body');
@@ -175,26 +196,22 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (!contentDiv) return;
         const tooltipHTML = contentDiv.innerHTML;
 
-        // Używamy 'click' zamiast 'mouseover' dla modala
         trigger.addEventListener('click', (e) => {
             e.preventDefault();
-            e.stopPropagation(); // Zapobiegaj propagacji kliknięcia
+            e.stopPropagation(); 
             showTooltip(tooltipHTML);
         });
     });
 
-    // Dodajemy listenery do zamykania
     tooltipCloseBtn.addEventListener('click', hideTooltip);
     tooltipOverlay.addEventListener('click', hideTooltip);
 
     
-    
-    // --- 5. LOGIKA PRZYCISKU "KAWY" (NAPRAWIA BŁĄD) ---
+    // --- 5. LOGIKA PRZYCISKU "KAWY" ---
     const donationLink = document.getElementById('donation-link');
     if (donationLink) {
         donationLink.addEventListener('click', function(e) {
             e.preventDefault(); 
-            // Tutaj w przyszłości można otworzyć link do płatności
             console.log('Donation link clicked');
         });
     }
@@ -254,7 +271,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const totalSupplyLiters = tankSize * startPressure;
         const totalSupplyBars = startPressure;
         
-        // ZMIANA: Zwracamy breakdown do użycia w (i)
         return {
             totalDemandLiters,
             totalDemandBars,
@@ -264,7 +280,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         };
     }
     
-    // === PRZYWRÓCONA FUNKCJA RENDEROWANIA ===
+    // === FUNKCJA RENDEROWANIA ===
     function renderConsumptionResult(container, consumptionData, reserveData, rockBottomInfo = null) {
         const { totalDemandLiters, totalDemandBars, totalSupplyLiters, totalSupplyBars } = consumptionData;
         const { requiredReserveLiters, requiredReserveBars } = reserveData;
@@ -272,7 +288,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const remainingBars = remainingLiters / (consumptionData.tankSize || totalSupplyLiters / totalSupplyBars);
         const isSafe = (remainingLiters >= requiredReserveLiters);
         
-        // ZMIANA: Logika Explanation HTML przeniesiona tutaj
         const { T_descent, L_descent, P_avg_descent, T_bottom, L_bottom, P_bottom, T_ascent_to_stop, L_ascent_to_stop, P_avg_ascent_to_stop, T_stop, L_stop, P_stop, T_ascent_to_surface, L_ascent_to_surface, P_avg_ascent_to_surface } = consumptionData.breakdown;
         
         const explanationHTML = `
@@ -309,7 +324,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             `;
         }
         
-        // ZMIANA: Dodano ikonę (i) oraz div .calculation-details
         container.innerHTML = `
             <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="true">i</div>
             <div class="calculation-details" style="display: none;">${explanationHTML}</div>
@@ -331,10 +345,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         `;
         container.style.display = 'block';
     }
-    // === KONIEC ZMODYFIKOWANEJ FUNKCJI ===
 
 
-    // --- Listener 1: Kalkulator Rock Bottom ---
+    // --- Listener 1: Kalkulator Rock Bottom (POPRAWIONY) ---
     const rbForm = document.getElementById('rbForm');
     const rbResultContainer = document.getElementById('rbResult');
     
@@ -354,7 +367,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     safetyMargin: parseFloat(document.getElementById('rbSafetyMargin').value) 
                 }; 
                 
-                // ZMIANA: Przechwytywanie wartości do wyjaśnienia
                 const P_depth = (params.depth / 10) + 1;
                 const P_stop = (params.stopDepth / 10) + 1;
                 const P_avg_ascent = (P_depth + P_stop) / 2;
@@ -366,8 +378,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const RB_pressure = TotalGasLiters / params.volume;
                 const FinalRB = RB_pressure + params.safetyMargin;
                 
-                const rbResult = { roundedBars: Math.ceil(FinalRB) }; // Używamy już obliczonych
+                const rbResult = { roundedBars: Math.ceil(FinalRB) };
                 
+                // FIX: Używamy params.volume zamiast volume, który był niechcący użyty wcześniej
                 const explanationHTML = `
                     <div class="formula-box-small">
                         <h5>Obliczenia Rock Bottom</h5>
@@ -410,7 +423,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const tankSize = parseFloat(document.getElementById('gcTankSize').value); 
                 const reservePressure = parseFloat(document.getElementById('gcReserve').value); 
                 
-                // ZMIANA: Przechwytywanie wartości do wyjaśnienia
                 const consumptionParams = { 
                     sac: parseFloat(document.getElementById('gcSAC').value), 
                     depth: parseFloat(document.getElementById('gcDepth').value), 
@@ -424,27 +436,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     divers: 1 
                 }; 
                 
-                // Re-kalkulacja dla wyjaśnienia (bezpieczniejsze niż refaktoryzacja)
-                const P_surface = 1.0;
-                const P_bottom = (consumptionParams.depth / 10) + 1;
-                const P_stop = (consumptionParams.stopDepth / 10) + 1;
-                const P_avg_descent = (P_surface + P_bottom) / 2;
-                const P_avg_ascent_to_stop = (P_bottom + P_stop) / 2;
-                const P_avg_ascent_to_surface = (P_stop + P_surface) / 2;
-                const T_descent = consumptionParams.depth / consumptionParams.descentRate;
-                const T_bottom = consumptionParams.bottomTime;
-                const T_ascent_to_stop = (consumptionParams.depth - consumptionParams.stopDepth) / consumptionParams.ascentRate;
-                const T_stop = consumptionParams.stopTime;
-                const T_ascent_to_surface = consumptionParams.stopDepth / consumptionParams.ascentRate;
-                const L_descent = consumptionParams.sac * P_avg_descent * T_descent;
-                const L_bottom = consumptionParams.sac * P_bottom * T_bottom;
-                const L_ascent_to_stop = consumptionParams.sac * P_avg_ascent_to_stop * T_ascent_to_stop;
-                const L_stop = consumptionParams.sac * P_stop * T_stop;
-                const L_ascent_to_surface = consumptionParams.sac * P_avg_ascent_to_surface * T_ascent_to_surface;
-                
                 const consumptionResult = calculateGasConsumption(consumptionParams); 
-                // ZMIANA: Przekazanie wartości breakdown do funkcji renderującej
-                consumptionResult.breakdown = { T_descent, L_descent, P_avg_descent, T_bottom, L_bottom, P_bottom, T_ascent_to_stop, L_ascent_to_stop, P_avg_ascent_to_stop, T_stop, L_stop, P_stop, T_ascent_to_surface, L_ascent_to_surface, P_avg_ascent_to_surface };
+                consumptionResult.breakdown = { 
+                    T_descent: consumptionParams.depth / consumptionParams.descentRate,
+                    L_descent: consumptionParams.sac * ((1 + (consumptionParams.depth / 10) + 1) / 2) * (consumptionParams.depth / consumptionParams.descentRate), // Uproszczone, pełne wyliczenie w funkcji
+                    // ... tutaj używamy pełnego breakdown zwróconego z funkcji, to tylko placeholder
+                    ...consumptionResult.breakdown 
+                };
                 consumptionResult.sac = consumptionParams.sac;
 
                 const reserveParams = { 
@@ -505,26 +503,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     divers: 1 
                 }; 
                 
-                // ZMIANA: Re-kalkulacja dla wyjaśnienia
-                const P_surface = 1.0;
-                const P_bottom = (consumptionParams.depth / 10) + 1;
-                const P_stop = (consumptionParams.stopDepth / 10) + 1;
-                const P_avg_descent = (P_surface + P_bottom) / 2;
-                const P_avg_ascent_to_stop = (P_bottom + P_stop) / 2;
-                const P_avg_ascent_to_surface = (P_stop + P_surface) / 2;
-                const T_descent = consumptionParams.depth / consumptionParams.descentRate;
-                const T_bottom = consumptionParams.bottomTime;
-                const T_ascent_to_stop = (consumptionParams.depth - consumptionParams.stopDepth) / consumptionParams.ascentRate;
-                const T_stop = consumptionParams.stopTime;
-                const T_ascent_to_surface = consumptionParams.stopDepth / consumptionParams.ascentRate;
-                const L_descent = consumptionParams.sac * P_avg_descent * T_descent;
-                const L_bottom = consumptionParams.sac * P_bottom * T_bottom;
-                const L_ascent_to_stop = consumptionParams.sac * P_avg_ascent_to_stop * T_ascent_to_stop;
-                const L_stop = consumptionParams.sac * P_stop * T_stop;
-                const L_ascent_to_surface = consumptionParams.sac * P_avg_ascent_to_surface * T_ascent_to_surface;
-                
                 const consumptionResult = calculateGasConsumption(consumptionParams); 
-                consumptionResult.breakdown = { T_descent, L_descent, P_avg_descent, T_bottom, L_bottom, P_bottom, T_ascent_to_stop, L_ascent_to_stop, P_avg_ascent_to_stop, T_stop, L_stop, P_stop, T_ascent_to_surface, L_ascent_to_surface, P_avg_ascent_to_surface };
+                consumptionResult.breakdown = { ...consumptionResult.breakdown };
                 consumptionResult.sac = consumptionParams.sac;
                 
                 const rbInfo = { 
@@ -544,23 +524,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
     
     // --- Listener 4: Mock Paywall ---
-    // ZMIANA: Używa teraz delegacji zdarzeń, aby działać również w modalu
     const proTabContents = document.querySelectorAll('#pro-gas-calculator, #sod-gas, #sod-ballast');
 
     document.body.addEventListener('click', function(e) {
-        // Sprawdź, czy kliknięty element (lub jego rodzic) ma klasę .unlockProButton
         const unlockButton = e.target.closest('.unlockProButton');
         
         if (unlockButton) {
             e.preventDefault();
             e.stopPropagation();
             
-            // Odblokuj całą zawartość PRO
             proTabContents.forEach(content => {
                 content.classList.add('unlocked');
             });
             
-            // Jeśli przycisk był w modalu, zamknij modal
             if (e.target.closest('#global-tooltip')) {
                 hideTooltip();
             }
@@ -574,22 +550,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const ballastWarmerGroup = document.getElementById('ballast-warmer-group');
     const ballastTankSelect = document.getElementById('ballastTank');
     const ballastPlateGroup = document.getElementById('ballast-plate-group');
-    const ballastBodyTypeSelect = document.getElementById('ballastBodyType'); // ZMIANA: Dodano BodyType
+    const ballastBodyTypeSelect = document.getElementById('ballastBodyType');
 
-    // ZMIANA: Scentralizowana funkcja do pokazywania/ukrywania pól balastu
     function updateBallastDependents() {
         const suit = ballastSuitSelect.value;
         const tank = ballastTankSelect.value;
 
-        // Pokaż/Ukryj Ocieplacz
         if (suit === 'dryTri' || suit === 'dryNeo' || suit === 'dryCrash') {
             ballastWarmerGroup.style.display = 'block';
         } else {
             ballastWarmerGroup.style.display = 'none';
         }
         
-        // Pokaż/Ukryj Płytę
-        if (tank.includes('twin')) { // ZMIANA: Sprawdza czy string zawiera "twin"
+        if (tank.includes('twin')) {
             ballastPlateGroup.style.display = 'block';
         } else {
             ballastPlateGroup.style.display = 'none';
@@ -597,11 +570,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
     
     if (ballastSuitSelect && ballastWarmerGroup && ballastTankSelect && ballastPlateGroup) {
-        // Listenery
         ballastSuitSelect.addEventListener('change', updateBallastDependents);
         ballastTankSelect.addEventListener('change', updateBallastDependents);
         
-        // Uruchomienie przy ładowaniu strony
         updateBallastDependents();
     }
 
