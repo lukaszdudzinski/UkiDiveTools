@@ -1,28 +1,46 @@
 /* ============================================================
-    PODSTAWOWE STYLE
+   PODSTAWOWE STYLE
    ============================================================ */
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   margin: 0;
   padding: 0;
-  /* Tekst bazowy + cień dla czytelności na szkle */
   color: #f5f5f5; 
   text-shadow: 0 1px 2px rgba(0,0,0,0.5);
   transition: background-image 0.5s ease-in-out;
   
-  /* Domyślna tapeta */
   background-image: url('background_uki.jpg'); 
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
 }
 
-/* --- TYPOGRAFIA & NEONOWY NAGŁÓWEK --- */
+/* --- ANIMACJE --- */
 
 @keyframes neon-pulse {
   0% { text-shadow: 0 0 5px rgba(0, 209, 178, 0.5); }
   50% { text-shadow: 0 0 20px rgba(0, 209, 178, 0.8), 0 0 10px rgba(0, 209, 178, 0.4); }
   100% { text-shadow: 0 0 5px rgba(0, 209, 178, 0.5); }
+}
+
+@keyframes pulse-glow-dark {
+  0% { box-shadow: 0 0 5px rgba(0, 209, 178, 0.4); }
+  50% { box-shadow: 0 0 15px rgba(0, 209, 178, 0.9); }
+  100% { box-shadow: 0 0 5px rgba(0, 209, 178, 0.4); }
+}
+
+/* Animacja ramki dla PRO (Cyan) */
+@keyframes pulse-border-cyan {
+  0% { border-color: rgba(0, 209, 178, 0.3); box-shadow: 0 0 5px rgba(0, 209, 178, 0.1); }
+  50% { border-color: rgba(0, 209, 178, 1); box-shadow: 0 0 15px rgba(0, 209, 178, 0.4); }
+  100% { border-color: rgba(0, 209, 178, 0.3); box-shadow: 0 0 5px rgba(0, 209, 178, 0.1); }
+}
+
+/* Animacja pulsującego przycisku (dla Unlock PRO) */
+@keyframes pulse-scale {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 209, 178, 0.7); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(0, 209, 178, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 209, 178, 0); }
 }
 
 h1, h2, h3, .mobile-header h2 {
@@ -44,23 +62,19 @@ h1, h2, h3, .mobile-header h2 {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-  /* Glass Edge (Krawędź Szkła) */
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-top: 1px solid rgba(255, 255, 255, 0.3); 
   border-left: 1px solid rgba(255, 255, 255, 0.3); 
   height: 90vh; 
 }
 
-/* --- BELKA BOCZNA (SIDEBAR) --- */
+/* --- BELKA BOCZNA (SIDEBAR) - KOMPRESJA --- */
 .sidebar-nav {
   width: 260px;
   background-color: rgba(30, 30, 30, 0.4);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
-  
-  /* ZMIANA: Normalny padding, przycisk nie jest już spychany */
-  padding: 25px; 
-  
+  padding: 15px 20px 40px 20px; 
   flex-shrink: 0;
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   height: 100%;
@@ -75,14 +89,14 @@ h1, h2, h3, .mobile-header h2 {
     flex-direction: row; 
     align-items: center; 
     gap: 15px; 
-    margin-bottom: 20px; 
-    padding-bottom: 15px;
+    margin-bottom: 15px; 
+    padding-bottom: 10px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
     flex-shrink: 0; 
 }
 .logo-img-desktop {
-    width: 50px; 
-    height: 50px;
+    width: 45px; 
+    height: 45px;
     border-radius: 50%; 
     object-fit: cover;
     border: 2px solid rgba(0, 209, 178, 0.5); 
@@ -91,17 +105,16 @@ h1, h2, h3, .mobile-header h2 {
     margin-bottom: 0; 
 }
 .sidebar-header h1 {
-    font-size: 1.4em; 
+    font-size: 1.3em; 
     text-align: left;
 }
 
-/* Usunięcie starego h1 */
 .app-content > h1 {
     display: none !important;
 }
 
 .sidebar-nav .theme-switch-wrapper {
-  margin-bottom: 20px; 
+  margin-bottom: 15px; 
   display: flex; 
   align-items: center;
   flex-shrink: 0;
@@ -109,55 +122,70 @@ h1, h2, h3, .mobile-header h2 {
 .sidebar-nav .theme-label {
   color: #f5f5f5; 
   margin-left: 10px;
+  font-size: 0.95em;
 }
 
-/* --- NAWIGACJA --- */
+/* --- NAWIGACJA (ZAKTUALIZOWANA: CZYTELNOŚĆ) --- */
 .sidebar-nav ul { 
     list-style: none; 
     padding: 0; 
     margin: 0; 
-    /* ZMIANA: Wyłączono rozpychanie. Lista zajmuje tylko tyle miejsca ile musi. */
     flex-grow: 0; 
     overflow-y: visible; 
     min-height: 0; 
 }
 .sidebar-nav li a {
   display: block;
-  padding: 10px 20px; 
-  color: #f5f5f5; 
+  padding: 8px 15px; /* Kompresja */
+  color: #ffffff !important; /* WYMUSZONA BIEL */
   text-decoration: none;
-  font-size: 1.05em; 
-  border-radius: 8px;
-  margin-bottom: 6px; 
+  font-size: 1em; 
+  border-radius: 6px;
+  margin-bottom: 4px; 
   transition: all 0.2s ease-in-out;
+  border: 1px solid transparent; 
+  font-weight: 500; /* Pogrubienie */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.95); /* Mocny czarny cień */
+  letter-spacing: 0.5px;
 }
 
 .sidebar-nav li a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.15);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Efekt glow */
 }
 
 .sidebar-nav li a.active {
   background-color: #00d1b2;
-  color: #1e1e1e;
+  color: #1e1e1e !important; /* Ciemny tekst na turkusowym tle */
   font-weight: bold;
   text-shadow: none; 
 }
 
-/* --- Przycisk "Kawy" --- */
-@keyframes pulse-glow-dark {
-  0% { box-shadow: 0 0 5px rgba(0, 209, 178, 0.4); }
-  50% { box-shadow: 0 0 15px rgba(0, 209, 178, 0.9); }
-  100% { box-shadow: 0 0 5px rgba(0, 209, 178, 0.4); }
+/* STYL DLA LINKU PRO W MENU (TURKUSOWY PULS) */
+.sidebar-nav li.pro-menu-item a {
+    font-weight: bold;
+    border-color: rgba(0, 209, 178, 0.3);
+    animation: pulse-border-cyan 2s infinite ease-in-out;
+    margin-bottom: 10px; 
+}
+.sidebar-nav li.pro-menu-item a:hover {
+    background-color: rgba(0, 209, 178, 0.1);
+    box-shadow: 0 0 10px rgba(0, 209, 178, 0.3);
+}
+.sidebar-nav li.pro-menu-item a.active {
+    background-color: #00d1b2;
+    color: #1e1e1e !important;
+    animation: none; 
+    box-shadow: 0 0 15px rgba(0, 209, 178, 0.5);
 }
 
+/* --- Przycisk "Kawy" --- */
 .donation-wrapper {
   background: rgba(40, 40, 40, 0.7);
   border-radius: 8px;
-  padding: 12px; 
-  /* ZMIANA: Większy odstęp od menu, normalny odstęp od dołu */
-  margin-top: 30px; 
-  margin-bottom: 20px;
+  padding: 10px; 
+  margin-top: 15px; 
+  margin-bottom: 10px;
   text-align: center; 
   animation: pulse-glow-dark 3s infinite ease-in-out;
   flex-shrink: 0; 
@@ -204,6 +232,14 @@ h1, h2, h3, .mobile-header h2 {
   box-sizing: border-box;
 }
 
+/* STYL DLA NAGŁÓWKÓW ZAKŁADEK (np. Ustawienia) */
+.tab-content h3 {
+    color: #ffffff !important;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.95); /* High Contrast Shadow */
+    margin-top: 0;
+}
+
 .tab-content {
   display: none;
 }
@@ -214,6 +250,205 @@ h1, h2, h3, .mobile-header h2 {
 .app-content > .theme-switch-wrapper,
 .app-content > .tab-nav {
     display: none !important;
+}
+
+/* ============================================================
+   DASHBOARD PRO (Z Overlay Lock)
+   ============================================================ */
+
+#pro-dashboard .pro-header {
+    text-align: center;
+    margin-bottom: 20px; 
+    border-bottom: 1px solid rgba(0, 209, 178, 0.3); 
+    padding-bottom: 15px;
+}
+#pro-dashboard h3 {
+    color: #00d1b2 !important; /* WYJĄTEK: Tu zostaje turkusowy */
+    font-size: 1.8em;
+    margin-bottom: 5px;
+    text-shadow: 0 0 15px rgba(0, 209, 178, 0.6), 0 0 5px rgba(0, 209, 178, 0.4);
+}
+
+/* ZMIANA: Poprawiona czytelność opisu w Strefie PRO */
+#pro-dashboard p {
+    color: #ffffff; /* Czysta biel dla lepszego kontrastu */
+    font-size: 1.1em; /* Nieco większa czcionka */
+    font-weight: 500; /* Lekkie pogrubienie */
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.9); /* Mocny czarny cień */
+    line-height: 1.4; /* Poprawiona czytelność linii */
+    margin-top: 5px; 
+    max-width: 90%; /* Ograniczenie szerokości na mobile */
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+/* Wrapper dla Dashboardu PRO (pozycjonowanie overlay) */
+.pro-dashboard-wrapper {
+    position: relative;
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Siatka 2x2 */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 15px; 
+    max-width: 800px;
+    width: 100%;
+}
+
+/* Stan zablokowany siatki */
+.locked-grid {
+    filter: blur(4px) grayscale(0.8);
+    opacity: 0.3;
+    pointer-events: none;
+    transition: all 0.5s ease;
+}
+
+/* Nakładka (Overlay) blokująca */
+.pro-lock-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    background: rgba(20, 20, 20, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 25px 40px;
+    border-radius: 15px;
+    border: 1px solid #ff3860;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    max-width: 400px;
+    transition: all 0.5s ease;
+}
+
+/* Stylizacja Logo na Nakładce PRO */
+.pro-overlay-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #00d1b2;
+    box-shadow: 0 0 20px rgba(0, 209, 178, 0.4);
+    margin-bottom: 15px;
+    animation: pulse-glow-dark 3s infinite alternate;
+}
+
+.lock-message {
+    color: #ff3860;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.pulse-button {
+    background-color: #00d1b2;
+    color: #1e1e1e;
+    font-weight: bold;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1.1em;
+    border-radius: 50px;
+    cursor: pointer;
+    animation: pulse-scale 2s infinite;
+    transition: background-color 0.3s;
+}
+.pulse-button:hover {
+    background-color: #00c4a7;
+    color: #fff;
+}
+
+/* Stan ODBLOKOWANY (dodawane przez JS) */
+.unlocked .pro-lock-overlay {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.unlocked .locked-grid {
+    filter: none;
+    opacity: 1;
+    pointer-events: auto;
+}
+.unlocked .pro-status-locked {
+    display: none !important;
+}
+
+/* Karta Narzędzia - Kompaktowa */
+.dashboard-card {
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 15px; 
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    height: 100%; 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.dashboard-card:hover {
+    transform: translateY(-3px);
+    background-color: rgba(0, 209, 178, 0.1);
+    border-color: #00d1b2;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.dashboard-card h4 {
+    color: #00d1b2;
+    margin: 0 0 8px 0;
+    font-size: 1.3em;
+}
+.dashboard-card p {
+    font-size: 0.9em;
+    color: #bbb;
+    line-height: 1.3;
+    margin: 0;
+    font-style: normal !important;
+}
+
+/* Karta nieaktywna */
+.dashboard-card.disabled-card {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-style: dashed;
+}
+.dashboard-card.disabled-card:hover {
+    transform: none;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Przycisk Powrotu */
+.back-to-dashboard {
+    background: none;
+    border: 1px solid #00d1b2;
+    color: #00d1b2;
+    padding: 6px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    transition: all 0.2s;
+    font-weight: bold;
+}
+.back-to-dashboard:hover {
+    color: #1e1e1e;
+    background-color: #00d1b2;
 }
 
 /* --- Pod-Zakładki --- */
@@ -264,11 +499,18 @@ h1, h2, h3, .mobile-header h2 {
   display: flex;
   flex-direction: column;
 }
-.input-group label {
+
+/* ZMIANA CZYTELNOŚCI: ETYKIETY */
+.input-group label, 
+.label-with-tooltip label {
   margin-bottom: 6px;
   font-size: 0.9em;
-  color: #b0b0b0;
+  color: #ffffff !important; /* Czysta biel */
+  font-weight: 500; /* Trochę grubsze */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9); /* Mocny cień */
+  letter-spacing: 0.5px;
 }
+
 .input-group input,
 .input-group select {
   background-color: #333;
@@ -293,9 +535,9 @@ h1, h2, h3, .mobile-header h2 {
 }
 
 .app-content button[type="submit"] {
-  background-color: #00d1b2 !important;
-  color: #1e1e1e !important;
-  font-weight: bold !important;
+  background-color: #00d1b2; 
+  color: #1e1e1e;
+  font-weight: bold;
   padding: 12px 20px;
   font-size: 1.1em;
   border: none;
@@ -399,72 +641,137 @@ h1, h2, h3, .mobile-header h2 {
 #global-tooltip.tooltip-content p { margin: 5px 0; }
 #global-tooltip.tooltip-content ul { margin: 10px 0 0 20px; padding: 0; text-align: left; }
 
+/* Mniejsze przyciski z tooltipem (Nitrox/Blender) */
 .button-with-tooltip {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 10px; /* Zmniejszony odstęp */
+  width: 100%;
 }
 .button-with-tooltip button {
   flex: 1;
 }
 .button-with-tooltip .tooltip-button {
   flex-shrink: 0;
-}
-
-/* --- Ustawienia --- */
-#settings-panel h4 {
-  font-size: 1.2em; color: #e0e0e0; margin-top: 25px; margin-bottom: 10px;
-  padding-bottom: 10px; border-bottom: 1px solid #4a4a4a;
-}
-.wallpaper-options { display: flex; flex-wrap: wrap; gap: 12px; }
-.wallpaper-thumb {
-  width: 120px; height: 75px; object-fit: cover; border-radius: 6px;
-  cursor: pointer; border: 2px solid #4a4a4a; transition: all 0.2s ease;
-}
-.wallpaper-thumb:hover { border-color: #e0e0e0; transform: scale(1.05); }
-.wallpaper-thumb.active {
-  border-color: #00d1b2; box-shadow: 0 0 10px rgba(0, 209, 178, 0.5);
-}
-.settings-toggle-row {
-  display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;
-}
-.settings-toggle-row label {
-  margin-bottom: 0; color: #e0e0e0;
-}
-.settings-select {
-  background-color: #333;
-  border: 1px solid #4a4a4a;
+  width: 24px;  /* Zmniejszono z 32px */
+  height: 24px; /* Zmniejszono z 32px */
+  font-size: 1em; /* Mniejsza czcionka */
+  line-height: 24px; /* Centrowanie */
+  padding: 0;
+  border-radius: 50%;
+  background-color: #4a4a4a;
   color: #e0e0e0;
-  padding: 8px 10px;
-  border-radius: 8px;
-  font-size: 0.9em;
+  font-weight: bold;
+  cursor: help;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* --- Wyniki --- */
+/* --- Ustawienia (ZAKTUALIZOWANE: CZYTELNOŚĆ + GRID TAPET) --- */
+
+#settings-panel h4 {
+  font-size: 1.2em; 
+  color: #ffffff !important; /* Czysta biel */
+  margin-top: 25px; 
+  margin-bottom: 15px;
+  padding-bottom: 10px; 
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9); /* Mocny cień dla czytelności */
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+/* Kontener na tapety - GRID (Siatka 2 kolumnowa RWD) */
+.wallpaper-options { 
+    display: grid;
+    /* Inteligentna siatka: dopasuj ile wejdzie (min 130px), reszta spada niżej */
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 15px; /* Odstęp między kafelkami */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Pojedyncza tapeta (skalowalna) */
+.wallpaper-thumb {
+  width: 100%; /* Wypełnia całą szerokość kolumny */
+  height: 150px; /* ZWIĘKSZONO WYSOKOŚĆ (było 90px) - lepiej widać */
+  object-fit: cover; 
+  border-radius: 8px;
+  cursor: pointer; 
+  border: 2px solid rgba(255, 255, 255, 0.3); 
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.wallpaper-thumb:hover { 
+    border-color: #ffffff; 
+    transform: scale(1.03); 
+}
+
+.wallpaper-thumb.active {
+  border-color: #00d1b2; /* Turkusowa ramka dla aktywnej */
+  box-shadow: 0 0 15px rgba(0, 209, 178, 0.6);
+  transform: scale(1.05);
+}
+
+/* Wiersze przełączników (np. Efekt Szklany) */
+.settings-toggle-row {
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  margin-bottom: 20px; /* Większy odstęp dla wygody */
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Delikatna linia oddzielająca */
+}
+
+/* Etykiety w ustawieniach (Poprawa czytelności) */
+.settings-toggle-row label {
+  margin-bottom: 0; 
+  color: #ffffff !important; /* Czysta biel */
+  font-size: 1em;
+  font-weight: 500;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9); /* Mocny cień */
+}
+
+.settings-select {
+  background-color: rgba(30, 30, 30, 0.9); /* Ciemniejsze tło dla kontrastu */
+  border: 1px solid #aaa;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.95em;
+  max-width: 150px; /* Żeby nie rozpychało na mobile */
+}
+
+/* --- Wyniki (Unified & Compact) --- */
 .result-container {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.3); /* Nieco ciemniejsze tło */
   border: 1px solid #4a4a4a;
   border-radius: 8px;
-  padding: 4px 10px;
-  margin-top: 20px;
+  padding: 12px; /* Zmniejszono padding */
+  margin-top: 15px;
   display: none;
   animation: pulse-glow-dark 3s infinite ease-in-out;
   position: relative;
+  text-align: center; 
+  overflow: hidden; /* Ważne dla Warning Box */
 }
 
+/* Mniejsza ikona 'i' w wynikach */
 .result-info-icon {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 20px;
-  height: 20px;
+  top: 6px;
+  right: 6px;
+  width: 18px; /* Zmniejszono */
+  height: 18px; /* Zmniejszono */
+  font-size: 0.8em;
   background-color: rgba(0, 0, 0, 0.3);
   color: #b0b0b0;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9em;
   font-weight: bold;
   cursor: help;
   transition: all 0.2s ease;
@@ -504,45 +811,134 @@ h1, h2, h3, .mobile-header h2 {
 #global-tooltip .formula-box-small ul { margin: 0 0 0 20px; padding: 0; }
 #global-tooltip .formula-box-small li { margin-bottom: 3px; font-size: 0.9em; }
 
-/* Kompaktowe wyniki */
-#result .result-label, #modResult .result-label, #eadResult .result-label, #ballastResult .result-label, #bestMixResult .result-label, #cnsResult .result-label {
-  font-size: 1.1em; text-align: center; line-height: 1.1; color: #b0b0b0; margin-bottom: 0; 
+/* Kompaktowe sekcje wyników */
+.result-section { 
+    margin-bottom: 8px; /* Mniejszy odstęp między sekcjami */
+    padding-bottom: 8px; 
+    border-bottom: 1px solid rgba(255,255,255,0.1); 
 }
-#result .result-value, #modResult .result-value, #eadResult .result-value, #ballastResult .result-value, #bestMixResult .result-value, #cnsResult .result-value {
-  font-size: 2.8em; font-weight: bold; color: #00d1b2; margin-top: 0; text-align: center; line-height: 1.1; margin-bottom: 0;
+/* Usuwamy linię z ostatniej sekcji, chyba że jest to Warning Box */
+.result-section:last-of-type { 
+    margin-bottom: 0; 
+    padding-bottom: 0; 
+    border-bottom: none; 
 }
-#cnsResult .result-sub-label { text-align: center; color: #b0b0b0; font-size: 0.9em; border-top: 1px solid #4a4a4a; padding-top: 4px; margin-top: 4px; margin-bottom: 0; }
-#cnsResult .result-sub-label strong { color: #ffffff; }
-#ballastResult .result-warning { font-size: 0.9em; text-align: center; margin-top: 4px; border-top: 1px solid #4a4a4a; padding-top: 4px; margin-bottom: 0; }
 
-#rbResult .result-label { font-size: 1em; color: #b0b0b0; margin: 0; padding: 0; text-align: center; line-height: 1.1; }
-#rbResult .result-value { font-size: 2.5em; font-weight: bold; color: #00d1b2; margin-top: 0; text-align: center; line-height: 1.1; margin-bottom: 0; }
+/* Etykiety - mniejsze i bliżej wartości */
+.result-label {
+  font-size: 0.85em; /* Nieco mniejsza czcionka */
+  color: #b0b0b0; 
+  margin-bottom: 2px; /* Bardzo mały odstęp od wartości */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+/* GŁÓWNE WARTOŚCI (ODWRÓCONE KOLORY: LICHBA SREBRNA) */
+.result-value, .result-value-main {
+  font-size: 2em; /* Zmniejszono z 2.5em dla kompaktowości */
+  font-weight: bold; 
+  color: #e0e0e0 !important; /* Srebrny/Jasnoszary */
+  text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  margin-top: 0; 
+  margin-bottom: 4px;
+  text-align: center;
+  line-height: 1.1;
+}
+
+/* Styl dla jednostki (np. "kg", "bar") - TURKUSOWY AKCENT */
+.result-value-main .unit, 
+.result-value-main span {
+    color: #00d1b2 !important; /* Turkus */
+    font-size: 0.6em; 
+    font-weight: 400; 
+    margin-left: 4px;
+    vertical-align: baseline;
+    opacity: 1;
+    text-shadow: 0 0 10px rgba(0, 209, 178, 0.4);
+}
+
+/* Biały dla standardowych sekcji wyników (list) */
+.result-section .result-value-main {
+    color: #e0e0e0 !important; 
+}
+
+.result-value-sub { 
+    font-size: 1.1em; 
+    color: #ffffff !important; /* Biały kolor dla pod-wyników */
+    text-align: center; 
+    margin-top: 0; 
+}
+.result-value-sub strong { color: #ffffff; }
+
+/* Rock Bottom Info Box (Też Srebrny + Turkusowa jednostka) */
+.rb-info-section { 
+    background-color: rgba(0, 209, 178, 0.1); /* Lekkie tło turkusowe */
+    border: 1px solid #00d1b2; 
+    padding: 8px; 
+    border-radius: 6px; 
+    margin-bottom: 10px; 
+}
+.rb-info-section .result-label { 
+    font-size: 0.8em; 
+    color: #e0e0e0; 
+    text-transform: none; 
+}
+.rb-info-section .result-value-main { 
+    font-size: 1.8em; 
+    margin: 0; 
+    color: #e0e0e0 !important;
+}
+.rb-info-section .result-value-main .unit {
+    color: #00d1b2 !important;
+}
+
+/* Werdykty (Paski na dole) */
+.result-verdict { 
+    font-size: 1.2em; /* Zmniejszono z 1.5em */
+    font-weight: bold; 
+    text-align: center; 
+    margin-top: 8px; 
+    padding: 8px; 
+    border-radius: 5px; 
+    text-transform: uppercase;
+}
+.result-verdict-ok { color: #23d160; background-color: rgba(35, 209, 96, 0.15); border: 1px solid rgba(35, 209, 96, 0.3); }
+.result-verdict-bad { color: #ff3860; background-color: rgba(255, 56, 96, 0.15); border: 1px solid rgba(255, 56, 96, 0.3); }
 
 .result-error { font-size: 1em; color: #ff3860; font-weight: bold; text-align: center; }
 
-#gcResult .result-section, #proGasResult .result-section { margin-bottom: 1px; padding-bottom: 1px; border-bottom: 1px solid #4a4a4a; }
-#gcResult .result-section:last-child, #proGasResult .result-section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-#gcResult .result-label, #proGasResult .result-label { font-size: 0.9em; color: #b0b0b0; text-align: center; margin-bottom: 0; text-transform: uppercase; }
-#gcResult .result-value-main, #proGasResult .result-value-main { font-size: 1.8em; font-weight: bold; color: #ffffff; text-align: center; }
-#gcResult .result-value-main .liters, #proGasResult .result-value-main .liters { color: #00d1b2; }
-#gcResult .result-value-sub, #proGasResult .result-value-sub { font-size: 1.1em; color: #b0b0b0; text-align: center; margin-top: 0; }
-.result-value-sub strong { color: #ffffff; }
-#gcResult .result-verdict, #proGasResult .result-verdict { font-size: 1.5em; font-weight: bold; text-align: center; margin-top: 4px; padding: 5px; border-radius: 5px; }
-#gcResult .result-verdict-ok, #proGasResult .result-verdict-ok { color: #23d160; background-color: rgba(35, 209, 96, 0.1); }
-#gcResult .result-verdict-bad, #proGasResult .result-verdict-bad { color: #ff3860; background-color: rgba(255, 56, 96, 0.1); }
+/* --- NOWY WARNING BOX (Ostrzeżenie na dole) --- */
+.result-warning-box {
+    margin-top: 12px;
+    /* Marginesy ujemne niwelują padding rodzica (.result-container) */
+    margin-left: -12px; 
+    margin-right: -12px;
+    margin-bottom: -12px;
+    
+    padding: 12px 15px;
+    background-color: rgba(255, 193, 7, 0.08); /* Bardzo delikatne żółte tło */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    
+    color: #ffdd57; /* Żółty tekst */
+    font-size: 0.85em;
+    line-height: 1.4;
+    text-align: center;
+}
+.result-warning-box strong {
+    color: #ffe08a; /* Jaśniejszy żółty dla pogrubienia */
+}
 
-#proGasResult .rb-info-section { background-color: rgba(0, 0, 0, 0.2); border: 1px solid #00d1b2; padding: 2px 8px; border-radius: 8px; margin-bottom: 2px; }
-#proGasResult .rb-info-section .result-label { font-size: 1em; text-transform: none; color: #e0e0e0; line-height: 1.1; }
-#proGasResult .rb-info-section .result-value-main { color: #00d1b2; font-size: 2em; margin-top: 0; line-height: 1.1; }
+/* CNS Specific */
+#cnsResult .result-sub-label { text-align: center; color: #b0b0b0; font-size: 0.9em; border-top: 1px solid #4a4a4a; padding-top: 10px; margin-top: 5px; margin-bottom: 0; }
+#cnsResult .result-sub-label strong { color: #ffffff; }
+
+/* Ballast Warning (stare - można usunąć, ale zostawiamy dla kompatybilności) */
+#ballastResult .result-warning { display: none; } 
+
 
 /* PRO Paywall */
-.sub-tab-button .pro-badge { font-size: 0.6em; background-color: #00d1b2; color: #1e1e1e; padding: 3px 6px; border-radius: 4px; margin-left: 5px; vertical-align: middle; font-weight: bold; }
-.pro-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(30, 30, 30, 0.85); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 10; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; border-radius: 8px; }
-.pro-overlay h4 { color: #00d1b2; font-size: 1.5em; margin-bottom: 10px; }
-.pro-overlay p { font-size: 1.1em; color: #e0e0e0; max-width: 400px; margin-bottom: 25px; }
-.pro-overlay-button { background-color: #00d1b2; color: #1e1e1e; font-weight: bold; border: none; padding: 12px 25px; font-size: 1.1em; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
-.pro-overlay-button:hover { background-color: #ffffff; }
-.sub-tab-content.unlocked .pro-overlay { display: none; }
+.sub-tab-button .pro-badge, .sidebar-nav .pro-badge { font-size: 0.6em; background-color: #00d1b2; color: #1e1e1e; padding: 3px 6px; border-radius: 4px; margin-left: 5px; vertical-align: middle; font-weight: bold; }
 
 /* Przełącznik */
 .theme-switch { position: relative; display: inline-block; width: 44px; height: 24px; }
@@ -565,111 +961,18 @@ input:checked + .slider:before { transform: translateX(20px); }
 .formula-box ul li strong { color: #e0e0e0; }
 
 /* Checklisty */
-.checklist-group { margin-bottom: 20px; background-color: rgba(0, 0, 0, 0.2); border-radius: 8px; padding: 10px 15px; border: 1px solid #4a4a4a; }
-.checklist-group h4 { font-size: 1.2em; color: #00d1b2; margin: 5px 0 10px 0; padding-bottom: 5px; border-bottom: 1px solid #4a4a4a; }
-.checklist-item { display: flex; align-items: center; margin-bottom: 10px; font-size: 1.1em; }
-.checklist-item label { color: #e0e0e0; margin-left: 10px; cursor: pointer; transition: color 0.2s; }
-.checklist-item input[type="checkbox"] { appearance: none; -webkit-appearance: none; width: 24px; height: 24px; border: 2px solid #555; border-radius: 4px; cursor: pointer; position: relative; transition: all 0.2s; background-color: #333; }
-.checklist-item input[type="checkbox"]:hover { border-color: #00d1b2; }
+.checklist-group { margin-bottom: 20px; background-color: rgba(255, 255, 255, 0.2); border-radius: 8px; padding: 10px 15px; border: 1px solid #4a4a4a; }
+.checklist-group h4 { font-size: 1.2em; color: #00d1b2; border-bottom-color: rgba(255, 255, 255, 0.3); }
+.checklist-item label { color: #f0f0f0; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
+.checklist-item input[type="checkbox"] { border-color: #ccc; background-color: rgba(255,255,255,0.3); }
 .checklist-item input[type="checkbox"]:checked { background-color: #00d1b2; border-color: #00d1b2; }
-.checklist-item input[type="checkbox"]:checked::after { content: '\2713'; font-size: 18px; font-weight: bold; color: #1e1e1e; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-.checklist-item input[type="checkbox"]:checked + label { color: #777; text-decoration: line-through; }
-
-.global-reset-wrapper { text-align: center; margin-top: -10px; margin-bottom: 15px; }
-#global-checklist-reset-btn { background-color: rgba(40, 40, 40, 0.7); color: #00d1b2; border: 1px solid #4a4a4a; border-radius: 8px; padding: 8px 20px; font-size: 0.9em; font-weight: bold; cursor: pointer; transition: all 0.2s; animation: pulse-glow-dark 3s infinite ease-in-out; }
-#global-checklist-reset-btn:hover { background-color: #00d1b2; color: #1e1e1e; border-color: #00d1b2; }
-
-/* --- Liquid Glass OFF --- */
-body.glass-off .sidebar-nav, body.glass-off .app-content { background-color: #1e1e1e; backdrop-filter: none; -webkit-backdrop-filter: none; }
-body.glass-off #global-tooltip.tooltip-content { background-color: #2c2c2c; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.checklist-item input[type="checkbox"]:checked + label { color: #ddd; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4); text-decoration: line-through; }
+body:not(.dark-theme) .result-value-sub { color: #333 !important; }
+body:not(.dark-theme) .rb-info-section .result-value-main { color: #e0e0e0 !important; } /* Dark mode value color */
+body:not(.dark-theme) .rb-info-section .result-value-main .unit { color: #00d1b2 !important; }
 
 /* ============================================================
-   LIGHT MODE + GLASS OFF FIXES ("Ślepota Śnieżna" Fix)
-   ============================================================ */
-body:not(.dark-theme).glass-off .sidebar-nav,
-body:not(.dark-theme).glass-off .app-content {
-    background-color: rgba(245, 245, 245, 0.95) !important; 
-}
-body:not(.dark-theme).glass-off #global-tooltip.tooltip-content {
-    background-color: #f4f4f4;
-    color: #333;
-}
-
-/* Wymuszenie kontrastu */
-body:not(.dark-theme).glass-off label,
-body:not(.dark-theme).glass-off p,
-body:not(.dark-theme).glass-off li,
-body:not(.dark-theme).glass-off h3,
-body:not(.dark-theme).glass-off .result-label,
-body:not(.dark-theme).glass-off .theme-label,
-body:not(.dark-theme).glass-off .sidebar-nav li a {
-    color: #222 !important;
-    text-shadow: none !important;
-}
-
-body:not(.dark-theme).glass-off .input-group input,
-body:not(.dark-theme).glass-off .input-group select {
-    background-color: #fff !important;
-    border: 1px solid #ccc !important;
-    color: #000 !important;
-}
-
-body:not(.dark-theme).glass-off .sidebar-nav h1 {
-    color: #00d1b2 !important; 
-    text-shadow: none !important; 
-    animation: none !important; 
-}
-
-
-/* ============================================================
-    LIGHT MODE (Ogólne - z Glass ON)
-   ============================================================ */
-body:not(.dark-theme) .sidebar-nav { background-color: rgba(255, 255, 255, 0.15); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-right: 1px solid rgba(0, 0, 0, 0.1); }
-body:not(.dark-theme) .app-content { background-color: rgba(255, 255, 255, 0.25); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); }
-
-body:not(.dark-theme) h1, body:not(.dark-theme) h3, body:not(.dark-theme) .theme-label, body:not(.dark-theme) .settings-toggle-row label, body:not(.dark-theme) #settings-panel h4 { color: #ffffff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
-body:not(.dark-theme) .sidebar-nav li a { color: #e0e0e0; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
-body:not(.dark-theme) .sidebar-nav li a:hover { background-color: rgba(255, 255, 255, 0.2); color: #ffffff; }
-body:not(.dark-theme) .sidebar-nav li a.active { background-color: #00d1b2; color: #1e1e1e; text-shadow: none; }
-body:not(.dark-theme) .donation-wrapper { background: rgba(255, 255, 255, 0.3); animation: pulse-glow-dark 3s infinite ease-in-out; }
-body:not(.dark-theme) .donation-wrapper a { color: #e0e0e0; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
-body:not(.dark-theme) label, body:not(.dark-theme) .label-with-tooltip label, body:not(.dark-theme) p, body:not(.dark-theme) .result-warning { color: #f0f0f0; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
-body:not(.dark-theme) .input-group input, body:not(.dark-theme) .input-group select, body:not(.dark-theme) .settings-select { background-color: rgba(255, 255, 255, 0.9); border: 1px solid #cccccc; color: #2c2c2c; text-shadow: none; }
-body:not(.dark-theme) .input-group input::placeholder { color: #999; }
-body:not(.dark-theme) .input-group input:disabled { opacity: 0.6; background-color: #eee; }
-body:not(.dark-theme) .sub-tab-nav { background-color: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3); }
-body:not(.dark-theme) .sub-tab-button { color: #4a4a4a; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.2); }
-body:not(.dark-theme) .sub-tab-button:hover { color: #1e1e1e; background-color: rgba(255, 255, 255, 0.3); }
-body:not(.dark-theme) .sub-tab-button.active { background-color: #00d1b2; color: #1e1e1e; text-shadow: none; font-weight: bold; }
-body:not(.dark-theme) .pro-overlay { background-color: rgba(255, 255, 255, 0.85); text-align: center; }
-body:not(.dark-theme) .pro-overlay h4 { color: #009e86; text-shadow: none; }
-body:not(.dark-theme) .pro-overlay p { color: #363636; text-shadow: none; }
-body:not(.dark-theme) .result-container { animation-name: pulse-glow-dark; }
-body:not(.dark-theme) #global-tooltip.tooltip-content { background-color: rgba(255, 255, 255, 0.2); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border: 1px solid rgba(0, 0, 0, 0.1); color: #f0f0f0; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); animation-name: pulse-glow-dark; }
-body:not(.dark-theme) #global-tooltip.tooltip-content h4 { color: #00d1b2; }
-body:not(.dark-theme) #tooltip-close-btn { color: #f0f0f0; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
-body:not(.dark-theme) #tooltip-close-btn:hover { color: #00d1b2; }
-body:not(.dark-theme) #proGasResult .rb-info-section .result-label { color: #f0f0f0; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
-body:not(.dark-theme) #gcResult .result-value-main, body:not(.dark-theme) #proGasResult .result-value-main, body:not(.dark-theme) #rbResult .result-value, body:not(.dark-theme) #result .result-value, body:not(.dark-theme) #modResult .result-value, body:not(.dark-theme) #eadResult .result-value, body:not(.dark-theme) #bestMixResult .result-value, body:not(.dark-theme) #cnsResult .result-value { color: #ffffff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
-body:not(.dark-theme) .result-value-sub strong { color: #ffffff; }
-body:not(.dark-theme) #rbResult .result-label, body:not(.dark-theme) #gcResult .result-label, body:not(.dark-theme) #proGasResult .result-label, body:not(.dark-theme) #ballastResult .result-label, body:not(.dark-theme) #result .result-label, body:not(.dark-theme) #modResult .result-label, body:not(.dark-theme) #eadResult .result-label, body:not(.dark-theme) #bestMixResult .result-label, body:not(.dark-theme) #cnsResult .result-label, body:not(.dark-theme) #cnsResult .result-sub-label { color: #f0f0f0; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
-body:not(.dark-theme) #cnsResult .result-sub-label strong { color: #ffffff; }
-body:not(.dark-theme) #gcResult .result-value-sub, body:not(.dark-theme) #proGasResult .result-value-sub { color: #e0e0e0; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
-body:not(.dark-theme) .science-content h4 { color: #00d1b2; border-bottom-color: rgba(255, 255, 255, 0.3); }
-body:not(.dark-theme) .formula-box { background-color: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.3); }
-body:not(.dark-theme) .formula-box h5 { color: #ffffff; }
-body:not(.dark-theme) .formula-box .formula { background-color: rgba(0, 0, 0, 0.2); color: #00d1b2; }
-body:not(.dark-theme) .formula-box ul li { color: #e0e0e0; }
-body:not(.dark-theme) .formula-box ul li strong { color: #ffffff; }
-body:not(.dark-theme) .checklist-group { background-color: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.3); }
-body:not(.dark-theme) .checklist-group h4 { color: #00d1b2; border-bottom-color: rgba(255, 255, 255, 0.3); }
-body:not(.dark-theme) .checklist-item label { color: #f0f0f0; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
-body:not(.dark-theme) .checklist-item input[type="checkbox"] { border-color: #ccc; background-color: rgba(255,255,255,0.3); }
-body:not(.dark-theme) .checklist-item input[type="checkbox"]:checked { background-color: #00d1b2; border-color: #00d1b2; }
-body:not(.dark-theme) .checklist-item input[type="checkbox"]:checked + label { color: #ddd; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4); text-decoration: line-through; }
-
-/* ============================================================
-   STYLIZACJA MOBILNA (MOBILE-FIRST REFACTOR)
+   STYLIZACJA MOBILNA
    ============================================================ */
 
 .mobile-header {
@@ -855,7 +1158,6 @@ body:not(.dark-theme) .checklist-item input[type="checkbox"]:checked + label { c
         font-size: 1rem;
     }
 
-    /* Pod-zakładki GRID (Opcja B) */
     .sub-tab-nav {
         display: grid;
         grid-template-columns: 1fr 1fr; 
