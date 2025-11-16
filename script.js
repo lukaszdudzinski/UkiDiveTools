@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    
+   
     const body = document.body;
 
     // ============================================================
@@ -32,27 +32,36 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 
     sidebarLinks.forEach(link => {
-        link.addEventListener('click', closeMenu);
+        // Zmodyfikowany listener, aby ignorował linki donacji i alarmu
+        link.addEventListener('click', (e) => {
+            const parentDiv = link.parentElement;
+            if (parentDiv.classList.contains('donation-wrapper') || parentDiv.classList.contains('emergency-wrapper')) {
+                // To jest link specjalny, nie zamykaj menu (obsłuży go inny listener)
+                return;
+            }
+            // To jest link nawigacyjny
+            closeMenu();
+        });
     });
-    
+   
     // ============================================================
-    // 1. NAWIGACJA
+    // 1. NAWIGACJA GŁÓWNA (ZAKŁADKI)
     // ============================================================
-    
-    const navLinks = document.querySelectorAll('.sidebar-nav a');
-    const tabContents = document.querySelectorAll('.app-content > .tab-content-wrapper > .tab-content'); 
-    
+   
+    const navLinks = document.querySelectorAll('.sidebar-nav ul a'); // Celujemy tylko w linki nawigacyjne w <ul>
+    const tabContents = document.querySelectorAll('.app-content > .tab-content-wrapper > .tab-content');
+   
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             navLinks.forEach(l => l.classList.remove('active'));
             link.classList.add('active');
-            
+           
             tabContents.forEach(content => {
                 content.classList.remove('active-tab');
                 content.style.display = 'none';
             });
-            
+           
             const tabId = link.getAttribute('data-tab');
             const activeContent = document.getElementById(tabId);
             if (activeContent) {
@@ -86,15 +95,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
     };
 
     // ============================================================
-    // 2. POD-ZAKŁADKI
+    // 2. POD-ZAKŁADKI (WNP. W NITROX)
     // ============================================================
     const subTabButtons = document.querySelectorAll('.sub-tab-button');
     subTabButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
             const subTabId = this.getAttribute('data-subtab');
-            const parentWrapper = this.closest('.tab-content'); 
-            
+            const parentWrapper = this.closest('.tab-content');
+           
             if (!subTabId) return;
             const subTabToShow = document.getElementById(subTabId);
             if (!subTabToShow) return;
@@ -105,10 +114,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
             parentWrapper.querySelectorAll('.sub-tab-button').forEach(btn => {
                 btn.classList.remove('active');
             });
-            
+           
             subTabToShow.classList.add('active-sub-tab');
             this.classList.add('active');
-            
+           
             if (parentWrapper.id === 'nitrox-calculator') {
                 const nitroxO2Input = document.getElementById('nitroxO2');
                 if (subTabId === 'best-mix-calculator') {
@@ -121,12 +130,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     // ============================================================
-    // 3. USTAWIENIA
+    // 3. USTAWIENIA (MOTYW, SZKŁO, TAPETA, WODA)
     // ============================================================
     const themeToggle = document.getElementById('theme-toggle');
-    const glassToggle = document.getElementById('glass-toggle'); 
+    const glassToggle = document.getElementById('glass-toggle');
     const wallpaperThumbs = document.querySelectorAll('.wallpaper-thumb');
-    const defaultWallpaper = "url('background_uki.jpg')"; 
+    const defaultWallpaper = "url('background_uki.jpg')";
     const globalWaterTypeSelect = document.getElementById('global-water-type');
     const sacWaterType = document.getElementById('waterType');
     const ballastWaterType = document.getElementById('ballastWater');
@@ -181,18 +190,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if (sacWaterType) sacWaterType.addEventListener('change', () => setWaterType(sacWaterType.value));
     if (ballastWaterType) ballastWaterType.addEventListener('change', () => setWaterType(ballastWaterType.value));
 
+    // Inicjalizacja przy starcie
     const savedTheme = localStorage.getItem('theme');
-    setTheme(savedTheme === 'dark' || savedTheme === null); 
+    setTheme(savedTheme === 'dark' || savedTheme === null);
     const savedWallpaper = localStorage.getItem('uki-wallpaper');
     setWallpaper(savedWallpaper || defaultWallpaper);
     const savedGlass = localStorage.getItem('uki-liquid-glass');
     setLiquidGlass(savedGlass === 'on' || savedGlass === null);
     const savedWater = localStorage.getItem('uki-water-type');
     setWaterType(savedWater || 'fresh');
-    
-    
+   
+   
     // ============================================================
-    // 4. TOOLTIPY & MODALE (IKONA "i")
+    // 4. TOOLTIPY & MODALE (W TYM NOWY MODAL SOS)
     // ============================================================
     const globalTooltip = document.getElementById('global-tooltip');
     const tooltipOverlay = document.getElementById('tooltip-overlay');
@@ -200,43 +210,39 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const tooltipCloseBtn = document.getElementById('tooltip-close-btn');
     const allTriggers = document.querySelectorAll('.tooltip-trigger');
 
-    function showTooltip(contentHTML) {
+    function showTooltip(contentHTML, isEmergency = false) { // Dodany parametr
         tooltipBody.innerHTML = contentHTML;
         globalTooltip.style.display = 'block';
         tooltipOverlay.style.display = 'block';
+        
+        // Dodaj/Usuń klasę dla czerwonej ramki
+        if (isEmergency) {
+            globalTooltip.classList.add('emergency-modal');
+        } else {
+            globalTooltip.classList.remove('emergency-modal');
+        }
     }
 
     function hideTooltip() {
         globalTooltip.style.display = 'none';
         tooltipOverlay.style.display = 'none';
         tooltipBody.innerHTML = '';
+        globalTooltip.classList.remove('emergency-modal'); // Zawsze usuwaj przy zamykaniu
     }
 
     allTriggers.forEach(trigger => {
-        // Dla przycisków z zagnieżdżonym contentem (nowe rozwiązanie)
+        // Dla przycisków z zagnieżdżonym contentem
         if (trigger.classList.contains('tooltip-button') || trigger.classList.contains('result-info-icon')) {
-             // Szukamy wewnątrz
              const contentDiv = trigger.querySelector('.tooltip-content');
              if(contentDiv) {
                  trigger.addEventListener('click', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    showTooltip(contentDiv.innerHTML);
+                    showTooltip(contentDiv.innerHTML, false); // false = nie jest alarmem
                  });
-                 return; // Stop here
+                 return; 
              }
         }
-        
-        // Fallback dla starych tooltipów (jeśli są)
-        const contentDiv = trigger.querySelector('.tooltip-content');
-        if (!contentDiv) return;
-        const tooltipHTML = contentDiv.innerHTML;
-
-        trigger.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation(); 
-            showTooltip(tooltipHTML);
-        });
     });
 
     tooltipCloseBtn.addEventListener('click', hideTooltip);
@@ -244,37 +250,66 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // --- Globalny Listener dla Ikon Wyników (i) ---
     document.querySelector('.app-content').addEventListener('click', function(e) {
-        // Obsługa dynamicznie generowanych "i" w wynikach
         if (e.target.classList.contains('result-info-icon')) {
-            // Sprawdź czy ma "swoją" treść w data-atrybucie lub ukrytym divie obok
             const resultContainer = e.target.closest('.result-container');
             if (!resultContainer) return;
-
             const detailsDiv = resultContainer.querySelector('.calculation-details');
             if (!detailsDiv) return;
-
             const detailsHTML = detailsDiv.innerHTML;
             const isProFeature = e.target.dataset.proFeature === 'true';
-            
-            // Sprawdź czy Strefa PRO jest odblokowana
-            const isUnlocked = document.querySelector('#pro-dashboard').classList.contains('unlocked'); 
+            const isUnlocked = document.querySelector('#pro-dashboard').classList.contains('unlocked');
 
             if (!isProFeature || isUnlocked) {
-                showTooltip(detailsHTML);
+                showTooltip(detailsHTML, false); // false = nie jest alarmem
             } else {
                 const proOverlayHTML = "<div style='text-align:center;'><h4>🔒 Funkcja PRO</h4><p>Szczegółowe obliczenia są dostępne w wersji PRO.</p><p>Postaw kawę, aby odblokować!</p></div>";
-                showTooltip(proOverlayHTML);
+                showTooltip(proOverlayHTML, false);
             }
         }
     });
 
+    // --- Link Donacji (Kawa) ---
     const donationLink = document.getElementById('donation-link');
     if (donationLink) {
         donationLink.addEventListener('click', function(e) {
-            e.preventDefault(); 
-            console.log('Donation link clicked');
+            e.preventDefault();
+            const coffeeHTML = `
+                <h4>☕ Postaw mi kawę!</h4>
+                <p>Jeśli podoba Ci się to narzędzie, możesz wesprzeć jego rozwój.</p>
+                <p><strong>[Tu będzie Twój link do BuyCoffee]</strong></p>
+            `;
+            showTooltip(coffeeHTML, false);
         });
     }
+
+    // --- NOWA LOGIKA: PRZYCISK ALARMOWY (SOS) ---
+    const emergencyBtn = document.getElementById('emergency-btn');
+    if (emergencyBtn) {
+        emergencyBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation(); // Ważne, aby nie aktywować linku nawigacyjnego
+
+            const emergencyHTML = `
+                <div style="text-align: center;">
+                    <h4 style="color: #ff3860; font-weight: bold; margin-bottom: 15px; font-size: 1.4em;">🚑 ALARM NURKOWY</h4>
+                    <p style="color: #fff; margin-bottom: 20px; line-height: 1.4;">Krajowy Ośrodek Medycyny Hiperbarycznej w Gdyni</p>
+                    
+                    <a href="tel:586225163" style="display: block; padding: 15px; background: #ff3860; color: white; text-decoration: none; font-weight: bold; font-size: 1.3em; border-radius: 8px; margin-bottom: 10px; box-shadow: 0 0 10px rgba(255,56,96,0.5);">
+                        📞 58 622 51 63
+                    </a>
+                    
+                    <a href="tel:586998655" style="display: block; padding: 15px; background: rgba(255, 56, 96, 0.2); border: 1px solid #ff3860; color: #fff; text-decoration: none; font-weight: bold; font-size: 1.2em; border-radius: 8px;">
+                        📞 58 699 86 55
+                    </a>
+                    
+                    <p style="color: #aaa; font-size: 0.8em; margin-top: 20px;">Kliknij numer, aby natychmiast połączyć.</p>
+                </div>
+            `;
+            
+            showTooltip(emergencyHTML, true); // true = włącz styl awaryjny (czerwona ramka)
+        });
+    }
+
 
     // ============================================================
     // 5. LISTENERY - LOGIKA KALKULATORÓW
@@ -300,7 +335,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             details: { SAC_stressed, Gas_reaction, Gas_ascent, TotalGasLiters, P_depth, P_avg_ascent, T_ascent }
         };
     }
-    
+   
     function calculateGasConsumption(params) {
         const { sac, depth, bottomTime, descentRate, ascentRate, stopDepth, stopTime, tankSize, startPressure, divers } = params;
         const P_surface = 1.0;
@@ -323,7 +358,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const totalDemandBars = totalDemandLiters / tankSize;
         const totalSupplyLiters = tankSize * startPressure;
         const totalSupplyBars = startPressure;
-        
+       
         return {
             totalDemandLiters,
             totalDemandBars,
@@ -332,7 +367,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             breakdown: { T_descent, L_descent, P_avg_descent, T_bottom, L_bottom, P_bottom, T_ascent_to_stop, L_ascent_to_stop, P_avg_ascent_to_stop, T_stop, L_stop, P_stop, T_ascent_to_surface, L_ascent_to_surface, P_avg_ascent_to_surface }
         };
     }
-    
+   
     function renderConsumptionResult(container, consumptionData, reserveData, rockBottomInfo = null) {
         const { totalDemandLiters, totalDemandBars, totalSupplyLiters, totalSupplyBars } = consumptionData;
         const { requiredReserveLiters } = reserveData;
@@ -340,7 +375,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const remainingBars = remainingLiters / (consumptionData.tankSize || totalSupplyLiters / totalSupplyBars);
         const isSafe = (remainingLiters >= requiredReserveLiters);
         const { T_descent, L_descent, P_avg_descent, T_bottom, L_bottom, P_bottom, T_ascent_to_stop, L_ascent_to_stop, P_avg_ascent_to_stop, T_stop, L_stop, P_stop, T_ascent_to_surface, L_ascent_to_surface, P_avg_ascent_to_surface } = consumptionData.breakdown;
-        
+       
         const explanationHTML = `
             <div class="formula-box-small">
                 <h5>Fazy Obliczeń Planu</h5>
@@ -353,17 +388,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 </ul>
             </div>
         `;
-        
+       
         let rbHtml = '';
         if (rockBottomInfo) {
             rbHtml = `<div class="result-section rb-info-section"><p class="result-label">Minimalna Rezerwa (Rock Bottom):</p><p class="result-value-main">${rockBottomInfo.roundedBars}<span class="unit">bar</span></p></div>`;
         }
         let verdictHTML = isSafe ? `<div class="result-verdict result-verdict-ok">WYSTARCZY</div>` : `<div class="result-verdict result-verdict-bad">NIE WYSTARCZY</div>`;
-        
+       
         container.innerHTML = `
             <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="true">i</div>
             <div class="calculation-details" style="display: none;">${explanationHTML}</div>
-            ${rbHtml} 
+            ${rbHtml}
             <div class="result-section"><p class="result-label">Zapotrzebowanie (Plan):</p><p class="result-value-main">${totalDemandLiters.toFixed(0)}<span class="unit">l</span> <span>(${totalDemandBars.toFixed(1)} bar)</span></p></div>
             <div class="result-section"><p class="result-label">Pozostało:</p><p class="result-value-main">${remainingLiters.toFixed(0)}<span class="unit">l</span> <span>(${remainingBars.toFixed(1)} bar)</span></p></div>
             ${verdictHTML}
@@ -384,11 +419,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const depth = parseFloat(document.getElementById('depth').value);
                 const time = parseFloat(document.getElementById('time').value);
                 const waterType = document.getElementById('waterType').value;
-                
-                const pressureConversion = (waterType === 'fresh') ? (10 / 10.3) : 1.0; 
-                const avgPressure = (depth / 10 * pressureConversion) + 1; 
+               
+                const pressureConversion = (waterType === 'fresh') ? (10 / 10.3) : 1.0;
+                const avgPressure = (depth / 10 * pressureConversion) + 1;
                 const sac = ( (p1 - p2) * vb ) / ( avgPressure * time );
-                
+               
                 const explanationHTML = `
                     <div class="formula-box-small">
                         <h5>Obliczenia SAC</h5>
@@ -401,7 +436,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         </ul>
                     </div>
                 `;
-                
+               
                 // Ujednolicony styl wyniku (Kompaktowy)
                 resultDiv.innerHTML = `
                     <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
@@ -420,11 +455,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const rbForm = document.getElementById('rbForm');
     const rbResultContainer = document.getElementById('rbResult');
     if (rbForm && rbResultContainer) {
-        rbForm.addEventListener('submit', function(e) { 
-            e.preventDefault(); 
-            try { 
-                const params = { sac: parseFloat(document.getElementById('rbSAC').value), depth: parseFloat(document.getElementById('rbDepth').value), stopDepth: parseFloat(document.getElementById('rbStopDepth').value), ascentRate: parseFloat(document.getElementById('rbAscentRate').value), stressFactor: parseFloat(document.getElementById('rbStressFactor').value), divers: parseInt(document.getElementById('rbDivers').value), emergencyTime: parseFloat(document.getElementById('rbEmergencyTime').value), volume: parseFloat(document.getElementById('rbVolume').value), safetyMargin: parseFloat(document.getElementById('rbSafetyMargin').value) }; 
-                const rbResult = calculateRockBottom(params); 
+        rbForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            try {
+                const params = { sac: parseFloat(document.getElementById('rbSAC').value), depth: parseFloat(document.getElementById('rbDepth').value), stopDepth: parseFloat(document.getElementById('rbStopDepth').value), ascentRate: parseFloat(document.getElementById('rbAscentRate').value), stressFactor: parseFloat(document.getElementById('rbStressFactor').value), divers: parseInt(document.getElementById('rbDivers').value), emergencyTime: parseFloat(document.getElementById('rbEmergencyTime').value), volume: parseFloat(document.getElementById('rbVolume').value), safetyMargin: parseFloat(document.getElementById('rbSafetyMargin').value) };
+                const rbResult = calculateRockBottom(params);
                 const d = rbResult.details;
                 const explanationHTML = `
                     <div class="formula-box-small">
@@ -443,10 +478,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     <div class="rb-info-section" style="border:none; padding:0; background:transparent;">
                         <p class="result-label">Minimalna Rezerwa (RB)</p>
                         <p class="result-value-main" style="color: #00d1b2 !important;">${rbResult.roundedBars}<span class="unit">bar</span></p>
-                    </div>`; 
-                rbResultContainer.style.display = 'block'; 
+                    </div>`;
+                rbResultContainer.style.display = 'block';
                 rbResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } catch (error) {} 
+            } catch (error) {}
         });
     }
 
@@ -454,60 +489,60 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const gcForm = document.getElementById('gasConsumptionForm');
     const gcResultContainer = document.getElementById('gcResult');
     if (gcForm && gcResultContainer) {
-        gcForm.addEventListener('submit', function(e) { 
-            e.preventDefault(); 
-            try { 
-                const tankSize = parseFloat(document.getElementById('gcTankSize').value); 
-                const reservePressure = parseFloat(document.getElementById('gcReserve').value); 
-                const consumptionParams = { sac: parseFloat(document.getElementById('gcSAC').value), depth: parseFloat(document.getElementById('gcDepth').value), bottomTime: parseFloat(document.getElementById('gcBottomTime').value), descentRate: parseFloat(document.getElementById('gcDescentRate').value), ascentRate: parseFloat(document.getElementById('gcAscentRate').value), stopDepth: parseFloat(document.getElementById('gcStopDepth').value), stopTime: parseFloat(document.getElementById('gcStopTime').value), tankSize: tankSize, startPressure: parseFloat(document.getElementById('gcStartPressure').value), divers: 1 }; 
-                const consumptionResult = calculateGasConsumption(consumptionParams); 
+        gcForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            try {
+                const tankSize = parseFloat(document.getElementById('gcTankSize').value);
+                const reservePressure = parseFloat(document.getElementById('gcReserve').value);
+                const consumptionParams = { sac: parseFloat(document.getElementById('gcSAC').value), depth: parseFloat(document.getElementById('gcDepth').value), bottomTime: parseFloat(document.getElementById('gcBottomTime').value), descentRate: parseFloat(document.getElementById('gcDescentRate').value), ascentRate: parseFloat(document.getElementById('gcAscentRate').value), stopDepth: parseFloat(document.getElementById('gcStopDepth').value), stopTime: parseFloat(document.getElementById('gcStopTime').value), tankSize: tankSize, startPressure: parseFloat(document.getElementById('gcStartPressure').value), divers: 1 };
+                const consumptionResult = calculateGasConsumption(consumptionParams);
                 consumptionResult.breakdown = { ...consumptionResult.breakdown };
                 consumptionResult.sac = consumptionParams.sac;
-                const reserveParams = { requiredReserveLiters: tankSize * reservePressure, requiredReserveBars: reservePressure }; 
-                renderConsumptionResult(gcResultContainer, { ...consumptionResult, tankSize: tankSize }, reserveParams, null); 
+                const reserveParams = { requiredReserveLiters: tankSize * reservePressure, requiredReserveBars: reservePressure };
+                renderConsumptionResult(gcResultContainer, { ...consumptionResult, tankSize: tankSize }, reserveParams, null);
                 gcResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } catch (error) {} 
+            } catch (error) {}
         });
     }
-    
+   
     // --- 4. Kalkulator PRO GAS (Planning + RB) ---
     const proForm = document.getElementById('proGasForm');
     const proResultContainer = document.getElementById('proGasResult');
     if (proForm && proResultContainer) {
-        proForm.addEventListener('submit', function(e) { 
-            e.preventDefault(); 
-            try { 
-                const sac = parseFloat(document.getElementById('gcSAC_pro').value); 
-                const depth = parseFloat(document.getElementById('gcDepth_pro').value); 
-                const tankSize = parseFloat(document.getElementById('gcTankSize_pro').value); 
-                const ascentRate = parseFloat(document.getElementById('gcAscentRate_pro').value); 
-                const stopDepth = parseFloat(document.getElementById('gcStopDepth_pro').value); 
-                const rbParams = { sac: sac, depth: depth, stopDepth: stopDepth, ascentRate: ascentRate, stressFactor: parseFloat(document.getElementById('rbStressFactor_pro').value), divers: parseInt(document.getElementById('rbDivers_pro').value), emergencyTime: parseFloat(document.getElementById('rbEmergencyTime_pro').value), volume: tankSize, safetyMargin: parseFloat(document.getElementById('rbSafetyMargin_pro').value) }; 
-                const rbResult = calculateRockBottom(rbParams); 
-                const reserveParams = { requiredReserveLiters: rbResult.liters, requiredReserveBars: rbResult.bars }; 
-                const consumptionParams = { sac: sac, depth: depth, bottomTime: parseFloat(document.getElementById('gcBottomTime_pro').value), descentRate: parseFloat(document.getElementById('gcDescentRate_pro').value), ascentRate: ascentRate, stopDepth: stopDepth, stopTime: parseFloat(document.getElementById('gcStopTime_pro').value), tankSize: tankSize, startPressure: parseFloat(document.getElementById('gcStartPressure_pro').value), divers: 1 }; 
-                const consumptionResult = calculateGasConsumption(consumptionParams); 
-                const rbInfo = { depth: rbParams.depth, roundedBars: rbResult.roundedBars }; 
+        proForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            try {
+                const sac = parseFloat(document.getElementById('gcSAC_pro').value);
+                const depth = parseFloat(document.getElementById('gcDepth_pro').value);
+                const tankSize = parseFloat(document.getElementById('gcTankSize_pro').value);
+                const ascentRate = parseFloat(document.getElementById('gcAscentRate_pro').value);
+                const stopDepth = parseFloat(document.getElementById('gcStopDepth_pro').value);
+                const rbParams = { sac: sac, depth: depth, stopDepth: stopDepth, ascentRate: ascentRate, stressFactor: parseFloat(document.getElementById('rbStressFactor_pro').value), divers: parseInt(document.getElementById('rbDivers_pro').value), emergencyTime: parseFloat(document.getElementById('rbEmergencyTime_pro').value), volume: tankSize, safetyMargin: parseFloat(document.getElementById('rbSafetyMargin_pro').value) };
+                const rbResult = calculateRockBottom(rbParams);
+                const reserveParams = { requiredReserveLiters: rbResult.liters, requiredReserveBars: rbResult.bars };
+                const consumptionParams = { sac: sac, depth: depth, bottomTime: parseFloat(document.getElementById('gcBottomTime_pro').value), descentRate: parseFloat(document.getElementById('gcDescentRate_pro').value), ascentRate: ascentRate, stopDepth: stopDepth, stopTime: parseFloat(document.getElementById('gcStopTime_pro').value), tankSize: tankSize, startPressure: parseFloat(document.getElementById('gcStartPressure_pro').value), divers: 1 };
+                const consumptionResult = calculateGasConsumption(consumptionParams);
+                const rbInfo = { depth: rbParams.depth, roundedBars: rbResult.roundedBars };
                 consumptionResult.breakdown = { ...consumptionResult.breakdown };
                 consumptionResult.sac = consumptionParams.sac;
-                renderConsumptionResult(proResultContainer, { ...consumptionResult, tankSize: tankSize }, reserveParams, rbInfo); 
+                renderConsumptionResult(proResultContainer, { ...consumptionResult, tankSize: tankSize }, reserveParams, rbInfo);
                 proResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } catch (error) {} 
+            } catch (error) {}
         });
     }
-    
+   
     // --- 5. Nitrox: MOD ---
     const modForm = document.getElementById('modForm');
     const modResult = document.getElementById('modResult');
     if (modForm && modResult) {
-        modForm.addEventListener('submit', function(e) { 
-            e.preventDefault(); 
+        modForm.addEventListener('submit', function(e) {
+            e.preventDefault();
             try {
                 const o2 = parseFloat(document.getElementById('nitroxO2').value) / 100;
                 const ppo2 = parseFloat(document.getElementById('modPO2').value);
                 const mod = ((ppo2 / o2) - 1) * 10;
                 const explanationHTML = `<div class="formula-box-small"><h5>Obliczenia MOD</h5><p>MOD = (PPO2 / FO2 - 1) * 10</p><ul><li>${ppo2} / ${o2} = ${(ppo2/o2).toFixed(2)} ATA</li><li>(${(ppo2/o2).toFixed(2)} - 1) * 10 = <strong>${mod.toFixed(1)} m</strong></li></ul></div>`;
-                
+               
                 modResult.innerHTML = `
                     <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
@@ -520,20 +555,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
             } catch (error) {}
         });
     }
-    
+   
     // --- 6. Nitrox: EAD ---
     const eadForm = document.getElementById('eadForm');
     const eadResult = document.getElementById('eadResult');
     if (eadForm && eadResult) {
-        eadForm.addEventListener('submit', function(e) { 
-            e.preventDefault(); 
+        eadForm.addEventListener('submit', function(e) {
+            e.preventDefault();
             try {
                 const o2 = parseFloat(document.getElementById('nitroxO2').value) / 100;
                 const depth = parseFloat(document.getElementById('eadDepth').value);
                 const n2 = 1.0 - o2;
                 const ead = ((depth + 10) * (n2 / 0.79)) - 10;
                 const explanationHTML = `<div class="formula-box-small"><h5>Obliczenia EAD</h5><p>EAD = ((D + 10) * FN2 / 0.79) - 10</p><ul><li>Ciśnienie N2: (${depth}+10) * ${n2.toFixed(2)} = ${((depth+10)*n2).toFixed(2)}</li><li>Ekwiwalent Powietrzny: (${((depth+10)*n2).toFixed(2)} / 0.79) - 10 = <strong>${ead.toFixed(1)} m</strong></li></ul></div>`;
-                
+               
                 eadResult.innerHTML = `
                     <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
@@ -556,12 +591,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
             try {
                 const depth = parseFloat(document.getElementById('bestMixDepth').value);
                 const ppo2 = parseFloat(document.getElementById('bestMixPO2').value);
-                const waterType = document.getElementById('global-water-type').value; 
+                const waterType = document.getElementById('global-water-type').value;
                 const pressureConversion = (waterType === 'fresh') ? (10 / 10.3) : 1.0;
                 const ata = (depth / 10 * pressureConversion) + 1;
                 const fo2 = (ppo2 / ata);
                 const bestMixPercent = Math.floor(fo2 * 100);
-                
+               
                 const explanationHTML = `<div class="formula-box-small"><h5>Best Mix</h5><p>FO2 = PPO2 / ATA</p><ul><li>Ciśnienie otoczenia: ${ata.toFixed(2)} ATA</li><li>Wymagane O2: ${ppo2} / ${ata.toFixed(2)} = ${fo2.toFixed(3)}</li><li>Wynik (zaokrąglony w dół): <strong>${bestMixPercent}%</strong></li></ul></div>`;
 
                 bestMixResult.innerHTML = `
@@ -576,7 +611,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             } catch (error) {}
         });
     }
-    
+   
     // --- 8. Nitrox: CNS ---
     const cnsForm = document.getElementById('cnsForm');
     const cnsResult = document.getElementById('cnsResult');
@@ -590,7 +625,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const waterType = document.getElementById('global-water-type').value;
                 const pressureConversion = (waterType === 'fresh') ? (10 / 10.3) : 1.0;
                 const ppo2 = ((depth / 10 * pressureConversion) + 1) * o2;
-                
+               
                 // Tabela NOAA (uproszczona logika dla przykładu)
                 const cnsRates = { 0.6: 0.12, 0.7: 0.17, 0.8: 0.22, 0.9: 0.28, 1.0: 0.33, 1.1: 0.40, 1.2: 0.48, 1.3: 0.56, 1.4: 0.67, 1.5: 0.83, 1.6: 1.11 };
                 let rateKey = (Math.floor(ppo2 * 10) / 10).toFixed(1);
@@ -624,8 +659,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const targetBar = parseFloat(document.getElementById('blendTargetBar').value);
                 const targetO2 = parseFloat(document.getElementById('blendTargetO2').value) / 100;
 
-                const topUpO2 = 0.21; 
-                const o2InAirFraction = 1.0 - topUpO2; 
+                const topUpO2 = 0.21;
+                const o2InAirFraction = 1.0 - topUpO2;
                 const numerator = (targetBar * (targetO2 - topUpO2)) - (startBar * (startO2 - topUpO2));
                 const oxygenToAdd = numerator / o2InAirFraction;
                 const pressureAfterO2 = startBar + oxygenToAdd;
@@ -724,7 +759,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             } catch (error) {}
         });
     }
-    
+   
     // --- 11. Kalkulator Balastu (ZAKTUALIZOWANY UI) ---
     const ballastForm = document.getElementById('ballastForm');
     const ballastResultContainer = document.getElementById('ballastResult');
@@ -742,18 +777,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if (ballastSuitSelect) { ballastSuitSelect.addEventListener('change', updateBallastDependents); ballastTankSelect.addEventListener('change', updateBallastDependents); updateBallastDependents(); }
 
     if (ballastForm && ballastResultContainer) {
-        ballastForm.addEventListener('submit', function(e) { 
-            e.preventDefault(); 
-            try { 
+        ballastForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            try {
                 const weight = parseFloat(document.getElementById('ballastWeight').value);
                 const suitType = document.getElementById('ballastSuit').value;
                 const tankType = document.getElementById('ballastTank').value;
                 const waterType = document.getElementById('ballastWater').value;
                 const bodyType = document.getElementById('ballastBodyType').value;
-                
+               
                 // --- Logika Obliczeń ---
                 let baseBallast = weight * 0.10;
-                
+               
                 if(bodyType === 'slim') baseBallast -= 1;
                 if(bodyType === 'overweight') baseBallast += 1;
 
@@ -763,12 +798,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     case 'foam3': suitMod = 1; suitName = "Pianka 3mm"; break;
                     case 'foam5': suitMod = 3; suitName = "Pianka 5mm"; break;
                     case 'foam7': suitMod = 5; suitName = "Pianka 7mm"; break;
-                    case 'dryTri': 
+                    case 'dryTri':
                     case 'dryCrash':
                     case 'dryNeo':
                         suitName = "Suchy Skafander";
                         const warmer = document.getElementById('ballastWarmer').value;
-                        suitMod = 8; 
+                        suitMod = 8;
                         if(warmer === 'thick') { suitMod += 4; suitName += " (Gruby)"; }
                         else { suitName += " (Cienki)"; }
                         break;
@@ -810,42 +845,42 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             <li>Butla (${tankName}): <strong>${tankMod > 0 ? '+' : ''}${tankMod} kg</strong></li>
                         </ul>
                     </div>`;
-                
+               
                 ballastResultContainer.innerHTML = `
                     <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
-                    
+                   
                     <div class="result-section">
                         <p class="result-label">Sugerowany balast</p>
                         <p class="result-value-main">${totalBallast}<span class="unit">kg</span></p>
                     </div>
-                    
+                   
                     <div class="result-warning-box">
                         ⚠️ <strong>Pamiętaj:</strong> To tylko sugestia. Zawsze wykonaj kontrolę pływalności (check-dive) przed nurkowaniem, aby precyjnie dobrać ostateczną ilość obciążenia.
-                    </div>`; 
-                
-                ballastResultContainer.style.display = 'block'; 
+                    </div>`;
+               
+                ballastResultContainer.style.display = 'block';
                 ballastResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } catch (error) { } 
+            } catch (error) { }
         });
     }
 
     // --- Paywall Logic (Overlay) ---
     const proOverlay = document.getElementById('pro-overlay-lock');
     const proGrid = document.getElementById('pro-tools-grid');
-    
+   
     document.body.addEventListener('click', function(e) {
         const unlockButton = e.target.closest('.unlockProButton');
         if (unlockButton) {
             e.preventDefault();
             e.stopPropagation();
-            
+           
             // Dodaj klasę unlocked do kontenera PRO
             const proDashboard = document.getElementById('pro-dashboard');
             if (proDashboard) {
                 proDashboard.classList.add('unlocked');
             }
-            
+           
             // Ukryj tooltip jeśli był otwarty (np. ten z wyjaśnieniem)
             if (e.target.closest('#global-tooltip')) hideTooltip();
         }
