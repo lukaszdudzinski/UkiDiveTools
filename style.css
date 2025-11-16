@@ -75,7 +75,7 @@ h1, h2, h3, .mobile-header h2 {
   height: 90vh;
 }
 
-/* --- BELKA BOCZNA (SIDEBAR) - KOMPRESJA --- */
+/* --- BELKA BOCZNA (SIDEBAR) - POPRAWIONA --- */
 .sidebar-nav {
   width: 260px;
   background-color: rgba(30, 30, 30, 0.4);
@@ -87,7 +87,7 @@ h1, h2, h3, .mobile-header h2 {
   height: 100%;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  overflow-y: hidden; /* Ukryj przepełnienie głównego kontenera */
   transition: background-color 0.3s, backdrop-filter 0.3s;
 }
 
@@ -137,8 +137,8 @@ h1, h2, h3, .mobile-header h2 {
     list-style: none;
     padding: 0;
     margin: 0;
-    flex-grow: 1; /* Pozwala liście rosnąć i pchać stopkę w dół */
-    overflow-y: auto;
+    flex-grow: 1; /* POPRAWKA: Lista rośnie */
+    overflow-y: auto; /* POPRAWKA: Lista się przewija, a nie wypycha stopkę */
     min-height: 0;
 }
 .sidebar-nav li a {
@@ -302,6 +302,42 @@ h1, h2, h3, .mobile-header h2 {
 }
 
 /* ============================================================
+   EKRAN POWITALNY (POPRAWIONY STYL TEKSTU)
+   ============================================================ */
+#welcome-screen .home-header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80%; /* Wypełnij większość dostępnego miejsca */
+    padding: 20px;
+}
+#welcome-screen .home-logo {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 3px solid #00d1b2;
+    box-shadow: 0 0 20px rgba(0, 209, 178, 0.4);
+    margin-bottom: 20px;
+}
+#welcome-screen .home-header h2 {
+    font-size: 2.2em;
+    color: #fff;
+    margin-bottom: 10px;
+    text-shadow: 0 0 15px rgba(0, 209, 178, 0.6);
+}
+/* POPRAWKA: Styl tekstu jak w menu */
+#welcome-screen .home-header p {
+    font-size: 1.2em;
+    color: #b0b0b0;
+    margin: 0;
+    font-weight: 500;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.95);
+    letter-spacing: 0.5px;
+}
+
+/* ============================================================
    DASHBOARD PRO (Z Overlay Lock)
    ============================================================ */
 
@@ -317,29 +353,23 @@ h1, h2, h3, .mobile-header h2 {
     margin-bottom: 5px;
     text-shadow: 0 0 15px rgba(0, 209, 178, 0.6), 0 0 5px rgba(0, 209, 178, 0.4);
 }
-
-/* ZMIANA: Poprawiona czytelność opisu w Strefie PRO */
 #pro-dashboard p {
-    color: #ffffff; /* Czysta biel dla lepszego kontrastu */
-    font-size: 1.1em; /* Nieco większa czcionka */
-    font-weight: 500; /* Lekkie pogrubienie */
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.9); /* Mocny czarny cień */
-    line-height: 1.4; /* Poprawiona czytelność linii */
+    color: #ffffff;
+    font-size: 1.1em;
+    font-weight: 500;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
+    line-height: 1.4;
     margin-top: 5px;
-    max-width: 90%; /* Ograniczenie szerokości na mobile */
+    max-width: 90%;
     margin-left: auto;
     margin-right: auto;
 }
-
-/* Wrapper dla Dashboardu PRO (pozycjonowanie overlay) */
 .pro-dashboard-wrapper {
     position: relative;
     min-height: 300px;
     display: flex;
     justify-content: center;
 }
-
-/* Siatka 2x2 */
 .dashboard-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -347,16 +377,12 @@ h1, h2, h3, .mobile-header h2 {
     max-width: 800px;
     width: 100%;
 }
-
-/* Stan zablokowany siatki */
 .locked-grid {
     filter: blur(4px) grayscale(0.8);
     opacity: 0.3;
     pointer-events: none;
     transition: all 0.5s ease;
 }
-
-/* Nakładka (Overlay) blokująca */
 .pro-lock-overlay {
     position: absolute;
     top: 50%;
@@ -379,8 +405,6 @@ h1, h2, h3, .mobile-header h2 {
     max-width: 400px;
     transition: all 0.5s ease;
 }
-
-/* Stylizacja Logo na Nakładce PRO */
 .pro-overlay-logo {
     width: 80px;
     height: 80px;
@@ -391,14 +415,12 @@ h1, h2, h3, .mobile-header h2 {
     margin-bottom: 15px;
     animation: pulse-glow-dark 3s infinite alternate;
 }
-
 .lock-message {
     color: #ff3860;
     font-size: 1.2em;
     margin-bottom: 15px;
     font-weight: bold;
 }
-
 .pulse-button {
     background-color: #00d1b2;
     color: #1e1e1e;
@@ -415,14 +437,11 @@ h1, h2, h3, .mobile-header h2 {
     background-color: #00c4a7;
     color: #fff;
 }
-
-/* Stan ODBLOKOWANY (dodawane przez JS) */
 .unlocked .pro-lock-overlay {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 }
-
 .unlocked .locked-grid {
     filter: none;
     opacity: 1;
@@ -431,8 +450,6 @@ h1, h2, h3, .mobile-header h2 {
 .unlocked .pro-status-locked {
     display: none !important;
 }
-
-/* Karta Narzędzia - Kompaktowa */
 .dashboard-card {
     background-color: rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -456,7 +473,6 @@ h1, h2, h3, .mobile-header h2 {
     border-color: #00d1b2;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
-
 .dashboard-card h4 {
     color: #00d1b2;
     margin: 0 0 8px 0;
@@ -469,8 +485,6 @@ h1, h2, h3, .mobile-header h2 {
     margin: 0;
     font-style: normal !important;
 }
-
-/* Karta nieaktywna */
 .dashboard-card.disabled-card {
     opacity: 0.5;
     cursor: not-allowed;
@@ -481,8 +495,6 @@ h1, h2, h3, .mobile-header h2 {
     background-color: rgba(0, 0, 0, 0.4);
     border-color: rgba(255, 255, 255, 0.1);
 }
-
-/* Przycisk Powrotu */
 .back-to-dashboard {
     background: none;
     border: 1px solid #00d1b2;
@@ -548,18 +560,15 @@ h1, h2, h3, .mobile-header h2 {
   display: flex;
   flex-direction: column;
 }
-
-/* ZMIANA CZYTELNOŚCI: ETYKIETY */
 .input-group label,
 .label-with-tooltip label {
   margin-bottom: 6px;
   font-size: 0.9em;
-  color: #ffffff !important; /* Czysta biel */
-  font-weight: 500; /* Trochę grubsze */
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9); /* Mocny cień */
+  color: #ffffff !important;
+  font-weight: 500;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
   letter-spacing: 0.5px;
 }
-
 .input-group input,
 .input-group select {
   background-color: #333;
@@ -582,7 +591,6 @@ h1, h2, h3, .mobile-header h2 {
   background-color: #444;
   cursor: not-allowed;
 }
-
 .app-content button[type="submit"] {
   background-color: #00d1b2;
   color: #1e1e1e;
@@ -595,7 +603,6 @@ h1, h2, h3, .mobile-header h2 {
   width: 100%;
   text-shadow: none;
 }
-
 .two-column-form {
   display: flex;
   flex-wrap: wrap;
@@ -630,6 +637,7 @@ h1, h2, h3, .mobile-header h2 {
   cursor: help;
 }
 
+/* POPRAWKA: z-index podniesiony */
 #tooltip-overlay {
   position: fixed;
   top: 0;
@@ -639,23 +647,25 @@ h1, h2, h3, .mobile-header h2 {
   background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
-  z-index: 999;
+  z-index: 1010; 
   display: none;
 }
 
+/* POPRAWKA: z-index podniesiony */
 #global-tooltip.tooltip-content {
   position: fixed;
   display: none;
-  width: 320px;
+  width: 90%;
+  max-width: 340px;
   padding: 20px;
   padding-top: 40px;
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-  z-index: 1000;
+  z-index: 1011; 
   color: #e0e0e0;
   font-size: 0.9em;
   text-align: center;
-  background-color: rgba(30, 30, 30, 0.6);
+  background-color: rgba(30, 30, 30, 0.8);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -721,11 +731,10 @@ h1, h2, h3, .mobile-header h2 {
 #global-tooltip.tooltip-content p { margin: 5px 0; }
 #global-tooltip.tooltip-content ul { margin: 10px 0 0 20px; padding: 0; text-align: left; }
 
-/* Mniejsze przyciski z tooltipem (Nitrox/Blender) */
 .button-with-tooltip {
   display: flex;
   align-items: center;
-  gap: 10px; /* Zmniejszony odstęp */
+  gap: 10px;
   width: 100%;
 }
 .button-with-tooltip button {
@@ -733,10 +742,10 @@ h1, h2, h3, .mobile-header h2 {
 }
 .button-with-tooltip .tooltip-button {
   flex-shrink: 0;
-  width: 24px;  /* Zmniejszono z 32px */
-  height: 24px; /* Zmniejszono z 32px */
-  font-size: 1em; /* Mniejsza czcionka */
-  line-height: 24px; /* Centrowanie */
+  width: 24px;
+  height: 24px;
+  font-size: 1em;
+  line-height: 24px;
   padding: 0;
   border-radius: 50%;
   background-color: #4a4a4a;
@@ -748,34 +757,28 @@ h1, h2, h3, .mobile-header h2 {
   justify-content: center;
 }
 
-/* --- Ustawienia (ZAKTUALIZOWANE: CZYTELNOŚĆ + GRID TAPET) --- */
-
+/* --- Ustawienia --- */
 #settings-panel h4 {
   font-size: 1.2em;
-  color: #ffffff !important; /* Czysta biel */
+  color: #ffffff !important;
   margin-top: 25px;
   margin-bottom: 15px;
   padding-bottom: 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9); /* Mocny cień dla czytelności */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
   letter-spacing: 0.5px;
   font-weight: 600;
 }
-
-/* Kontener na tapety - GRID (Siatka 2 kolumnowa RWD) */
 .wallpaper-options {
     display: grid;
-    /* Inteligentna siatka: dopasuj ile wejdzie (min 130px), reszta spada niżej */
     grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 15px; /* Odstęp między kafelkami */
+    gap: 15px;
     width: 100%;
     box-sizing: border-box;
 }
-
-/* Pojedyncza tapeta (skalowalna) */
 .wallpaper-thumb {
-  width: 100%; /* Wypełnia całą szerokość kolumny */
-  height: 150px; /* ZWIĘKSZONO WYSOKOŚĆ (było 90px) - lepiej widać */
+  width: 100%;
+  height: 150px;
   object-fit: cover;
   border-radius: 8px;
   cursor: pointer;
@@ -783,68 +786,59 @@ h1, h2, h3, .mobile-header h2 {
   transition: all 0.2s ease;
   box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
-
 .wallpaper-thumb:hover {
     border-color: #ffffff;
     transform: scale(1.03);
 }
-
 .wallpaper-thumb.active {
-  border-color: #00d1b2; /* Turkusowa ramka dla aktywnej */
+  border-color: #00d1b2;
   box-shadow: 0 0 15px rgba(0, 209, 178, 0.6);
   transform: scale(1.05);
 }
-
-/* Wiersze przełączników (np. Efekt Szklany) */
 .settings-toggle-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px; /* Większy odstęp dla wygody */
+  margin-bottom: 20px;
   padding-bottom: 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Delikatna linia oddzielająca */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-
-/* Etykiety w ustawieniach (Poprawa czytelności) */
 .settings-toggle-row label {
   margin-bottom: 0;
-  color: #ffffff !important; /* Czysta biel */
+  color: #ffffff !important;
   font-size: 1em;
   font-weight: 500;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9); /* Mocny cień */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
 }
-
 .settings-select {
-  background-color: rgba(30, 30, 30, 0.9); /* Ciemniejsze tło dla kontrastu */
+  background-color: rgba(30, 30, 30, 0.9);
   border: 1px solid #aaa;
   color: #ffffff;
   padding: 10px;
   border-radius: 8px;
   font-size: 0.95em;
-  max-width: 150px; /* Żeby nie rozpychało na mobile */
+  max-width: 150px;
 }
 
-/* --- Wyniki (Unified & Compact) --- */
+/* --- Wyniki --- */
 .result-container {
-  background-color: rgba(0, 0, 0, 0.3); /* Nieco ciemniejsze tło */
+  background-color: rgba(0, 0, 0, 0.3);
   border: 1px solid #4a4a4a;
   border-radius: 8px;
-  padding: 12px; /* Zmniejszono padding */
+  padding: 12px;
   margin-top: 15px;
   display: none;
   animation: pulse-glow-dark 3s infinite ease-in-out;
   position: relative;
   text-align: center;
-  overflow: hidden; /* Ważne dla Warning Box */
+  overflow: hidden;
 }
-
-/* Mniejsza ikona 'i' w wynikach */
 .result-info-icon {
   position: absolute;
   top: 6px;
   right: 6px;
-  width: 18px; /* Zmniejszono */
-  height: 18px; /* Zmniejszono */
+  width: 18px;
+  height: 18px;
   font-size: 0.8em;
   background-color: rgba(0, 0, 0, 0.3);
   color: #b0b0b0;
@@ -861,8 +855,6 @@ h1, h2, h3, .mobile-header h2 {
   background-color: #00d1b2;
   color: #1e1e1e;
 }
-
-/* Styl dla tooltipa (i) */
 #global-tooltip .formula-box-small {
   background-color: rgba(0, 0, 0, 0.2);
   border: 1px solid #4a4a4a;
@@ -871,65 +863,42 @@ h1, h2, h3, .mobile-header h2 {
   margin-top: 10px;
   text-align: left;
 }
-#global-tooltip .formula-box-small h5 {
-  margin: 0 0 8px 0;
-  font-size: 1.1em;
-  color: #ffffff;
-  text-align: center;
-}
-#global-tooltip .formula-box-small .formula {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 1em;
-  color: #00d1b2;
-  padding: 5px;
-  border-radius: 4px;
-  background-color: rgba(0, 0, 0, 0.3);
-  overflow-x: auto;
-  margin-bottom: 8px;
-  text-align: center;
-}
+#global-tooltip .formula-box-small h5 { margin: 0 0 8px 0; font-size: 1.1em; color: #ffffff; text-align: center; }
+#global-tooltip .formula-box-small .formula { font-family: 'Courier New', Courier, monospace; font-size: 1em; color: #00d1b2; padding: 5px; border-radius: 4px; background-color: rgba(0, 0, 0, 0.3); overflow-x: auto; margin-bottom: 8px; text-align: center; }
 #global-tooltip .formula-box-small ul { margin: 0 0 0 20px; padding: 0; }
 #global-tooltip .formula-box-small li { margin-bottom: 3px; font-size: 0.9em; }
 
-/* Kompaktowe sekcje wyników */
 .result-section {
-    margin-bottom: 8px; /* Mniejszy odstęp między sekcjami */
+    margin-bottom: 8px;
     padding-bottom: 8px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
 }
-/* Usuwamy linię z ostatniej sekcji, chyba że jest to Warning Box */
 .result-section:last-of-type {
     margin-bottom: 0;
     padding-bottom: 0;
     border-bottom: none;
 }
-
-/* Etykiety - mniejsze i bliżej wartości */
 .result-label {
-  font-size: 0.85em; /* Nieco mniejsza czcionka */
+  font-size: 0.85em;
   color: #b0b0b0;
-  margin-bottom: 2px; /* Bardzo mały odstęp od wartości */
+  margin-bottom: 2px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   text-align: center;
 }
-
-/* GŁÓWNE WARTOŚCI (ODWRÓCONE KOLORY: LICHBA SREBRNA) */
 .result-value, .result-value-main {
-  font-size: 2em; /* Zmniejszono z 2.5em dla kompaktowości */
+  font-size: 2em;
   font-weight: bold;
-  color: #e0e0e0 !important; /* Srebrny/Jasnoszary */
+  color: #e0e0e0 !important;
   text-shadow: 0 2px 5px rgba(0,0,0,0.5);
   margin-top: 0;
   margin-bottom: 4px;
   text-align: center;
   line-height: 1.1;
 }
-
-/* Styl dla jednostki (np. "kg", "bar") - TURKUSOWY AKCENT */
 .result-value-main .unit,
 .result-value-main span {
-    color: #00d1b2 !important; /* Turkus */
+    color: #00d1b2 !important;
     font-size: 0.6em;
     font-weight: 400;
     margin-left: 4px;
@@ -937,45 +906,29 @@ h1, h2, h3, .mobile-header h2 {
     opacity: 1;
     text-shadow: 0 0 10px rgba(0, 209, 178, 0.4);
 }
-
-/* Biały dla standardowych sekcji wyników (list) */
 .result-section .result-value-main {
     color: #e0e0e0 !important;
 }
-
 .result-value-sub {
     font-size: 1.1em;
-    color: #ffffff !important; /* Biały kolor dla pod-wyników */
+    color: #ffffff !important;
     text-align: center;
     margin-top: 0;
 }
 .result-value-sub strong { color: #ffffff; }
-
-/* Rock Bottom Info Box (Też Srebrny + Turkusowa jednostka) */
 .rb-info-section {
-    background-color: rgba(0, 209, 178, 0.1); /* Lekkie tło turkusowe */
+    background-color: rgba(0, 209, 178, 0.1);
     border: 1px solid #00d1b2;
     padding: 8px;
     border-radius: 6px;
     margin-bottom: 10px;
 }
-.rb-info-section .result-label {
-    font-size: 0.8em;
-    color: #e0e0e0;
-    text-transform: none;
-}
-.rb-info-section .result-value-main {
-    font-size: 1.8em;
-    margin: 0;
-    color: #e0e0e0 !important;
-}
-.rb-info-section .result-value-main .unit {
-    color: #00d1b2 !important;
-}
+.rb-info-section .result-label { font-size: 0.8em; color: #e0e0e0; text-transform: none; }
+.rb-info-section .result-value-main { font-size: 1.8em; margin: 0; color: #e0e0e0 !important; }
+.rb-info-section .result-value-main .unit { color: #00d1b2 !important; }
 
-/* Werdykty (Paski na dole) */
 .result-verdict {
-    font-size: 1.2em; /* Zmniejszono z 1.5em */
+    font-size: 1.2em;
     font-weight: bold;
     text-align: center;
     margin-top: 8px;
@@ -985,42 +938,23 @@ h1, h2, h3, .mobile-header h2 {
 }
 .result-verdict-ok { color: #23d160; background-color: rgba(35, 209, 96, 0.15); border: 1px solid rgba(35, 209, 96, 0.3); }
 .result-verdict-bad { color: #ff3860; background-color: rgba(255, 56, 96, 0.15); border: 1px solid rgba(255, 56, 96, 0.3); }
-
 .result-error { font-size: 1em; color: #ff3860; font-weight: bold; text-align: center; }
-
-/* --- NOWY WARNING BOX (Ostrzeżenie na dole) --- */
 .result-warning-box {
     margin-top: 12px;
-    /* Marginesy ujemne niwelują padding rodzica (.result-container) */
     margin-left: -12px;
     margin-right: -12px;
     margin-bottom: -12px;
-   
     padding: 12px 15px;
-    background-color: rgba(255, 193, 7, 0.08); /* Bardzo delikatne żółte tło */
+    background-color: rgba(255, 193, 7, 0.08);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-   
-    color: #ffdd57; /* Żółty tekst */
+    color: #ffdd57;
     font-size: 0.85em;
     line-height: 1.4;
     text-align: center;
 }
-.result-warning-box strong {
-    color: #ffe08a; /* Jaśniejszy żółty dla pogrubienia */
-}
+.result-warning-box strong { color: #ffe08a; }
 
-/* CNS Specific */
-#cnsResult .result-sub-label { text-align: center; color: #b0b0b0; font-size: 0.9em; border-top: 1px solid #4a4a4a; padding-top: 10px; margin-top: 5px; margin-bottom: 0; }
-#cnsResult .result-sub-label strong { color: #ffffff; }
-
-/* Ballast Warning (stare - można usunąć, ale zostawiamy dla kompatybilności) */
-#ballastResult .result-warning { display: none; }
-
-
-/* PRO Paywall */
-.sub-tab-button .pro-badge, .sidebar-nav .pro-badge { font-size: 0.6em; background-color: #00d1b2; color: #1e1e1e; padding: 3px 6px; border-radius: 4px; margin-left: 5px; vertical-align: middle; font-weight: bold; }
-
-/* Przełącznik */
+/* --- PRZEŁĄCZNIK MOTYWU --- */
 .theme-switch { position: relative; display: inline-block; width: 44px; height: 24px; }
 .theme-switch input { opacity: 0; width: 0; height: 0; }
 .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #4a4a4a; transition: .4s; }
@@ -1031,7 +965,7 @@ input:checked + .slider:before { transform: translateX(20px); }
 .slider.round { border-radius: 24px; }
 .slider.round:before { border-radius: 50%; }
 
-/* Wiedza Nurkowa */
+/* --- WIEDZA NURKOWA --- */
 .science-content h4 { color: #00d1b2; border-bottom: 1px solid #4a4a4a; padding-bottom: 10px; margin-top: 15px; }
 .formula-box { background-color: rgba(0, 0, 0, 0.2); border: 1px solid #4a4a4a; border-radius: 8px; padding: 15px 20px; margin-top: 15px; }
 .formula-box h5 { margin: 0 0 10px 0; font-size: 1.2em; color: #ffffff; }
@@ -1040,7 +974,7 @@ input:checked + .slider:before { transform: translateX(20px); }
 .formula-box ul li { margin-bottom: 5px; color: #b0b0b0; }
 .formula-box ul li strong { color: #e0e0e0; }
 
-/* Checklisty */
+/* --- CHECKLISTY --- */
 .checklist-group { margin-bottom: 20px; background-color: rgba(255, 255, 255, 0.2); border-radius: 8px; padding: 10px 15px; border: 1px solid #4a4a4a; }
 .checklist-group h4 { font-size: 1.2em; color: #00d1b2; border-bottom-color: rgba(255, 255, 255, 0.3); }
 .checklist-item label { color: #f0f0f0; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
@@ -1091,15 +1025,21 @@ body.glass-off:not(.dark-theme) {
 }
 body.glass-off:not(.dark-theme) h1, body.glass-off:not(.dark-theme) label,
 body.glass-off:not(.dark-theme) li a {
-  color: #333;
-  text-shadow: none;
+  color: #333 !important; /* Ważne, aby nadpisać biały cień */
+  text-shadow: none !important;
 }
 body.glass-off:not(.dark-theme) .sidebar-nav h1 {
-    color: #333; /* Logo w trybie jasnym bez szkła */
+    color: #333 !important; 
     animation: none;
 }
 body.glass-off:not(.dark-theme) .sidebar-nav li a.active {
     color: #1e1e1e !important;
+}
+body.glass-off:not(.dark-theme) .result-value-sub {
+    color: #333 !important;
+}
+body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
+    color: #333 !important;
 }
 
 
@@ -1143,7 +1083,6 @@ body.glass-off:not(.dark-theme) .sidebar-nav li a.active {
         border-radius: 50%;
         border: 1px solid rgba(0, 209, 178, 0.5);
     }
-
     .mobile-header h2 {
         margin: 0;
         font-size: 1.2em;
@@ -1178,7 +1117,7 @@ body.glass-off:not(.dark-theme) .sidebar-nav li a.active {
         left: 0;
         height: 100%;
         width: 280px;
-        z-index: 1001;
+        z-index: 1001; /* POPRAWKA: Wysoki Z-Index */
         transform: translateX(-100%);
         transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
         border-right: 1px solid rgba(255,255,255,0.1);
@@ -1189,12 +1128,9 @@ body.glass-off:not(.dark-theme) .sidebar-nav li a.active {
     .sidebar-nav.active {
         transform: translateX(0);
     }
-
-    /* Ukrycie nagłówka w sidebarze na mobile */
     .sidebar-header, .sidebar-nav h1 {
         display: none;
     }
-   
     .sidebar-nav .theme-switch-wrapper {
         margin-top: 20px;
     }
@@ -1207,7 +1143,7 @@ body.glass-off:not(.dark-theme) .sidebar-nav li a.active {
         height: 100%;
         background: rgba(0,0,0,0.6);
         backdrop-filter: blur(3px);
-        z-index: 1000;
+        z-index: 1000; /* POPRAWKA: Z-Index pod menu */
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.3s;
@@ -1222,7 +1158,6 @@ body.glass-off:not(.dark-theme) .sidebar-nav li a.active {
         height: auto;
         overflow-y: visible;
         padding-bottom: 80px;
-       
         background: none !important;
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
@@ -1239,7 +1174,6 @@ body.glass-off:not(.dark-theme) .sidebar-nav li a.active {
         padding: 20px 15px;
         height: auto;
     }
-
     .two-column-form {
         flex-direction: column;
         gap: 0;
@@ -1247,6 +1181,9 @@ body.glass-off:not(.dark-theme) .sidebar-nav li a.active {
     .form-column {
         width: 100%;
         min-width: 0;
+    }
+    .dashboard-grid {
+        grid-template-columns: 1fr; /* Karty PRO jedna pod drugą */
     }
    
     /* LIQUID GLASS NA INPUTACH - MOBILE */
@@ -1261,7 +1198,6 @@ body.glass-off:not(.dark-theme) .sidebar-nav li a.active {
         padding: 14px 12px;
         box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
-   
     body:not(.dark-theme):not(.glass-off) .input-group input,
     body:not(.dark-theme):not(.glass-off) .input-group select {
         background-color: rgba(255, 255, 255, 0.8);
@@ -1271,7 +1207,6 @@ body.glass-off:not(.dark-theme) .sidebar-nav li a.active {
         color: #000;
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-   
     body.glass-off .input-group input,
     body.glass-off .input-group select {
         background-color: #333;
@@ -1320,7 +1255,6 @@ body.glass-off:not(.dark-theme) .sidebar-nav li a.active {
         border-color: #00d1b2;
         box-shadow: 0 0 15px rgba(0, 209, 178, 0.4);
     }
-   
     body:not(.dark-theme) .sub-tab-button {
         background-color: rgba(255,255,255,0.7);
         border: 1px solid rgba(0,0,0,0.1);
@@ -1330,17 +1264,14 @@ body.glass-off:not(.dark-theme) .sidebar-nav li a.active {
         background-color: #00d1b2;
         color: #fff;
     }
-
     #global-tooltip.tooltip-content {
         width: 90%;
         max-width: none;
         font-size: 1em;
     }
-   
     .result-value {
         font-size: 2.2em !important;
     }
-   
     .checklist-item {
         padding: 8px 0;
         border-bottom: 1px solid rgba(255,255,255,0.05);

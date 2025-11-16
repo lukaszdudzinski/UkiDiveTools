@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
     const sidebarNav = document.querySelector('.sidebar-nav');
     const overlay = document.querySelector('.overlay');
-    const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+    const sidebarLinks = document.querySelectorAll('.sidebar-nav a'); // Wszystkie linki w sidebarze
 
     function toggleMenu() {
         sidebarNav.classList.toggle('active');
@@ -31,51 +31,62 @@ document.addEventListener('DOMContentLoaded', (event) => {
         overlay.addEventListener('click', closeMenu);
     }
 
+    // Listener zamykania menu dla linków nawigacyjnych
     sidebarLinks.forEach(link => {
-        // Zmodyfikowany listener, aby ignorował linki donacji i alarmu
-        link.addEventListener('click', (e) => {
-            const parentDiv = link.parentElement;
-            if (parentDiv.classList.contains('donation-wrapper') || parentDiv.classList.contains('emergency-wrapper')) {
-                // To jest link specjalny, nie zamykaj menu (obsłuży go inny listener)
-                return;
-            }
-            // To jest link nawigacyjny
-            closeMenu();
-        });
+        // Sprawdzamy, czy link JEST linkiem nawigacyjnym (w <ul>)
+        if (link.closest('ul')) {
+            link.addEventListener('click', closeMenu);
+        }
     });
    
     // ============================================================
     // 1. NAWIGACJA GŁÓWNA (ZAKŁADKI)
     // ============================================================
    
-    const navLinks = document.querySelectorAll('.sidebar-nav ul a'); // Celujemy tylko w linki nawigacyjne w <ul>
+    const navLinks = document.querySelectorAll('.sidebar-nav ul a'); // Celujemy tylko w linki w <ul>
     const tabContents = document.querySelectorAll('.app-content > .tab-content-wrapper > .tab-content');
    
+    // Funkcja do przełączania zakładek
+    function switchTab(tabId) {
+        // Zaktualizuj linki w sidebarze
+        navLinks.forEach(l => {
+            l.classList.toggle('active', l.getAttribute('data-tab') === tabId);
+        });
+
+        // Pokaż odpowiednią treść
+        tabContents.forEach(content => {
+            content.classList.remove('active-tab');
+            content.style.display = 'none';
+            if (content.id === tabId) {
+                content.classList.add('active-tab');
+                content.style.display = 'block';
+            }
+        });
+    }
+
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            navLinks.forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
-           
-            tabContents.forEach(content => {
-                content.classList.remove('active-tab');
-                content.style.display = 'none';
-            });
-           
             const tabId = link.getAttribute('data-tab');
-            const activeContent = document.getElementById(tabId);
-            if (activeContent) {
-                activeContent.classList.add('active-tab');
-                activeContent.style.display = 'block';
+            if (tabId) {
+                switchTab(tabId);
             }
         });
     });
 
+    // Ustawienie domyślnej zakładki (Welcome)
+    // Musimy ręcznie ukryć wszystkie zakładki oprócz 'welcome-screen' przy starcie
+    tabContents.forEach(content => {
+        if (!content.classList.contains('active-tab')) {
+            content.style.display = 'none';
+        }
+    });
+
+
     // Dashboard PRO Navigation
     window.openProTool = function(toolId) {
-        // Najpierw sprawdzamy czy odblokowane
         const isUnlocked = document.querySelector('#pro-dashboard').classList.contains('unlocked');
-        if (!isUnlocked) return; // Jeśli zablokowane, nic nie rób (kliknięcie w overlay obsłuży odblokowanie)
+        if (!isUnlocked) return; 
 
         document.getElementById('pro-dashboard').style.display = 'none';
         const toolSection = document.getElementById(toolId);
@@ -215,7 +226,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         globalTooltip.style.display = 'block';
         tooltipOverlay.style.display = 'block';
         
-        // Dodaj/Usuń klasę dla czerwonej ramki
         if (isEmergency) {
             globalTooltip.classList.add('emergency-modal');
         } else {
@@ -227,11 +237,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
         globalTooltip.style.display = 'none';
         tooltipOverlay.style.display = 'none';
         tooltipBody.innerHTML = '';
-        globalTooltip.classList.remove('emergency-modal'); // Zawsze usuwaj przy zamykaniu
+        globalTooltip.classList.remove('emergency-modal');
     }
 
     allTriggers.forEach(trigger => {
-        // Dla przycisków z zagnieżdżonym contentem
         if (trigger.classList.contains('tooltip-button') || trigger.classList.contains('result-info-icon')) {
              const contentDiv = trigger.querySelector('.tooltip-content');
              if(contentDiv) {
@@ -282,12 +291,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 
-    // --- NOWA LOGIKA: PRZYCISK ALARMOWY (SOS) ---
+    // --- LOGIKA PRZYCISKU ALARMOWEGO (SOS) ---
     const emergencyBtn = document.getElementById('emergency-btn');
     if (emergencyBtn) {
         emergencyBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            e.stopPropagation(); // Ważne, aby nie aktywować linku nawigacyjnego
+            e.stopPropagation(); 
+            
+            // POPRAWKA: Najpierw zamknij menu na mobile
+            if (window.innerWidth <= 768) {
+                closeMenu();
+            }
 
             const emergencyHTML = `
                 <div style="text-align: center;">
@@ -437,7 +451,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     </div>
                 `;
                
-                // Ujednolicony styl wyniku (Kompaktowy)
                 resultDiv.innerHTML = `
                     <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
@@ -666,7 +679,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const pressureAfterO2 = startBar + oxygenToAdd;
                 const airTopUp = targetBar - pressureAfterO2;
 
-                // Obsługa błędów logicznych
                 if (oxygenToAdd < 0) {
                     blenderResult.innerHTML = `<p class="result-error">Nie można uzyskać mieszanki (Zbyt dużo tlenu w butli startowej).</p>`;
                     blenderResult.style.display = 'block';
@@ -769,12 +781,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const ballastPlateGroup = document.getElementById('ballast-plate-group');
 
     function updateBallastDependents() {
+        if (!ballastSuitSelect || !ballastTankSelect) return; // Zabezpieczenie
         const suit = ballastSuitSelect.value;
         const tank = ballastTankSelect.value;
         if (suit === 'dryTri' || suit === 'dryNeo' || suit === 'dryCrash') { ballastWarmerGroup.style.display = 'block'; } else { ballastWarmerGroup.style.display = 'none'; }
         if (tank.includes('twin')) { ballastPlateGroup.style.display = 'block'; } else { ballastPlateGroup.style.display = 'none'; }
     }
-    if (ballastSuitSelect) { ballastSuitSelect.addEventListener('change', updateBallastDependents); ballastTankSelect.addEventListener('change', updateBallastDependents); updateBallastDependents(); }
+    if (ballastSuitSelect) { 
+        ballastSuitSelect.addEventListener('change', updateBallastDependents); 
+        ballastTankSelect.addEventListener('change', updateBallastDependents); 
+        updateBallastDependents(); 
+    }
 
     if (ballastForm && ballastResultContainer) {
         ballastForm.addEventListener('submit', function(e) {
@@ -786,7 +803,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const waterType = document.getElementById('ballastWater').value;
                 const bodyType = document.getElementById('ballastBodyType').value;
                
-                // --- Logika Obliczeń ---
+                // --- Logika Obliczeń (Heurystyka) ---
                 let baseBallast = weight * 0.10;
                
                 if(bodyType === 'slim') baseBallast -= 1;
@@ -818,19 +835,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     case 'alu11': tankMod = 2; tankName = "Alu 11L (S80)"; break;
                     case 'steel12': tankMod = -2; tankName = "Stal 12L"; break;
                     case 'steel15': tankMod = -3; tankName = "Stal 15L"; break;
-                    case 'twin7_200':
-                    case 'twin85_200':
-                    case 'twin10_200':
-                    case 'twin12_200':
-                    case 'twin7_300':
-                    case 'twin85_300':
-                    case 'twin10_300':
-                    case 'twin12_300':
-                        tankMod = -5;
-                        tankName = "Twinset";
-                        const plate = document.getElementById('ballastPlate').value;
-                        if(plate === 'steel') { tankMod -= 2; tankName += " + Płyta Stal"; }
-                        break;
+                    case 'twin7_200': tankMod = -4; tankName = "Twin 2x7L"; break;
+                    case 'twin12_200': tankMod = -8; tankName = "Twin 2x12L"; break;
+                }
+
+                if (tankType.includes('twin')) {
+                    const plate = document.getElementById('ballastPlate').value;
+                    if(plate === 'steel') { tankMod -= 2; tankName += " + Płyta Stal"; }
                 }
 
                 const totalBallast = Math.max(0, Math.round((baseBallast + suitMod + waterMod + tankMod) * 2) / 2);
@@ -856,7 +867,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     </div>
                    
                     <div class="result-warning-box">
-                        ⚠️ <strong>Pamiętaj:</strong> To tylko sugestia. Zawsze wykonaj kontrolę pływalności (check-dive) przed nurkowaniem, aby precyjnie dobrać ostateczną ilość obciążenia.
+                        ⚠️ <strong>Pamiętaj:</strong> To tylko sugestia. Zawsze wykonaj kontrolę pływalności (check-dive).
                     </div>`;
                
                 ballastResultContainer.style.display = 'block';
@@ -867,7 +878,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // --- Paywall Logic (Overlay) ---
     const proOverlay = document.getElementById('pro-overlay-lock');
-    const proGrid = document.getElementById('pro-tools-grid');
    
     document.body.addEventListener('click', function(e) {
         const unlockButton = e.target.closest('.unlockProButton');
@@ -875,13 +885,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
             e.preventDefault();
             e.stopPropagation();
            
-            // Dodaj klasę unlocked do kontenera PRO
             const proDashboard = document.getElementById('pro-dashboard');
             if (proDashboard) {
                 proDashboard.classList.add('unlocked');
             }
            
-            // Ukryj tooltip jeśli był otwarty (np. ten z wyjaśnieniem)
             if (e.target.closest('#global-tooltip')) hideTooltip();
         }
     });
