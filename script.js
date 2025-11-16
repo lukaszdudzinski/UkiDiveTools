@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
    
     const navLinks = document.querySelectorAll('.sidebar-nav ul a'); // Celujemy tylko w linki w <ul>
     const tabContents = document.querySelectorAll('.app-content > .tab-content-wrapper > .tab-content');
+    const homeLinkHeader = document.getElementById('home-link-header');
    
     // Funkcja do przełączania zakładek
     function switchTab(tabId) {
@@ -64,6 +65,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 
+    // POPRAWKA: Funkcja powrotu do "Home"
+    function goHome() {
+        // Odznacz wszystkie aktywne linki w menu
+        navLinks.forEach(l => l.classList.remove('active'));
+        
+        // Pokaż tylko welcome-screen
+        tabContents.forEach(content => {
+            if (content.id === 'welcome-screen') {
+                content.classList.add('active-tab');
+                content.style.display = 'block';
+            } else {
+                content.classList.remove('active-tab');
+                content.style.display = 'none';
+            }
+        });
+
+        // Jeśli na mobile, zamknij menu
+        if (window.innerWidth <= 768) {
+            closeMenu();
+        }
+    }
+
+    // Listener dla linków nawigacyjnych
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
@@ -74,8 +98,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     });
 
+    // POPRAWKA: Listener dla kliknięcia w logo/header
+    if (homeLinkHeader) {
+        homeLinkHeader.addEventListener('click', (e) => {
+            e.preventDefault();
+            goHome();
+        });
+    }
+
     // Ustawienie domyślnej zakładki (Welcome)
-    // Musimy ręcznie ukryć wszystkie zakładki oprócz 'welcome-screen' przy starcie
     tabContents.forEach(content => {
         if (!content.classList.contains('active-tab')) {
             content.style.display = 'none';
