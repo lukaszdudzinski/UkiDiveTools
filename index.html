@@ -225,12 +225,29 @@
                 
                 <div id="science-of-diving" class="tab-content">
                     <h3>Wiedza Nurkowa</h3>
-                    <nav class="sub-tab-nav"><button class="sub-tab-button active" data-subtab="sod-sac">SAC</button><button class="sub-tab-button" data-subtab="sod-nitrox">Nitrox</button><button class="sub-tab-button" data-subtab="sod-gas">Gazy</button><button class="sub-tab-button" data-subtab="sod-ballast">Balast</button></nav>
+                    <nav class="sub-tab-nav"><button class="sub-tab-button active" data-subtab="sod-sac">SAC</button><button class="sub-tab-button" data-subtab="sod-nitrox">Nitrox</button><button class="sub-tab-button" data-subtab="sod-gas">Gazy</button><button class="sub-tab-button" data-subtab="sod-ballast">Balast</button><button class="sub-tab-button" data-subtab="sod-lectures">Wykłady</button></nav>
                     <div class="sub-tab-content-wrapper">
                         <div id="sod-sac" class="sub-tab-content active-sub-tab"><div class="science-content"><h4>SAC</h4><div class="formula-box"><p class="formula">SAC = ((P1 - P2) * Vb) / (Pśr * T)</p><ul><li>P1/P2: Ciśnienie start/koniec</li><li>Vb: Butla</li><li>Pśr: Średnie ciśnienie</li></ul></div></div></div>
                         <div id="sod-nitrox" class="sub-tab-content"><div class="science-content"><h4>MOD</h4><div class="formula-box"><p class="formula">MOD = ((PPO2 / FO2) - 1) * 10</p></div><h4>EAD</h4><div class="formula-box"><p class="formula">EAD = ((D + 10) * FN2 / 0.79) - 10</p></div></div></div>
                         <div id="sod-gas" class="sub-tab-content"><div class="science-content"><h4>Plan</h4><div class="formula-box"><p>Suma gazu z faz: Zanurzenie + Dno + Wynurzenie + Przystanek.</p></div><h4>Rock Bottom</h4><div class="formula-box"><p>Rezerwa dla 2 nurków w stresie przy awaryjnym wynurzeniu.</p></div></div></div>
                         <div id="sod-ballast" class="sub-tab-content"><div class="science-content"><h4>Balast</h4><div class="formula-box"><p>Baza: 10% wagi. Pianka +/-, Suchy +4-8kg, Woda słodka -2kg, Stal -, Alu +.</p></div></div></div>
+                        <div id="sod-lectures" class="sub-tab-content">
+                            <div class="lectures-layout">
+                                <div class="lectures-grid-wrapper">
+                                    <ul id="lecture-cards" class="cards lectures-grid" aria-live="polite"></ul>
+                                </div>
+                                <main id="lecture-viewer" class="lecture-viewer" aria-hidden="true">
+                                    <div class="lecture-header">
+                                        <h2 id="lecture-title">Wybierz wykład</h2>
+                                        <div class="lecture-controls">
+                                            <button id="lecture-back-btn" class="secondary">Powrót</button>
+                                        </div>
+                                    </div>
+                                    <nav id="lecture-toc" class="lecture-toc" aria-hidden="true"></nav>
+                                    <article id="lecture-body" class="lecture-body"><p>Brak wybranego wykładu.</p></article>
+                                </main>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
