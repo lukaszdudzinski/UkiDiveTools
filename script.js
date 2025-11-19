@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', (event) => {
+﻿document.addEventListener('DOMContentLoaded', (event) => {
 
     const body = document.body;
 
