@@ -24,8 +24,8 @@ Twoim celem jest pomoc w pisaniu, modyfikowaniu, refaktoryzowaniu i debugowaniu 
 #### ➡️ Faza 2: UKI'S PRO (W Trakcie)
 
 **Kalkulatory Zaawansowane:**
-- [ ] **Kalkulator Trimix** (He/O2/N2 mixing) - **NASTĘPNY PRIORYTET**
-- [ ] **Deco Planner** (planowanie dekompresji, multilevel)
+- [x] **Kalkulator Trimix** (He/O2/N2 mixing) ✓
+- [ ] **Deco Planner** (planowanie dekompresji, multilevel) - **NASTĘPNY PRIORYTET**
 - [ ] Rozbudowa planowania gazu o wiele butli/gazów (stage bottles)
 - [ ] Kalkulator Bailout dla rebreatherów (CCR/SCR)
 

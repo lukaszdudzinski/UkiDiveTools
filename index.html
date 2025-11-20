@@ -103,6 +103,10 @@
                                 <h4>Gas Blender</h4>
                                 <p>Mieszanie parcjalne (Tlen + Powietrze). Precyzyjne plany top-up.</p>
                             </div>
+                            <div class="dashboard-card" onclick="openProTool('trimix-calculator')">
+                                <h4>Trimix Calculator</h4>
+                                <p>Mieszanie He/O2/N2. Partial pressure blending dla głębokich nurkowań.</p>
+                            </div>
                             <div class="dashboard-card" onclick="openProTool('bailout-calculator')">
                                 <h4>Bailout / Ucieczka</h4>
                                 <p>Obliczanie gazu na awaryjne wynurzenie (min. Rock Bottom).</p>
@@ -155,6 +159,60 @@
                         </div>
                     </form>
                     <div id="blenderResult" class="result-container"></div>
+                </div>
+
+                <div id="trimix-calculator" class="tab-content pro-tool-view">
+                    <button class="back-to-dashboard" onclick="backToDashboard()">Wróć do Strefy PRO</button>
+                    <h3>Kalkulator Trimix</h3>
+                    <p style="color: #b0b0b0; margin-bottom: 20px; font-size: 0.9em;">Partial Pressure Blending: He → O2
+                        → Air (Top-up).</p>
+                    <form id="trimixForm" class="two-column-form">
+                        <div class="form-column">
+                            <h4>1. Parametry Docelowe</h4>
+                            <div class="input-group">
+                                <label for="trimixTargetO2">Docelowy % Tlenu</label>
+                                <input type="number" id="trimixTargetO2" value="21" min="16" max="100" step="0.1"
+                                    required>
+                            </div>
+                            <div class="input-group">
+                                <label for="trimixTargetHe">Docelowy % Helu</label>
+                                <input type="number" id="trimixTargetHe" value="35" min="0" max="90" step="0.1"
+                                    required>
+                            </div>
+                            <div class="input-group">
+                                <label for="trimixTankSize">Pojemność Butli (l)</label>
+                                <input type="number" id="trimixTankSize" value="15" min="1" step="1" required>
+                            </div>
+                        </div>
+                        <div class="form-column">
+                            <h4>2. Ciśnienia</h4>
+                            <div class="input-group">
+                                <label for="trimixStartBar">Ciśnienie Początkowe (bar)</label>
+                                <input type="number" id="trimixStartBar" value="0" min="0" step="1" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="trimixTargetBar">Ciśnienie Docelowe (bar)</label>
+                                <input type="number" id="trimixTargetBar" value="200" min="1" step="1" required>
+                            </div>
+                        </div>
+                        <div class="form-full-width">
+                            <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
+                                        class="tooltip-content">
+                                        <h4>Trimix Blending (Partial Pressure)</h4>
+                                        <p>Metoda mieszania parcjalnego dla Trimix:</p>
+                                        <ol style="text-align: left; margin-left: 15px;">
+                                            <li><strong>Krok 1:</strong> Dodaj hel (100% He) do obliczonego ciśnienia.
+                                            </li>
+                                            <li><strong>Krok 2:</strong> Dodaj tlen (100% O2) do obliczonego ciśnienia.
+                                            </li>
+                                            <li><strong>Krok 3:</strong> Dopełnij powietrzem (21% O2) do ciśnienia
+                                                docelowego.</li>
+                                        </ol>
+                                        <p><strong>Uwaga:</strong> Kolejność jest kluczowa! He → O2 → Air</p>
+                                    </div></span><button type="submit">Oblicz Mieszankę Trimix</button></div>
+                        </div>
+                    </form>
+                    <div id="trimixResult" class="result-container"></div>
                 </div>
 
                 <div id="bailout-calculator" class="tab-content pro-tool-view">

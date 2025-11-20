@@ -752,7 +752,91 @@
         });
     }
 
-    // --- 10. Bailout Calculator (PRO) ---
+    // --- 10. Trimix Calculator (PRO) ---
+    const trimixForm = document.getElementById('trimixForm');
+    const trimixResult = document.getElementById('trimixResult');
+    if (trimixForm && trimixResult) {
+        trimixForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            try {
+                const targetO2 = parseFloat(document.getElementById('trimixTargetO2').value);
+                const targetHe = parseFloat(document.getElementById('trimixTargetHe').value);
+                const tankSize = parseFloat(document.getElementById('trimixTankSize').value);
+                const startBar = parseFloat(document.getElementById('trimixStartBar').value);
+                const targetBar = parseFloat(document.getElementById('trimixTargetBar').value);
+
+                // Walidacja
+                if (targetO2 + targetHe > 100) {
+                    trimixResult.innerHTML = `<p class="result-error">Błąd: Suma O2 i He nie może przekraczać 100%!</p>`;
+                    trimixResult.style.display = 'block';
+                    return;
+                }
+                if (targetO2 < 16) {
+                    trimixResult.innerHTML = `<p class="result-error">Błąd: Zawartość tlenu musi być ≥ 16% (minimalna frakcja do oddychania).</p>`;
+                    trimixResult.style.display = 'block';
+                    return;
+                }
+                if (targetBar <= startBar) {
+                    trimixResult.innerHTML = `<p class="result-error">Błąd: Ciśnienie docelowe musi być wyższe niż początkowe.</p>`;
+                    trimixResult.style.display = 'block';
+                    return;
+                }
+
+                //Partial Pressure Blending Obliczenia
+                const heBar = (targetHe / 100) * targetBar;
+                const o2Bar = (targetO2 / 100) * targetBar;
+                const totalHeO2 = heBar + o2Bar;
+                const airBar = targetBar - totalHeO2;
+                const n2Percent = 100 - targetO2 - targetHe;
+
+                // Ciśnienia pośrednie (krok po kroku)
+                const pressureAfterHe = startBar + heBar;
+                const pressureAfterO2 = pressureAfterHe + o2Bar;
+
+                // Tooltip z formułami
+                const explanationHTML = `
+                    <div class="formula-box-small">
+                        <h5>Partial Pressure Blending (Trimix)</h5>
+                        <p>Obliczenia ciśnień parcjalnych dla mieszanki ${targetO2}/${targetHe}:</p>
+                        <ul>
+                            <li>P<sub>He</sub> = (${targetHe}% × ${targetBar} bar) / 100 = <strong>${heBar.toFixed(1)} bar</strong></li>
+                            <li>P<sub>O2</sub> = (${targetO2}% × ${targetBar} bar) / 100 = <strong>${o2Bar.toFixed(1)} bar</strong></li>
+                            <li>P<sub>Air</sub> = ${targetBar} - ${heBar.toFixed(1)} - ${o2Bar.toFixed(1)} = <strong>${airBar.toFixed(1)} bar</strong></li>
+                            <li>N<sub>2</sub> = 100% - ${targetO2}% - ${targetHe}% = <strong>${n2Percent.toFixed(1)}%</strong></li>
+                        </ul>
+                    </div>
+                `;
+
+                trimixResult.innerHTML = `
+                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="true">i</div>
+                    <div class="calculation-details" style="display: none;">${explanationHTML}</div>
+                    <div class="result-section">
+                        <p class="result-label">Krok 1: Dodaj 100% Hel (He)</p>
+                        <p class="result-value-main" style="color: #e0e0e0 !important;">+${heBar.toFixed(1)}<span class="unit">bar</span></p>
+                        <p class="result-value-sub">Ciśnienie pośrednie: ${pressureAfterHe.toFixed(1)} bar</p>
+                    </div>
+                    <div class="result-section">
+                        <p class="result-label">Krok 2: Dodaj 100% Tlen (O2)</p>
+                        <p class="result-value-main" style="color: #00d1b2 !important;">+${o2Bar.toFixed(1)}<span class="unit">bar</span></p>
+                        <p class="result-value-sub">Ciśnienie pośrednie: ${pressureAfterO2.toFixed(1)} bar</p>
+                    </div>
+                    <div class="result-section">
+                        <p class="result-label">Krok 3: Dopełnij Powietrzem (21% O2)</p>
+                        <p class="result-value-main" style="color: #fff !important;">+${airBar.toFixed(1)}<span class="unit">bar</span></p>
+                        <p class="result-value-sub">Do ciśnienia: ${targetBar} bar</p>
+                    </div>
+                    <div class="result-section" style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px; margin-top: 10px;">
+                        <p class="result-label">Końcowa Mieszanka</p>
+                        <p class="result-value-main" style="font-size: 1.8em;">Trimix ${targetO2.toFixed(0)}/${targetHe.toFixed(0)}</p>
+                        <p class="result-value-sub">O<sub>2</sub>: ${targetO2}% | He: ${targetHe}% | N<sub>2</sub>: ${n2Percent.toFixed(1)}%</p>
+                    </div>`;
+                trimixResult.style.display = 'block';
+                trimixResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } catch (error) { }
+        });
+    }
+
+    // --- 11. Bailout Calculator (PRO) ---
     const bailoutForm = document.getElementById('bailoutForm');
     const bailoutResult = document.getElementById('bailoutResult');
     if (bailoutForm && bailoutResult) {
