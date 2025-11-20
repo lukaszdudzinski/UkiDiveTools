@@ -17,19 +17,127 @@ Twoim celem jest pomoc w pisaniu, modyfikowaniu, refaktoryzowaniu i debugowaniu 
 - [x] Planowanie Gazu (RB, Zużycie)
 - [x] Kalkulator Balastu
 - [x] Narzędzia Divemastera (Checklisty)
-- [x] Wiedza Nurkowa (Wzory)
-- [x] Ustawienia (Motyw, Tapeta, etc.)
+- [x] Wiedza Nurkowa (Wzory + Artykuły)
+- [x] Ustawienia (Motyw, Tapeta, Liquid Glass)
+- [x] Kalkulator Mieszania Gazów (Gas Blending) ✓
 
 #### ➡️ Faza 2: UKI'S PRO (W Trakcie)
-- [ ] **Kalkulator Mieszania Gazów (Gas Blending)** - **NASTĘPNY CEL**
-- [ ] Rozbudowa planowania gazu o wiele butli/gazów
-- [ ] Zaawansowane ustawienia i profile sprzętu
 
-#### 🚀 Faza 3: FULL-STACK (Przyszłość)
-- [ ] Implementacja backendu w Ruby on Rails
-- [ ] Baza danych SQL dla kont użytkowników i logbooka
-- [ ] System logowania i profile użytkowników
-- [ ] Cyfrowy Logbook Nurkowy
+**Kalkulatory Zaawansowane:**
+- [ ] **Kalkulator Trimix** (He/O2/N2 mixing) - **NASTĘPNY PRIORYTET**
+- [ ] **Deco Planner** (planowanie dekompresji, multilevel)
+- [ ] Rozbudowa planowania gazu o wiele butli/gazów (stage bottles)
+- [ ] Kalkulator Bailout dla rebreatherów (CCR/SCR)
+
+**Edukacja & Interaktywność:**
+- [ ] **Quiz System** po artykułach (weryfikacja wiedzy)
+- [ ] Interaktywne diagramy i animacje w artykułach
+- [ ] Certyfikacja Prep (przygotowanie do egzaminów PADI/SSI)
+- [ ] Video tutorials integration (YouTube embeds)
+
+**Progressive Web App (PWA):**
+- [ ] **PWA Setup** (manifest.json, service worker)
+- [ ] Instalacja jako aplikacja mobilna/desktop
+- [ ] Offline Mode (cache strategia)
+- [ ] Push Notifications (przypomnienia o serwisach sprzętu)
+
+**Integracje & Synchronizacja:**
+- [ ] **Synchronizacja z komputerami nurkowymi** (Suunto, Garmin, Shearwater API)
+- [ ] **Integracja z SSI App** (export logbooka jako QR code do odczytu przez SSI)
+- [ ] Export danych do formatu UDDF (Universal Dive Data Format)
+- [ ] Import z plików XML/CSV z popularnych komputerów
+
+**UX/UI Enhancements:**
+- [ ] Zaawansowane profile sprzętu (własne konfiguracje)
+- [ ] Dark/Light mode auto-switch (pora dnia)
+- [ ] Custom color schemes (purple, blue, ocean themes)
+- [ ] Mobile gestures (swipe między zakładkami)
+
+#### 🚀 Faza 3: FULL-STACK (Rails + SQL)
+
+**Backend Infrastructure:**
+- [ ] **Ruby on Rails Backend Setup**
+  - RESTful API dla frontend
+  - Authentication & Authorization (Devise lub JWT)
+  - PostgreSQL database schema design
+  
+**User Management:**
+- [ ] System rejestracji i logowania
+- [ ] Profile użytkowników (certyfikaty, preferencje)
+- [ ] Multi-device sync (cloud storage)
+- [ ] Email notifications & password recovery
+
+**Digital Logbook (Cyfrowy Dziennik Nurkowań):**
+- [ ] **CRUD dla nurkowań** (Create, Read, Update, Delete)
+  - Data, czas, lokalizacja
+  - Głębokość max/avg, czas nurkowania
+  - Zużycie gazu, temperatura wody
+  - Warunki (widoczność, prądy, fale)
+  - Notatki, zdjęcia, video links
+  
+- [ ] **Statystyki i Analytics**
+  - Całkowity czas pod wodą
+  - Liczba nurkowań (total, rocznie)
+  - Najgłębszy dive, najdłuższy dive
+  - Wykresy progresji (depth over time)
+  - SAC rate tracking
+  
+- [ ] **Dive Site Database**
+  - Mapa miejsc nurkowych (Google Maps API)
+  - Oceny i recenzje dive sites
+  - GPS coordinates
+  - Warunki typowe dla danego miejsca
+  
+- [ ] **Equipment Tracker**
+  - Inventory sprzętu nurkowego
+  - Historia serwisów (regulatory, BCD, tanks)
+  - Przypomnienia o przeglądach (VIP, Hydro)
+  - Koszty sprzętu i maintenance
+
+**Certyfikaty & Szkolenia:**
+- [ ] Baza certyfikatów (PADI, SSI, CMAS, etc.)
+- [ ] Upload certificate images/PDFs
+- [ ] Tracking dat ważności (refresh courses)
+- [ ] Historia szkoleń i instruktorów
+
+**Social & Community:**
+- [ ] Buddy system (znajdź partnera do nurkowania)
+- [ ] Dive trip planner (planowanie wypraw grupowych)
+- [ ] Public/private logbook sharing
+- [ ] Feed aktywności znajomych
+- [ ] Photo gallery z nurkowań
+
+**Advanced Features:**
+- [ ] AI-powered dive analysis (anomalie, sugestie)
+- [ ] Weather API integration (prognoza dla dive sites)
+- [ ] Tide & current data
+- [ ] Marine life database (co widziałeś pod wodą)
+- [ ] Gamification (badges za achievements)
+
+#### 💡 Faza 4: FUTURE IDEAS (Long-term Vision)
+
+**Multilanguage Support:**
+- [ ] Angielski (priorytet #1)
+- [ ] Niemiecki
+- [ ] Hiszpański
+- [ ] Opcjonalnie: Francuski, Włoski
+
+**Business Features:**
+- [ ] Dive Center Management System
+  - Booking system dla nurkowań
+  - Zarządzanie kursami
+  - Equipment rental tracking
+  
+**Hardware Integration:**
+- [ ] Własna aplikacja mobilna (React Native / Flutter)
+- [ ] Bluetooth connectivity z dive computers
+- [ ] Smartwatch complications (dive countdown)
+
+**Monetization (opcjonalnie):**
+- [ ] Premium features tier system
+- [ ] Partnerships z dive centers
+- [ ] Affiliate marketing (sprzęt nurkowy)
+- [ ] Ads (delikatne, non-intrusive)
 
 ---
 

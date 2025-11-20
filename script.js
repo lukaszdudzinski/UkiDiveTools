@@ -1566,4 +1566,34 @@
 
     initLectures();
 
+    // --- PRZYCISK WYCZYŚĆ LISTĘ (CHECKLISTY) ---
+    const checklistResetBtn = document.getElementById('global-checklist-reset-btn');
+    if (checklistResetBtn) {
+        checklistResetBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Znajdź aktywną pod-zakładkę checklisty
+            const activeChecklist = document.querySelector('#divemaster-tools .sub-tab-content.active-sub-tab');
+
+            if (activeChecklist) {
+                // Znajdź wszystkie zaznaczone checkboxy w aktywnej zakładce
+                const checkboxes = activeChecklist.querySelectorAll('input[type="checkbox"]:checked');
+
+                // Odznacz wszystkie checkboxy
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+
+                // Opcjonalna informacja wizualna (krótka animacja)
+                const wrapper = checklistResetBtn.closest('.global-reset-wrapper');
+                if (wrapper) {
+                    wrapper.style.animation = 'none';
+                    setTimeout(() => {
+                        wrapper.style.animation = 'pulse-glow-dark 3s infinite ease-in-out';
+                    }, 10);
+                }
+            }
+        });
+    }
+
 });
