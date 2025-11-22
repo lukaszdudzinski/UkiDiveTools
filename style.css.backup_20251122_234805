@@ -3631,6 +3631,7 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
     line-height: 1.4;
   }
 }
+
 /* ============================================
    QUIZ MODAL - CENTERED OVERLAY
    ============================================ */
@@ -3665,8 +3666,15 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
 }
 
 @keyframes quiz-pop-in {
-  0% { transform: scale(0.8); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .quiz-header {
@@ -3846,11 +3854,54 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
   margin-right: 10px;
 }
 
-/* ============================================================
-   GAME OVER SCREEN STYLING
-   ============================================================ */
+/* ============================================
+   QUIZ IMPROVEMENTS - Reward & Game Over
+   ============================================ */
 
-/* Container for Game Over content */
+/* Reward Image */
+.reward-image {
+  max-width: 200px;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  animation: bounce-reward 1.2s ease-in-out;
+  box-shadow: 0 8px 20px rgba(0, 209, 178, 0.3);
+}
+
+@keyframes bounce-reward {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* Retry Button - Success Screen (styled like coffee button) */
+.retry-button {
+  background: rgba(20, 20, 20, 0.9);
+  border: 2px solid #00d1b2;
+  color: #00d1b2;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  animation: pulse-border-cyan 2s infinite ease-in-out;
+  transition: all 0.3s ease;
+  margin: 10px;
+}
+
+.retry-button:hover {
+  background: rgba(0, 209, 178, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(0, 209, 178, 0.4);
+}
+
+/* Game Over Screen */
 .game-over-container {
   display: flex;
   flex-direction: column;
@@ -3859,7 +3910,7 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
   padding: 40px 20px;
 }
 
-/* Game Over Logo - Circle with RED pulsing border */
+/* Game Over Logo - Circle with Red Pulsing Border (Premium Style) */
 .game-over-logo {
   width: 180px;
   height: 180px;
@@ -3873,17 +3924,19 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
 }
 
 @keyframes pulse-red-border {
-  0%, 100% {
+
+  0%,
+  100% {
     border-color: #ff3860;
     box-shadow: 0 0 10px rgba(255, 56, 96, 0.5);
   }
+
   50% {
     border-color: #ff578a;
     box-shadow: 0 0 25px rgba(255, 56, 96, 0.9);
   }
 }
 
-/* "GAME OVER !!!" title */
 .game-over-title {
   font-size: 2.5em;
   color: #ff3860;
@@ -3893,7 +3946,6 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
   margin: 10px 0 5px 0;
 }
 
-/* Subtitle: "Trzy błędne odpowiedzi!" */
 .game-over-subtitle {
   color: #eee;
   font-size: 1.1em;
@@ -3901,7 +3953,6 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
   margin: 0;
 }
 
-/* Warning: "Nie wchodź do wody!!!" */
 .game-over-warning {
   color: #ff3860;
   font-size: 1.3em;
@@ -3911,7 +3962,7 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
   text-shadow: 0 0 15px rgba(255, 56, 96, 0.4);
 }
 
-/* Retry Button - turquoise with pulsing border */
+/* Retry Button - Game Over (styled like coffee button) */
 .retry-button-gameover {
   background: rgba(20, 20, 20, 0.9);
   border: 2px solid #00d1b2;
@@ -3932,7 +3983,7 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
   box-shadow: 0 0 20px rgba(0, 209, 178, 0.4);
 }
 
-/* Back Button - "Powrót do artykułu" red style */
+/* Back Button - Game Over (red style) */
 .back-button-gameover {
   background: rgba(20, 20, 20, 0.9);
   border: 2px solid #ff3860;
@@ -3952,14 +4003,17 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
   box-shadow: 0 0 20px rgba(255, 56, 96, 0.4);
 }
 
-/* Shake animation for "GAME OVER !!!" title */
 @keyframes shake {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateX(0);
   }
+
   25% {
     transform: translateX(-10px);
   }
+
   75% {
     transform: translateX(10px);
   }

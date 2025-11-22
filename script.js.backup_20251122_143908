@@ -10,9 +10,7 @@ let wrongAnswers = 0;
 let score = 0;
 
 function startQuiz(quizData) {
-    // Shuffle and pick 10 random questions
-    const shuffled = [...quizData].sort(() => 0.5 - Math.random());
-    currentQuizData = shuffled.slice(0, 10);
+    currentQuizData = quizData;
     currentQuestionIndex = 0;
     currentScore = 0;
     score = 0;
@@ -107,11 +105,9 @@ function showQuizResult() {
 
     let resultHTML = '';
 
-    // Add random reward image for perfect score
+    // Add reward image for perfect score
     if (percentage === 100) {
-        const rewardImages = ['reward1.jpg', 'reward2.jpg', 'reward3.jpg', 'reward4.jpg', 'reward5.jpg'];
-        const randomImage = rewardImages[Math.floor(Math.random() * rewardImages.length)];
-        resultHTML += `<img src="${randomImage}" class="reward-image" alt="Gratulacje!">`;
+        resultHTML += `<img src="quiz_reward_diver1.jpg" class="reward-image" alt="Gratulacje!">`;
     }
 
     resultHTML += `<div class="quiz-score-circle">${score}/${currentQuizData.length}</div>`;
@@ -145,7 +141,7 @@ function showGameOver() {
 
     quizResultScreen.innerHTML = `
         <div class="game-over-container">
-            <img src="img/logo.jpg" alt="Uki" class="game-over-logo">
+            <img src="logo_uki.png" alt="Uki" class="game-over-logo">
             <h2 class="game-over-title">GAME OVER !!!</h2>
             <p class="game-over-subtitle">Trzy błędne odpowiedzi!</p>
             <p class="game-over-warning">Nie wchodź do wody!!!</p>
