@@ -3840,11 +3840,6 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
   width: 100%;
 }
 
-.quiz-start-btn-elegant::before {
-  content: '🧠';
-  font-size: 1.2em;
-  margin-right: 10px;
-}
 
 /* ============================================================
    GAME OVER SCREEN STYLING
@@ -3977,4 +3972,24 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
   box-shadow: 0 8px 20px rgba(0, 209, 178, 0.3);
   border: 2px solid rgba(0, 209, 178, 0.5);
   animation: pulse-glow-dark 3s infinite ease-in-out;
+}
+
+/* Retry button - outline style with red border */
+.retry-button {
+  background: rgba(30, 30, 30, 0.9);
+  border: 2px solid #ff3860;
+  color: #ff3860;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 5px;
+}
+
+.retry-button:hover {
+  background: rgba(255, 56, 96, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(255, 56, 96, 0.4);
 }
