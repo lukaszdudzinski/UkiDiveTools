@@ -13,6 +13,14 @@ function startQuiz(quizData) {
     // Shuffle and pick 10 random questions
     const shuffled = [...quizData].sort(() => 0.5 - Math.random());
     currentQuizData = shuffled.slice(0, 10);
+
+    // DIAGNOSTICS: Log randomization for debugging
+    console.log(`[QUIZ] Total questions available: ${quizData.length}`);
+    console.log(`[QUIZ] Selected 10 random questions. Order:`);
+    currentQuizData.forEach((q, i) => {
+        console.log(`  ${i + 1}. ${q.question.substring(0, 50)}...`);
+    });
+
     currentQuestionIndex = 0;
     currentScore = 0;
     score = 0;

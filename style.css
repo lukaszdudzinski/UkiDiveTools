@@ -3944,6 +3944,7 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
   cursor: pointer;
   transition: all 0.3s ease;
   margin: 5px;
+  animation: pulse-red 2s infinite ease-in-out;
 }
 
 .back-button-gameover:hover {
@@ -3963,4 +3964,17 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
   75% {
     transform: translateX(10px);
   }
+}
+
+/* Reward image for perfect quiz score (10/10) */
+.reward-image {
+  width: 250px;
+  max-width: 250px;
+  height: auto;
+  border-radius: 12px;
+  margin: 0 auto 20px auto;
+  display: block;
+  box-shadow: 0 8px 20px rgba(0, 209, 178, 0.3);
+  border: 2px solid rgba(0, 209, 178, 0.5);
+  animation: pulse-glow-dark 3s infinite ease-in-out;
 }
