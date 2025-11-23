@@ -21,7 +21,21 @@ PATCH (v1.2.X) - Poprawki błędów, drobne naprawy (fix image size, CSS cleanup
 
 ## 📚 HISTORIA WERSJI
 
-### v1.4.0 - 2025-01-23 15:38 ✅ OBECNA - MILESTONE COMPLETE
+### v1.4.2 - 2025-01-23 17:20 ✅ OBECNA - 🎉 MILESTONE: QUIZ COMPLETE
+**Typ:** PATCH - Final animation fix  
+**Zmiana:** Dodano `animation: pulse-red` do przycisku "Spróbuj Ponownie"  
+**Plik:** `style.css`  
+**Status:** ✅ MILESTONE ACHIEVED - Quiz system kompletny i gotowy do głębszych testów
+
+### v1.4.1 - 2025-01-23 16:35 ✅
+**Typ:** PATCH - Bug fixes  
+**Zmiany:**
+- Usunięto emoji mózgu (PowerShell line deletion)
+- Dodano `.retry-button` styling (red outline)
+**Pliki:** `style.css`  
+**Status:** ✅ Complete
+
+### v1.4.0 - 2025-01-23 15:38 ✅
 **Typ:** MINOR - UI cleanup + diagnostyka  
 **Zmiany:**
 - ✅ Usunięto emoji mózgu (🧠) z przycisku "Sprawdź wiedzę"
