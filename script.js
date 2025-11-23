@@ -117,7 +117,7 @@ function showQuizResult() {
 
     // Add random reward image for perfect score
     if (percentage === 100) {
-        const rewardImages = ['reward1.jpg', 'reward2.jpg', 'reward3.jpg', 'reward4.jpg', 'reward5.jpg'];
+        const rewardImages = ['reward1.jpg', 'reward2.jpg', 'reward3.jpg', 'reward4.jpg', 'reward5.jpg', 'reward6.jpg', 'reward7.jpg', 'reward8.jpg', 'reward9.jpg', 'reward10.jpg'];
         const randomImage = rewardImages[Math.floor(Math.random() * rewardImages.length)];
         resultHTML += `<img src="${randomImage}" class="reward-image" alt="Gratulacje!">`;
     }
