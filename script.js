@@ -767,7 +767,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const o2 = parseFloat(document.getElementById('nitroxO2').value) / 100;
                 const ppo2 = parseFloat(document.getElementById('modPO2').value);
                 const mod = ((ppo2 / o2) - 1) * 10;
-                const explanationHTML = `<div class="formula-box-small"><h5>Obliczenia MOD</h5><p>MOD = (PPO2 / FO2 - 1) * 10</p><ul><li>${ppo2} / ${o2} = ${(ppo2 / o2).toFixed(2)} ATA</li><li>(${(ppo2 / o2).toFixed(2)} - 1) * 10 = <strong>${mod.toFixed(1)} m</strong></li></ul></div>`;
+                const explanationHTML = `<div class="formula-box-small"><h5>Obliczenia MOD</h5><p class="formula">MOD = (PPO2 / FO2 - 1) * 10</p><ul><li>${ppo2} / ${o2} = ${(ppo2 / o2).toFixed(2)} ATA</li><li>(${(ppo2 / o2).toFixed(2)} - 1) * 10 = <strong>${mod.toFixed(1)} m</strong></li></ul></div>`;
 
                 modResult.innerHTML = `
                     <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
@@ -793,7 +793,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const depth = parseFloat(document.getElementById('eadDepth').value);
                 const n2 = 1.0 - o2;
                 const ead = ((depth + 10) * (n2 / 0.79)) - 10;
-                const explanationHTML = `<div class="formula-box-small"><h5>Obliczenia EAD</h5><p>EAD = ((D + 10) * FN2 / 0.79) - 10</p><ul><li>Ciśnienie N2: (${depth}+10) * ${n2.toFixed(2)} = ${((depth + 10) * n2).toFixed(2)}</li><li>Ekwiwalent Powietrzny: (${((depth + 10) * n2).toFixed(2)} / 0.79) - 10 = <strong>${ead.toFixed(1)} m</strong></li></ul></div>`;
+                const explanationHTML = `<div class="formula-box-small"><h5>Obliczenia EAD</h5><p class="formula">EAD = ((D + 10) * FN2 / 0.79) - 10</p><ul><li>Ciśnienie N2: (${depth}+10) * ${n2.toFixed(2)} = ${((depth + 10) * n2).toFixed(2)}</li><li>Ekwiwalent Powietrzny: (${((depth + 10) * n2).toFixed(2)} / 0.79) - 10 = <strong>${ead.toFixed(1)} m</strong></li></ul></div>`;
 
                 eadResult.innerHTML = `
                     <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
@@ -859,7 +859,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 let cnsPerMin = (rateKey < 0.6) ? 0.0 : (rateKey > 1.6 ? 1.11 : cnsRates[rateKey]);
                 const cnsTotal = cnsPerMin * time;
 
-                const explanationHTML = `<div class="formula-box-small"><h5>Obliczenia CNS</h5><ul><li>PPO2 na dnie: <strong>${ppo2.toFixed(2)} ATA</strong></li><li>Limit NOAA dla ${ppo2.toFixed(1)} ATA: ${cnsPerMin}% / min</li><li>Zużycie limitu: ${cnsPerMin}% * ${time} min = <strong>${cnsTotal.toFixed(1)}%</strong></li></ul></div>`;
+                const explanationHTML = `<div class="formula-box-small"><h5>Obliczenia CNS</h5><p class="formula">%CNS = Czas * Wskaźnik NOAA dla PPO₂</p><ul><li>PPO2 na dnie: <strong>${ppo2.toFixed(2)} ATA</strong></li><li>Limit NOAA dla ${ppo2.toFixed(1)} ATA: ${cnsPerMin}% / min</li><li>Zużycie limitu: ${cnsPerMin}% * ${time} min = <strong>${cnsTotal.toFixed(1)}%</strong></li></ul></div>`;
 
                 cnsResult.innerHTML = `
                     <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
