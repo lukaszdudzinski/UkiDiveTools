@@ -117,7 +117,7 @@ function showQuizResult() {
 
     // Add random reward image for perfect score
     if (percentage === 100) {
-        const rewardImages = ['reward1.jpg', 'reward2.jpg', 'reward3.jpg', 'reward4.jpg', 'reward5.jpg'];
+        const rewardImages = ['reward1.jpg', 'reward2.jpg', 'reward3.jpg', 'reward4.jpg', 'reward5.jpg', 'reward6.jpg', 'reward7.jpg', 'reward8.jpg', 'reward9.jpg', 'reward10.jpg'];
         const randomImage = rewardImages[Math.floor(Math.random() * rewardImages.length)];
         resultHTML += `<img src="${randomImage}" class="reward-image" alt="Gratulacje!">`;
     }
@@ -605,13 +605,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         const explanationHTML = `
             <div class="formula-box-small">
-                <h5>Fazy Obliczeń Planu</h5>
+                <h5>Obliczenia Zużycia Gazu</h5>
+                <p class="formula">L = SAC × Ciśnienie (ATA) × Czas (min)</p>
                 <ul>
-                    <li>Zanurzenie: ${L_descent.toFixed(0)} l (Śr. ${P_avg_descent.toFixed(1)} ATA)</li>
-                    <li>Dno: ${L_bottom.toFixed(0)} l (${P_bottom.toFixed(1)} ATA &times; ${T_bottom.toFixed(1)} min)</li>
-                    <li>Wynurzenie do 5m: ${L_ascent_to_stop.toFixed(0)} l</li>
-                    <li>Safety Stop: ${L_stop.toFixed(0)} l</li>
-                    <li>Wynurzenie na pow.: ${L_ascent_to_surface.toFixed(0)} l</li>
+                    <li>Zanurzenie: <strong>${L_descent.toFixed(0)} l</strong> (Śr. ${P_avg_descent.toFixed(2)} ATA × ${T_descent.toFixed(1)} min)</li>
+                    <li>Dno: <strong>${L_bottom.toFixed(0)} l</strong> (${P_bottom.toFixed(2)} ATA × ${T_bottom.toFixed(1)} min)</li>
+                    <li>Wynurzenie do stopu: <strong>${L_ascent_to_stop.toFixed(0)} l</strong> (Śr. ${P_avg_ascent_to_stop.toFixed(2)} ATA × ${T_ascent_to_stop.toFixed(1)} min)</li>
+                    <li>Safety Stop: <strong>${L_stop.toFixed(0)} l</strong> (${P_stop.toFixed(2)} ATA × ${T_stop.toFixed(1)} min)</li>
+                    <li>Wynurzenie na powierzchnię: <strong>${L_ascent_to_surface.toFixed(0)} l</strong> (Śr. ${P_avg_ascent_to_surface.toFixed(2)} ATA × ${T_ascent_to_surface.toFixed(1)} min)</li>
+                    <li>Total: <strong>${totalDemandLiters.toFixed(0)} l</strong></li>
                 </ul>
             </div>
         `;
@@ -623,7 +625,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         let verdictHTML = isSafe ? `<div class="result-verdict result-verdict-ok">WYSTARCZY</div>` : `<div class="result-verdict result-verdict-bad">NIE WYSTARCZY</div>`;
 
         container.innerHTML = `
-            <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="true">i</div>
+            <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
             <div class="calculation-details" style="display: none;">${explanationHTML}</div>
             ${rbHtml}
             <div class="result-section"><p class="result-label">Zapotrzebowanie (Plan):</p><p class="result-value-main">${totalDemandLiters.toFixed(0)}<span class="unit">l</span> <span>(${totalDemandBars.toFixed(1)} bar)</span></p></div>
@@ -690,11 +692,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const explanationHTML = `
                     <div class="formula-box-small">
                         <h5>Obliczenia Rock Bottom</h5>
+                        <p class="formula">RB = Gaz Reakcji + Gaz Wynurzenia</p>
                         <ul>
-                            <li><strong>SAC Stres:</strong> ${d.SAC_stressed.toFixed(1)} l/min</li>
-                            <li><strong>Reakcja:</strong> ${d.SAC_stressed.toFixed(1)} * ${d.P_depth.toFixed(1)} ATA * ${params.emergencyTime} min * ${params.divers} os. = <strong>${d.Gas_reaction.toFixed(0)} l</strong></li>
-                            <li><strong>Wynurzenie:</strong> ${d.SAC_stressed.toFixed(1)} * ${d.P_avg_ascent.toFixed(1)} ATA * ${d.T_ascent.toFixed(1)} min * ${params.divers} os. = <strong>${d.Gas_ascent.toFixed(0)} l</strong></li>
-                            <li><strong>Suma:</strong> ${d.Gas_reaction.toFixed(0)} + ${d.Gas_ascent.toFixed(0)} = ${d.TotalGasLiters.toFixed(0)} l</li>
+                            <li>SAC w stresie: <strong>${d.SAC_stressed.toFixed(1)} l/min</strong></li>
+                            <li>Gaz reakcji: <strong>${d.Gas_reaction.toFixed(0)} l</strong> (${d.SAC_stressed.toFixed(1)} × ${d.P_depth.toFixed(1)} ATA × ${params.emergencyTime} min × ${params.divers} os.)</li>
+                            <li>Gaz wynurzenia: <strong>${d.Gas_ascent.toFixed(0)} l</strong> (${d.SAC_stressed.toFixed(1)} × ${d.P_avg_ascent.toFixed(1)} ATA × ${d.T_ascent.toFixed(1)} min × ${params.divers} os.)</li>
+                            <li>Total: <strong>${d.TotalGasLiters.toFixed(0)} l</strong> (${d.Gas_reaction.toFixed(0)} + ${d.Gas_ascent.toFixed(0)})</li>
                         </ul>
                     </div>`;
 
@@ -767,7 +770,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const o2 = parseFloat(document.getElementById('nitroxO2').value) / 100;
                 const ppo2 = parseFloat(document.getElementById('modPO2').value);
                 const mod = ((ppo2 / o2) - 1) * 10;
-                const explanationHTML = `<div class="formula-box-small"><h5>Obliczenia MOD</h5><p>MOD = (PPO2 / FO2 - 1) * 10</p><ul><li>${ppo2} / ${o2} = ${(ppo2 / o2).toFixed(2)} ATA</li><li>(${(ppo2 / o2).toFixed(2)} - 1) * 10 = <strong>${mod.toFixed(1)} m</strong></li></ul></div>`;
+                const explanationHTML = `<div class="formula-box-small"><h5>Obliczenia MOD</h5><p class="formula">MOD = (PPO2 / FO2 - 1) * 10</p><ul><li>${ppo2} / ${o2} = ${(ppo2 / o2).toFixed(2)} ATA</li><li>(${(ppo2 / o2).toFixed(2)} - 1) * 10 = <strong>${mod.toFixed(1)} m</strong></li></ul></div>`;
 
                 modResult.innerHTML = `
                     <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
@@ -793,7 +796,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const depth = parseFloat(document.getElementById('eadDepth').value);
                 const n2 = 1.0 - o2;
                 const ead = ((depth + 10) * (n2 / 0.79)) - 10;
-                const explanationHTML = `<div class="formula-box-small"><h5>Obliczenia EAD</h5><p>EAD = ((D + 10) * FN2 / 0.79) - 10</p><ul><li>Ciśnienie N2: (${depth}+10) * ${n2.toFixed(2)} = ${((depth + 10) * n2).toFixed(2)}</li><li>Ekwiwalent Powietrzny: (${((depth + 10) * n2).toFixed(2)} / 0.79) - 10 = <strong>${ead.toFixed(1)} m</strong></li></ul></div>`;
+                const explanationHTML = `<div class="formula-box-small"><h5>Obliczenia EAD</h5><p class="formula">EAD = ((D + 10) * FN2 / 0.79) - 10</p><ul><li>Ciśnienie N2: (${depth}+10) * ${n2.toFixed(2)} = ${((depth + 10) * n2).toFixed(2)}</li><li>Ekwiwalent Powietrzny: (${((depth + 10) * n2).toFixed(2)} / 0.79) - 10 = <strong>${ead.toFixed(1)} m</strong></li></ul></div>`;
 
                 eadResult.innerHTML = `
                     <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
@@ -823,7 +826,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const fo2 = (ppo2 / ata);
                 const bestMixPercent = Math.floor(fo2 * 100);
 
-                const explanationHTML = `<div class="formula-box-small"><h5>Best Mix</h5><p>FO2 = PPO2 / ATA</p><ul><li>Ciśnienie otoczenia: ${ata.toFixed(2)} ATA</li><li>Wymagane O2: ${ppo2} / ${ata.toFixed(2)} = ${fo2.toFixed(3)}</li><li>Wynik (zaokrąglony w dół): <strong>${bestMixPercent}%</strong></li></ul></div>`;
+                const waterTypeName = (waterType === 'fresh') ? 'słodka' : 'słona';
+                const explanationHTML = `<div class="formula-box-small"><h5>Best Mix</h5><p class="formula">FO2 = PPO2 / ATA</p><ul><li><strong>Krok 1: Obliczenie ciśnienia (ATA)</strong><ul><li>Głębokość: ${depth}m</li><li>Woda: ${waterTypeName}</li><li>Wzór: ATA = (Głębokość / 10 ${waterType === 'fresh' ? '* 0.971' : ''}) + 1</li><li>ATA = ${ata.toFixed(2)} ATA</li></ul></li><li><strong>Krok 2: Obliczenie FO₂</strong><ul><li>PPO₂ (limit): ${ppo2} bar</li><li>FO₂ = ${ppo2} / ${ata.toFixed(2)} = ${fo2.toFixed(3)}</li></ul></li><li><strong>Wynik (zaokrąglony w dół):</strong> <strong>${bestMixPercent}%</strong></li></ul></div>`;
 
                 bestMixResult.innerHTML = `
                     <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
@@ -858,7 +862,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 let cnsPerMin = (rateKey < 0.6) ? 0.0 : (rateKey > 1.6 ? 1.11 : cnsRates[rateKey]);
                 const cnsTotal = cnsPerMin * time;
 
-                const explanationHTML = `<div class="formula-box-small"><h5>Obliczenia CNS</h5><ul><li>PPO2 na dnie: <strong>${ppo2.toFixed(2)} ATA</strong></li><li>Limit NOAA dla ${ppo2.toFixed(1)} ATA: ${cnsPerMin}% / min</li><li>Zużycie limitu: ${cnsPerMin}% * ${time} min = <strong>${cnsTotal.toFixed(1)}%</strong></li></ul></div>`;
+                const explanationHTML = `<div class="formula-box-small"><h5>Obliczenia CNS</h5><p class="formula">%CNS = Czas * Wskaźnik NOAA dla PPO₂</p><ul><li>PPO2 na dnie: <strong>${ppo2.toFixed(2)} ATA</strong></li><li>Limit NOAA dla ${ppo2.toFixed(1)} ATA: ${cnsPerMin}% / min</li><li>Zużycie limitu: ${cnsPerMin}% * ${time} min = <strong>${cnsTotal.toFixed(1)}%</strong></li></ul></div>`;
 
                 cnsResult.innerHTML = `
                     <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>

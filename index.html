@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pl">
 
 <head>
@@ -328,10 +328,8 @@
                         <div class="form-full-width">
                             <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                         class="tooltip-content">
-                                        <h4>SAC (Surface Air Consumption)</h4>
-                                        <p>Powierzchniowe zużycie gazu. Podstawowy parametr do planowania nurkowania.
-                                        </p>
-                                        <p><em>Wzór: (Zużyty Gaz [l]) / (Ciśnienie śr. [ATA] * Czas [min])</em></p>
+                                        <h4>SAC (Surface Air Consumption) – Powierzchniowe Zużycie Gazu</h4>
+                                        <p>SAC to wskaźnik zużycia gazu (powietrza) wyrażony w litrach na minutę na powierzchni (przy ciśnieniu 1 bar). Jest to niezbędny parametr do planowania nurkowania. SAC zależy od wielu czynników, w tym od doświadczenia nurka, obciążenia fizycznego, głębokości i temperatury wody.</p>
                                     </div></span><button type="submit">Oblicz SAC</button></div>
                         </div>
                     </form>
@@ -359,8 +357,9 @@
                                 </div>
                                 <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                             class="tooltip-content">
-                                            <h4>MOD (Maximum Operating Depth)</h4>
-                                            <p>Maksymalna głębokość dla mieszanki i limitu PPO₂.</p>
+                                            <h4>MOD (Maximum Operating Depth) – Maksymalna Głębokość Operacyjna</h4>
+                                            <p>MOD to Maksymalna Głębokość Operacyjna, czyli największa głębokość, na której można użyć danej mieszanki oddechowej (np. Nitroxu) bez przekroczenia maksymalnego limitu ciśnienia parcjalnego tlenu (ppO₂).</p>
+                                            <p><strong>Znaczenie:</strong> Przestrzeganie MOD jest kluczowym elementem bezpieczeństwa, ponieważ zapobiega toksyczności tlenowej Ośrodkowego Układu Nerwowego (CNS). Komputer nurkowy włączy alarm, gdy nurek osiągnie głębokość, na której ppO₂ przekroczy limit (zazwyczaj 1.4 do 1.6 bara).</p>
                                         </div></span><button type="submit">Oblicz MOD</button></div>
                             </form>
                             <div id="modResult" class="result-container"></div>
@@ -371,9 +370,9 @@
                                         type="number" id="eadDepth" min="1" required></div>
                                 <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                             class="tooltip-content">
-                                            <h4>EAD (Equivalent Air Depth)</h4>
-                                            <p>Równoważna Głębokość Powietrzna. Pokazuje, jak "głęboko" czuje się Twój
-                                                organizm pod kątem nasycenia azotem.</p>
+                                            <h4>EAD (Equivalent Air Depth) – Równoważna Głębokość Powietrzna</h4>
+                                            <p>EAD (Równoważna Głębokość Powietrzna) to koncepcja, która odnosi ciśnienie parcjalne azotu w mieszaninie nitroksowej do ciśnienia azotu w powietrzu na płytszej, równoważnej głębokości.</p>
+                                            <p><strong>Znaczenie:</strong> Ponieważ Nitrox zawiera mniej azotu niż powietrze, ciało akumuluje go mniej. Wyznaczenie EAD pozwala nurkowi użyć dowolnej powietrznej tabeli dekompresyjnej, podstawiając EAD jako głębokość nurkowania. Obliczanie EAD jest nierozerwalnie związane z koncepcją Nitroxu.</p>
                                         </div></span><button type="submit">Oblicz EAD</button></div>
                             </form>
                             <div id="eadResult" class="result-container"></div>
@@ -387,9 +386,8 @@
                                         required></div>
                                 <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                             class="tooltip-content">
-                                            <h4>Best Mix</h4>
-                                            <p>Oblicza "najgorętszą" (najwyższe O2) bezpieczną mieszankę na daną
-                                                głębokość i limit PPO₂.</p>
+                                            <h4>Best Mix (Najlepsza Mieszanina)</h4>
+                                            <p>Best Mix to określenie oznaczające optymalną frakcję tlenu (FO₂) w mieszaninie, która zapewnia maksymalne korzyści operacyjne przy jednoczesnym zachowaniu bezpieczeństwa w zakresie ciśnienia parcjalnego tlenu. Pozwala to nurkowi określić gaz, który jest najlepszy dla planowanej głębokości.</p>
                                         </div></span><button type="submit">Oblicz Best Mix</button></div>
                             </form>
                             <div id="bestMixResult" class="result-container"></div>
@@ -402,9 +400,9 @@
                                         type="number" id="cnsTime" value="20" min="1" required></div>
                                 <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                             class="tooltip-content">
-                                            <h4>%CNS (Toksyczność Tlenowa)</h4>
-                                            <p>Oblicza obciążenie Ośrodkowego Układu Nerwowego tlenem na podstawie PPO₂
-                                                i czasu.</p>
+                                            <h4>CNS (Central Nervous System) – Toksyczność Tlenowa OUN</h4>
+                                            <p><strong>Zagrożenie:</strong> Jest to najpoważniejsze zagrożenie dla nurka korzystającego z Nitroxu, grożące wystąpieniem nagłych konwulsji (drgawek tlenowych), co może doprowadzić do utonięcia.</p>
+                                            <p><strong>Limity:</strong> Limit ppO₂ to 1.6 ATA (maksymalna bezpieczna wartość), z zalecanym limitem 1.4 ATA. NOAA ustaliła maksymalny czas pojedynczej ekspozycji na 1.6 ATA na 45 minut. Toksyczność CNS jest liczona w %CNS.</p>
                                         </div></span><button type="submit">Oblicz CNS%</button></div>
                             </form>
                             <div id="cnsResult" class="result-container"></div>
@@ -445,9 +443,8 @@
                                 <div class="form-full-width">
                                     <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                                 class="tooltip-content">
-                                                <h4>Rock Bottom (RB)</h4>
-                                                <p>Minimalna ilość gazu na bezpieczny powrót we dwójkę w razie awarii.
-                                                </p>
+                                                <h4>Rock Bottom (Minimalna Rezerwa Gazu)</h4>
+                                                <p>Rock Bottom (Reguła „żelaznej rezerwy") to metoda obliczania minimalnej ilości gazu (rezerwy), niezbędnej do bezpiecznego wynurzenia członków zespołu po wystąpieniu najgorszej możliwej sytuacji awaryjnej (zwykle brak gazu u partnera). Jest to metoda przeznaczona do nurkowań głębokich i Extended Range.</p>
                                             </div></span><button type="submit">Oblicz Rock Bottom</button></div>
                                 </div>
                             </form>
@@ -483,8 +480,9 @@
                                 <div class="form-full-width">
                                     <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                                 class="tooltip-content">
-                                                <h4>Planowanie Zużycia Gazu</h4>
-                                                <p>Symuluje zużycie gazu w całym profilu nurkowym.</p>
+                                                <h4>Zużycie Gazu / Kalkulator Zużycia Gazu</h4>
+                                                <p>Planowanie zużycia gazu wymaga znajomości indywidualnego wskaźnika SAC (Powierzchniowego Zużycia Gazu). Śledzenie zużycia gazu w Logbooku pomaga monitorować postępy nurka.</p>
+                                                <p><strong>Czynniki wpływające na zużycie gazu:</strong> Wysiłek fizyczny, kondycja, stres, temperatura wody i głębokość. Kalkulator pozwala na określenie, czy ilość gazu w butli jest wystarczająca na nurkowanie.</p>
                                             </div></span><button type="submit">Oblicz Zużycie</button></div>
                                 </div>
                             </form>
