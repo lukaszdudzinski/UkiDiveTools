@@ -692,11 +692,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const explanationHTML = `
                     <div class="formula-box-small">
                         <h5>Obliczenia Rock Bottom</h5>
+                        <p class="formula">RB = Gaz Reakcji + Gaz Wynurzenia</p>
                         <ul>
-                            <li><strong>SAC Stres:</strong> ${d.SAC_stressed.toFixed(1)} l/min</li>
-                            <li><strong>Reakcja:</strong> ${d.SAC_stressed.toFixed(1)} * ${d.P_depth.toFixed(1)} ATA * ${params.emergencyTime} min * ${params.divers} os. = <strong>${d.Gas_reaction.toFixed(0)} l</strong></li>
-                            <li><strong>Wynurzenie:</strong> ${d.SAC_stressed.toFixed(1)} * ${d.P_avg_ascent.toFixed(1)} ATA * ${d.T_ascent.toFixed(1)} min * ${params.divers} os. = <strong>${d.Gas_ascent.toFixed(0)} l</strong></li>
-                            <li><strong>Suma:</strong> ${d.Gas_reaction.toFixed(0)} + ${d.Gas_ascent.toFixed(0)} = ${d.TotalGasLiters.toFixed(0)} l</li>
+                            <li>SAC w stresie: <strong>${d.SAC_stressed.toFixed(1)} l/min</strong></li>
+                            <li>Gaz reakcji: <strong>${d.Gas_reaction.toFixed(0)} l</strong> (${d.SAC_stressed.toFixed(1)} × ${d.P_depth.toFixed(1)} ATA × ${params.emergencyTime} min × ${params.divers} os.)</li>
+                            <li>Gaz wynurzenia: <strong>${d.Gas_ascent.toFixed(0)} l</strong> (${d.SAC_stressed.toFixed(1)} × ${d.P_avg_ascent.toFixed(1)} ATA × ${d.T_ascent.toFixed(1)} min × ${params.divers} os.)</li>
+                            <li>Total: <strong>${d.TotalGasLiters.toFixed(0)} l</strong> (${d.Gas_reaction.toFixed(0)} + ${d.Gas_ascent.toFixed(0)})</li>
                         </ul>
                     </div>`;
 
