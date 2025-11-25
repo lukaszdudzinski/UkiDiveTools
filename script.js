@@ -608,11 +608,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 <h5>Obliczenia Zużycia Gazu</h5>
                 <p class="formula">L = SAC × Ciśnienie (ATA) × Czas (min)</p>
                 <ul>
-                    <li><strong>1. Zanurzenie:</strong> ${L_descent.toFixed(0)} l <ul><li>Śr. ${P_avg_descent.toFixed(2)} ATA × ${T_descent.toFixed(1)} min</li></ul></li>
-                    <li><strong>2. Dno:</strong> ${L_bottom.toFixed(0)} l <ul><li>${P_bottom.toFixed(2)} ATA × ${T_bottom.toFixed(1)} min</li></ul></li>
-                    <li><strong>3. Wyn. do stopu:</strong> ${L_ascent_to_stop.toFixed(0)} l <ul><li>Śr. ${P_avg_ascent_to_stop.toFixed(2)} ATA × ${T_ascent_to_stop.toFixed(1)} min</li></ul></li>
-                    <li><strong>4. Safety Stop:</strong> ${L_stop.toFixed(0)} l <ul><li>${P_stop.toFixed(2)} ATA × ${T_stop.toFixed(1)} min</li></ul></li>
-                    <li><strong>5. Wyn. na pow.:</strong> ${L_ascent_to_surface.toFixed(0)} l <ul><li>Śr. ${P_avg_ascent_to_surface.toFixed(2)} ATA × ${T_ascent_to_surface.toFixed(1)} min</li></ul></li>
+                    <li>Zanurzenie: <strong>${L_descent.toFixed(0)} l</strong> (Śr. ${P_avg_descent.toFixed(2)} ATA × ${T_descent.toFixed(1)} min)</li>
+                    <li>Dno: <strong>${L_bottom.toFixed(0)} l</strong> (${P_bottom.toFixed(2)} ATA × ${T_bottom.toFixed(1)} min)</li>
+                    <li>Wynurzenie do stopu: <strong>${L_ascent_to_stop.toFixed(0)} l</strong> (Śr. ${P_avg_ascent_to_stop.toFixed(2)} ATA × ${T_ascent_to_stop.toFixed(1)} min)</li>
+                    <li>Safety Stop: <strong>${L_stop.toFixed(0)} l</strong> (${P_stop.toFixed(2)} ATA × ${T_stop.toFixed(1)} min)</li>
+                    <li>Wynurzenie na powierzchnię: <strong>${L_ascent_to_surface.toFixed(0)} l</strong> (Śr. ${P_avg_ascent_to_surface.toFixed(2)} ATA × ${T_ascent_to_surface.toFixed(1)} min)</li>
+                    <li>Total: <strong>${totalDemandLiters.toFixed(0)} l</strong></li>
                 </ul>
             </div>
         `;
