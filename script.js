@@ -605,13 +605,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         const explanationHTML = `
             <div class="formula-box-small">
-                <h5>Fazy Obliczeń Planu</h5>
+                <h5>Obliczenia Zużycia Gazu</h5>
+                <p class="formula">L = SAC × Ciśnienie (ATA) × Czas (min)</p>
                 <ul>
-                    <li>Zanurzenie: ${L_descent.toFixed(0)} l (Śr. ${P_avg_descent.toFixed(1)} ATA)</li>
-                    <li>Dno: ${L_bottom.toFixed(0)} l (${P_bottom.toFixed(1)} ATA &times; ${T_bottom.toFixed(1)} min)</li>
-                    <li>Wynurzenie do 5m: ${L_ascent_to_stop.toFixed(0)} l</li>
-                    <li>Safety Stop: ${L_stop.toFixed(0)} l</li>
-                    <li>Wynurzenie na pow.: ${L_ascent_to_surface.toFixed(0)} l</li>
+                    <li><strong>1. Zanurzenie:</strong> ${L_descent.toFixed(0)} l <ul><li>Śr. ${P_avg_descent.toFixed(2)} ATA × ${T_descent.toFixed(1)} min</li></ul></li>
+                    <li><strong>2. Dno:</strong> ${L_bottom.toFixed(0)} l <ul><li>${P_bottom.toFixed(2)} ATA × ${T_bottom.toFixed(1)} min</li></ul></li>
+                    <li><strong>3. Wyn. do stopu:</strong> ${L_ascent_to_stop.toFixed(0)} l <ul><li>Śr. ${P_avg_ascent_to_stop.toFixed(2)} ATA × ${T_ascent_to_stop.toFixed(1)} min</li></ul></li>
+                    <li><strong>4. Safety Stop:</strong> ${L_stop.toFixed(0)} l <ul><li>${P_stop.toFixed(2)} ATA × ${T_stop.toFixed(1)} min</li></ul></li>
+                    <li><strong>5. Wyn. na pow.:</strong> ${L_ascent_to_surface.toFixed(0)} l <ul><li>Śr. ${P_avg_ascent_to_surface.toFixed(2)} ATA × ${T_ascent_to_surface.toFixed(1)} min</li></ul></li>
                 </ul>
             </div>
         `;
