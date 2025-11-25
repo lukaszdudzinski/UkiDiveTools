@@ -823,7 +823,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const fo2 = (ppo2 / ata);
                 const bestMixPercent = Math.floor(fo2 * 100);
 
-                const explanationHTML = `<div class="formula-box-small"><h5>Best Mix</h5><p>FO2 = PPO2 / ATA</p><ul><li>Ciśnienie otoczenia: ${ata.toFixed(2)} ATA</li><li>Wymagane O2: ${ppo2} / ${ata.toFixed(2)} = ${fo2.toFixed(3)}</li><li>Wynik (zaokrąglony w dół): <strong>${bestMixPercent}%</strong></li></ul></div>`;
+                const waterTypeName = (waterType === 'fresh') ? 'słodka' : 'słona';
+                const explanationHTML = `<div class="formula-box-small"><h5>Best Mix</h5><p class="formula">FO2 = PPO2 / ATA</p><ul><li><strong>Krok 1: Obliczenie ciśnienia (ATA)</strong><ul><li>Głębokość: ${depth}m</li><li>Woda: ${waterTypeName}</li><li>Wzór: ATA = (Głębokość / 10 ${waterType === 'fresh' ? '* 0.971' : ''}) + 1</li><li>ATA = ${ata.toFixed(2)} ATA</li></ul></li><li><strong>Krok 2: Obliczenie FO₂</strong><ul><li>PPO₂ (limit): ${ppo2} bar</li><li>FO₂ = ${ppo2} / ${ata.toFixed(2)} = ${fo2.toFixed(3)}</li></ul></li><li><strong>Wynik (zaokrąglony w dół):</strong> <strong>${bestMixPercent}%</strong></li></ul></div>`;
 
                 bestMixResult.innerHTML = `
                     <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
