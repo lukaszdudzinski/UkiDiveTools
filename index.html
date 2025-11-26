@@ -560,72 +560,75 @@
                     <h3>Narzędzia Divemastera</h3>
                     <nav class="sub-tab-nav"><button class="sub-tab-button active"
                             data-subtab="briefing-checklist">Odprawa</button><button class="sub-tab-button"
-                            data-subtab="packing-checklist">Pakowanie</button><button class="sub-tab-button"
+                            data-subtab="packing-checklist">Sprawdzenie Sprzętu</button><button class="sub-tab-button"
                             data-subtab="buddy-check-list">Buddy Check</button></nav>
                     <div class="global-reset-wrapper"><button id="global-checklist-reset-btn"
                             title="Wyczyść aktywną listę">✓ Wyczyść Listę</button></div>
                     <div class="sub-tab-content-wrapper">
                         <div id="briefing-checklist" class="sub-tab-content active-sub-tab">
                             <div class="checklist-group">
-                                <h4>Wprowadzenie</h4>
-                                <div class="checklist-item"><input type="checkbox" id="brief-cb-1"><label
-                                        for="brief-cb-1">Przedstawienie (rola Przewodnika)</label></div>
-                                <div class="checklist-item"><input type="checkbox" id="brief-cb-2"><label
-                                        for="brief-cb-2">Cel nurkowania</label></div>
+                                <h4>1. Wprowadzenie i Plan Ogólny</h4>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-1"><label for="brief-cb-1">Przedstawienie się (Przewodnik i Załoga)</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-2"><label for="brief-cb-2">Nazwa, cechy i opis miejsca nurkowego</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-3"><label for="brief-cb-3">Cel i charakter nurkowania</label></div>
                             </div>
                             <div class="checklist-group">
-                                <h4>Organizacja</h4>
-                                <div class="checklist-item"><input type="checkbox" id="brief-cb-3"><label
-                                        for="brief-cb-3">Podział na zespoły partnerskie</label></div>
-                                <div class="checklist-item"><input type="checkbox" id="brief-cb-4"><label
-                                        for="brief-cb-4">Ustawienie grupy pod wodą</label></div>
+                                <h4>2. Warunki Środowiskowe</h4>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-4"><label for="brief-cb-4">Aktualna pogoda i warunki na wodzie</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-5"><label for="brief-cb-5">Przewidywana widoczność i prądy</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-6"><label for="brief-cb-6">Możliwe życie podwodne/ciekawe elementy</label></div>
                             </div>
                             <div class="checklist-group">
-                                <h4>Warunki</h4>
-                                <div class="checklist-item"><input type="checkbox" id="brief-cb-6"><label
-                                        for="brief-cb-6">Opis miejsca nurkowego</label></div>
-                                <div class="checklist-item"><input type="checkbox" id="brief-cb-7"><label
-                                        for="brief-cb-7">Warunki (prąd, falowanie, wizura)</label></div>
-                                <div class="checklist-item"><input type="checkbox" id="brief-cb-8"><label
-                                        for="brief-cb-8">Zagrożenia (sieci, łodzie, fauna)</label></div>
+                                <h4>3. Limity Nurkowania i Plan</h4>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-7"><label for="brief-cb-7">Maksymalna głębokość i czas denny</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-8"><label for="brief-cb-8">Minimalny zapas powietrza (Rock Bottom/Rezerwa)</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-9"><label for="brief-cb-9">Kierunek płynięcia i planowana trasa</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-10"><label for="brief-cb-10">Punkt zwrotny (Zawracanie)</label></div>
                             </div>
                             <div class="checklist-group">
-                                <h4>Procedury i Limity</h4>
-                                <div class="checklist-item"><input type="checkbox" id="brief-cb-9"><label
-                                        for="brief-cb-9">Plan: Maks. głębokość i Czas denny</label></div>
-                                <div class="checklist-item"><input type="checkbox" id="brief-cb-10"><label
-                                        for="brief-cb-10">Limity gazu (ciśnienie zwrotne, rezerwa)</label></div>
+                                <h4>4. System Partnerski i Komunikacja</h4>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-11"><label for="brief-cb-11">Przydzielenie partnerów</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-12"><label for="brief-cb-12">Powtórzenie znaków nurkowych</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-13"><label for="brief-cb-13">Procedury zagubienia partnera</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-14"><label for="brief-cb-14">Dzielenie się gazem (procedura i automat)</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-15"><label for="brief-cb-15">Komunikacja pod wodą (tabliczka, sygnalizatory)</label></div>
                             </div>
                             <div class="checklist-group">
-                                <h4>Plan Awaryjny (EAP)</h4>
-                                <div class="checklist-item"><input type="checkbox" id="brief-cb-14"><label
-                                        for="brief-cb-14">Procedura zgubienia partnera / braku gazu</label></div>
-                                <div class="checklist-item"><input type="checkbox" id="brief-cb-15"><label
-                                        for="brief-cb-15">Lokalizacja: Apteczka / Zestaw Tlenowy</label></div>
+                                <h4>5. Logistyka i Procedury Sprzętowe</h4>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-16"><label for="brief-cb-16">Procedury wejścia i wyjścia z wody</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-17"><label for="brief-cb-17">Procedury zanurzania i wynurzania</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-18"><label for="brief-cb-18">Awaryjne zrzucenie balastu</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-19"><label for="brief-cb-19">Kontrola Partnerska (Pre-Dive Check)</label></div>
+                            </div>
+                            <div class="checklist-group">
+                                <h4>6. Bezpieczeństwo i Plany Awaryjne</h4>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-20"><label for="brief-cb-20">Procedury awaryjne (Co jeśli?)</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-21"><label for="brief-cb-21">Lokalizacja apteczki pierwszej pomocy</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-22"><label for="brief-cb-22">Lokalizacja zestawu tlenowego</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-23"><label for="brief-cb-23">Lokalizacja radiostacji/telefonu</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-24"><label for="brief-cb-24">Procedura przywołania nurków</label></div>
+                                <div class="checklist-item"><input type="checkbox" id="brief-cb-25"><label for="brief-cb-25">Prawo rezygnacji z nurkowania</label></div>
                             </div>
                         </div>
                         <div id="packing-checklist" class="sub-tab-content">
-                            <div class="checklist-group">
-                                <h4>Skafander</h4>
-                                <div class="checklist-item"><input type="checkbox" id="pack-cb-1"><label
-                                        for="pack-cb-1">Skafander</label></div>
-                                <div class="checklist-item"><input type="checkbox" id="pack-cb-2"><label
-                                        for="pack-cb-2">Buty</label></div>
-                            </div>
-                            <div class="checklist-group">
-                                <h4>Sprzęt</h4>
-                                <div class="checklist-item"><input type="checkbox" id="pack-cb-5"><label
-                                        for="pack-cb-5">Maska</label></div>
-                                <div class="checklist-item"><input type="checkbox" id="pack-cb-7"><label
-                                        for="pack-cb-7">Płetwy</label></div>
-                            </div>
-                            <div class="checklist-group">
-                                <h4>Zestaw</h4>
-                                <div class="checklist-item"><input type="checkbox" id="pack-cb-8"><label
-                                        for="pack-cb-8">Butla / Automat</label></div>
-                                <div class="checklist-item"><input type="checkbox" id="pack-cb-9"><label
-                                        for="pack-cb-9">Balast</label></div>
-                            </div>
+                            <div class="checklist-item"><input type="checkbox" id="pack-cb-1"><label for="pack-cb-1">Maska</label></div>
+                            <div class="checklist-item"><input type="checkbox" id="pack-cb-2"><label for="pack-cb-2">Płetwy</label></div>
+                            <div class="checklist-item"><input type="checkbox" id="pack-cb-3"><label for="pack-cb-3">Kaptur</label></div>
+                            <div class="checklist-item"><input type="checkbox" id="pack-cb-4"><label for="pack-cb-4">Rękawice</label></div>
+                            <div class="checklist-item"><input type="checkbox" id="pack-cb-5"><label for="pack-cb-5">Pianka</label></div>
+                            <div class="checklist-item"><input type="checkbox" id="pack-cb-6"><label for="pack-cb-6">Suchy skafander</label></div>
+                            <div class="checklist-item"><input type="checkbox" id="pack-cb-7"><label for="pack-cb-7">Ocieplacz</label></div>
+                            <div class="checklist-item"><input type="checkbox" id="pack-cb-8"><label for="pack-cb-8">Buty</label></div>
+                            <div class="checklist-item"><input type="checkbox" id="pack-cb-9"><label for="pack-cb-9">Automat oddechowy</label></div>
+                            <div class="checklist-item"><input type="checkbox" id="pack-cb-10"><label for="pack-cb-10">BCD/Skrzydło</label></div>
+                            <div class="checklist-item"><input type="checkbox" id="pack-cb-11"><label for="pack-cb-11">Butla - czy sprawdzona ilość gazu?</label></div>
+                            <div class="checklist-item"><input type="checkbox" id="pack-cb-12"><label for="pack-cb-12">Komputer</label></div>
+                            <div class="checklist-item"><input type="checkbox" id="pack-cb-13"><label for="pack-cb-13">Balast</label></div>
+                            <div class="checklist-item"><input type="checkbox" id="pack-cb-14"><label for="pack-cb-14">Latarka</label></div>
+                            <div class="checklist-item"><input type="checkbox" id="pack-cb-15"><label for="pack-cb-15">Narzędzie tnące</label></div>
+                            <div class="checklist-item"><input type="checkbox" id="pack-cb-16"><label for="pack-cb-16">Bojka SMB</label></div>
+                            <div class="checklist-item"><input type="checkbox" id="pack-cb-17"><label for="pack-cb-17">Kompas</label></div>
+                            <div class="checklist-item"><input type="checkbox" id="pack-cb-18"><label for="pack-cb-18">Tabliczka</label></div>
                         </div>
                         <div id="buddy-check-list" class="sub-tab-content">
                             <div class="checklist-group">
