@@ -909,7 +909,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
                 const explanationHTML = `
                     <div class="formula-box-small">
-                        <h5>Mieszanie Parcjalne</h5>
+                        <h5>Gas Blender: Mieszanie Metodą Ciśnień Parcjalnych (Nitrox)</h5>
                         <p>Obliczamy ile czystego tlenu (100%) dodać, aby resztę dobić powietrzem (21%).</p>
                         <ul>
                             <li>Cel: ${targetBar} bar o stężeniu ${(targetO2 * 100).toFixed(0)}%</li>
