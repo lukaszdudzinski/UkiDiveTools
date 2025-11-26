@@ -1149,12 +1149,36 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
                 const explanationHTML = `
                     <div class="formula-box-small">
-                        <h5>Składowe Balastu</h5>
-                        <ul>
-                            <li>Baza (ok. 10% wagi): <strong>${baseBallast.toFixed(1)} kg</strong></li>
-                            <li>${suitName}: <strong>+${suitMod} kg</strong></li>
-                            <li>Woda (${waterType === 'salt' ? 'Słona' : 'Słodka'}): <strong>+${waterMod} kg</strong></li>
-                            <li>Butla (${tankName}): <strong>${tankMod > 0 ? '+' : ''}${tankMod} kg</strong></li>
+                        <h5>Obliczanie Sugestii Balastu</h5>
+                        <p>Obliczenie balastu to heurystyka (dobra zasada), a nie ścisły wzór. Zawsze wykonaj kontrolę pływalności.</p>
+                        <p class="formula">Balast = Waga<sub>bazowa</sub> + Modyfikatory</p>
+ <ul>
+                            <li><strong>Waga<sub>bazowa</sub>:</strong> 10% wagi ciała nurka</li>
+                            <li>--- Modyfikatory Skafandra ---</li>
+                            <li><strong>Pianka 3mm:</strong> -3 kg</li>
+                            <li><strong>Pianka 5mm:</strong> -2 kg</li>
+                            <li><strong>Pianka 7mm:</strong> 0 kg (baza)</li>
+                            <li><strong>Suchy (Trylam/Crash):</strong> +4kg (Cienki ocieplacz) / +6kg (Gruby ocieplacz)</li>
+                            <li><strong>Suchy (Neopren):</strong> +7kg (Cienki ocieplacz) / +8kg (Gruby ocieplacz)</li>
+                            <li>--- Modyfikatory Butli (Pływalność Ujemna) ---</li>
+                            <li><strong>Alu 11L (S80):</strong> +1 kg (jest dodatnia)</li>
+                            <li><strong>Stal 12L:</strong> -3 kg</li>
+                            <li><strong>Stal 15L:</strong> -4 kg</li>
+                            <li><strong>Twin 2x7L (232b):</strong> -4 kg</li>
+                            <li><strong>Twin 2x8.5L (232b):</strong> -5 kg</li>
+                            <li><strong>Twin 2x10L (232b):</strong> -6 kg</li>
+                            <li><strong>Twin 2x12L (232b):</strong> -8 kg</li>
+                            <li><strong>Twin 2x7L (300b):</strong> -6 kg</li>
+                            <li><strong>Twin 2x8.5L (300b):</strong> -7 kg</li>
+                            <li><strong>Twin 2x10L (300b):</strong> -8 kg</li>
+                            <li><strong>Twin 2x12L (300b):</strong> -10 kg</li>
+                            <li><strong>Płyta Alu (dla Twina):</strong> -0.85 kg</li>
+                            <li><strong>Płyta Stal (dla Twina):</strong> -2 kg</li>
+                            <li>--- Modyfikatory Inne ---</li>
+                            <li><strong>Woda Słodka:</strong> -2 kg</li>
+                            <li><strong>Budowa Szczupła:</strong> +2 kg</li>
+                            <li><strong>Budowa Atletyczna:</strong> -3 kg</li>
+                            <li><strong>Budowa Nadwaga:</strong> +3 kg</li>
                         </ul>
                     </div>`;
 
