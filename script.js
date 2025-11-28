@@ -1082,12 +1082,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
         decoForm.addEventListener('submit', function (e) {
             e.preventDefault();
             try {
+                console.log('[DECO] Form submitted!');
                 const depth = parseFloat(document.getElementById('decoDepth').value);
                 const bottomTime = parseFloat(document.getElementById('decoBottomTime').value);
                 const fo2Percent = parseFloat(document.getElementById('decoFO2').value);
                 const gfLow = parseFloat(document.getElementById('decoGFLow').value);
                 const gfHigh = parseFloat(document.getElementById('decoGFHigh').value);
                 
+                console.log('[DECO] Inputs:', { depth, bottomTime, fo2Percent, gfLow, gfHigh });
                 const fo2 = fo2Percent / 100;
                 
                 // Calculate deco profile
