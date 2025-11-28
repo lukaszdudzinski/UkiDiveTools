@@ -1093,7 +1093,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const fo2 = fo2Percent / 100;
                 
                 // Calculate deco profile
+                console.log('[DECO] Calculating profile...');
                 const result = calculateDecoProfile(depth, bottomTime, fo2, gfLow, gfHigh);
+                console.log('[DECO] Result:', result);
                 
                 // Build HTML output
                 let html = '';
