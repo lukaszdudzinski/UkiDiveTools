@@ -315,6 +315,91 @@
                     </form>
                     <div id="proGasResult" class="result-container"></div>
                 </div>
+<!-- DECO PLANNER VIEW -->
+<div id="deco-planner" class="tab-content pro-tool-view">
+    <button class="back-to-dashboard" onclick="backToDashboard()">Wróć do Strefy PRO</button>
+    <h3>Deco Planner - Bühlmann ZHL-16C</h3>
+    <p style="color: #b0b0b0; margin-bottom: 20px; font-size: 0.9em;">
+        Planowanie dekompresji dla nurkowań technicznych.
+    </p>
+
+    <!-- WARNING BOX -->
+    <div
+        style="background: rgba(220, 20, 60, 0.1); border: 2px solid rgba(220, 20, 60, 0.5); border-radius: 10px; padding: 15px; margin-bottom: 20px;">
+        <h4 style="color: #ff6b6b; margin-top: 0;">⚠️ WAŻNE OSTRZEŻENIE</h4>
+        <ul style="color: #ffaa99; margin: 0; padding-left: 20px; font-size: 0.9em;">
+            <li>To narzędzie służy WYŁĄCZNIE do celów edukacyjnych i planowania wstępnego</li>
+            <li>NIE zastępuje komputera nurkowego</li>
+            <li>NIE gwarantuje bezpieczeństwa</li>
+            <li>Zawsze nurkuj z certyfikowanym komputerem nurkowym</li>
+            <li>Wymaga certyfikacji nurkowania dekompresyjnego</li>
+            <li>Autor nie ponosi odpowiedzialności za używanie tego narzędzia</li>
+        </ul>
+    </div>
+
+    <form id="decoForm" class="two-column-form">
+        <div class="form-column">
+            <div class="input-group">
+                <label for="decoDepth">Maksymalna Głębokość (m)</label>
+                <input type="number" id="decoDepth" value="40" min="10" max="100" required>
+            </div>
+            <div class="input-group">
+                <label for="decoBottomTime">Czas Denny (min)</label>
+                <input type="number" id="decoBottomTime" value="20" min="1" max="180" required>
+            </div>
+            <div class="input-group">
+                <label for="decoFO2">FO2 - Frakcja Tlenu (%)</label>
+                <input type="number" id="decoFO2" value="21" min="10" max="100" step="1" required>
+            </div>
+        </div>
+        <div class="form-column">
+            <div class="input-group">
+                <label for="decoGFLow">Gradient Factor Low (%)</label>
+                <input type="number" id="decoGFLow" value="30" min="10" max="100" step="5" required>
+            </div>
+            <div class="input-group">
+                <label for="decoGFHigh">Gradient Factor High (%)</label>
+                <input type="number" id="decoGFHigh" value="85" min="50" max="100" step="5" required>
+            </div>
+            <div class="input-group" style="opacity: 0.5; pointer-events: none;">
+                <label>Multi-Level (Wkrótce)</label>
+                <input type="checkbox" disabled>
+            </div>
+        </div>
+        <div class="form-full-width">
+            <div class="button-with-tooltip">
+                <span class="tooltip-trigger tooltip-button">?
+                    <div class="tooltip-content">
+                        <h4>Deco Planner: Algorytm Bühlmann ZHL-16C</h4>
+                        <p>Kalkulator planowania dekompresji używający szwajcarskiego algorytmu opracowanego przez Dr.
+                            Alberta Bühlmanna.</p>
+                        <p><strong>Jak działa:</strong></p>
+                        <ul style="text-align: left; margin-left: 15px;">
+                            <li><strong>16 Compartments:</strong> Ciało modelowane jako 16 teoretycznych "tkanek" z
+                                różnymi szybkościami absorpcji/odgazowania azotu</li>
+                            <li><strong>M-Values:</strong> Maksymalne dopuszczalne ciśnienie parcjalne dla każdej tkanki
+                            </li>
+                            <li><strong>Gradient Factors (GF):</strong> Marginesy bezpieczeństwa. GF 30/85 =
+                                conservatywne, GF 50/95 = liberalne</li>
+                        </ul>
+                        <p><strong>Interpretacja wyników:</strong></p>
+                        <ul style="text-align: left; margin-left: 15px;">
+                            <li><strong>NDL:</strong> No Decompression Limit - można wynurzyć się bezpośrednio (tylko
+                                safety stop)</li>
+                            <li><strong>Deco:</strong> Wymagane przystanki dekompresyjne na podanych głębokościach</li>
+                            <li><strong>Runtime:</strong> Całkowity czas od zejścia do powierzchni</li>
+                        </ul>
+                        <p><strong>Pamiętaj:</strong> To tylko narzędzie planowania. Zawsze nurkuj z komputerem!</p>
+                    </div>
+                </span>
+                <button type="submit">Oblicz Profil Deco</button>
+            </div>
+        </div>
+    </form>
+
+    <div id="decoResult" class="result-container"></div>
+</div>
+
 
                 <div id="sac-calculator" class="tab-content">
                     <h3>Kalkulator SAC</h3>
