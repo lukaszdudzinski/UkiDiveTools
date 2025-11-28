@@ -1073,6 +1073,124 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 
+
+
+    // --- 12. Deco Planner (PRO) - Bühlmann ZHL-16C ---
+    const decoForm = document.getElementById('decoForm');
+    const decoResult = document.getElementById('decoResult');
+    if (decoForm && decoResult) {
+        decoForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            try {
+                console.log('[DECO] Form submitted!');
+                const depth = parseFloat(document.getElementById('decoDepth').value);
+                const bottomTime = parseFloat(document.getElementById('decoBottomTime').value);
+                const fo2Percent = parseFloat(document.getElementById('decoFO2').value);
+                const gfLow = parseFloat(document.getElementById('decoGFLow').value);
+                const gfHigh = parseFloat(document.getElementById('decoGFHigh').value);
+                
+                console.log('[DECO] Inputs:', { depth, bottomTime, fo2Percent, gfLow, gfHigh });
+                const fo2 = fo2Percent / 100;
+                
+                // Calculate deco profile
+                console.log('[DECO] Calculating profile...');
+                const result = calculateDecoProfile(depth, bottomTime, fo2, gfLow, gfHigh);
+                console.log('[DECO] Result:', result);
+                
+                // Build HTML output
+                let html = '';
+                
+                // Profile summary
+                html += `<div class="result-section">
+                    <p class="result-label">Profil Nurkowania</p>
+                    <p class="result-value-main" style="font-size: 1.6em;">${result.gas.type}</p>
+                    <p class="result-value-sub">
+                        Maks. Głębokość: ${result.profile.maxDepth}m | 
+                        Czas denny: ${result.profile.bottomTime} min | 
+                        GF ${gfLow}/${gfHigh}
+                    </p>
+                </div>`;
+                
+                // Runtime
+                html += `<div class="result-section">
+                    <p class="result-label">Total Runtime</p>
+                    <p class="result-value-main" style="color: #00d1b2; font-size: 2em;">
+                        ${result.profile.totalRuntime} <span class="unit">min</span>
+                    </p>
+                    <p class="result-value-sub">
+                        Zejście: ${result.profile.descentTime}min | 
+                        Dno: ${result.profile.bottomTime}min | 
+                        Wynurzenie: ${result.profile.ascentTime}min
+                    </p>
+                </div>`;
+                
+                // Deco stops or NDL
+                if (result.ndl) {
+                    html += `<div class="result-section" style="background: rgba(0, 209, 178, 0.1); border: 1px solid rgba(0, 209, 178, 0.3); padding: 15px; border-radius: 8px; margin-top: 15px;">
+                        <p class="result-label" style="color: #00d1b2;">✅ NDL (No Decompression Limit)</p>
+                        <p style="color: #00d1b2; font-size: 0.95em;">
+                            Możesz wynurzyć się bezpośrednio z zachowaniem prędkości wynurzania 10 m/min.
+                        </p>
+                    </div>`;
+                    
+                    if (result.stops.length > 0 && result.stops[0].type === 'safety') {
+                        html += `<div class="result-section">
+                            <p class="result-label">Safety Stop (Zalecany)</p>
+                            <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                    <th style="text-align: left; padding: 8px; color: #00d1b2;">Głębokość</th>
+                                    <th style="text-align: center; padding: 8px; color: #00d1b2;">Czas</th>
+                                    <th style="text-align: right; padding: 8px; color: #00d1b2;">Runtime</th>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px;">${result.stops[0].depth}m</td>
+                                    <td style="text-align: center; padding: 8px;">${result.stops[0].time} min</td>
+                                    <td style="text-align: right; padding: 8px;">${result.stops[0].runtime} min</td>
+                                </tr>
+                            </table>
+                        </div>`;
+                    }
+                } else {
+                    html += `<div class="result-section" style="background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.3); padding: 15px; border-radius: 8px; margin-top: 15px;">
+                        <p class="result-label" style="color: #ff6b6b;">⚠️ DECOMPRESSION REQUIRED</p>
+                        <p style="color: #ff6b6b; font-size: 0.95em;">
+                            Wymagane przystanki dekompresyjne. Nie wynurzaj się szybciej niż wskazany profil!
+                        </p>
+                    </div>`;
+                    
+                    html += `<div class="result-section">
+                        <p class="result-label">Deco Stops</p>
+                        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <th style="text-align: left; padding: 8px; color: #00d1b2;">Głębokość</th>
+                                <th style="text-align: center; padding: 8px; color: #00d1b2;">Czas</th>
+                                <th style="text-align: center; padding: 8px; color: #00d1b2;">Typ</th>
+                                <th style="text-align: right; padding: 8px; color: #00d1b2;">Runtime</th>
+                            </tr>`;
+                    
+                    result.stops.forEach(stop => {
+                        const typeLabel = stop.type === 'deco' ? '<span style="color: #ff6b6b;">DECO</span>' : '<span style="color: #ffd700;">Safety</span>';
+                        html += `<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <td style="padding: 8px; font-weight: bold;">${stop.depth}m</td>
+                            <td style="text-align: center; padding: 8px;">${stop.time} min</td>
+                            <td style="text-align: center; padding: 8px;">${typeLabel}</td>
+                            <td style="text-align: right; padding: 8px;">${stop.runtime} min</td>
+                        </tr>`;
+                    });
+                    
+                    html += `</table></div>`;
+                }
+                
+                decoResult.innerHTML = html;
+                decoResult.style.display = 'block';
+                decoResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } catch (error) {
+                decoResult.innerHTML = `<p class="result-error">Błąd obliczeń: ${error.message}</p>`;
+                decoResult.style.display = 'block';
+                console.error('Deco Planner Error:', error);
+            }
+        });
+    }
     // --- 11. Kalkulator Balastu (ZAKTUALIZOWANY UI) ---
     const ballastForm = document.getElementById('ballastForm');
     const ballastResultContainer = document.getElementById('ballastResult');
