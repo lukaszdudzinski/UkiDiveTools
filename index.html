@@ -201,17 +201,15 @@
                         <div class="form-full-width">
                             <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                         class="tooltip-content">
-                                        <h4>Trimix Blending (Partial Pressure)</h4>
-                                        <p>Metoda mieszania parcjalnego dla Trimix:</p>
-                                        <ol style="text-align: left; margin-left: 15px;">
-                                            <li><strong>Krok 1:</strong> Dodaj hel (100% He) do obliczonego ciśnienia.
-                                            </li>
-                                            <li><strong>Krok 2:</strong> Dodaj tlen (100% O2) do obliczonego ciśnienia.
-                                            </li>
-                                            <li><strong>Krok 3:</strong> Dopełnij powietrzem (21% O2) do ciśnienia
-                                                docelowego.</li>
-                                        </ol>
-                                        <p><strong>Uwaga:</strong> Kolejność jest kluczowa! He → O2 → Air</p>
+                                        <h4>Trimix Blending: Partial Pressure Blending (He/O2/N2)</h4>
+                                        <p>Trimix to zaawansowana mieszanina gazowa składająca się z tlenu (O2), helu (He) i azotu (N2), używana w głębokim nurkowaniu technicznym.</p>
+                                        <p><strong>Metoda ciśnień parcjalnych:</strong></p>
+                                        <ul style="text-align: left; margin-left: 15px;">
+                                            <li><strong>Krok 1:</strong> Dodaj 100% helu (He) do wymaganego ciśnienia parcjalnego</li>
+                                            <li><strong>Krok 2:</strong> Dodaj 100% tlenu (O2) do wymaganego ciśnienia parcjalnego</li>
+                                            <li><strong>Krok 3:</strong> Dopełnij powietrzem (21% O2, 79% N2) do ciśnienia docelowego</li>
+                                        </ul>
+                                        <p><strong>Bezpieczeństwo:</strong> Wymaga certyfikacji Gas Blender Trimix. Hel jest gazem inertnym (nie narkotyczny), redukuje gęstość mieszanki i zmniejsza dekompresję (vs. powietrze/nitrox).</p>
                                     </div></span><button type="submit">Oblicz Mieszankę Trimix</button></div>
                         </div>
                     </form>
@@ -248,12 +246,15 @@
                         <div class="form-full-width">
                             <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                         class="tooltip-content">
-                                        <h4>Co to jest Bailout?</h4>
-                                        <p>Żelazna rezerwa gazu na sytuację "worst-case".</p>
-                                        <ol style="text-align: left; margin-left: 15px;">
-                                            <li><strong>Reakcja na dnie:</strong> Rozwiązanie problemu w stresie.</li>
-                                            <li><strong>Wynurzenie:</strong> Podróż do powierzchni.</li>
-                                        </ol>
+                                        <h4>Bailout: Kalkulator Awaryjnego Zapasu Gazu</h4>
+                                        <p>Bailout to awaryjny zapas gazu, który musisz mieć, aby bezpiecznie wynurzyć się z głębokości w razie całkowitego braku gazu głównego (np. awaria rebreathera, Problem z twin-setem).</p>
+                                        <p><strong>Składowe obliczeń:</strong></p>
+                                        <ul style="text-align: left; margin-left: 15px;">
+                                            <li><strong>Reakcja:</strong> Czas na rozpoznanie problemu i przełączenie się na bailout (1-2 min)</li>
+                                            <li><strong>Wynurzenie:</strong> Gaz potrzebny na kontrolowane wynurzenie z prędkością 10 m/min</li>
+                                            <li><strong>Bezpieczny margines:</strong> Rezerwa na nieprzewidziane sytuacje</li>
+                                        </ul>
+                                        <p><strong>Ważne:</strong> Bailout to minimum absolutne. W nurkowaniu techniczny zaleca się 1.5x-2x obliczonej wartości.</p>
                                     </div></span><button type="submit">Oblicz Bailout</button></div>
                         </div>
                     </form>
@@ -299,8 +300,16 @@
                         <div class="form-full-width">
                             <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                         class="tooltip-content">
-                                        <h4>Planowanie PRO</h4>
-                                        <p>Łączy obliczenie zużycia gazu z rezerwą Rock Bottom.</p>
+                                        <h4>PRO Gas Planning: Zaawansowane Planowanie Zapasu Gazu</h4>
+                                        <p>Profesjonalne planowanie gazu dla nurkowań technicznych, uwzględniające regułę thirds/sixths i wszystkie fazy nurkowania.</p>
+                                        <p><strong>Fazy nurkowania:</strong></p>
+                                        <ul style="text-align: left; margin-left: 15px;">
+                                            <li><strong>Zanurzenie:</strong> Gaz zużyty podczas schodzenia na głębokość (10 m/min)</li>
+                                            <li><strong>Dno:</strong> Gaz zużyty podczas pracy na dnie (planowany czas denny)</li>
+                                            <li><strong>Wynurzenie:</strong> Gaz zużyty podczas kontrolowanego wynurzania (10 m/min)</li>
+                                            <li><strong>Deco:</strong> Gaz zużyty podczas przystanków dekompresyjnych (jeśli wymagane)</li>
+                                        </ul>
+                                        <p><strong>Rezerwa:</strong> 1/3 zapasu na powrót + 1/3 na awarię. Nurkujesz tylko na 1/3 butli.</p>
                                     </div></span><button type="submit">Oblicz Plan + RB</button></div>
                         </div>
                     </form>
