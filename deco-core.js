@@ -1,4 +1,4 @@
-
+﻿
 // ============================================================
 // DECO PLANNER - CORE SIMULATION FUNCTIONS
 // ============================================================
@@ -200,7 +200,10 @@ function calculateDecoProfile(maxDepth, bottomTime, fo2 = 0.21, gfLow = 30, gfHi
     let totalDecoTime = 0;
 
     // Ascend to first stop or surface
-    while (currentDepth > 0) {
+    let iterations = 0;
+    const maxIterations = 50; // Safety limit to prevent infinite loop
+    while (currentDepth > 0 && iterations < maxIterations) {
+        iterations++;
         // Interpolate GF based on depth
         const gf = gfHigh; // Simplified - use GF High for now
         // TODO: Implement proper GF interpolation (GF Low at first stop, GF High at surface)
