@@ -207,29 +207,30 @@ function calculateDecoProfile(maxDepth, bottomTime, fo2 = 0.21, gfLow = 30, gfHi
     while (currentDepth > 0 && iterations < maxIterations) {
         iterations++;
         console.log(`\n[DECO LOOP] Iteration ${iterations}, currentDepth: ${currentDepth}m`);
-        // Interpolate GF based on depth
-        // GF interpolation: GF Low at first stop, GF High at surface
-        // Formula: GF = GF_low + (GF_high - GF_low) * (first_stop_depth - current_depth) / first_stop_depth
-        let gf = gfHigh;
-        if (decoStops.length > 0) {
-            // We have at least one deco stop, so we know the first stop depth
+        // GF Interpolation Logic:
+        // 1. Before any deco stops: use GF Low (determines first stop depth)
+        // 2. At first stop depth: use GF Low
+        // 3. Between first stop and surface: interpolate GF Low → GF High
+        // 4. At surface: GF High
+
+        let gf;
+        if (decoStops.length === 0) {
+            // No deco stops yet - use GF Low to determine first stop
+            gf = gfLow;
+        } else {
+            // We have at least one deco stop
             const firstStopDepth = decoStops[0].depth;
+
             if (currentDepth >= firstStopDepth) {
-                // Still at or below first stop - use GF Low
+                // Still at or deeper than first stop - use GF Low
                 gf = gfLow;
             } else {
                 // Between first stop and surface - interpolate
+                // Formula: GF = GF_low + (GF_high - GF_low) * (first_stop - current) / first_stop
                 gf = gfLow + (gfHigh - gfLow) * (firstStopDepth - currentDepth) / firstStopDepth;
             }
-        } else {
-            // No deco stops yet - check if we need one by getting ceiling with GF Low
-            const { ceiling: testCeiling } = getControllingCeiling(tissues, gfLow);
-            if (testCeiling > 0) {
-                // We need deco - use GF Low
-                gf = gfLow;
-            }
         }
-        console.log(`[GF] Current depth: ${currentDepth}m, GF: ${gf.toFixed(1)}%`);
+        console.log(`[GF] Current depth: ${currentDepth}m, GF: ${gf.toFixed(1)}%, stops: ${decoStops.length}`);
 
         // Get ceiling (shallowest safe depth)
         const { ceiling } = getControllingCeiling(tissues, gf);
