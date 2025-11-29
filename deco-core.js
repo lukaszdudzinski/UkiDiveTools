@@ -295,12 +295,22 @@ function calculateDecoProfile(maxDepth, bottomTime, fo2 = 0.21, gfLow = 30, gfHi
             console.log(`[STOP] Hit maxStopTime limit (${maxStopTime} min)!`);
         }
 
-        decoStops.push({
-            depth: stopDepth,
-            time: stopTime,
-            runtime: descentTime + bottomTime + totalDecoTime,
-            type: 'deco'
-        });
+        // Check if we already have a stop at this depth (merge duplicates)
+        const lastStop = decoStops[decoStops.length - 1];
+        if (lastStop && lastStop.depth === stopDepth) {
+            // Merge with existing stop
+            console.log(`[STOP] Merging with existing ${stopDepth}m stop (${lastStop.time} + ${stopTime} min)`);
+            lastStop.time += stopTime;
+            lastStop.runtime = descentTime + bottomTime + totalDecoTime;
+        } else {
+            // Add new stop
+            decoStops.push({
+                depth: stopDepth,
+                time: stopTime,
+                runtime: descentTime + bottomTime + totalDecoTime,
+                type: 'deco'
+            });
+        }
 
         // Move to next shallower stop
         currentDepth = stopDepth - DECO_CONFIG.stopInterval;
