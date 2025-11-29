@@ -1088,18 +1088,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const fo2Percent = parseFloat(document.getElementById('decoFO2').value);
                 const gfLow = parseFloat(document.getElementById('decoGFLow').value);
                 const gfHigh = parseFloat(document.getElementById('decoGFHigh').value);
-                
+
                 console.log('[DECO] Inputs:', { depth, bottomTime, fo2Percent, gfLow, gfHigh });
                 const fo2 = fo2Percent / 100;
-                
+
                 // Calculate deco profile
                 console.log('[DECO] Calculating profile...');
                 const result = calculateDecoProfile(depth, bottomTime, fo2, gfLow, gfHigh);
                 console.log('[DECO] Result:', result);
-                
+
                 // Build HTML output
                 let html = '';
-                
+
                 // Profile summary
                 html += `<div class="result-section">
                     <p class="result-label">Profil Nurkowania</p>
@@ -1110,10 +1110,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         GF ${gfLow}/${gfHigh}
                     </p>
                 </div>`;
-                
+
                 // Runtime
                 html += `<div class="result-section">
-                    <p class="result-label">Total Runtime</p>
+                    <p class="result-label">Łączny Czas Nurkowania</p>
                     <p class="result-value-main" style="color: #00d1b2; font-size: 2em;">
                         ${result.profile.totalRuntime} <span class="unit">min</span>
                     </p>
@@ -1123,7 +1123,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         Wynurzenie: ${result.profile.ascentTime}min
                     </p>
                 </div>`;
-                
+
                 // Deco stops or NDL
                 if (result.ndl) {
                     html += `<div class="result-section" style="background: rgba(0, 209, 178, 0.1); border: 1px solid rgba(0, 209, 178, 0.3); padding: 15px; border-radius: 8px; margin-top: 15px;">
@@ -1132,7 +1132,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             Możesz wynurzyć się bezpośrednio z zachowaniem prędkości wynurzania 10 m/min.
                         </p>
                     </div>`;
-                    
+
                     if (result.stops.length > 0 && result.stops[0].type === 'safety') {
                         html += `<div class="result-section">
                             <p class="result-label">Safety Stop (Zalecany)</p>
@@ -1152,24 +1152,24 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     }
                 } else {
                     html += `<div class="result-section" style="background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.3); padding: 15px; border-radius: 8px; margin-top: 15px;">
-                        <p class="result-label" style="color: #ff6b6b;">⚠️ DECOMPRESSION REQUIRED</p>
+                        <p class="result-label" style="color: #ff6b6b;">⚠️ WYMAGANA DEKOMPRESJA</p>
                         <p style="color: #ff6b6b; font-size: 0.95em;">
                             Wymagane przystanki dekompresyjne. Nie wynurzaj się szybciej niż wskazany profil!
                         </p>
                     </div>`;
-                    
+
                     html += `<div class="result-section">
-                        <p class="result-label">Deco Stops</p>
+                        <p class="result-label">Przystanki Dekompresyjne</p>
                         <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
                             <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
                                 <th style="text-align: left; padding: 8px; color: #00d1b2;">Głębokość</th>
                                 <th style="text-align: center; padding: 8px; color: #00d1b2;">Czas</th>
                                 <th style="text-align: center; padding: 8px; color: #00d1b2;">Typ</th>
-                                <th style="text-align: right; padding: 8px; color: #00d1b2;">Runtime</th>
+                                <th style="text-align: right; padding: 8px; color: #00d1b2;">Czas Całkowity</th>
                             </tr>`;
-                    
+
                     result.stops.forEach(stop => {
-                        const typeLabel = stop.type === 'deco' ? '<span style="color: #ff6b6b;">DECO</span>' : '<span style="color: #ffd700;">Safety</span>';
+                        const typeLabel = stop.type === 'deco' ? '<span style="color: #ff6b6b;">Deco</span>' : '<span style="color: #ffd700;">Bezp.</span>';
                         html += `<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
                             <td style="padding: 8px; font-weight: bold;">${stop.depth}m</td>
                             <td style="text-align: center; padding: 8px;">${stop.time} min</td>
@@ -1177,10 +1177,42 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             <td style="text-align: right; padding: 8px;">${stop.runtime} min</td>
                         </tr>`;
                     });
-                    
+
                     html += `</table></div>`;
                 }
-                
+
+                // Add explanation tooltip
+                const explanationHTML = `
+                    <div class="result-section" style="margin-top: 20px; background: rgba(100, 100, 100, 0.1); padding: 15px; border-radius: 8px;">
+                        <h4 style="margin-top: 0; color: #00d1b2;">ℹ️ Wyjaśnienie Obliczeń - Bühlmann ZHL-16C</h4>
+                        <p><strong>Dane Wejściowe:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li>Maksymalna Głębokość: ${depth} m</li>
+                            <li>Czas Denny: ${bottomTime} min</li>
+                            <li>Gaz: ${(fo2 * 100).toFixed(0)}% O₂ (${fo2 === 0.21 ? 'Air' : 'Nitrox ' + (fo2 * 100).toFixed(0)})</li>
+                            <li>Gradient Factors: GF ${gfLow}/${gfHigh} (konserwatyzm)</li>
+                        </ul>
+                        <p><strong>Model Bühlmann ZHL-16C:</strong></p>
+                        <ul style="margin-left: 20px;">
+                            <li><strong>16 Przedziałów Tkankowych:</strong> Każda tkanka ma różne tempo absorpcji/desorpcji azotu (half-times: 4 min → 635 min)</li>
+                            <li><strong>M-Values:</strong> Maksymalne dopuszczalne ciśnienie parcjalne azotu w każdej tkance</li>
+                            <li><strong>Gradient Factors:</strong> GF Low (${gfLow}%) określa głębokość pierwszego przystanku, GF High (${gfHigh}%) określa margines bezpieczeństwa na powierzchni</li>
+                        </ul>
+                        <p><strong>Przebieg Obliczeń:</strong></p>
+                        <ol style="margin-left: 20px;">
+                            <li><strong>Zejście:</strong> Symulacja nasycenia tkanek azotem podczas zejścia (${result.profile.descentTime} min)</li>
+                            <li><strong>Dno:</strong> Dalsze nasycenie na głębokości ${depth}m przez ${bottomTime} min</li>
+                            <li><strong>Obliczanie Ceiling:</strong> Dla każdej tkanki obliczany jest "ceiling" (najniższa bezpieczna głębokość) używając Schreiner Equation</li>
+                            <li><strong>Przystanki Deco:</strong> ${result.ndl ? 'Żadna tkanka nie wymaga dekompresji - NDL!' : 'Tkanka kontrolująca wymaga przystanków na ' + result.stops.filter(s => s.type === 'deco').length + ' głębokościach'}</li>
+                            <li><strong>Wynurzenie:</strong> Odgazowanie tkanek podczas przystanków (${result.profile.ascentTime} min total)</li>
+                        </ol>
+                        <p style="color: #ffd700; font-size: 0.9em; margin-top: 15px;">
+                            <strong>⚠️ Uwaga:</strong> Algorytm Bühlmann ZHL-16C jest uznany za najbardziej zaawansowany model dekompresji, ale to narzędzie jest TYLKO do celów edukacyjnych. Zawsze nurkuj z certyfikowanym komputerem nurkowym!
+                        </p>
+                    </div>
+                `;
+                html += explanationHTML;
+
                 decoResult.innerHTML = html;
                 decoResult.style.display = 'block';
                 decoResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
