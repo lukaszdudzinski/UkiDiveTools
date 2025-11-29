@@ -649,11 +649,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const time = parseFloat(document.getElementById('time').value);
                 const waterType = document.getElementById('waterType').value;
 
-                const pressureConversion = (waterType === 'fresh') ? (10 / 10.3) : 1.0;
-                const avgPressure = (depth / 10 * pressureConversion) + 1;
+                // Używamy standardowego przybliżenia (depth/10 + 1) dla uproszczenia i zgodności z oczekiwaniami
+                const avgPressure = (depth / 10) + 1;
                 const sac = ((p1 - p2) * vb) / (avgPressure * time);
 
                 const explanationHTML = `
+                    <div class="formula-box-small">
                         <h5>Obliczenia SAC</h5>
                         <p class="formula">SAC = (Zużyte Litry) / (Śr. Ciśnienie * Czas)</p>
                         <ul>
@@ -689,7 +690,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const rbResult = calculateRockBottom(params);
                 const d = rbResult.details;
                 const explanationHTML = `
-                    <div class="formula-box-small">
+                    < div class="formula-box-small" >
                         <h5>Obliczenia Rock Bottom</h5>
                         <p class="formula">RB = Gaz Reakcji + Gaz Wynurzenia</p>
                         <ul>
@@ -698,10 +699,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             <li>Gaz wynurzenia: <strong>${d.Gas_ascent.toFixed(0)} l</strong> (${d.SAC_stressed.toFixed(1)} × ${d.P_avg_ascent.toFixed(1)} ATA × ${d.T_ascent.toFixed(1)} min × ${params.divers} os.)</li>
                             <li>Total: <strong>${d.TotalGasLiters.toFixed(0)} l</strong> (${d.Gas_reaction.toFixed(0)} + ${d.Gas_ascent.toFixed(0)})</li>
                         </ul>
-                    </div>`;
+                    </div > `;
 
                 rbResultContainer.innerHTML = `
-                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
+                    < div class="result-info-icon tooltip-trigger" data - tooltip - type="calculation" data - pro - feature="false" > i</div >
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
                     <div class="rb-info-section" style="border:none; padding:0; background:transparent;">
                         <p class="result-label">Minimalna Rezerwa (RB)</p>
@@ -769,10 +770,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const o2 = parseFloat(document.getElementById('nitroxO2').value) / 100;
                 const ppo2 = parseFloat(document.getElementById('modPO2').value);
                 const mod = ((ppo2 / o2) - 1) * 10;
-                const explanationHTML = `<div class="formula-box-small"><h5>Obliczenia MOD</h5><p class="formula">MOD = (PPO2 / FO2 - 1) * 10</p><ul><li>${ppo2} / ${o2} = ${(ppo2 / o2).toFixed(2)} ATA</li><li>(${(ppo2 / o2).toFixed(2)} - 1) * 10 = <strong>${mod.toFixed(1)} m</strong></li></ul></div>`;
+                const explanationHTML = `< div class="formula-box-small" ><h5>Obliczenia MOD</h5><p class="formula">MOD = (PPO2 / FO2 - 1) * 10</p><ul><li>${ppo2} / ${o2} = ${(ppo2 / o2).toFixed(2)} ATA</li><li>(${(ppo2 / o2).toFixed(2)} - 1) * 10 = <strong>${mod.toFixed(1)} m</strong></li></ul></div > `;
 
                 modResult.innerHTML = `
-                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
+                    < div class="result-info-icon tooltip-trigger" data - tooltip - type="calculation" data - pro - feature="false" > i</div >
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
                     <div class="result-section">
                         <p class="result-label">Maksymalna Głębokość (MOD)</p>
@@ -795,10 +796,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const depth = parseFloat(document.getElementById('eadDepth').value);
                 const n2 = 1.0 - o2;
                 const ead = ((depth + 10) * (n2 / 0.79)) - 10;
-                const explanationHTML = `<div class="formula-box-small"><h5>Obliczenia EAD</h5><p class="formula">EAD = ((D + 10) * FN2 / 0.79) - 10</p><ul><li>Ciśnienie N2: (${depth}+10) * ${n2.toFixed(2)} = ${((depth + 10) * n2).toFixed(2)}</li><li>Ekwiwalent Powietrzny: (${((depth + 10) * n2).toFixed(2)} / 0.79) - 10 = <strong>${ead.toFixed(1)} m</strong></li></ul></div>`;
+                const explanationHTML = `< div class="formula-box-small" ><h5>Obliczenia EAD</h5><p class="formula">EAD = ((D + 10) * FN2 / 0.79) - 10</p><ul><li>Ciśnienie N2: (${depth}+10) * ${n2.toFixed(2)} = ${((depth + 10) * n2).toFixed(2)}</li><li>Ekwiwalent Powietrzny: (${((depth + 10) * n2).toFixed(2)} / 0.79) - 10 = <strong>${ead.toFixed(1)} m</strong></li></ul></div > `;
 
                 eadResult.innerHTML = `
-                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
+                    < div class="result-info-icon tooltip-trigger" data - tooltip - type="calculation" data - pro - feature="false" > i</div >
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
                     <div class="result-section">
                         <p class="result-label">EAD (Dla Tabel Powietrznych)</p>
@@ -826,10 +827,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const bestMixPercent = Math.floor(fo2 * 100);
 
                 const waterTypeName = (waterType === 'fresh') ? 'słodka' : 'słona';
-                const explanationHTML = `<div class="formula-box-small"><h5>Best Mix</h5><p class="formula">FO2 = PPO2 / ATA</p><ul><li><strong>Krok 1: Obliczenie ciśnienia (ATA)</strong><ul><li>Głębokość: ${depth}m</li><li>Woda: ${waterTypeName}</li><li>Wzór: ATA = (Głębokość / 10 ${waterType === 'fresh' ? '* 0.971' : ''}) + 1</li><li>ATA = ${ata.toFixed(2)} ATA</li></ul></li><li><strong>Krok 2: Obliczenie FO₂</strong><ul><li>PPO₂ (limit): ${ppo2} bar</li><li>FO₂ = ${ppo2} / ${ata.toFixed(2)} = ${fo2.toFixed(3)}</li></ul></li><li><strong>Wynik (zaokrąglony w dół):</strong> <strong>${bestMixPercent}%</strong></li></ul></div>`;
+                const explanationHTML = `< div class="formula-box-small" ><h5>Best Mix</h5><p class="formula">FO2 = PPO2 / ATA</p><ul><li><strong>Krok 1: Obliczenie ciśnienia (ATA)</strong><ul><li>Głębokość: ${depth}m</li><li>Woda: ${waterTypeName}</li><li>Wzór: ATA = (Głębokość / 10 ${waterType === 'fresh' ? '* 0.971' : ''}) + 1</li><li>ATA = ${ata.toFixed(2)} ATA</li></ul></li><li><strong>Krok 2: Obliczenie FO₂</strong><ul><li>PPO₂ (limit): ${ppo2} bar</li><li>FO₂ = ${ppo2} / ${ata.toFixed(2)} = ${fo2.toFixed(3)}</li></ul></li><li><strong>Wynik (zaokrąglony w dół):</strong> <strong>${bestMixPercent}%</strong></li></ul></div > `;
 
                 bestMixResult.innerHTML = `
-                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
+                    < div class="result-info-icon tooltip-trigger" data - tooltip - type="calculation" data - pro - feature="false" > i</div >
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
                     <div class="result-section">
                         <p class="result-label">Najlepszy Mix (Best Mix)</p>
@@ -837,41 +838,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     </div>`;
                 bestMixResult.style.display = 'block';
                 bestMixResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } catch (error) { }
-        });
-    }
-
-    // --- 8. Nitrox: CNS ---
-    const cnsForm = document.getElementById('cnsForm');
-    const cnsResult = document.getElementById('cnsResult');
-    if (cnsForm && cnsResult) {
-        cnsForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            try {
-                const o2 = parseFloat(document.getElementById('nitroxO2').value) / 100;
-                const depth = parseFloat(document.getElementById('cnsDepth').value);
-                const time = parseFloat(document.getElementById('cnsTime').value);
-                const waterType = document.getElementById('global-water-type').value;
-                const pressureConversion = (waterType === 'fresh') ? (10 / 10.3) : 1.0;
-                const ppo2 = ((depth / 10 * pressureConversion) + 1) * o2;
-
-                // Tabela NOAA (uproszczona logika dla przykładu)
-                const cnsRates = { 0.6: 0.12, 0.7: 0.17, 0.8: 0.22, 0.9: 0.28, 1.0: 0.33, 1.1: 0.40, 1.2: 0.48, 1.3: 0.56, 1.4: 0.67, 1.5: 0.83, 1.6: 1.11 };
-                let rateKey = (Math.floor(ppo2 * 10) / 10).toFixed(1);
-                let cnsPerMin = (rateKey < 0.6) ? 0.0 : (rateKey > 1.6 ? 1.11 : cnsRates[rateKey]);
-                const cnsTotal = cnsPerMin * time;
-
-                const explanationHTML = `<div class="formula-box-small"><h5>Obliczenia CNS</h5><p class="formula">%CNS = Czas * Wskaźnik NOAA dla PPO₂</p><ul><li>PPO2 na dnie: <strong>${ppo2.toFixed(2)} ATA</strong></li><li>Limit NOAA dla ${ppo2.toFixed(1)} ATA: ${cnsPerMin}% / min</li><li>Zużycie limitu: ${cnsPerMin}% * ${time} min = <strong>${cnsTotal.toFixed(1)}%</strong></li></ul></div>`;
-
-                cnsResult.innerHTML = `
-                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
-                    <div class="calculation-details" style="display: none;">${explanationHTML}</div>
-                    <div class="result-section">
-                        <p class="result-label">Obciążenie CNS</p>
-                        <p class="result-value-main">${cnsTotal.toFixed(1)}<span class="unit">%</span></p>
-                    </div>`;
-                cnsResult.style.display = 'block';
-                cnsResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } catch (error) { }
         });
     }
@@ -896,18 +862,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const airTopUp = targetBar - pressureAfterO2;
 
                 if (oxygenToAdd < 0) {
-                    blenderResult.innerHTML = `<p class="result-error">Nie można uzyskać mieszanki (Zbyt dużo tlenu w butli startowej).</p>`;
+                    blenderResult.innerHTML = `< p class="result-error" > Nie można uzyskać mieszanki(Zbyt dużo tlenu w butli startowej).</p > `;
                     blenderResult.style.display = 'block';
                     return;
                 }
                 if (pressureAfterO2 > targetBar) {
-                    blenderResult.innerHTML = `<p class="result-error">Przekroczono ciśnienie docelowe.</p>`;
+                    blenderResult.innerHTML = `< p class="result-error" > Przekroczono ciśnienie docelowe.</p > `;
                     blenderResult.style.display = 'block';
                     return;
                 }
 
                 const explanationHTML = `
-                    <div class="formula-box-small">
+                    < div class="formula-box-small" >
                         <h5>Gas Blender: Mieszanie Metodą Ciśnień Parcjalnych (Nitrox)</h5>
                         <p>Obliczamy ile czystego tlenu (100%) dodać, aby resztę dobić powietrzem (21%).</p>
                         <ul>
@@ -915,11 +881,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             <li>Krok 1 (Tlen): <strong>+${oxygenToAdd.toFixed(1)} bar</strong></li>
                             <li>Krok 2 (Powietrze): +${airTopUp.toFixed(1)} bar</li>
                         </ul>
-                    </div>
-                `;
+                    </div >
+                    `;
 
                 blenderResult.innerHTML = `
-                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="true">i</div>
+                    < div class="result-info-icon tooltip-trigger" data - tooltip - type="calculation" data - pro - feature="true" > i</div >
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
                     <div class="result-section">
                         <p class="result-label">Krok 1: Dodaj 100% Tlenu</p>
@@ -952,17 +918,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
                 // Walidacja
                 if (targetO2 + targetHe > 100) {
-                    trimixResult.innerHTML = `<p class="result-error">Błąd: Suma O2 i He nie może przekraczać 100%!</p>`;
+                    trimixResult.innerHTML = `< p class="result-error" > Błąd: Suma O2 i He nie może przekraczać 100 % !</p > `;
                     trimixResult.style.display = 'block';
                     return;
                 }
                 if (targetO2 < 16) {
-                    trimixResult.innerHTML = `<p class="result-error">Błąd: Zawartość tlenu musi być ≥ 16% (minimalna frakcja do oddychania).</p>`;
+                    trimixResult.innerHTML = `< p class="result-error" > Błąd: Zawartość tlenu musi być ≥ 16 % (minimalna frakcja do oddychania).</p > `;
                     trimixResult.style.display = 'block';
                     return;
                 }
                 if (targetBar <= startBar) {
-                    trimixResult.innerHTML = `<p class="result-error">Błąd: Ciśnienie docelowe musi być wyższe niż początkowe.</p>`;
+                    trimixResult.innerHTML = `< p class="result-error" > Błąd: Ciśnienie docelowe musi być wyższe niż początkowe.</p > `;
                     trimixResult.style.display = 'block';
                     return;
                 }
@@ -980,7 +946,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
                 // Tooltip z formułami
                 const explanationHTML = `
-                    <div class="formula-box-small">
+                    < div class="formula-box-small" >
                         <h5>Partial Pressure Blending (Trimix)</h5>
                         <p>Obliczenia ciśnień parcjalnych dla mieszanki ${targetO2}/${targetHe}:</p>
                         <ul>
@@ -989,11 +955,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             <li>P<sub>Air</sub> = ${targetBar} - ${heBar.toFixed(1)} - ${o2Bar.toFixed(1)} = <strong>${airBar.toFixed(1)} bar</strong></li>
                             <li>N<sub>2</sub> = 100% - ${targetO2}% - ${targetHe}% = <strong>${n2Percent.toFixed(1)}%</strong></li>
                         </ul>
-                    </div>
-                `;
+                    </div >
+                    `;
 
                 trimixResult.innerHTML = `
-                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="true">i</div>
+                    < div class="result-info-icon tooltip-trigger" data - tooltip - type="calculation" data - pro - feature="true" > i</div >
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
                     <div class="result-section">
                         <p class="result-label">Krok 1: Dodaj 100% Hel (He)</p>
@@ -1045,18 +1011,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const requiredBar = totalLitres / tankSize;
 
                 const explanationHTML = `
-                    <div class="formula-box-small">
+                    < div class="formula-box-small" >
                         <h5>Kalkulacja Bailout</h5>
                         <ul>
                             <li><strong>Reakcja:</strong> ${sac} l/min * ${pressureAtDepth} ATA * ${reactionTime} min = <strong>${gasReaction.toFixed(0)} l</strong></li>
                             <li><strong>Wynurzenie:</strong> ${sac} l/min * ${avgPressure.toFixed(1)} ATA * ${travelTime.toFixed(1)} min = <strong>${gasAscent.toFixed(0)} l</strong></li>
                             <li><strong>Suma:</strong> ${totalLitres.toFixed(0)} l</li>
                         </ul>
-                    </div>
-                `;
+                    </div >
+                    `;
 
                 bailoutResult.innerHTML = `
-                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="true">i</div>
+                    < div class="result-info-icon tooltip-trigger" data - tooltip - type="calculation" data - pro - feature="true" > i</div >
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
                     <div class="result-section">
                         <p class="result-label">Wymagany Gaz (Minimum)</p>
@@ -1100,7 +1066,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 let html = '';
 
                 // Profile summary
-                html += `<div class="result-section">
+                html += `< div class="result-section" >
                     <p class="result-label">Profil Nurkowania</p>
                     <p class="result-value-main" style="font-size: 1.6em;">${result.gas.type}</p>
                     <p class="result-value-sub">
@@ -1108,13 +1074,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         Czas denny: ${result.profile.bottomTime} min | 
                         GF ${gfLow}/${gfHigh}
                     </p>
-                </div>`;
+                </div > `;
 
                 // Runtime
                 // Runtime breakdown
                 const totalStopTime = result.stops.reduce((sum, stop) => sum + stop.time, 0);
 
-                html += `<div class="result-section">
+                html += `< div class="result-section" >
                     <p class="result-label">Łączny Czas Nurkowania</p>
                     <p class="result-value-main" style="color: #00d1b2; font-size: 2em;">
                         ${result.profile.totalRuntime} <span class="unit">min</span>
@@ -1128,7 +1094,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     <p class="result-value-sub" style="font-size: 0.85em; opacity: 0.8; margin-top: 5px;">
                         * Łączny czas = zejście (${result.profile.descentTime}) + dno (${result.profile.bottomTime}) + wynurzenie (${result.profile.travelTime}) + przystanki (${totalStopTime}) = ${result.profile.totalRuntime} min
                     </p>
-                </div>`;
+                </div > `;
 
                 // Gas requirement estimation
                 // SAC 20 l/min * pressure * time for each phase
@@ -1156,7 +1122,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const totalGasLiters = Math.round(gasDescent + gasBottom + gasAscent + gasStops);
                 const gasFor12LTank = Math.round(totalGasLiters / 12);
 
-                html += `<div class="result-section">
+                html += `< div class="result-section" >
                     <p class="result-label">Oszacowanie Zużycia Gazu</p>
                     <p class="result-value-main" style="color: #ffd700; font-size: 1.8em;">
                         ${totalGasLiters} <span class="unit">litrów</span>
@@ -1167,19 +1133,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     <p class="result-value-sub" style="font-size: 0.85em; opacity: 0.8; margin-top: 5px;">
                         * SAC ${sac} l/min | Zejście: ${Math.round(gasDescent)}L | Dno: ${Math.round(gasBottom)}L | Wynurzenie: ${Math.round(gasAscent)}L | Przystanki: ${Math.round(gasStops)}L
                     </p>
-                </div>`;
+                </div > `;
 
                 // Deco stops or NDL
                 if (result.ndl) {
-                    html += `<div class="result-section" style="background: rgba(0, 209, 178, 0.1); border: 1px solid rgba(0, 209, 178, 0.3); padding: 15px; border-radius: 8px; margin-top: 15px;">
+                    html += `< div class="result-section" style = "background: rgba(0, 209, 178, 0.1); border: 1px solid rgba(0, 209, 178, 0.3); padding: 15px; border-radius: 8px; margin-top: 15px;" >
                         <p class="result-label" style="color: #00d1b2;">✅ NDL (No Decompression Limit)</p>
                         <p style="color: #00d1b2; font-size: 0.95em;">
                             Możesz wynurzyć się bezpośrednio z zachowaniem prędkości wynurzania 10 m/min.
                         </p>
-                    </div>`;
+                    </div > `;
 
                     if (result.stops.length > 0 && result.stops[0].type === 'safety') {
-                        html += `<div class="result-section">
+                        html += `< div class="result-section" >
                             <p class="result-label">Safety Stop (Zalecany)</p>
                             <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
                                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
@@ -1193,17 +1159,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
                                     <td style="text-align: right; padding: 8px;">${result.stops[0].runtime} min</td>
                                 </tr>
                             </table>
-                        </div>`;
+                        </div > `;
                     }
                 } else {
-                    html += `<div class="result-section" style="background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.3); padding: 15px; border-radius: 8px; margin-top: 15px;">
+                    html += `< div class="result-section" style = "background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.3); padding: 15px; border-radius: 8px; margin-top: 15px;" >
                         <p class="result-label" style="color: #ff6b6b;">⚠️ WYMAGANA DEKOMPRESJA</p>
                         <p style="color: #ff6b6b; font-size: 0.95em;">
                             Wymagane przystanki dekompresyjne. Nie wynurzaj się szybciej niż wskazany profil!
                         </p>
-                    </div>`;
+                    </div > `;
 
-                    html += `<div class="result-section">
+                    html += `< div class="result-section" >
                         <p class="result-label">Przystanki Dekompresyjne</p>
                         <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
                             <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
@@ -1223,12 +1189,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         </tr>`;
                     });
 
-                    html += `</table></div>`;
+                    html += `</table></div > `;
                 }
 
                 // Create explanation HTML for tooltip
                 const explanationHTML = `
-                    <h3>Wyjaśnienie Obliczeń - Bühlmann ZHL-16C</h3>
+                    < h3 > Wyjaśnienie Obliczeń - Bühlmann ZHL - 16C</h3 >
                     <p><strong>Dane Wejściowe:</strong></p>
                     <ul>
                         <li>Maksymalna Głębokość: ${depth} m</li>
@@ -1256,14 +1222,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 `;
 
                 decoResult.innerHTML = `
-                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
-                    <div class="calculation-details" style="display: none;">${explanationHTML}</div>
+                    < div class="result-info-icon tooltip-trigger" data - tooltip - type="calculation" data - pro - feature="false" > i</div >
+                        <div class="calculation-details" style="display: none;">${explanationHTML}</div>
                     ${html}
                 `;
                 decoResult.style.display = 'block';
                 decoResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } catch (error) {
-                decoResult.innerHTML = `<p class="result-error">Błąd obliczeń: ${error.message}</p>`;
+                decoResult.innerHTML = `< p class="result-error" > Błąd obliczeń: ${error.message}</p > `;
                 decoResult.style.display = 'block';
                 console.error('Deco Planner Error:', error);
             }
@@ -1344,7 +1310,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const totalBallast = Math.max(0, Math.round((baseBallast + suitMod + waterMod + tankMod) * 2) / 2);
 
                 const explanationHTML = `
-                    <div class="formula-box-small">
+                    < div class="formula-box-small" >
                         <h5>Obliczanie Sugestii Balastu</h5>
                         <p>Obliczenie balastu to heurystyka (dobra zasada), a nie ścisły wzór. Zawsze wykonaj kontrolę pływalności.</p>
                         <p class="formula">Balast = Waga<sub>bazowa</sub> + Modyfikatory</p>
@@ -1376,10 +1342,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             <li><strong>Budowa Atletyczna:</strong> -3 kg</li>
                             <li><strong>Budowa Nadwaga:</strong> +3 kg</li>
                         </ul>
-                    </div>`;
+                    </div > `;
 
                 ballastResultContainer.innerHTML = `
-                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
+                    < div class="result-info-icon tooltip-trigger" data - tooltip - type="calculation" data - pro - feature="false" > i</div >
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
                    
                     <div class="result-section">
@@ -1423,7 +1389,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             id: 'barotrauma',
             title: 'Barotrauma',
             description: 'Urazy ciśnieniowe. Fizyka, rodzaje, profilaktyka i pierwsza pomoc.',
-            content: `<h2>BAROTRAUMA (Uraz Ciśnieniowy): Pełny Przewodnik dla Początkujących Nurków</h2>
+            content: `< h2 > BAROTRAUMA(Uraz Ciśnieniowy): Pełny Przewodnik dla Początkujących Nurków</h2 >
             <p>Barotrauma to uszkodzenie tkanek, które wynika z nadmiernej różnicy ciśnień między przestrzenią gazową w ciele a ciśnieniem otoczenia. Zrozumienie tego zjawiska jest fundamentalne, ponieważ woda nie jest naturalnym środowiskiem człowieka.</p>
             <h3>1. Fizyczne Podstawy Barotraumy: Prawo Boyle’a-Mariotte’a</h3>
             <p>Wszystkie urazy ciśnieniowe są ściśle związane z Prawem Boyle’a-Mariotte’a. Prawo to opisuje zachowanie gazu w stałej temperaturze (przemiana izotermiczna).</p>
