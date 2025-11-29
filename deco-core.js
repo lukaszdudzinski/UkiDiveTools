@@ -283,11 +283,11 @@ function calculateDecoProfile(maxDepth, bottomTime, fo2 = 0.21, gfLow = 30, gfHi
             stopTime++;
             totalDecoTime++;
 
-            // Check if we can ascend (ceiling must be at or below next stop depth)
+            // Check if we can ascend (ceiling must be below current stop depth)
             const { ceiling: newCeiling } = getControllingCeiling(tissues, gf);
-            const nextStopDepth = stopDepth - DECO_CONFIG.stopInterval;
-            if (newCeiling <= nextStopDepth) {
-                console.log(`[STOP] Ceiling cleared! newCeiling: ${newCeiling.toFixed(2)}m <= ${nextStopDepth}m, stopTime: ${stopTime} min`);
+            // Can ascend when ceiling drops below where we currently are
+            if (newCeiling < stopDepth) {
+                console.log(`[STOP] Ceiling cleared! newCeiling: ${newCeiling.toFixed(2)}m < ${stopDepth}m, stopTime: ${stopTime} min`);
                 break;
             }
         }
