@@ -162,145 +162,129 @@ function getControllingCeiling(tissues, gf) {
         const ceiling = Math.max(0, (pAmb - DECO_CONFIG.atmPressure) / DECO_CONFIG.waterPressurePerMeter);
 
         if (ceiling > maxCeiling) {
-            maxCeiling = ceiling;
-            controllingCompartment = i;
-        }
-    }
+ * @param { number } maxDepth - Maximum depth in meters
+                * @param { number } bottomTime - Bottom time in minutes
+                    * @param { number } fo2 - Fraction of O2(default: 0.21 for air)
+ * @param { number } gfLow - Gradient Factor Low(default: 30)
+                * @param { number } gfHigh - Gradient Factor High(default: 85)
+                    * @returns { Object } Deco profile with stops and runtime
+                        */
+            function calculateDecoProfile(maxDepth, bottomTime, fo2 = 0.21, gfLow = 30, gfHigh = 85) {
+                // Initialize tissues at surface
+                let tissues = initializeTissues();
 
-    const result = {
-        ceiling: Math.ceil(maxCeiling / DECO_CONFIG.stopInterval) * DECO_CONFIG.stopInterval,
-        compartment: controllingCompartment
-    };
-    console.log(`[CEILING] maxCeiling: ${maxCeiling.toFixed(2)}m, rounded: ${result.ceiling}m, compartment: ${controllingCompartment + 1}, GF: ${gf}%`);
-    return result;
-}
+                // Simulate descent
+                tissues = simulateDescent(tissues, maxDepth, fo2);
+                const descentTime = maxDepth / DECO_CONFIG.descentRate;
 
-/**
- * Calculate deco profile for a single-level dive
- * 
- * @param {number} maxDepth - Maximum depth in meters
- * @param {number} bottomTime - Bottom time in minutes
- * @param {number} fo2 - Fraction of O2 (default: 0.21 for air)
- * @param {number} gfLow - Gradient Factor Low (default: 30)
- * @param {number} gfHigh - Gradient Factor High (default: 85)
- * @returns {Object} Deco profile with stops and runtime
- */
-function calculateDecoProfile(maxDepth, bottomTime, fo2 = 0.21, gfLow = 30, gfHigh = 85) {
-    // Initialize tissues at surface
-    let tissues = initializeTissues();
+                // Simulate bottom time
+                tissues = simulateBottom(tissues, maxDepth, bottomTime, fo2);
 
-    // Simulate descent
-    tissues = simulateDescent(tissues, maxDepth, fo2);
-    const descentTime = maxDepth / DECO_CONFIG.descentRate;
+                // Calculate deco stops
+                const decoStops = [];
+                let currentDepth = maxDepth;
+                let totalDecoTime = 0;
 
-    // Simulate bottom time
-    tissues = simulateBottom(tissues, maxDepth, bottomTime, fo2);
+                // Ascend to first stop or surface
+                let iterations = 0;
+                const maxIterations = 50; // Safety limit to prevent infinite loop
+                while (currentDepth > 0 && iterations < maxIterations) {
+                    iterations++;
+                    console.log(`\n[DECO LOOP] Iteration ${iterations}, currentDepth: ${currentDepth}m`);
+                    // Interpolate GF based on depth
+                    const gf = gfHigh; // Simplified - use GF High for now
+                    // TODO: Implement proper GF interpolation (GF Low at first stop, GF High at surface)
 
-    // Calculate deco stops
-    const decoStops = [];
-    let currentDepth = maxDepth;
-    let totalDecoTime = 0;
+                    // Get ceiling (shallowest safe depth)
+                    const { ceiling } = getControllingCeiling(tissues, gf);
 
-    // Ascend to first stop or surface
-    let iterations = 0;
-    const maxIterations = 50; // Safety limit to prevent infinite loop
-    while (currentDepth > 0 && iterations < maxIterations) {
-        iterations++;
-        console.log(`\n[DECO LOOP] Iteration ${iterations}, currentDepth: ${currentDepth}m`);
-        // Interpolate GF based on depth
-        const gf = gfHigh; // Simplified - use GF High for now
-        // TODO: Implement proper GF interpolation (GF Low at first stop, GF High at surface)
+                    if (ceiling === 0 && currentDepth <= 6) {
+                        // Can ascend to surface, but do safety stop
+                        if (currentDepth > 3) {
+                            const { tissues: newTissues, time } = simulateAscent(tissues, currentDepth, 3, fo2);
+                            tissues = newTissues;
+                        }
 
-        // Get ceiling (shallowest safe depth)
-        const { ceiling } = getControllingCeiling(tissues, gf);
+                        // Safety stop at 3-5m
+                        const safetyDepth = 5;
+                        const safetyTime = 3;
+                        tissues = simulateBottom(tissues, safetyDepth, safetyTime, fo2);
+                        decoStops.push({
+                            depth: safetyDepth,
+                            time: safetyTime,
+                            runtime: descentTime + bottomTime + totalDecoTime + safetyTime,
+                            type: 'safety'
+                        });
+                        totalDecoTime += safetyTime;
+                        break;
+                    }
 
-        if (ceiling === 0 && currentDepth <= 6) {
-            // Can ascend to surface, but do safety stop
-            if (currentDepth > 3) {
-                const { tissues: newTissues, time } = simulateAscent(tissues, currentDepth, 3, fo2);
-                tissues = newTissues;
+                    if (ceiling === 0) {
+                        // Can surface
+                        break;
+                    }
+
+                    // Need deco stop at ceiling depth
+                    const stopDepth = Math.max(ceiling, 3);
+
+                    // Ascend to stop depth
+                    if (currentDepth > stopDepth) {
+                        const { tissues: newTissues, time } = simulateAscent(tissues, currentDepth, stopDepth, fo2);
+                        tissues = newTissues;
+                        totalDecoTime += time;
+                        currentDepth = stopDepth;
+                    }
+
+                    // Stay at stop until ceiling clears
+                    console.log(`[STOP] At ${stopDepth}m, calculating stop time...`);
+                    let stopTime = 0;
+                    const maxStopTime = 60; // Safety limit
+
+                    while (stopTime < maxStopTime) {
+                        // Simulate 1 minute at stop
+                        tissues = simulateBottom(tissues, stopDepth, 1, fo2);
+                        stopTime++;
+                        totalDecoTime++;
+
+                        // Check if we can ascend
+                        const { ceiling: newCeiling } = getControllingCeiling(tissues, gf);
+                        if (newCeiling < stopDepth - DECO_CONFIG.stopInterval) {
+                            console.log(`[STOP] Ceiling cleared! newCeiling: ${newCeiling}m < ${stopDepth - DECO_CONFIG.stopInterval}m, stopTime: ${stopTime} min`);
+                            break;
+                        }
+                    }
+
+                    if (stopTime >= maxStopTime) {
+                        console.log(`[STOP] Hit maxStopTime limit (${maxStopTime} min)!`);
+                    }
+
+                    decoStops.push({
+                        depth: stopDepth,
+                        time: stopTime,
+                        runtime: descentTime + bottomTime + totalDecoTime,
+                        type: 'deco'
+                    });
+
+                    // Move to next shallower stop
+                    currentDepth = stopDepth - DECO_CONFIG.stopInterval;
+                }
+
+                const totalRuntime = descentTime + bottomTime + totalDecoTime;
+                const ascentTime = totalRuntime - descentTime - bottomTime;
+
+                return {
+                    profile: {
+                        maxDepth,
+                        bottomTime,
+                        descentTime: Math.ceil(descentTime),
+                        ascentTime: Math.ceil(ascentTime),
+                        totalRuntime: Math.ceil(totalRuntime)
+                    },
+                    stops: decoStops,
+                    gas: {
+                        fo2: (fo2 * 100).toFixed(0) + '%',
+                        type: fo2 === 0.21 ? 'Air' : `Nitrox ${(fo2 * 100).toFixed(0)}`
+                    },
+                    ndl: decoStops.length === 0 || (decoStops.length === 1 && decoStops[0].type === 'safety')
+                };
             }
-
-            // Safety stop at 3-5m
-            const safetyDepth = 5;
-            const safetyTime = 3;
-            tissues = simulateBottom(tissues, safetyDepth, safetyTime, fo2);
-            decoStops.push({
-                depth: safetyDepth,
-                time: safetyTime,
-                runtime: descentTime + bottomTime + totalDecoTime + safetyTime,
-                type: 'safety'
-            });
-            totalDecoTime += safetyTime;
-            break;
-        }
-
-        if (ceiling === 0) {
-            // Can surface
-            break;
-        }
-
-        // Need deco stop at ceiling depth
-        const stopDepth = Math.max(ceiling, 3);
-
-        // Ascend to stop depth
-        if (currentDepth > stopDepth) {
-            const { tissues: newTissues, time } = simulateAscent(tissues, currentDepth, stopDepth, fo2);
-            tissues = newTissues;
-            totalDecoTime += time;
-            currentDepth = stopDepth;
-        }
-
-        // Stay at stop until ceiling clears
-        console.log(`[STOP] At ${stopDepth}m, calculating stop time...`);
-        let stopTime = 0;
-        const maxStopTime = 60; // Safety limit
-
-        while (stopTime < maxStopTime) {
-            // Simulate 1 minute at stop
-            tissues = simulateBottom(tissues, stopDepth, 1, fo2);
-            stopTime++;
-            totalDecoTime++;
-
-            // Check if we can ascend
-            const { ceiling: newCeiling } = getControllingCeiling(tissues, gf);
-            if (newCeiling < stopDepth - DECO_CONFIG.stopInterval) {
-                console.log(`[STOP] Ceiling cleared! newCeiling: ${newCeiling}m < ${stopDepth - DECO_CONFIG.stopInterval}m, stopTime: ${stopTime} min`);
-                break;
-            }
-        }
-
-        if (stopTime >= maxStopTime) {
-            console.log(`[STOP] Hit maxStopTime limit (${maxStopTime} min)!`);
-        }
-
-        decoStops.push({
-            depth: stopDepth,
-            time: stopTime,
-            runtime: descentTime + bottomTime + totalDecoTime,
-            type: 'deco'
-        });
-
-        // Move to next shallower stop
-        currentDepth = stopDepth - DECO_CONFIG.stopInterval;
-    }
-
-    const totalRuntime = descentTime + bottomTime + totalDecoTime;
-    const ascentTime = totalRuntime - descentTime - bottomTime;
-
-    return {
-        profile: {
-            maxDepth,
-            bottomTime,
-            descentTime: Math.ceil(descentTime),
-            ascentTime: Math.ceil(ascentTime),
-            totalRuntime: Math.ceil(totalRuntime)
-        },
-        stops: decoStops,
-        gas: {
-            fo2: (fo2 * 100).toFixed(0) + '%',
-            type: fo2 === 0.21 ? 'Air' : `Nitrox ${(fo2 * 100).toFixed(0)}`
-        },
-        ndl: decoStops.length === 0 || (decoStops.length === 1 && decoStops[0].type === 'safety')
-    };
-}
