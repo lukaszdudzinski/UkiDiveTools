@@ -1122,6 +1122,39 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         Dno: ${result.profile.bottomTime}min | 
                         Wynurzenie: ${result.profile.ascentTime}min
                     </p>
+                    <p class="result-value-sub" style="font-size: 0.85em; opacity: 0.8; margin-top: 5px;">
+                        * Wynurzenie = czas wynurzania + wszystkie przystanki
+                    </p>
+                </div>`;
+
+                // Gas requirement estimation
+                // Simple calculation: SAC 20 l/min * average pressure * time
+                const avgDepthDescent = depth / 2;
+                const avgPressureDescent = (avgDepthDescent / 10) + 1;
+                const gasDescent = 20 * avgPressureDescent * result.profile.descentTime;
+
+                const pressureBottom = (depth / 10) + 1;
+                const gasBottom = 20 * pressureBottom * result.profile.bottomTime;
+
+                // For ascent, estimate average depth as half of max depth
+                const avgDepthAscent = depth / 2;
+                const avgPressureAscent = (avgDepthAscent / 10) + 1;
+                const gasAscent = 20 * avgPressureAscent * result.profile.ascentTime;
+
+                const totalGasLiters = Math.round(gasDescent + gasBottom + gasAscent);
+                const gasFor12LTank = Math.round(totalGasLiters / 12);
+
+                html += `<div class="result-section">
+                    <p class="result-label">Oszacowanie Zużycia Gazu</p>
+                    <p class="result-value-main" style="color: #ffd700; font-size: 1.8em;">
+                        ${totalGasLiters} <span class="unit">litrów</span>
+                    </p>
+                    <p class="result-value-sub">
+                        Dla butli 12L: ~${gasFor12LTank} bar
+                    </p>
+                    <p class="result-value-sub" style="font-size: 0.85em; opacity: 0.8; margin-top: 5px;">
+                        * Założenie: SAC 20 l/min (spokojne nurkowanie)
+                    </p>
                 </div>`;
 
                 // Deco stops or NDL
