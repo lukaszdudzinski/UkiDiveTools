@@ -2504,10 +2504,3 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 
-// Toggle Deco Explanation Popup
-function toggleDecoExplanation() {
-    const popup = document.getElementById('decoExplanationPopup');
-    if (popup) {
-        popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
-    }
-}
