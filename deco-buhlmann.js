@@ -196,8 +196,10 @@ function getCeilingDepth(tissuePressure, compartmentIndex, gf, useHelium = false
     // Rearranging: P_amb = b × (P_tissue + a × (1 - GF/100) + a × GF/100)
     //            = b × (P_tissue + a)
 
-    // Simplified: assuming GF linear interpolation
-    const pAmb = b * (tissuePressure + a);
+    // Solve for P_amb when P_tissue = M_GF
+    // Correct formula: P_amb = (P_tissue + GF*a) / (1 - GF + GF/b)
+    const gfFraction = gf / 100;
+    const pAmb = (tissuePressure + gfFraction * a) / (1 - gfFraction + gfFraction / b);
 
     // Convert ambient pressure to depth
     const depth = (pAmb - DECO_CONFIG.atmPressure) / DECO_CONFIG.waterPressurePerMeter;
