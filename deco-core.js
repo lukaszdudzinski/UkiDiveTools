@@ -315,3 +315,37 @@ function calculateDecoProfile(maxDepth, bottomTime, fo2 = 0.21, gfLow = 30, gfHi
         // Move to next shallower stop
         currentDepth = stopDepth - DECO_CONFIG.stopInterval;
     }
+
+    const totalRuntime = descentTime + bottomTime + totalDecoTime;
+    const ascentTime = totalRuntime - descentTime - bottomTime;
+
+    // Calculate actual travel time (ascent without stops)
+    let travelTime = 0;
+    let prevDepth = maxDepth;
+    decoStops.forEach(stop => {
+        const distance = prevDepth - stop.depth;
+        travelTime += distance / DECO_CONFIG.ascentRate;
+        prevDepth = stop.depth;
+    });
+    // Add final ascent to surface
+    if (prevDepth > 0) {
+        travelTime += prevDepth / DECO_CONFIG.ascentRate;
+    }
+
+    return {
+        profile: {
+            maxDepth,
+            bottomTime,
+            descentTime: Math.ceil(descentTime),
+            ascentTime: Math.ceil(ascentTime),
+            travelTime: Math.ceil(travelTime),
+            totalRuntime: Math.ceil(totalRuntime)
+        },
+        stops: decoStops,
+        gas: {
+            fo2: (fo2 * 100).toFixed(0) + '%',
+            type: fo2 === 0.21 ? 'Air' : `Nitrox ${(fo2 * 100).toFixed(0)}`
+        },
+        ndl: decoStops.length === 0 || (decoStops.length === 1 && decoStops[0].type === 'safety')
+    };
+}
