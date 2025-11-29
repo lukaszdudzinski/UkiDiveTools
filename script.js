@@ -654,14 +654,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const sac = ((p1 - p2) * vb) / (avgPressure * time);
 
                 const explanationHTML = `
-                    <div class="formula-box-small">
                         <h5>Obliczenia SAC</h5>
                         <p class="formula">SAC = (Zużyte Litry) / (Śr. Ciśnienie * Czas)</p>
                         <ul>
                             <li>Zużyty gaz: (${p1} - ${p2}) bar * ${vb} l = <strong>${(p1 - p2) * vb} litrów</strong></li>
                             <li>Śr. ciśnienie (ATA): (${depth}m / 10) + 1 = <strong>${avgPressure.toFixed(2)} ATA</strong></li>
-                            <li>Mianownik: ${avgPressure.toFixed(2)} * ${time} min = ${(avgPressure * time).toFixed(1)}</li>
-                            <li>Wynik: ${(p1 - p2) * vb} / ${(avgPressure * time).toFixed(1)} = <strong>${sac.toFixed(2)}</strong></li>
+                            <li>Mianownik: ${avgPressure.toFixed(2)} * ${time} min = ${(avgPressure * time).toFixed(2)}</li>
+                            <li>Wynik: ${(p1 - p2) * vb} / ${(avgPressure * time).toFixed(2)} = <strong>${sac.toFixed(2)}</strong></li>
                         </ul>
                     </div>
                 `;
