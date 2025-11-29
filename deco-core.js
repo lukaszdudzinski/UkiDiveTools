@@ -167,10 +167,12 @@ function getControllingCeiling(tissues, gf) {
         }
     }
 
-    return {
+    const result = {
         ceiling: Math.ceil(maxCeiling / DECO_CONFIG.stopInterval) * DECO_CONFIG.stopInterval,
         compartment: controllingCompartment
     };
+    console.log(`[CEILING] maxCeiling: ${maxCeiling.toFixed(2)}m, rounded: ${result.ceiling}m, compartment: ${controllingCompartment + 1}, GF: ${gf}%`);
+    return result;
 }
 
 /**
@@ -204,6 +206,7 @@ function calculateDecoProfile(maxDepth, bottomTime, fo2 = 0.21, gfLow = 30, gfHi
     const maxIterations = 50; // Safety limit to prevent infinite loop
     while (currentDepth > 0 && iterations < maxIterations) {
         iterations++;
+        console.log(`\n[DECO LOOP] Iteration ${iterations}, currentDepth: ${currentDepth}m`);
         // Interpolate GF based on depth
         const gf = gfHigh; // Simplified - use GF High for now
         // TODO: Implement proper GF interpolation (GF Low at first stop, GF High at surface)
@@ -249,6 +252,7 @@ function calculateDecoProfile(maxDepth, bottomTime, fo2 = 0.21, gfLow = 30, gfHi
         }
 
         // Stay at stop until ceiling clears
+        console.log(`[STOP] At ${stopDepth}m, calculating stop time...`);
         let stopTime = 0;
         const maxStopTime = 60; // Safety limit
 
@@ -261,8 +265,13 @@ function calculateDecoProfile(maxDepth, bottomTime, fo2 = 0.21, gfLow = 30, gfHi
             // Check if we can ascend
             const { ceiling: newCeiling } = getControllingCeiling(tissues, gf);
             if (newCeiling < stopDepth - DECO_CONFIG.stopInterval) {
+                console.log(`[STOP] Ceiling cleared! newCeiling: ${newCeiling}m < ${stopDepth - DECO_CONFIG.stopInterval}m, stopTime: ${stopTime} min`);
                 break;
             }
+        }
+
+        if (stopTime >= maxStopTime) {
+            console.log(`[STOP] Hit maxStopTime limit (${maxStopTime} min)!`);
         }
 
         decoStops.push({
