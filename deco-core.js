@@ -140,26 +140,10 @@ function getControllingCeiling(tissues, gf) {
         // Total inert gas loading (N2 + He)
         const totalLoading = tissues.n2[i] + tissues.he[i];
 
-        // Calculate ceiling for this compartment
-        // We need to check both N2 and He, use combined approach
-        const { a, b } = BUHLMANN_N2[i];
-
-        // For simplicity, use N2 coefficients (accurate enough for air/nitrox)
-        // For Trimix, would need to calculate weighted a/b values
-
-        const mValue0 = (DECO_CONFIG.atmPressure / b) - a;
-
-        if (totalLoading <= mValue0 * (gf / 100)) {
-            // Can surface with this compartment
-            continue;
-        }
-
-        // Calculate ambient pressure needed for this loading
-        // totalLoading = (pAmb / b) - a  (at 100% GF)
-        // With GF: totalLoading = mValue0 + (gf/100) * ((pAmb/b - a) - mValue0)
-        // Solve for pAmb: pAmb = b * (totalLoading + a)
-        const pAmb = b * (totalLoading + a);
-        const ceiling = Math.max(0, (pAmb - DECO_CONFIG.atmPressure) / DECO_CONFIG.waterPressurePerMeter);
+        // Calculate ceiling for this compartment using the corrected Bühlmann + GF formula
+        // We use N2 coefficients for now (standard ZHL-16C approach for air/nitrox)
+        // Note: getCeilingDepth handles the GF math correctly now
+        const ceiling = getCeilingDepth(totalLoading, i, gf);
 
         if (ceiling > maxCeiling) {
             maxCeiling = ceiling;
