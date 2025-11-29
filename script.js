@@ -1181,43 +1181,40 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     html += `</table></div>`;
                 }
 
-                // Add info icon with popup tooltip (like MOD)
-                html += `
-                    <div class="result-section" style="position: relative; margin-top: 20px; padding: 15px; background: rgba(0, 0, 0, 0.2); border-radius: 8px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="color: #00d1b2; font-weight: bold;">Wyjaśnienie Obliczeń - Bühlmann ZHL-16C</span>
-                            <button onclick="toggleDecoExplanation()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 16px; color: #00d1b2;">i</button>
-                        </div>
-                        <div id="decoExplanationPopup" style="display: none; margin-top: 15px; padding: 15px; background: rgba(0, 0, 0, 0.9); border: 2px solid #00d1b2; border-radius: 8px;">
-                            <p><strong>Dane Wejściowe:</strong></p>
-                            <ul style="margin-left: 20px;">
-                                <li>Maksymalna Głębokość: ${depth} m</li>
-                                <li>Czas Denny: ${bottomTime} min</li>
-                                <li>Gaz: ${(fo2 * 100).toFixed(0)}% O₂ (${fo2 === 0.21 ? 'Air' : 'Nitrox ' + (fo2 * 100).toFixed(0)})</li>
-                                <li>Gradient Factors: GF ${gfLow}/${gfHigh} (konserwatyzm)</li>
-                            </ul>
-                            <p><strong>Model Bühlmann ZHL-16C:</strong></p>
-                            <ul style="margin-left: 20px;">
-                                <li><strong>16 Przedziałów Tkankowych:</strong> Każda tkanka ma różne tempo absorpcji/desorpcji azotu (half-times: 4 min → 635 min)</li>
-                                <li><strong>M-Values:</strong> Maksymalne dopuszczalne ciśnienie parcjalne azotu w każdej tkance</li>
-                                <li><strong>Gradient Factors:</strong> GF Low (${gfLow}%) określa głębokość pierwszego przystanku, GF High (${gfHigh}%) określa margines bezpieczeństwa na powierzchni</li>
-                            </ul>
-                            <p><strong>Przebieg Obliczeń:</strong></p>
-                            <ol style="margin-left: 20px;">
-                                <li><strong>Zejście:</strong> Symulacja nasycenia tkanek azotem podczas zejścia (${result.profile.descentTime} min)</li>
-                                <li><strong>Dno:</strong> Dalsze nasycenie na głębokości ${depth}m przez ${bottomTime} min</li>
-                                <li><strong>Obliczanie Ceiling:</strong> Dla każdej tkanki obliczany jest "ceiling" (najniższa bezpieczna głębokość) używając Schreiner Equation</li>
-                                <li><strong>Przystanki Deco:</strong> ${result.ndl ? 'Żadna tkanka nie wymaga dekompresji - NDL!' : 'Tkanka kontrolująca wymaga przystanków na ' + result.stops.filter(s => s.type === 'deco').length + ' głębokościach'}</li>
-                                <li><strong>Wynurzenie:</strong> Odgazowanie tkanek podczas przystanków (${result.profile.ascentTime} min total)</li>
-                            </ol>
-                            <p style="color: #ffd700; font-size: 0.9em; margin-top: 15px;">
-                                <strong>⚠️ Uwaga:</strong> Algorytm Bühlmann ZHL-16C jest uznany za najbardziej zaawansowany model dekompresji, ale to narzędzie jest TYLKO do celów edukacyjnych. Zawsze nurkuj z certyfikowanym komputerem nurkowym!
-                            </p>
-                        </div>
-                    </div>
+                // Create explanation HTML for tooltip
+                const explanationHTML = `
+                    <h3>Wyjaśnienie Obliczeń - Bühlmann ZHL-16C</h3>
+                    <p><strong>Dane Wejściowe:</strong></p>
+                    <ul>
+                        <li>Maksymalna Głębokość: ${depth} m</li>
+                        <li>Czas Denny: ${bottomTime} min</li>
+                        <li>Gaz: ${(fo2 * 100).toFixed(0)}% O₂ (${fo2 === 0.21 ? 'Air' : 'Nitrox ' + (fo2 * 100).toFixed(0)})</li>
+                        <li>Gradient Factors: GF ${gfLow}/${gfHigh} (konserwatyzm)</li>
+                    </ul>
+                    <p><strong>Model Bühlmann ZHL-16C:</strong></p>
+                    <ul>
+                        <li><strong>16 Przedziałów Tkankowych:</strong> Każda tkanka ma różne tempo absorpcji/desorpcji azotu (half-times: 4 min → 635 min)</li>
+                        <li><strong>M-Values:</strong> Maksymalne dopuszczalne ciśnienie parcjalne azotu w każdej tkance</li>
+                        <li><strong>Gradient Factors:</strong> GF Low (${gfLow}%) określa głębokość pierwszego przystanku, GF High (${gfHigh}%) określa margines bezpieczeństwa na powierzchni</li>
+                    </ul>
+                    <p><strong>Przebieg Obliczeń:</strong></p>
+                    <ol>
+                        <li><strong>Zejście:</strong> Symulacja nasycenia tkanek azotem podczas zejścia (${result.profile.descentTime} min)</li>
+                        <li><strong>Dno:</strong> Dalsze nasycenie na głębokości ${depth}m przez ${bottomTime} min</li>
+                        <li><strong>Obliczanie Ceiling:</strong> Dla każdej tkanki obliczany jest "ceiling" (najniższa bezpieczna głębokość) używając Schreiner Equation</li>
+                        <li><strong>Przystanki Deco:</strong> ${result.ndl ? 'Żadna tkanka nie wymaga dekompresji - NDL!' : 'Tkanka kontrolująca wymaga przystanków na ' + result.stops.filter(s => s.type === 'deco').length + ' głębokościach'}</li>
+                        <li><strong>Wynurzenie:</strong> Odgazowanie tkanek podczas przystanków (${result.profile.ascentTime} min total)</li>
+                    </ol>
+                    <p style="color: #ffd700; font-size: 0.9em; margin-top: 15px;">
+                        <strong>⚠️ Uwaga:</strong> Algorytm Bühlmann ZHL-16C jest uznany za najbardziej zaawansowany model dekompresji, ale to narzędzie jest TYLKO do celów edukacyjnych. Zawsze nurkuj z certyfikowanym komputerem nurkowym!
+                    </p>
                 `;
 
-                decoResult.innerHTML = html;
+                decoResult.innerHTML = `
+                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
+                    <div class="calculation-details" style="display: none;">${explanationHTML}</div>
+                    ${html}
+                `;
                 decoResult.style.display = 'block';
                 decoResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } catch (error) {
