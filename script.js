@@ -1112,6 +1112,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 </div>`;
 
                 // Runtime
+                // Runtime breakdown
+                const totalStopTime = result.stops.reduce((sum, stop) => sum + stop.time, 0);
+
                 html += `<div class="result-section">
                     <p class="result-label">Łączny Czas Nurkowania</p>
                     <p class="result-value-main" style="color: #00d1b2; font-size: 2em;">
@@ -1120,10 +1123,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     <p class="result-value-sub">
                         Zejście: ${result.profile.descentTime}min | 
                         Dno: ${result.profile.bottomTime}min | 
-                        Wynurzenie: ${result.profile.ascentTime}min
+                        Wynurzenie do 1. przystanku: ${result.profile.travelTime}min | 
+                        Przystanki: ${totalStopTime}min
                     </p>
                     <p class="result-value-sub" style="font-size: 0.85em; opacity: 0.8; margin-top: 5px;">
-                        * Wynurzenie = czas wynurzania + wszystkie przystanki
+                        * Łączny czas = zejście (${result.profile.descentTime}) + dno (${result.profile.bottomTime}) + wynurzenie (${result.profile.travelTime}) + przystanki (${totalStopTime}) = ${result.profile.totalRuntime} min
                     </p>
                 </div>`;
 
