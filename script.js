@@ -1128,20 +1128,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 </div>`;
 
                 // Gas requirement estimation
-                // Simple calculation: SAC 20 l/min * average pressure * time
+                // SAC 20 l/min * pressure * time for each phase
+                const sac = 20;
+
                 const avgDepthDescent = depth / 2;
                 const avgPressureDescent = (avgDepthDescent / 10) + 1;
-                const gasDescent = 20 * avgPressureDescent * result.profile.descentTime;
+                const gasDescent = sac * avgPressureDescent * result.profile.descentTime;
 
                 const pressureBottom = (depth / 10) + 1;
-                const gasBottom = 20 * pressureBottom * result.profile.bottomTime;
+                const gasBottom = sac * pressureBottom * result.profile.bottomTime;
 
-                // For ascent, estimate average depth as half of max depth
+                // Ascent - use travelTime (actual ascent time without stops)
                 const avgDepthAscent = depth / 2;
                 const avgPressureAscent = (avgDepthAscent / 10) + 1;
-                const gasAscent = 20 * avgPressureAscent * result.profile.ascentTime;
+                const gasAscent = sac * avgPressureAscent * result.profile.travelTime;
 
-                const totalGasLiters = Math.round(gasDescent + gasBottom + gasAscent);
+                // Stops - calculate for each stop at its depth
+                let gasStops = 0;
+                result.stops.forEach(stop => {
+                    const stopPressure = (stop.depth / 10) + 1;
+                    gasStops += sac * stopPressure * stop.time;
+                });
+
+                const totalGasLiters = Math.round(gasDescent + gasBottom + gasAscent + gasStops);
                 const gasFor12LTank = Math.round(totalGasLiters / 12);
 
                 html += `<div class="result-section">
@@ -1153,7 +1162,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         Dla butli 12L: ~${gasFor12LTank} bar
                     </p>
                     <p class="result-value-sub" style="font-size: 0.85em; opacity: 0.8; margin-top: 5px;">
-                        * Założenie: SAC 20 l/min (spokojne nurkowanie)
+                        * SAC ${sac} l/min | Zejście: ${Math.round(gasDescent)}L | Dno: ${Math.round(gasBottom)}L | Wynurzenie: ${Math.round(gasAscent)}L | Przystanki: ${Math.round(gasStops)}L
                     </p>
                 </div>`;
 
