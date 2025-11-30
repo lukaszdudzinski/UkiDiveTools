@@ -377,6 +377,11 @@
                                 <label for="decoFO2">FO2 - Frakcja Tlenu (%)</label>
                                 <input type="number" id="decoFO2" value="21" min="10" max="100" step="1" required>
                             </div>
+                            <div class="input-group">
+                                <label for="decoSAC">Twój SAC (l/min):</label>
+                                <input type="number" id="decoSAC" placeholder="np. 20" value="20" min="10" max="40"
+                                    step="1">
+                            </div>
                         </div>
                         <div class="form-column">
                             <div class="input-group">
@@ -387,9 +392,28 @@
                                 <label for="decoGFHigh">Gradient Factor High (%)</label>
                                 <input type="number" id="decoGFHigh" value="85" min="50" max="100" step="5" required>
                             </div>
-                            <div class="input-group" style="opacity: 0.5; pointer-events: none;">
-                                <label>Multi-Level (Wkrótce)</label>
-                                <input type="checkbox" disabled>
+                            <div class="input-group">
+                                <label for="decoTank">Konfiguracja Butli:</label>
+                                <select id="decoTank">
+                                    <option value="alu11">Alu 11L 207bar</option>
+                                    <option value="steel12">Stal 12L 200bar</option>
+                                    <option value="steel15" selected>Stal 15L 232bar</option>
+                                    <option value="twin7_200">Twinset Stalowy 2x7L (232b)</option>
+                                    <option value="twin12_200">Twinset Stalowy 2x12L (232b)</option>
+                                    <option value="twin85_200">Twinset Stalowy 2x8.5L (232b)</option>
+                                    <option value="twin10_200">Twinset Stalowy 2x10L (232b)</option>
+                                    <option value="twin7_300">Twinset Stalowy 2x7L (300b)</option>
+                                    <option value="twin85_300">Twinset Stalowy 2x8.5L (300b)</option>
+                                    <option value="twin10_300">Twinset Stalowy 2x10L (300b)</option>
+                                    <option value="twin12_300">Twinset Stalowy 2x12L (300b)</option>
+                                    <option value="custom">Własna Konfiguracja...</option>
+                                </select>
+                            </div>
+                            <div class="input-group" id="decoTankCustomGroup" style="display: none;">
+                                <label for="decoTankVol">Pojemność (L):</label>
+                                <input type="number" id="decoTankVol" value="12" min="5" max="50" step="0.5">
+                                <label for="decoTankPress" style="margin-top: 10px;">Ciśnienie (bar):</label>
+                                <input type="number" id="decoTankPress" value="200" min="100" max="300" step="10">
                             </div>
                         </div>
                         <div class="form-full-width">
@@ -398,28 +422,11 @@
                                     <div class="tooltip-content">
                                         <h4>Deco Planner: Algorytm Bühlmann ZHL-16C</h4>
                                         <p>Kalkulator planowania dekompresji używający szwajcarskiego algorytmu
-                                            opracowanego przez Dr.
-                                            Alberta Bühlmanna.</p>
+                                            opracowanego przez Dr. Alberta Bühlmanna.</p>
                                         <p><strong>Jak działa:</strong></p>
-                                        <ul style="text-align: left; margin-left: 15px;">
-                                            <li><strong>16 Compartments:</strong> Ciało modelowane jako 16 teoretycznych
-                                                "tkanek" z
-                                                różnymi szybkościami absorpcji/odgazowania azotu</li>
-                                            <li><strong>M-Values:</strong> Maksymalne dopuszczalne ciśnienie parcjalne
-                                                dla każdej tkanki
-                                            </li>
-                                            <li><strong>Gradient Factors (GF):</strong> Marginesy bezpieczeństwa. GF
-                                                30/85 =
-                                                conservatywne, GF 50/95 = liberalne</li>
-                                        </ul>
-                                        <p><strong>Interpretacja wyników:</strong></p>
-                                        <ul style="text-align: left; margin-left: 15px;">
-                                            <li><strong>NDL:</strong> No Decompression Limit - można wynurzyć się
-                                                bezpośrednio (tylko
-                                                safety stop)</li>
-                                            <li><strong>Deco:</strong> Wymagane przystanki dekompresyjne na podanych
-                                                głębokościach</li>
-                                            <li><strong>Runtime:</strong> Całkowity czas od zejścia do powierzchni</li>
+                                        <li><strong>Deco:</strong> Wymagane przystanki dekompresyjne na podanych
+                                            głębokościach</li>
+                                        <li><strong>Runtime:</strong> Całkowity czas od zejścia do powierzchni</li>
                                         </ul>
                                         <p><strong>Pamiętaj:</strong> To tylko narzędzie planowania. Zawsze nurkuj z
                                             komputerem!</p>
@@ -432,7 +439,6 @@
 
                     <div id="decoResult" class="result-container"></div>
                 </div>
-
 
                 <div id="sac-calculator" class="tab-content">
                     <h3>Kalkulator SAC</h3>
@@ -456,14 +462,18 @@
                                 </select></div>
                         </div>
                         <div class="form-full-width">
-                            <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
-                                        class="tooltip-content">
+                            <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?
+                                    <div class="tooltip-content">
                                         <h4>SAC (Surface Air Consumption) – Powierzchniowe Zużycie Gazu</h4>
-                                        <p>SAC to wskaźnik zużycia gazu (powietrza) wyrażony w litrach na minutę na
-                                            powierzchni (przy ciśnieniu 1 bar). Jest to niezbędny parametr do planowania
-                                            nurkowania. SAC zależy od wielu czynników, w tym od doświadczenia nurka,
+                                        <p>SAC to wskaźnik zużycia gazu (powietrza) wyrażony w litrach na
+                                            minutę na
+                                            powierzchni (przy ciśnieniu 1 bar). Jest to niezbędny parametr
+                                            do planowania
+                                            nurkowania. SAC zależy od wielu czynników, w tym od
+                                            doświadczenia nurka,
                                             obciążenia fizycznego, głębokości i temperatury wody.</p>
-                                    </div></span><button type="submit">Oblicz SAC</button></div>
+                                    </div>
+                                </span><button type="submit">Oblicz SAC</button></div>
                         </div>
                     </form>
                     <div id="result" class="result-container"></div>
@@ -485,20 +495,29 @@
                     <div class="sub-tab-content-wrapper">
                         <div id="mod-calculator" class="sub-tab-content active-sub-tab">
                             <form id="modForm">
-                                <div class="input-group"><label for="modPO2">Ciśnienie parcjalne (PPO₂)</label><input
-                                        type="number" id="modPO2" value="1.4" step="0.1" min="1.0" max="1.6" required>
+                                <div class="input-group"><label for="modPO2">Ciśnienie parcjalne
+                                        (PPO₂)</label><input type="number" id="modPO2" value="1.4" step="0.1" min="1.0"
+                                        max="1.6" required>
                                 </div>
                                 <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                             class="tooltip-content">
-                                            <h4>MOD (Maximum Operating Depth) – Maksymalna Głębokość Operacyjna</h4>
-                                            <p>MOD to Maksymalna Głębokość Operacyjna, czyli największa głębokość, na
-                                                której można użyć danej mieszanki oddechowej (np. Nitroxu) bez
-                                                przekroczenia maksymalnego limitu ciśnienia parcjalnego tlenu (ppO₂).
+                                            <h4>MOD (Maximum Operating Depth) – Maksymalna Głębokość
+                                                Operacyjna</h4>
+                                            <p>MOD to Maksymalna Głębokość Operacyjna, czyli największa
+                                                głębokość, na
+                                                której można użyć danej mieszanki oddechowej (np. Nitroxu)
+                                                bez
+                                                przekroczenia maksymalnego limitu ciśnienia parcjalnego
+                                                tlenu (ppO₂).
                                             </p>
-                                            <p><strong>Znaczenie:</strong> Przestrzeganie MOD jest kluczowym elementem
-                                                bezpieczeństwa, ponieważ zapobiega toksyczności tlenowej Ośrodkowego
-                                                Układu Nerwowego (CNS). Komputer nurkowy włączy alarm, gdy nurek
-                                                osiągnie głębokość, na której ppO₂ przekroczy limit (zazwyczaj 1.4 do
+                                            <p><strong>Znaczenie:</strong> Przestrzeganie MOD jest kluczowym
+                                                elementem
+                                                bezpieczeństwa, ponieważ zapobiega toksyczności tlenowej
+                                                Ośrodkowego
+                                                Układu Nerwowego (CNS). Komputer nurkowy włączy alarm, gdy
+                                                nurek
+                                                osiągnie głębokość, na której ppO₂ przekroczy limit
+                                                (zazwyczaj 1.4 do
                                                 1.6 bara).</p>
                                         </div></span><button type="submit">Oblicz MOD</button></div>
                             </form>
@@ -506,18 +525,26 @@
                         </div>
                         <div id="ead-calculator" class="sub-tab-content">
                             <form id="eadForm">
-                                <div class="input-group"><label for="eadDepth">Planowana głębokość (m)</label><input
-                                        type="number" id="eadDepth" min="1" required></div>
+                                <div class="input-group"><label for="eadDepth">Planowana głębokość
+                                        (m)</label><input type="number" id="eadDepth" min="1" required>
+                                </div>
                                 <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                             class="tooltip-content">
-                                            <h4>EAD (Equivalent Air Depth) – Równoważna Głębokość Powietrzna</h4>
-                                            <p>EAD (Równoważna Głębokość Powietrzna) to koncepcja, która odnosi
-                                                ciśnienie parcjalne azotu w mieszaninie nitroksowej do ciśnienia azotu w
+                                            <h4>EAD (Equivalent Air Depth) – Równoważna Głębokość Powietrzna
+                                            </h4>
+                                            <p>EAD (Równoważna Głębokość Powietrzna) to koncepcja, która
+                                                odnosi
+                                                ciśnienie parcjalne azotu w mieszaninie nitroksowej do
+                                                ciśnienia azotu w
                                                 powietrzu na płytszej, równoważnej głębokości.</p>
-                                            <p><strong>Znaczenie:</strong> Ponieważ Nitrox zawiera mniej azotu niż
-                                                powietrze, ciało akumuluje go mniej. Wyznaczenie EAD pozwala nurkowi
-                                                użyć dowolnej powietrznej tabeli dekompresyjnej, podstawiając EAD jako
-                                                głębokość nurkowania. Obliczanie EAD jest nierozerwalnie związane z
+                                            <p><strong>Znaczenie:</strong> Ponieważ Nitrox zawiera mniej
+                                                azotu niż
+                                                powietrze, ciało akumuluje go mniej. Wyznaczenie EAD pozwala
+                                                nurkowi
+                                                użyć dowolnej powietrznej tabeli dekompresyjnej,
+                                                podstawiając EAD jako
+                                                głębokość nurkowania. Obliczanie EAD jest nierozerwalnie
+                                                związane z
                                                 koncepcją Nitroxu.</p>
                                         </div></span><button type="submit">Oblicz EAD</button></div>
                             </form>
@@ -525,18 +552,23 @@
                         </div>
                         <div id="best-mix-calculator" class="sub-tab-content">
                             <form id="bestMixForm">
-                                <div class="input-group"><label for="bestMixDepth">Planowana głębokość (m)</label><input
-                                        type="number" id="bestMixDepth" step="0.1" value="30" min="1" required></div>
-                                <div class="input-group"><label for="bestMixPO2">Maksymalne PPO₂ (bar)</label><input
-                                        type="number" id="bestMixPO2" value="1.4" step="0.1" min="1.0" max="1.6"
+                                <div class="input-group"><label for="bestMixDepth">Planowana głębokość
+                                        (m)</label><input type="number" id="bestMixDepth" step="0.1" value="30" min="1"
                                         required></div>
+                                <div class="input-group"><label for="bestMixPO2">Maksymalne PPO₂
+                                        (bar)</label><input type="number" id="bestMixPO2" value="1.4" step="0.1"
+                                        min="1.0" max="1.6" required></div>
                                 <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                             class="tooltip-content">
                                             <h4>Best Mix (Najlepsza Mieszanina)</h4>
-                                            <p>Best Mix to określenie oznaczające optymalną frakcję tlenu (FO₂) w
-                                                mieszaninie, która zapewnia maksymalne korzyści operacyjne przy
-                                                jednoczesnym zachowaniu bezpieczeństwa w zakresie ciśnienia parcjalnego
-                                                tlenu. Pozwala to nurkowi określić gaz, który jest najlepszy dla
+                                            <p>Best Mix to określenie oznaczające optymalną frakcję tlenu
+                                                (FO₂) w
+                                                mieszaninie, która zapewnia maksymalne korzyści operacyjne
+                                                przy
+                                                jednoczesnym zachowaniu bezpieczeństwa w zakresie ciśnienia
+                                                parcjalnego
+                                                tlenu. Pozwala to nurkowi określić gaz, który jest najlepszy
+                                                dla
                                                 planowanej głębokości.</p>
                                         </div></span><button type="submit">Oblicz Best Mix</button></div>
                             </form>
@@ -545,18 +577,25 @@
                         <div id="cns-calculator" class="sub-tab-content">
                             <form id="cnsForm">
                                 <div class="input-group"><label for="cnsDepth">Głębokość (m)</label><input type="number"
-                                        id="cnsDepth" step="0.1" value="30" min="1" required></div>
-                                <div class="input-group"><label for="cnsTime">Czas na głębokości (min)</label><input
-                                        type="number" id="cnsTime" value="20" min="1" required></div>
+                                        id="cnsDepth" step="0.1" value="30" min="1" required>
+                                </div>
+                                <div class="input-group"><label for="cnsTime">Czas na głębokości
+                                        (min)</label><input type="number" id="cnsTime" value="20" min="1" required>
+                                </div>
                                 <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                             class="tooltip-content">
                                             <h4>CNS (Central Nervous System) – Toksyczność Tlenowa OUN</h4>
-                                            <p><strong>Zagrożenie:</strong> Jest to najpoważniejsze zagrożenie dla nurka
-                                                korzystającego z Nitroxu, grożące wystąpieniem nagłych konwulsji
+                                            <p><strong>Zagrożenie:</strong> Jest to najpoważniejsze
+                                                zagrożenie dla nurka
+                                                korzystającego z Nitroxu, grożące wystąpieniem nagłych
+                                                konwulsji
                                                 (drgawek tlenowych), co może doprowadzić do utonięcia.</p>
-                                            <p><strong>Limity:</strong> Limit ppO₂ to 1.6 ATA (maksymalna bezpieczna
-                                                wartość), z zalecanym limitem 1.4 ATA. NOAA ustaliła maksymalny czas
-                                                pojedynczej ekspozycji na 1.6 ATA na 45 minut. Toksyczność CNS jest
+                                            <p><strong>Limity:</strong> Limit ppO₂ to 1.6 ATA (maksymalna
+                                                bezpieczna
+                                                wartość), z zalecanym limitem 1.4 ATA. NOAA ustaliła
+                                                maksymalny czas
+                                                pojedynczej ekspozycji na 1.6 ATA na 45 minut. Toksyczność
+                                                CNS jest
                                                 liczona w %CNS.</p>
                                         </div></span><button type="submit">Oblicz CNS%</button></div>
                             </form>
@@ -574,37 +613,48 @@
                             <h3>Kalkulator Rock Bottom (Basic)</h3>
                             <form id="rbForm" class="two-column-form">
                                 <div class="form-column">
-                                    <div class="input-group"><label for="rbSAC">Twój SAC (l/min)</label><input
-                                            type="number" id="rbSAC" value="20" step="0.1" min="5" required></div>
-                                    <div class="input-group"><label for="rbDepth">Maks. Głębokość (m)</label><input
-                                            type="number" id="rbDepth" value="40" min="1" required></div>
+                                    <div class="input-group"><label for="rbSAC">Twój SAC
+                                            (l/min)</label><input type="number" id="rbSAC" value="20" step="0.1" min="5"
+                                            required></div>
+                                    <div class="input-group"><label for="rbDepth">Maks. Głębokość
+                                            (m)</label><input type="number" id="rbDepth" value="40" min="1" required>
+                                    </div>
                                     <div class="input-group"><label>Pojemność Butli (l)</label><input type="number"
                                             id="rbVolume" value="24" min="1" required></div>
                                     <div class="input-group"><label>Głęb. Przystanku (m)</label><input type="number"
                                             id="rbStopDepth" value="6" min="0" required></div>
-                                    <div class="input-group"><label>Prędkość Wynurzania (m/min)</label><input
-                                            type="number" id="rbAscentRate" value="10" min="1" required></div>
+                                    <div class="input-group"><label>Prędkość Wynurzania
+                                            (m/min)</label><input type="number" id="rbAscentRate" value="10" min="1"
+                                            required></div>
                                 </div>
                                 <div class="form-column">
                                     <div class="input-group"><label>Mnożnik SAC (Stres)</label><input type="number"
                                             id="rbStressFactor" value="2" step="0.1" min="1" required></div>
                                     <div class="input-group"><label>Liczba Nurków</label><input type="number"
-                                            id="rbDivers" value="2" min="1" max="2" required></div>
+                                            id="rbDivers" value="2" min="1" max="2" required>
+                                    </div>
                                     <div class="input-group"><label>Czas Reakcji (min)</label><input type="number"
-                                            id="rbEmergencyTime" value="2" min="0" required></div>
+                                            id="rbEmergencyTime" value="2" min="0" required>
+                                    </div>
                                     <div class="input-group"><label>Dodatkowy Bufor (bar)</label><input type="number"
-                                            id="rbSafetyMargin" value="10" min="0" required></div>
+                                            id="rbSafetyMargin" value="10" min="0" required>
+                                    </div>
                                 </div>
                                 <div class="form-full-width">
                                     <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                                 class="tooltip-content">
                                                 <h4>Rock Bottom (Minimalna Rezerwa Gazu)</h4>
-                                                <p>Rock Bottom (Reguła „żelaznej rezerwy") to metoda obliczania
-                                                    minimalnej ilości gazu (rezerwy), niezbędnej do bezpiecznego
-                                                    wynurzenia członków zespołu po wystąpieniu najgorszej możliwej
-                                                    sytuacji awaryjnej (zwykle brak gazu u partnera). Jest to metoda
+                                                <p>Rock Bottom (Reguła „żelaznej rezerwy") to metoda
+                                                    obliczania
+                                                    minimalnej ilości gazu (rezerwy), niezbędnej do
+                                                    bezpiecznego
+                                                    wynurzenia członków zespołu po wystąpieniu najgorszej
+                                                    możliwej
+                                                    sytuacji awaryjnej (zwykle brak gazu u partnera). Jest
+                                                    to metoda
                                                     przeznaczona do nurkowań głębokich i Extended Range.</p>
-                                            </div></span><button type="submit">Oblicz Rock Bottom</button></div>
+                                            </div></span><button type="submit">Oblicz Rock Bottom</button>
+                                    </div>
                                 </div>
                             </form>
                             <div id="rbResult" class="result-container"></div>
@@ -619,10 +669,12 @@
                                             id="gcDepth" value="30" required></div>
                                     <div class="input-group"><label>Czas Denny (min)</label><input type="number"
                                             id="gcBottomTime" value="20" required></div>
-                                    <div class="input-group"><label>Prędkość Zanurzania (m/min)</label><input
-                                            type="number" id="gcDescentRate" value="15" required></div>
-                                    <div class="input-group"><label>Prędkość Wynurzania (m/min)</label><input
-                                            type="number" id="gcAscentRate" value="10" required></div>
+                                    <div class="input-group"><label>Prędkość Zanurzania
+                                            (m/min)</label><input type="number" id="gcDescentRate" value="15" required>
+                                    </div>
+                                    <div class="input-group"><label>Prędkość Wynurzania
+                                            (m/min)</label><input type="number" id="gcAscentRate" value="10" required>
+                                    </div>
                                 </div>
                                 <div class="form-column">
                                     <div class="input-group"><label>Głęb. Przystanku (m)</label><input type="number"
@@ -640,12 +692,17 @@
                                     <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                                 class="tooltip-content">
                                                 <h4>Zużycie Gazu / Kalkulator Zużycia Gazu</h4>
-                                                <p>Planowanie zużycia gazu wymaga znajomości indywidualnego wskaźnika
-                                                    SAC (Powierzchniowego Zużycia Gazu). Śledzenie zużycia gazu w
+                                                <p>Planowanie zużycia gazu wymaga znajomości indywidualnego
+                                                    wskaźnika
+                                                    SAC (Powierzchniowego Zużycia Gazu). Śledzenie zużycia
+                                                    gazu w
                                                     Logbooku pomaga monitorować postępy nurka.</p>
-                                                <p><strong>Czynniki wpływające na zużycie gazu:</strong> Wysiłek
-                                                    fizyczny, kondycja, stres, temperatura wody i głębokość. Kalkulator
-                                                    pozwala na określenie, czy ilość gazu w butli jest wystarczająca na
+                                                <p><strong>Czynniki wpływające na zużycie gazu:</strong>
+                                                    Wysiłek
+                                                    fizyczny, kondycja, stres, temperatura wody i głębokość.
+                                                    Kalkulator
+                                                    pozwala na określenie, czy ilość gazu w butli jest
+                                                    wystarczająca na
                                                     nurkowanie.</p>
                                             </div></span><button type="submit">Oblicz Zużycie</button></div>
                                 </div>
@@ -657,7 +714,8 @@
 
                 <div id="ballast-calculator" class="tab-content">
                     <h3>Kalkulator Balastu</h3>
-                    <p style="color: #b0b0b0; margin-top: -10px; margin-bottom: 20px; font-size: 0.9em;">Oblicz
+                    <p style="color: #b0b0b0; margin-top: -10px; margin-bottom: 20px; font-size: 0.9em;">
+                        Oblicz
                         sugerowany punkt startowy dla Twojego obciążenia.</p>
                     <form id="ballastForm" class="two-column-form">
                         <div class="form-column">
@@ -677,11 +735,12 @@
                                     <option value="dryCrash">Suchy (Crash Neo)</option>
                                     <option value="dryNeo">Suchy (Neopren)</option>
                                 </select></div>
-                            <div class="input-group" id="ballast-warmer-group"><label>Ocieplacz</label><select
-                                    id="ballastWarmer">
+                            <div class="input-group" id="ballast-warmer-group">
+                                <label>Ocieplacz</label><select id="ballastWarmer">
                                     <option value="thin" selected>Cienki (do 200g)</option>
                                     <option value="thick">Gruby (400g+)</option>
-                                </select></div>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-column">
                             <div class="input-group"><label>Butla</label><select id="ballastTank" required>
@@ -709,17 +768,25 @@
                                 </select></div>
                         </div>
                         <div class="form-full-width">
-                            <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
-                                        class="tooltip-content">
+                            <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?
+                                    <div class="tooltip-content">
                                         <h4>Kalkulator Balastu / Kontrola Pływalności</h4>
-                                        <p>System balastowy służy do równoważenia dodatniej wyporności nurka i
-                                            skafandra, zgodnie z Prawem Archimedesa. Prawidłowe wyważenie jest kluczowe
-                                            dla uzyskania neutralnej pływalności (Unoszenie/Zawiśnięcie w toni).</p>
-                                        <p><strong>Uwaga – zawsze wykonaj kontrolę pływalności:</strong> Należy unikać
-                                            zabierania zbyt dużej ilości balastu, ponieważ negatywnie wpływa to na
-                                            technikę i zwiększa zużycie powietrza. Ilość balastu należy dostosować do
+                                        <p>System balastowy służy do równoważenia dodatniej wyporności nurka
+                                            i
+                                            skafandra, zgodnie z Prawem Archimedesa. Prawidłowe wyważenie
+                                            jest kluczowe
+                                            dla uzyskania neutralnej pływalności (Unoszenie/Zawiśnięcie w
+                                            toni).</p>
+                                        <p><strong>Uwaga – zawsze wykonaj kontrolę pływalności:</strong>
+                                            Należy unikać
+                                            zabierania zbyt dużej ilości balastu, ponieważ negatywnie wpływa
+                                            to na
+                                            technikę i zwiększa zużycie powietrza. Ilość balastu należy
+                                            dostosować do
                                             rodzaju wody (słodka/słona) i używanego skafandra.</p>
-                                    </div></span><button type="submit">Oblicz Sugestię Balastu</button></div>
+                                    </div>
+                                </span><button type="submit">Oblicz Sugestię Balastu</button>
+                            </div>
                         </div>
                     </form>
                     <div id="ballastResult" class="result-container"></div>
@@ -737,7 +804,8 @@
                             <div class="checklist-group">
                                 <h4>1. Wprowadzenie i Plan Ogólny</h4>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-1"><label
-                                        for="brief-cb-1">Przedstawienie się (Przewodnik i Załoga)</label></div>
+                                        for="brief-cb-1">Przedstawienie się (Przewodnik i Załoga)</label>
+                                </div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-2"><label
                                         for="brief-cb-2">Nazwa, cechy i opis miejsca nurkowego</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-3"><label
@@ -750,14 +818,16 @@
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-5"><label
                                         for="brief-cb-5">Przewidywana widoczność i prądy</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-6"><label
-                                        for="brief-cb-6">Możliwe życie podwodne/ciekawe elementy</label></div>
+                                        for="brief-cb-6">Możliwe życie podwodne/ciekawe elementy</label>
+                                </div>
                             </div>
                             <div class="checklist-group">
                                 <h4>3. Limity Nurkowania i Plan</h4>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-7"><label
                                         for="brief-cb-7">Maksymalna głębokość i czas denny</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-8"><label
-                                        for="brief-cb-8">Minimalny zapas powietrza (Rock Bottom/Rezerwa)</label></div>
+                                        for="brief-cb-8">Minimalny zapas powietrza (Rock
+                                        Bottom/Rezerwa)</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-9"><label
                                         for="brief-cb-9">Kierunek płynięcia i planowana trasa</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-10"><label
@@ -772,9 +842,11 @@
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-13"><label
                                         for="brief-cb-13">Procedury zagubienia partnera</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-14"><label
-                                        for="brief-cb-14">Dzielenie się gazem (procedura i automat)</label></div>
+                                        for="brief-cb-14">Dzielenie się gazem (procedura i automat)</label>
+                                </div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-15"><label
-                                        for="brief-cb-15">Komunikacja pod wodą (tabliczka, sygnalizatory)</label></div>
+                                        for="brief-cb-15">Komunikacja pod wodą (tabliczka,
+                                        sygnalizatory)</label></div>
                             </div>
                             <div class="checklist-group">
                                 <h4>5. Logistyka i Procedury Sprzętowe</h4>
@@ -792,7 +864,8 @@
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-20"><label
                                         for="brief-cb-20">Procedury awaryjne (Co jeśli?)</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-21"><label
-                                        for="brief-cb-21">Lokalizacja apteczki pierwszej pomocy</label></div>
+                                        for="brief-cb-21">Lokalizacja apteczki pierwszej pomocy</label>
+                                </div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-22"><label
                                         for="brief-cb-22">Lokalizacja zestawu tlenowego</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-23"><label
@@ -871,10 +944,12 @@
                                     <div class="formula-box">
                                         <p class="formula">MOD = ((PPO2 / FO2) - 1) * 10</p>
                                         <ul class="detailed-legend">
-                                            <li><strong>PPO2:</strong> Maksymalne ciśnienie parcjalne tlenu (np. 1.4
+                                            <li><strong>PPO2:</strong> Maksymalne ciśnienie parcjalne tlenu
+                                                (np. 1.4
                                                 ATA)
                                             </li>
-                                            <li><strong>FO2:</strong> Frakcja tlenu w mieszance (np. 0.32)</li>
+                                            <li><strong>FO2:</strong> Frakcja tlenu w mieszance (np. 0.32)
+                                            </li>
                                             <li><strong>-1:</strong> Odjęcie ciśnienia atmosferycznego</li>
                                             <li><strong>*10:</strong> Konwersja z barów na metry</li>
                                         </ul>
@@ -884,8 +959,10 @@
                                         <p class="formula">EAD = ((D + 10) * FN2 / 0.79) - 10</p>
                                         <ul class="detailed-legend">
                                             <li><strong>D:</strong> Aktualna głębokość (m)</li>
-                                            <li><strong>FN2:</strong> Frakcja azotu w mieszance (1 - FO2)</li>
-                                            <li><strong>0.79:</strong> Frakcja azotu w powietrzu (stała)</li>
+                                            <li><strong>FN2:</strong> Frakcja azotu w mieszance (1 - FO2)
+                                            </li>
+                                            <li><strong>0.79:</strong> Frakcja azotu w powietrzu (stała)
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -897,10 +974,13 @@
                                         <p class="formula">L_faza = SAC * P_avg * T</p>
                                         <ul class="detailed-legend">
                                             <li><strong>L_faza:</strong> Zużycie gazu w danej fazie (l)</li>
-                                            <li><strong>SAC:</strong> Powierzchniowe zużycie gazu (l/min)</li>
-                                            <li><strong>P_avg:</strong> Średnie ciśnienie otoczenia (ATA)</li>
+                                            <li><strong>SAC:</strong> Powierzchniowe zużycie gazu (l/min)
+                                            </li>
+                                            <li><strong>P_avg:</strong> Średnie ciśnienie otoczenia (ATA)
+                                            </li>
                                             <li><strong>T:</strong> Czas trwania fazy (min)</li>
-                                            <li><strong>L_total:</strong> Całkowite zużycie (Zanurzenie + Dno +
+                                            <li><strong>L_total:</strong> Całkowite zużycie (Zanurzenie +
+                                                Dno +
                                                 Wynurzenie +
                                                 Przystanki)</li>
                                         </ul>
@@ -909,14 +989,19 @@
                                     <div class="formula-box">
                                         <p class="formula">RB_bar = (L_reakcja + L_wynurz) / V_butli</p>
                                         <ul class="detailed-legend">
-                                            <li><strong>RB_bar:</strong> Minimalne ciśnienie rezerwy (bar)</li>
-                                            <li><strong>L_reakcja:</strong> Gaz na rozwiązanie problemu na dnie (l)</li>
-                                            <li><strong>L_wynurz:</strong> Gaz na bezpieczny powrót na powierzchnię (l)
+                                            <li><strong>RB_bar:</strong> Minimalne ciśnienie rezerwy (bar)
+                                            </li>
+                                            <li><strong>L_reakcja:</strong> Gaz na rozwiązanie problemu na
+                                                dnie (l)</li>
+                                            <li><strong>L_wynurz:</strong> Gaz na bezpieczny powrót na
+                                                powierzchnię (l)
                                             </li>
                                             <li><strong>V_butli:</strong> Pojemność wodna butli (l)</li>
-                                            <li><strong>SAC_stres:</strong> Zwykle 2x SAC normalny (stres)</li>
+                                            <li><strong>SAC_stres:</strong> Zwykle 2x SAC normalny (stres)
+                                            </li>
                                             <li><strong>Os.:</strong> Liczba nurków (np. 2 w zespole)</li>
-                                            <li><strong>T_reakcja:</strong> Czas na opanowanie sytuacji (min)</li>
+                                            <li><strong>T_reakcja:</strong> Czas na opanowanie sytuacji
+                                                (min)</li>
                                         </ul>
                                     </div>
                                 </div>

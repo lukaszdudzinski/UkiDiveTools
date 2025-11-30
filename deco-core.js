@@ -334,3 +334,243 @@ function calculateDecoProfile(maxDepth, bottomTime, fo2 = 0.21, gfLow = 30, gfHi
         ndl: decoStops.length === 0 || (decoStops.length === 1 && decoStops[0].type === 'safety')
     };
 }
+
+/**
+ * Calculate deco profile for a multi-level dive
+ * 
+ * @param {Array} segments - Array of dive segments: [{depth, time, fo2}, ...]
+ *                          Segments should be in chronological order
+ * @param {number} gfLow - Gradient Factor Low (default: 30)
+ * @param {number} gfHigh - Gradient Factor High (default: 85)
+ * @returns {Object} Deco profile with segments, stops and runtime
+ */
+function calculateMultiLevelDecoProfile(segments, gfLow = 30, gfHigh = 85) {
+    // Validate segments
+    if (!segments || segments.length === 0) {
+        throw new Error('At least one dive segment is required');
+    }
+
+    // Initialize tissues at surface
+    let tissues = initializeTissues();
+    let totalRuntime = 0;
+    let currentDepth = 0;
+    let segmentHistory = [];
+    let maxDepthReached = 0;
+
+    console.log(`\n[MULTI-LEVEL] Starting multi-level dive with ${segments.length} segments`);
+    console.log(`[MULTI-LEVEL] GF ${gfLow}/${gfHigh}`);
+
+    // Process each dive segment
+    for (let i = 0; i < segments.length; i++) {
+        const segment = segments[i];
+        const targetDepth = parseFloat(segment.depth);
+        const segmentTime = parseFloat(segment.time);
+        const fo2 = parseFloat(segment.fo2) / 100;
+
+        console.log(`\n[SEGMENT ${i + 1}] Depth: ${targetDepth}m, Time: ${segmentTime}min, FO2: ${(fo2 * 100).toFixed(0)}%`);
+
+        if (targetDepth <= 0 || segmentTime <= 0 || fo2 <= 0 || fo2 > 1) {
+            throw new Error(`Invalid segment ${i + 1}: depth=${targetDepth}m, time=${segmentTime}min, fo2=${(fo2 * 100).toFixed(0)}%`);
+        }
+
+        maxDepthReached = Math.max(maxDepthReached, targetDepth);
+
+        let segmentStartTime = totalRuntime;
+
+        // Descend or ascend to target depth
+        if (currentDepth < targetDepth) {
+            // Descending
+            const descentTime = (targetDepth - currentDepth) / DECO_CONFIG.descentRate;
+            console.log(`[SEGMENT ${i + 1}] Descending from ${currentDepth}m to ${targetDepth}m (${descentTime.toFixed(1)}min)`);
+            tissues = simulateDescent(tissues, targetDepth, fo2, 0, DECO_CONFIG.descentRate);
+            totalRuntime += descentTime;
+        } else if (currentDepth > targetDepth) {
+            // Ascending
+            const ascentDist = currentDepth - targetDepth;
+            const ascentTime = ascentDist / DECO_CONFIG.ascentRate;
+            console.log(`[SEGMENT ${i + 1}] Ascending from ${currentDepth}m to ${targetDepth}m (${ascentTime.toFixed(1)}min)`);
+            const ascentResult = simulateAscent(tissues, currentDepth, targetDepth, fo2, 0, DECO_CONFIG.ascentRate);
+            tissues = ascentResult.tissues;
+            totalRuntime += ascentResult.time;
+        }
+
+        currentDepth = targetDepth;
+
+        // Stay at this depth for the segment time
+        console.log(`[SEGMENT ${i + 1}] Staying at ${targetDepth}m for ${segmentTime}min`);
+        tissues = simulateBottom(tissues, targetDepth, segmentTime, fo2);
+        totalRuntime += segmentTime;
+
+        // Record segment in history
+        segmentHistory.push({
+            segmentNumber: i + 1,
+            depth: targetDepth,
+            time: segmentTime,
+            fo2: (fo2 * 100).toFixed(0) + '%',
+            gasType: fo2 === 0.21 ? 'Air' : `Nitrox ${(fo2 * 100).toFixed(0)}`,
+            startRuntime: Math.ceil(segmentStartTime),
+            endRuntime: Math.ceil(totalRuntime)
+        });
+    }
+
+    const bottomPhaseTime = totalRuntime;
+    console.log(`\n[MULTI-LEVEL] Bottom phase complete. Total bottom time: ${bottomPhaseTime.toFixed(1)}min at max depth ${maxDepthReached}m`);
+
+    // Now calculate deco stops from current depth (last segment)
+    // Use the last segment's gas for ascent (or could make this configurable)
+    const lastSegment = segments[segments.length - 1];
+    const ascentGas = parseFloat(lastSegment.fo2) / 100;
+
+    console.log(`[MULTI-LEVEL] Calculating deco from ${currentDepth}m with ${(ascentGas * 100).toFixed(0)}% O2`);
+
+    const decoStops = [];
+    let totalDecoTime = 0;
+
+    // Ascend to first stop or surface
+    let iterations = 0;
+    const maxIterations = 50;
+    while (currentDepth > 0 && iterations < maxIterations) {
+        iterations++;
+        console.log(`\n[DECO LOOP] Iteration ${iterations}, currentDepth: ${currentDepth}m`);
+
+        // GF interpolation
+        let gf;
+        if (decoStops.length === 0) {
+            gf = gfLow;
+        } else {
+            const firstStopDepth = decoStops[0].depth;
+            if (currentDepth >= firstStopDepth) {
+                gf = gfLow;
+            } else {
+                gf = gfLow + (gfHigh - gfLow) * (firstStopDepth - currentDepth) / firstStopDepth;
+            }
+        }
+        console.log(`[GF] Current depth: ${currentDepth}m, GF: ${gf.toFixed(1)}%, stops: ${decoStops.length}`);
+
+        // Get ceiling
+        const { ceiling } = getControllingCeiling(tissues, gf);
+
+        if (ceiling === 0 && currentDepth <= 6) {
+            // Can ascend to surface, but do safety stop
+            if (currentDepth > 3) {
+                const { tissues: newTissues, time } = simulateAscent(tissues, currentDepth, 3, ascentGas);
+                tissues = newTissues;
+                totalRuntime += time;
+            }
+
+            // Safety stop at 5m
+            const safetyDepth = 5;
+            const safetyTime = 3;
+            tissues = simulateBottom(tissues, safetyDepth, safetyTime, ascentGas);
+            decoStops.push({
+                depth: safetyDepth,
+                time: safetyTime,
+                runtime: Math.ceil(totalRuntime + safetyTime),
+                type: 'safety'
+            });
+            totalDecoTime += safetyTime;
+            totalRuntime += safetyTime;
+            break;
+        }
+
+        if (ceiling === 0) {
+            // Can surface
+            break;
+        }
+
+        // Need deco stop at ceiling depth
+        const stopDepth = Math.max(ceiling, 3);
+
+        // Ascend to stop depth
+        if (currentDepth > stopDepth) {
+            const { tissues: newTissues, time } = simulateAscent(tissues, currentDepth, stopDepth, ascentGas);
+            tissues = newTissues;
+            totalDecoTime += time;
+            totalRuntime += time;
+            currentDepth = stopDepth;
+        }
+
+        // Stay at stop until ceiling clears
+        console.log(`[STOP] At ${stopDepth}m, calculating stop time...`);
+        let stopTime = 0;
+        const maxStopTime = 60;
+
+        while (stopTime < maxStopTime) {
+            tissues = simulateBottom(tissues, stopDepth, 1, ascentGas);
+            stopTime++;
+            totalDecoTime++;
+            totalRuntime++;
+
+            const { ceiling: newCeiling } = getControllingCeiling(tissues, gf);
+            if (newCeiling < stopDepth) {
+                console.log(`[STOP] Ceiling cleared! newCeiling: ${newCeiling.toFixed(2)}m < ${stopDepth}m, stopTime: ${stopTime} min`);
+                break;
+            }
+        }
+
+        if (stopTime >= maxStopTime) {
+            console.log(`[STOP] Hit maxStopTime limit (${maxStopTime} min)!`);
+        }
+
+        // Check if we already have a stop at this depth (merge duplicates)
+        const lastStop = decoStops[decoStops.length - 1];
+        if (lastStop && lastStop.depth === stopDepth) {
+            console.log(`[STOP] Merging with existing ${stopDepth}m stop (${lastStop.time} + ${stopTime} min)`);
+            lastStop.time += stopTime;
+            lastStop.runtime = Math.ceil(totalRuntime);
+        } else {
+            decoStops.push({
+                depth: stopDepth,
+                time: stopTime,
+                runtime: Math.ceil(totalRuntime),
+                type: 'deco'
+            });
+        }
+
+        // Move to next shallower stop
+        currentDepth = stopDepth - DECO_CONFIG.stopInterval;
+    }
+
+    // Calculate travel time (ascent without stops)
+    let travelTime = 0;
+    let prevDepth = maxDepthReached;
+
+    // Add transitions between segments
+    for (let i = 1; i < segments.length; i++) {
+        const prevSegDepth = parseFloat(segments[i - 1].depth);
+        const currSegDepth = parseFloat(segments[i].depth);
+        if (prevSegDepth !== currSegDepth) {
+            const distance = Math.abs(prevSegDepth - currSegDepth);
+            const rate = prevSegDepth > currSegDepth ? DECO_CONFIG.ascentRate : DECO_CONFIG.descentRate;
+            travelTime += distance / rate;
+        }
+    }
+
+    // Add deco stop travel time
+    prevDepth = parseFloat(segments[segments.length - 1].depth);
+    decoStops.forEach(stop => {
+        const distance = prevDepth - stop.depth;
+        travelTime += distance / DECO_CONFIG.ascentRate;
+        prevDepth = stop.depth;
+    });
+
+    // Final ascent to surface
+    if (prevDepth > 0) {
+        travelTime += prevDepth / DECO_CONFIG.ascentRate;
+    }
+
+    return {
+        profile: {
+            type: 'multi-level',
+            maxDepth: maxDepthReached,
+            segmentCount: segments.length,
+            bottomTime: Math.ceil(bottomPhaseTime),
+            totalDecoTime: Math.ceil(totalDecoTime),
+            travelTime: Math.ceil(travelTime),
+            totalRuntime: Math.ceil(totalRuntime)
+        },
+        segments: segmentHistory,
+        stops: decoStops,
+        ndl: decoStops.length === 0 || (decoStops.length === 1 && decoStops[0].type === 'safety')
+    };
+}

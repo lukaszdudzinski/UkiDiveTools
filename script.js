@@ -690,7 +690,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const rbResult = calculateRockBottom(params);
                 const d = rbResult.details;
                 const explanationHTML = `
-                    < div class="formula-box-small" >
+                    <div class="formula-box-small" >
                         <h5>Obliczenia Rock Bottom</h5>
                         <p class="formula">RB = Gaz Reakcji + Gaz Wynurzenia</p>
                         <ul>
@@ -699,10 +699,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             <li>Gaz wynurzenia: <strong>${d.Gas_ascent.toFixed(0)} l</strong> (${d.SAC_stressed.toFixed(1)} × ${d.P_avg_ascent.toFixed(1)} ATA × ${d.T_ascent.toFixed(1)} min × ${params.divers} os.)</li>
                             <li>Total: <strong>${d.TotalGasLiters.toFixed(0)} l</strong> (${d.Gas_reaction.toFixed(0)} + ${d.Gas_ascent.toFixed(0)})</li>
                         </ul>
-                    </div > `;
+                    </div> `;
 
                 rbResultContainer.innerHTML = `
-                    < div class="result-info-icon tooltip-trigger" data - tooltip - type="calculation" data - pro - feature="false" > i</div >
+                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false" > i</div>
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
                     <div class="rb-info-section" style="border:none; padding:0; background:transparent;">
                         <p class="result-label">Minimalna Rezerwa (RB)</p>
@@ -770,10 +770,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const o2 = parseFloat(document.getElementById('nitroxO2').value) / 100;
                 const ppo2 = parseFloat(document.getElementById('modPO2').value);
                 const mod = ((ppo2 / o2) - 1) * 10;
-                const explanationHTML = `< div class="formula-box-small" ><h5>Obliczenia MOD</h5><p class="formula">MOD = (PPO2 / FO2 - 1) * 10</p><ul><li>${ppo2} / ${o2} = ${(ppo2 / o2).toFixed(2)} ATA</li><li>(${(ppo2 / o2).toFixed(2)} - 1) * 10 = <strong>${mod.toFixed(1)} m</strong></li></ul></div > `;
+                const explanationHTML = `<div class="formula-box-small" ><h5>Obliczenia MOD</h5><p class="formula">MOD = (PPO2 / FO2 - 1) * 10</p><ul><li>${ppo2} / ${o2} = ${(ppo2 / o2).toFixed(2)} ATA</li><li>(${(ppo2 / o2).toFixed(2)} - 1) * 10 = <strong>${mod.toFixed(1)} m</strong></li></ul></div> `;
 
                 modResult.innerHTML = `
-                    < div class="result-info-icon tooltip-trigger" data - tooltip - type="calculation" data - pro - feature="false" > i</div >
+                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false" > i</div>
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
                     <div class="result-section">
                         <p class="result-label">Maksymalna Głębokość (MOD)</p>
@@ -796,10 +796,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const depth = parseFloat(document.getElementById('eadDepth').value);
                 const n2 = 1.0 - o2;
                 const ead = ((depth + 10) * (n2 / 0.79)) - 10;
-                const explanationHTML = `< div class="formula-box-small" ><h5>Obliczenia EAD</h5><p class="formula">EAD = ((D + 10) * FN2 / 0.79) - 10</p><ul><li>Ciśnienie N2: (${depth}+10) * ${n2.toFixed(2)} = ${((depth + 10) * n2).toFixed(2)}</li><li>Ekwiwalent Powietrzny: (${((depth + 10) * n2).toFixed(2)} / 0.79) - 10 = <strong>${ead.toFixed(1)} m</strong></li></ul></div > `;
+                const explanationHTML = `<div class="formula-box-small" ><h5>Obliczenia EAD</h5><p class="formula">EAD = ((D + 10) * FN2 / 0.79) - 10</p><ul><li>Ciśnienie N2: (${depth}+10) * ${n2.toFixed(2)} = ${((depth + 10) * n2).toFixed(2)}</li><li>Ekwiwalent Powietrzny: (${((depth + 10) * n2).toFixed(2)} / 0.79) - 10 = <strong>${ead.toFixed(1)} m</strong></li></ul></div> `;
 
                 eadResult.innerHTML = `
-                    < div class="result-info-icon tooltip-trigger" data - tooltip - type="calculation" data - pro - feature="false" > i</div >
+                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false" > i</div>
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
                     <div class="result-section">
                         <p class="result-label">EAD (Dla Tabel Powietrznych)</p>
@@ -827,10 +827,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const bestMixPercent = Math.floor(fo2 * 100);
 
                 const waterTypeName = (waterType === 'fresh') ? 'słodka' : 'słona';
-                const explanationHTML = `< div class="formula-box-small" ><h5>Best Mix</h5><p class="formula">FO2 = PPO2 / ATA</p><ul><li><strong>Krok 1: Obliczenie ciśnienia (ATA)</strong><ul><li>Głębokość: ${depth}m</li><li>Woda: ${waterTypeName}</li><li>Wzór: ATA = (Głębokość / 10 ${waterType === 'fresh' ? '* 0.971' : ''}) + 1</li><li>ATA = ${ata.toFixed(2)} ATA</li></ul></li><li><strong>Krok 2: Obliczenie FO₂</strong><ul><li>PPO₂ (limit): ${ppo2} bar</li><li>FO₂ = ${ppo2} / ${ata.toFixed(2)} = ${fo2.toFixed(3)}</li></ul></li><li><strong>Wynik (zaokrąglony w dół):</strong> <strong>${bestMixPercent}%</strong></li></ul></div > `;
+                const explanationHTML = `<div class="formula-box-small" ><h5>Best Mix</h5><p class="formula">FO2 = PPO2 / ATA</p><ul><li><strong>Krok 1: Obliczenie ciśnienia (ATA)</strong><ul><li>Głębokość: ${depth}m</li><li>Woda: ${waterTypeName}</li><li>Wzór: ATA = (Głębokość / 10 ${waterType === 'fresh' ? '* 0.971' : ''}) + 1</li><li>ATA = ${ata.toFixed(2)} ATA</li></ul></li><li><strong>Krok 2: Obliczenie FO₂</strong><ul><li>PPO₂ (limit): ${ppo2} bar</li><li>FO₂ = ${ppo2} / ${ata.toFixed(2)} = ${fo2.toFixed(3)}</li></ul></li><li><strong>Wynik (zaokrąglony w dół):</strong> <strong>${bestMixPercent}%</strong></li></ul></div> `;
 
                 bestMixResult.innerHTML = `
-                    < div class="result-info-icon tooltip-trigger" data - tooltip - type="calculation" data - pro - feature="false" > i</div >
+                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false" > i</div>
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
                     <div class="result-section">
                         <p class="result-label">Najlepszy Mix (Best Mix)</p>
@@ -873,7 +873,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 }
 
                 const explanationHTML = `
-                    < div class="formula-box-small" >
+                    <div class="formula-box-small" >
                         <h5>Gas Blender: Mieszanie Metodą Ciśnień Parcjalnych (Nitrox)</h5>
                         <p>Obliczamy ile czystego tlenu (100%) dodać, aby resztę dobić powietrzem (21%).</p>
                         <ul>
@@ -881,11 +881,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             <li>Krok 1 (Tlen): <strong>+${oxygenToAdd.toFixed(1)} bar</strong></li>
                             <li>Krok 2 (Powietrze): +${airTopUp.toFixed(1)} bar</li>
                         </ul>
-                    </div >
+                    </div>
                     `;
 
                 blenderResult.innerHTML = `
-                    < div class="result-info-icon tooltip-trigger" data - tooltip - type="calculation" data - pro - feature="true" > i</div >
+                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="true" > i</div>
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
                     <div class="result-section">
                         <p class="result-label">Krok 1: Dodaj 100% Tlenu</p>
@@ -946,7 +946,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
                 // Tooltip z formułami
                 const explanationHTML = `
-                    < div class="formula-box-small" >
+                    <div class="formula-box-small" >
                         <h5>Partial Pressure Blending (Trimix)</h5>
                         <p>Obliczenia ciśnień parcjalnych dla mieszanki ${targetO2}/${targetHe}:</p>
                         <ul>
@@ -955,11 +955,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             <li>P<sub>Air</sub> = ${targetBar} - ${heBar.toFixed(1)} - ${o2Bar.toFixed(1)} = <strong>${airBar.toFixed(1)} bar</strong></li>
                             <li>N<sub>2</sub> = 100% - ${targetO2}% - ${targetHe}% = <strong>${n2Percent.toFixed(1)}%</strong></li>
                         </ul>
-                    </div >
+                    </div>
                     `;
 
                 trimixResult.innerHTML = `
-                    < div class="result-info-icon tooltip-trigger" data - tooltip - type="calculation" data - pro - feature="true" > i</div >
+                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="true" > i</div>
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
                     <div class="result-section">
                         <p class="result-label">Krok 1: Dodaj 100% Hel (He)</p>
@@ -1011,18 +1011,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const requiredBar = totalLitres / tankSize;
 
                 const explanationHTML = `
-                    < div class="formula-box-small" >
+                    <div class="formula-box-small" >
                         <h5>Kalkulacja Bailout</h5>
                         <ul>
                             <li><strong>Reakcja:</strong> ${sac} l/min * ${pressureAtDepth} ATA * ${reactionTime} min = <strong>${gasReaction.toFixed(0)} l</strong></li>
                             <li><strong>Wynurzenie:</strong> ${sac} l/min * ${avgPressure.toFixed(1)} ATA * ${travelTime.toFixed(1)} min = <strong>${gasAscent.toFixed(0)} l</strong></li>
                             <li><strong>Suma:</strong> ${totalLitres.toFixed(0)} l</li>
                         </ul>
-                    </div >
+                    </div>
                     `;
 
                 bailoutResult.innerHTML = `
-                    < div class="result-info-icon tooltip-trigger" data - tooltip - type="calculation" data - pro - feature="true" > i</div >
+                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="true" > i</div>
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
                     <div class="result-section">
                         <p class="result-label">Wymagany Gaz (Minimum)</p>
@@ -1043,6 +1043,34 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // --- 12. Deco Planner (PRO) - Bühlmann ZHL-16C ---
     const decoForm = document.getElementById('decoForm');
     const decoResult = document.getElementById('decoResult');
+    const decoTankSelect = document.getElementById('decoTank');
+    const decoTankCustomGroup = document.getElementById('decoTankCustomGroup');
+
+    // Cylinder Data (Standard Sizes)
+    const CYLINDER_DATA = {
+        'alu11': { vol: 11.1, press: 207 },
+        'steel12': { vol: 12, press: 200 },
+        'steel15': { vol: 15, press: 232 },
+        'twin7_200': { vol: 14, press: 232 },
+        'twin12_200': { vol: 24, press: 232 },
+        'twin85_200': { vol: 17, press: 232 },
+        'twin10_200': { vol: 20, press: 232 },
+        'twin7_300': { vol: 14, press: 300 },
+        'twin85_300': { vol: 17, press: 300 },
+        'twin10_300': { vol: 20, press: 300 },
+        'twin12_300': { vol: 24, press: 300 }
+    };
+
+    if (decoTankSelect && decoTankCustomGroup) {
+        decoTankSelect.addEventListener('change', function () {
+            if (this.value === 'custom') {
+                decoTankCustomGroup.style.display = 'block';
+            } else {
+                decoTankCustomGroup.style.display = 'none';
+            }
+        });
+    }
+
     if (decoForm && decoResult) {
         decoForm.addEventListener('submit', function (e) {
             e.preventDefault();
@@ -1053,8 +1081,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const fo2Percent = parseFloat(document.getElementById('decoFO2').value);
                 const gfLow = parseFloat(document.getElementById('decoGFLow').value);
                 const gfHigh = parseFloat(document.getElementById('decoGFHigh').value);
+                const sac = parseFloat(document.getElementById('decoSAC').value);
 
-                console.log('[DECO] Inputs:', { depth, bottomTime, fo2Percent, gfLow, gfHigh });
+                // Cylinder Config
+                let tankVol, tankPress;
+                const tankType = document.getElementById('decoTank').value;
+                if (tankType === 'custom') {
+                    tankVol = parseFloat(document.getElementById('decoTankVol').value);
+                    tankPress = parseFloat(document.getElementById('decoTankPress').value);
+                } else {
+                    const data = CYLINDER_DATA[tankType] || { vol: 15, press: 232 };
+                    tankVol = data.vol;
+                    tankPress = data.press;
+                }
+
+                console.log('[DECO] Inputs:', { depth, bottomTime, fo2Percent, gfLow, gfHigh, sac, tankVol, tankPress });
                 const fo2 = fo2Percent / 100;
 
                 // Calculate deco profile
@@ -1066,7 +1107,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 let html = '';
 
                 // Profile summary
-                html += `< div class="result-section" >
+                html += `<div class="result-section" >
                     <p class="result-label">Profil Nurkowania</p>
                     <p class="result-value-main" style="font-size: 1.6em;">${result.gas.type}</p>
                     <p class="result-value-sub">
@@ -1074,13 +1115,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         Czas denny: ${result.profile.bottomTime} min | 
                         GF ${gfLow}/${gfHigh}
                     </p>
-                </div > `;
+                </div> `;
 
                 // Runtime
                 // Runtime breakdown
                 const totalStopTime = result.stops.reduce((sum, stop) => sum + stop.time, 0);
 
-                html += `< div class="result-section" >
+                html += `<div class="result-section" >
                     <p class="result-label">Łączny Czas Nurkowania</p>
                     <p class="result-value-main" style="color: #00d1b2; font-size: 2em;">
                         ${result.profile.totalRuntime} <span class="unit">min</span>
@@ -1094,11 +1135,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     <p class="result-value-sub" style="font-size: 0.85em; opacity: 0.8; margin-top: 5px;">
                         * Łączny czas = zejście (${result.profile.descentTime}) + dno (${result.profile.bottomTime}) + wynurzenie (${result.profile.travelTime}) + przystanki (${totalStopTime}) = ${result.profile.totalRuntime} min
                     </p>
-                </div > `;
+                </div> `;
 
                 // Gas requirement estimation
-                // SAC 20 l/min * pressure * time for each phase
-                const sac = 20;
+                // SAC from user input * pressure * time for each phase
 
                 const avgDepthDescent = depth / 2;
                 const avgPressureDescent = (avgDepthDescent / 10) + 1;
@@ -1120,32 +1160,52 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 });
 
                 const totalGasLiters = Math.round(gasDescent + gasBottom + gasAscent + gasStops);
-                const gasFor12LTank = Math.round(totalGasLiters / 12);
+                const requiredBar = Math.ceil(totalGasLiters / tankVol);
+                const availableGas = tankVol * tankPress;
 
-                html += `< div class="result-section" >
+                // Gas Status Logic
+                let gasStatusColor = '#ffd700'; // Default yellow
+                let gasStatusIcon = '';
+                let gasWarning = '';
+
+                if (totalGasLiters > availableGas) {
+                    gasStatusColor = '#ff3860'; // Red
+                    gasStatusIcon = '⚠️ BRAK GAZU!';
+                    gasWarning = `<p style="color: #ff3860; font-weight: bold; margin-top: 5px;">ZABRAKNIE CI GAZU! Potrzebujesz ${totalGasLiters}L, masz tylko ${availableGas}L.</p>`;
+                } else if (totalGasLiters > availableGas * 0.66) { // Rock Bottom / Reserve warning (rough heuristic)
+                    gasStatusColor = '#ffdd57'; // Orange
+                    gasStatusIcon = '⚠️ Rezerwa';
+                    gasWarning = `<p style="color: #ffdd57; font-size: 0.9em; margin-top: 5px;">Uwaga: Zużywasz > 2/3 gazu. Mały margines bezpieczeństwa.</p>`;
+                } else {
+                    gasStatusColor = '#00d1b2'; // Green
+                    gasStatusIcon = '✅ OK';
+                }
+
+                html += `<div class="result-section">
                     <p class="result-label">Oszacowanie Zużycia Gazu</p>
-                    <p class="result-value-main" style="color: #ffd700; font-size: 1.8em;">
+                    <p class="result-value-main" style="color: ${gasStatusColor}; font-size: 1.8em;">
                         ${totalGasLiters} <span class="unit">litrów</span>
                     </p>
                     <p class="result-value-sub">
-                        Dla butli 12L: ~${gasFor12LTank} bar
+                        Dla wybranej butli (${tankVol}L): <strong>${requiredBar} bar</strong> ${gasStatusIcon}
                     </p>
+                    ${gasWarning}
                     <p class="result-value-sub" style="font-size: 0.85em; opacity: 0.8; margin-top: 5px;">
                         * SAC ${sac} l/min | Zejście: ${Math.round(gasDescent)}L | Dno: ${Math.round(gasBottom)}L | Wynurzenie: ${Math.round(gasAscent)}L | Przystanki: ${Math.round(gasStops)}L
                     </p>
-                </div > `;
+                </div> `;
 
                 // Deco stops or NDL
                 if (result.ndl) {
-                    html += `< div class="result-section" style = "background: rgba(0, 209, 178, 0.1); border: 1px solid rgba(0, 209, 178, 0.3); padding: 15px; border-radius: 8px; margin-top: 15px;" >
+                    html += `<div class="result-section" style="background: rgba(0, 209, 178, 0.1); border: 1px solid rgba(0, 209, 178, 0.3); padding: 15px; border-radius: 8px; margin-top: 15px;" >
                         <p class="result-label" style="color: #00d1b2;">✅ NDL (No Decompression Limit)</p>
                         <p style="color: #00d1b2; font-size: 0.95em;">
                             Możesz wynurzyć się bezpośrednio z zachowaniem prędkości wynurzania 10 m/min.
                         </p>
-                    </div > `;
+                    </div> `;
 
                     if (result.stops.length > 0 && result.stops[0].type === 'safety') {
-                        html += `< div class="result-section" >
+                        html += `<div class="result-section" >
                             <p class="result-label">Safety Stop (Zalecany)</p>
                             <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
                                 <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
@@ -1159,17 +1219,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
                                     <td style="text-align: right; padding: 8px;">${result.stops[0].runtime} min</td>
                                 </tr>
                             </table>
-                        </div > `;
+                        </div> `;
                     }
                 } else {
-                    html += `< div class="result-section" style = "background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.3); padding: 15px; border-radius: 8px; margin-top: 15px;" >
+                    html += `<div class="result-section" style="background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.3); padding: 15px; border-radius: 8px; margin-top: 15px;" >
                         <p class="result-label" style="color: #ff6b6b;">⚠️ WYMAGANA DEKOMPRESJA</p>
                         <p style="color: #ff6b6b; font-size: 0.95em;">
                             Wymagane przystanki dekompresyjne. Nie wynurzaj się szybciej niż wskazany profil!
                         </p>
-                    </div > `;
+                    </div> `;
 
-                    html += `< div class="result-section" >
+                    html += `<div class="result-section" >
                         <p class="result-label">Przystanki Dekompresyjne</p>
                         <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
                             <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
@@ -1189,7 +1249,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         </tr>`;
                     });
 
-                    html += `</table></div > `;
+                    html += `</table></div> `;
                 }
 
                 // Create explanation HTML for tooltip
@@ -1222,7 +1282,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 `;
 
                 decoResult.innerHTML = `
-                    < div class="result-info-icon tooltip-trigger" data - tooltip - type="calculation" data - pro - feature="false" > i</div >
+                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false" > i</div>
                         <div class="calculation-details" style="display: none;">${explanationHTML}</div>
                     ${html}
                 `;
@@ -1310,7 +1370,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 const totalBallast = Math.max(0, Math.round((baseBallast + suitMod + waterMod + tankMod) * 2) / 2);
 
                 const explanationHTML = `
-                    < div class="formula-box-small" >
+                    <div class="formula-box-small" >
                         <h5>Obliczanie Sugestii Balastu</h5>
                         <p>Obliczenie balastu to heurystyka (dobra zasada), a nie ścisły wzór. Zawsze wykonaj kontrolę pływalności.</p>
                         <p class="formula">Balast = Waga<sub>bazowa</sub> + Modyfikatory</p>
@@ -1342,10 +1402,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                             <li><strong>Budowa Atletyczna:</strong> -3 kg</li>
                             <li><strong>Budowa Nadwaga:</strong> +3 kg</li>
                         </ul>
-                    </div > `;
+                    </div> `;
 
                 ballastResultContainer.innerHTML = `
-                    < div class="result-info-icon tooltip-trigger" data - tooltip - type="calculation" data - pro - feature="false" > i</div >
+                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false" > i</div>
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
                    
                     <div class="result-section">
