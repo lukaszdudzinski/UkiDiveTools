@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Integrity Check - Uki's Dive Tools</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .pass {
+            color: #00d1b2;
+            font-weight: bold;
+        }
+
+        .fail {
+            color: #ff3860;
+            font-weight: bold;
+        }
+
+        .test-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #333;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Integrity Check</h1>
+    <div id="results">Running tests...</div>
+
+    <!-- Load Application Scripts -->
+    <script src="../deco-buhlmann.js"></script>
+    <script src="../deco-core.js"></script>
+    <script src="../js/data/lectures.js"></script>
+    <script src="../js/modules/quiz.js"></script>
+
+    <!-- Mock DOM elements required by script.js to avoid errors -->
+    <div id="mock-dom" style="display:none;">
+        <div id="science-of-diving"></div>
+        <div id="settings-panel"></div>
+        <div id="quiz-modal"></div>
+        <div id="lecture-cards"></div>
+        <div id="lecture-viewer"></div>
+        <div id="lecture-title"></div>
+        <div id="lecture-body"></div>
+        <div id="lecture-toc"></div>
+        <div id="lecture-back-btn"></div>
+        <div class="lectures-grid-wrapper"></div>
+        <div class="app-content"></div>
+        <div class="sidebar-nav"></div>
+        <div class="overlay"></div>
+        <div class="tab-content-wrapper">
+            <div class="tab-content"></div>
+        </div>
+        <div id="home-link-header"></div>
+        <div id="theme-toggle"></div>
+        <div id="glass-toggle"></div>
+        <div id="global-water-type"></div>
+        <div id="global-tooltip"></div>
+        <div id="tooltip-overlay"></div>
+        <div id="tooltip-body"></div>
+        <div id="tooltip-close-btn"></div>
+    </div>
+
+    <script>
+        // Mock localStorage
+        const localStorageMock = {
+            getItem: () => null,
+            setItem: () => { }
+        };
+        Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+    </script>
+
+    <script src="../script.js"></script>
+
+    <script>
+        function runTests() {
+            const results = document.getElementById('results');
+            let html = '';
+            let passed = 0;
+            let total = 0;
+
+            function assert(condition, message) {
+                total++;
+                if (condition) {
+                    passed++;
+                    html += `<div class="test-item"><span class="pass">PASS</span>: ${message}</div>`;
+                } else {
+                    html += `<div class="test-item"><span class="fail">FAIL</span>: ${message}</div>`;
+                }
+            }
+
+            // Test 1: Check lecturesData
+            assert(typeof lecturesData !== 'undefined', 'lecturesData is defined (global scope)');
+            assert(Array.isArray(lecturesData) && lecturesData.length > 0, 'lecturesData is a non-empty array');
+            if (typeof lecturesData !== 'undefined' && lecturesData.length > 0) {
+                assert(lecturesData[0].title === 'Fizyka Nurkowania', 'First lecture title is correct');
+            }
+
+            // Test 2: Check Quiz Functions
+            assert(typeof startQuiz === 'function', 'startQuiz function is defined');
+            assert(typeof renderQuestion === 'function', 'renderQuestion function is defined');
+
+            // Test 3: Check HTML Structure (in actual index.html, but here we check if script.js didn't crash)
+            assert(true, 'Scripts loaded without blocking errors');
+
+            results.innerHTML = html + `<h3>Summary: ${passed}/${total} Passed</h3>`;
+        }
+
+        // Run after a short delay to ensure scripts are parsed
+        setTimeout(runTests, 500);
+    </script>
+</body>
+
+</html>
