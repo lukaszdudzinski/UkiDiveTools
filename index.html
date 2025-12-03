@@ -1112,6 +1112,166 @@
                 <h3 id="quiz-result-message">Gratulacje!</h3>
                 <button class="retry-button" onclick="restartQuiz()">Spróbuj Ponownie</button>
                 <button class="pulse-button" onclick="closeQuiz()">Zamknij</button>
+
+                <!-- SEKCJA: WIEDZA NURKOWA -->
+                <div id="science-of-diving" class="tab-content">
+                    <h3>Wiedza Nurkowa</h3>
+                    <nav class="sub-tab-nav">
+                        <button class="sub-tab-button active" data-subtab="sod-sac">SAC</button>
+                        <button class="sub-tab-button" data-subtab="sod-nitrox">Nitrox</button>
+                        <button class="sub-tab-button" data-subtab="sod-gas">Gazy</button>
+                        <button class="sub-tab-button" data-subtab="sod-ballast">Balast</button>
+                        <button class="sub-tab-button" data-subtab="sod-lectures">Wykłady</button>
+                    </nav>
+                    <div class="sub-tab-content-wrapper">
+                        <div id="sod-sac" class="sub-tab-content active-sub-tab">
+                            <div class="science-content">
+                                <h4>SAC</h4>
+                                <div class="formula-box">
+                                    <p class="formula">SAC = ((P1 - P2) * Vb) / (Pśr * T)</p>
+                                    <ul>
+                                        <li>P1/P2: Ciśnienie start/koniec</li>
+                                        <li>Vb: Butla</li>
+                                        <li>Pśr: Średnie ciśnienie</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="sod-nitrox" class="sub-tab-content">
+                            <div class="science-content">
+                                <h4>MOD (Maximum Operating Depth)</h4>
+                                <div class="formula-box">
+                                    <p class="formula">MOD = ((PPO2 / FO2) - 1) * 10</p>
+                                    <ul class="detailed-legend">
+                                        <li><strong>PPO2:</strong> Maksymalne ciśnienie parcjalne tlenu (np. 1.4 ATA)</li>
+                                        <li><strong>FO2:</strong> Frakcja tlenu w mieszance (np. 0.32)</li>
+                                        <li><strong>-1:</strong> Odjęcie ciśnienia atmosferycznego</li>
+                                        <li><strong>*10:</strong> Konwersja z barów na metry</li>
+                                    </ul>
+                                </div>
+                                <h4>EAD (Equivalent Air Depth)</h4>
+                                <div class="formula-box">
+                                    <p class="formula">EAD = ((D + 10) * FN2 / 0.79) - 10</p>
+                                    <ul class="detailed-legend">
+                                        <li><strong>D:</strong> Aktualna głębokość (m)</li>
+                                        <li><strong>FN2:</strong> Frakcja azotu w mieszance (1 - FO2)</li>
+                                        <li><strong>0.79:</strong> Frakcja azotu w powietrzu (stała)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="sod-gas" class="sub-tab-content">
+                            <div class="science-content">
+                                <h4>Planowanie Gazu</h4>
+                                <div class="formula-box">
+                                    <p class="formula">L_faza = SAC * P_avg * T</p>
+                                    <ul class="detailed-legend">
+                                        <li><strong>L_faza:</strong> Zużycie gazu w danej fazie (l)</li>
+                                        <li><strong>SAC:</strong> Powierzchniowe zużycie gazu (l/min)</li>
+                                        <li><strong>P_avg:</strong> Średnie ciśnienie otoczenia (ATA)</li>
+                                        <li><strong>T:</strong> Czas trwania fazy (min)</li>
+                                        <li><strong>L_total:</strong> Całkowite zużycie (Zanurzenie + Dno + Wynurzenie + Przystanki)</li>
+                                    </ul>
+                                </div>
+                                <h4>Rock Bottom (Rezerwa)</h4>
+                                <div class="formula-box">
+                                    <p class="formula">RB_bar = (L_reakcja + L_wynurz) / V_butli</p>
+                                    <ul class="detailed-legend">
+                                        <li><strong>RB_bar:</strong> Minimalne ciśnienie rezerwy (bar)</li>
+                                        <li><strong>L_reakcja:</strong> Gaz na rozwiązanie problemu na dnie (l)</li>
+                                        <li><strong>L_wynurz:</strong> Gaz na bezpieczny powrót na powierzchnię (l)</li>
+                                        <li><strong>V_butli:</strong> Pojemność wodna butli (l)</li>
+                                        <li><strong>SAC_stres:</strong> Zwykle 2x SAC normalny (stres)</li>
+                                        <li><strong>Os.:</strong> Liczba nurków (np. 2 w zespole)</li>
+                                        <li><strong>T_reakcja:</strong> Czas na opanowanie sytuacji (min)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="sod-ballast" class="sub-tab-content">
+                            <div class="science-content">
+                                <h4>Kalkulacja Balastu</h4>
+                                <div class="formula-box">
+                                    <p class="formula">Baza = 10% Wagi Ciała</p>
+                                    <p><strong>Korekty (Wagi):</strong></p>
+                                    <ul class="detailed-legend">
+                                        <li><strong>Skafandry:</strong>
+                                            <ul>
+                                                <li>Pianka 3mm: +1 kg</li>
+                                                <li>Pianka 5mm: +3 kg</li>
+                                                <li>Pianka 7mm: +5 kg</li>
+                                                <li>Suchy (Laminat/Crash): +8 kg</li>
+                                                <li>Suchy + Gruby Ocieplacz: +12 kg</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Butle:</strong>
+                                            <ul>
+                                                <li>Alu 11L (S80): +2 kg</li>
+                                                <li>Stal 12L (krótka/długa): -2 kg</li>
+                                                <li>Stal 15L: -3 kg</li>
+                                                <li>Twin 2x7L: -4 kg</li>
+                                                <li>Twin 2x12L: -8 kg</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Inne:</strong>
+                                            <ul>
+                                                <li>Płyta Stalowa: -2 kg</li>
+                                                <li>Woda Słona: +2.5 kg</li>
+                                                <li>Budowa Szczupła: -1 kg</li>
+                                                <li>Nadwaga: +1 kg</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="sod-lectures" class="sub-tab-content">
+                            <div class="lectures-layout">
+                                <div class="lectures-grid-wrapper">
+                                    <ul id="lecture-cards" class="cards lectures-grid" aria-live="polite"></ul>
+                                </div>
+                                <main id="lecture-viewer" class="lecture-viewer" aria-hidden="true">
+                                    <div class="lecture-header">
+                                        <h2 id="lecture-title">Wybierz wykład</h2>
+                                        <div class="lecture-controls">
+                                            <button id="lecture-back-btn" class="secondary">Powrót</button>
+                                        </div>
+                                    </div>
+                                    <nav id="lecture-toc" class="lecture-toc" aria-hidden="true"></nav>
+                                    <article id="lecture-body" class="lecture-body">
+                                        <p>Brak wybranego wykładu.</p>
+                                    </article>
+                                </main>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEKCJA: USTAWIENIA -->
+                <div id="settings-panel" class="tab-content">
+                    <h3>Ustawienia</h3>
+                    <div class="settings-toggle-row">
+                        <label for="glass-toggle">Efekt Szklany (Liquid Glass)</label>
+                        <label class="theme-switch" for="glass-toggle">
+                            <input type="checkbox" id="glass-toggle" />
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="settings-toggle-row">
+                        <label for="global-water-type">Domyślny Rodzaj Wody</label>
+                        <select id="global-water-type" class="settings-select">
+                            <option value="fresh">Woda słodka</option>
+                            <option value="salt">Woda słona</option>
+                        </select>
+                    </div>
+                    <h4>Zmień Tapetę</h4>
+                    <div class="wallpaper-options">
+                        <img src="background_uki.jpg" class="wallpaper-thumb active" data-wallpaper="url('background_uki.jpg')">
+                        <img src="Gemini_Generated_Image_31b0jp31b0jp31b0 (1).png" class="wallpaper-thumb" data-wallpaper="url('Gemini_Generated_Image_31b0jp31b0jp31b0 (1).png')">
+                        <img src="Gemini_Generated_Image_31b0jp31b0jp31b0 (2).png" class="wallpaper-thumb" data-wallpaper="url('Gemini_Generated_Image_31b0jp31b0jp31b0 (2).png')">
+                        <img src="Generated Image September 22, 2025 - 3_04PM.png" class="wallpaper-thumb" data-wallpaper="url('Generated Image September 22, 2025 - 3_04PM.png')">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
