@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    PODSTAWOWE STYLE
    ============================================================ */
 body {
@@ -3840,11 +3840,7 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
   width: 100%;
 }
 
-.quiz-start-btn-elegant::before {
-  content: '🧠';
-  font-size: 1.2em;
-  margin-right: 10px;
-}
+
 
 /* ============================================================
    GAME OVER SCREEN STYLING
@@ -3963,4 +3959,39 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
   75% {
     transform: translateX(10px);
   }
+}
+
+/* Reward Image & Retry Button Fix */
+.reward-image {
+    width: auto;
+    max-width: 90%;
+    max-height: 400px;
+    height: auto;
+    border-radius: 12px;
+    margin: 0 auto 20px auto;
+    display: block;
+    box-shadow: 0 8px 20px rgba(0, 209, 178, 0.3);
+    border: 2px solid rgba(0, 209, 178, 0.5);
+    animation: pulse-glow-dark 3s infinite ease-in-out;
+    object-fit: contain;
+}
+
+.retry-button {
+    background: rgba(30, 30, 30, 0.9);
+    border: 2px solid #00d1b2;
+    color: #00d1b2;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 5px;
+    animation: pulse-border-cyan 2s infinite ease-in-out;
+}
+
+.retry-button:hover {
+    background: rgba(0, 209, 178, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(0, 209, 178, 0.4);
 }
