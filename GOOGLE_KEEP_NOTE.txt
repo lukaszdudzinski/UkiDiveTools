@@ -1,0 +1,52 @@
+# 🧪 UKI'S DIVE TOOLS - Testy Aplikacji
+
+## JAK URUCHOMIĆ TESTY? (wybierz jedną metodę)
+
+### ⚡ NAJSZYBSZA (jeśli masz Python):
+```
+1. PowerShell w folderze aplikacji
+2. python -m http.server 8000
+3. Otwórz: http://localhost:8000
+4. F12 → new UkiTestSuite().runAll()
+```
+
+### 📋 ALTERNATYWA (skopiuj-wklej):
+```
+1. Otwórz: tests/automated-test.js
+2. Ctrl+A → Ctrl+C (skopiuj wszystko)
+3. Otwórz aplikację w przeglądarce
+4. F12 → wklej kod → Enter
+5. new UkiTestSuite().runAll()
+```
+
+### 💡 RAZ NA ZAWSZE:
+```
+Dodaj do index.html przed </body>:
+<script src="tests/automated-test.js"></script>
+
+Potem zawsze: F12 → new UkiTestSuite().runAll()
+```
+
+---
+
+## KIEDY URUCHAMIAĆ?
+- ✅ Przed commitowaniem kodu
+- ✅ Po większych zmianach
+- ✅ Po przywróceniu backupu
+
+## REGUŁA:
+**Wszystko ✅ zielone? Commituj!**  
+**Coś ❌ czerwone? Napraw najpierw!**
+
+---
+
+## CZY AGENT TO ROBI?
+**NIE** - Ty musisz sam uruchamiać przed commitami!  
+**TAK** - Agent wie o testach (workflow) i testuje podczas weryfikacji.
+
+Nowe konwersacje: Agent czyta `.agent/workflows/testing_procedure.md`
+
+---
+
+💾 ZAPISANE: 06-12-2024
+📱 Dodaj do Google Keep: "Uki Tests - F12 → new UkiTestSuite().runAll()"
