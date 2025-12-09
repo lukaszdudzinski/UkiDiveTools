@@ -1,4 +1,4 @@
-﻿// ============================================================
+// ============================================================
 // QUIZ SYSTEM - GLOBAL SCOPE (Must be accessible from HTML onclick)
 // ============================================================
 let quizModal, quizBody, quizResultScreen;
@@ -109,7 +109,7 @@ function showQuizResult() {
 
     // Add random reward image for perfect score
     if (percentage === 100) {
-        const rewardImages = ['reward1.jpg', 'reward2.jpg', 'reward3.jpg', 'reward4.jpg', 'reward5.jpg'];
+        const rewardImages = ['img/rewards/reward1.jpg', 'img/rewards/reward2.jpg', 'img/rewards/reward3.jpg', 'img/rewards/reward4.jpg', 'img/rewards/reward5.jpg'];
         const randomImage = rewardImages[Math.floor(Math.random() * rewardImages.length)];
         resultHTML += `<img src="${randomImage}" class="reward-image" alt="Gratulacje!">`;
     }
@@ -351,7 +351,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const themeToggle = document.getElementById('theme-toggle');
     const glassToggle = document.getElementById('glass-toggle');
     const wallpaperThumbs = document.querySelectorAll('.wallpaper-thumb');
-    const defaultWallpaper = "url('background_uki.jpg')";
+    const defaultWallpaper = "url('img/bg/background_uki.jpg')";
     const globalWaterTypeSelect = document.getElementById('global-water-type');
     const sacWaterType = document.getElementById('waterType');
     const ballastWaterType = document.getElementById('ballastWater');
