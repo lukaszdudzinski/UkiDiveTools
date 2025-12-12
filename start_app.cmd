@@ -1,0 +1,6 @@
+@echo off
+echo Starting Uki's Dive Tools v1.6.0...
+echo Otwieranie serwera lokalnego (wymagane dla modulow ES6)...
+start "" "http://localhost:8081/index.html"
+python -m http.server 8081
+pause

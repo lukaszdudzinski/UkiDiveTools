@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Uki's Dive Tools - Unit Tests</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #222;
+            color: #eee;
+            padding: 20px;
+        }
+
+        .pass {
+            color: #4caf50;
+        }
+
+        .fail {
+            color: #f44336;
+        }
+
+        h1 {
+            border-bottom: 1px solid #444;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🧪 Unit Tests Runner</h1>
+    <div id="output">Initializing...</div>
+
+    <script type="module">
+        // Global error handler
+        window.errors = [];
+        window.onerror = function (msg, url, line) {
+            window.errors.push(`${msg} (${url}:${line})`);
+            render();
+            return false;
+        };
+
+        const output = document.getElementById('output');
+
+        function render() {
+            if (window.errors.length > 0) {
+                output.innerHTML = `<h2 class="fail">❌ FAILED</h2><ul>${window.errors.map(e => `<li>${e}</li>`).join('')}</ul>`;
+            } else {
+                output.innerHTML = `<h2 class="pass">✅ ALL TESTS PASSED</h2><p>Check console for details.</p>`;
+            }
+        }
+
+        // Import tests dynamically
+        try {
+            await import('./unit/DiveMath.test.js');
+            await import('./unit/NitroxCalculator.test.js');
+            // Add more tests here
+
+            // If we got here, no synchronous errors occurred in modules
+            render();
+        } catch (e) {
+            console.error(e);
+            window.errors.push(e.message);
+            render();
+        }
+    </script>
+</body>
+
+</html>
