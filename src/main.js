@@ -4,6 +4,7 @@ import { DivemasterUI } from './modules/ui/DivemasterUI.js';
 // Initialize Application
 // Initialize Application
 const initApp = () => {
+    console.log("Starting App Initialization...");
     AppUI.init();
     DivemasterUI.init();
 

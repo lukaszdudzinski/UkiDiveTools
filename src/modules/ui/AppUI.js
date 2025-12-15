@@ -10,6 +10,7 @@ export const AppUI = {
         AppUI.initNavigation();
         AppUI.initTheme();
         AppUI.initTooltips();
+        AppUI.initGlobalButtons();
 
         // Initialize Sub-Modules
         initNitroxUI();
@@ -22,6 +23,78 @@ export const AppUI = {
 
         // Mobile Menu
         AppUI.initMobileMenu();
+    },
+
+    initGlobalButtons: () => {
+        // 1. SOS Button - Global Listener
+        const emergencyBtn = document.getElementById('emergency-btn');
+        if (emergencyBtn) {
+            // Remove old listeners wrapper (optional check)
+            emergencyBtn.replaceWith(emergencyBtn.cloneNode(true));
+            const newEmergencyBtn = document.getElementById('emergency-btn'); // Re-select after clone
+            newEmergencyBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('SOS Button Clicked');
+                const emergencyContent = document.getElementById('emergency-content');
+                if (emergencyContent) {
+                    // Direct manipulation of global tooltip to ensure it works
+                    const tooltipBody = document.getElementById('tooltip-body');
+                    const globalTooltip = document.getElementById('global-tooltip');
+                    const tooltipOverlay = document.getElementById('tooltip-overlay');
+
+                    if (tooltipBody && globalTooltip && tooltipOverlay) {
+                        tooltipBody.innerHTML = emergencyContent.innerHTML;
+                        globalTooltip.style.display = 'block';
+                        tooltipOverlay.style.display = 'block';
+                        globalTooltip.classList.add('emergency-modal');
+                    }
+                }
+            });
+        }
+
+        // 2. Donation Button - Global Listener
+        const donationLink = document.getElementById('donation-link');
+        if (donationLink) {
+            donationLink.replaceWith(donationLink.cloneNode(true));
+            const newDonationLink = document.getElementById('donation-link');
+            newDonationLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('Donation Button Clicked');
+                alert('Dziękuję za chęć wsparcia! (Link do płatności wkrótce)');
+            });
+        }
+
+        // 3. PRO Unlock - Event Delegation for robustness (handles dynamic overlays)
+        // Using document.body to catch clicks on elements that might be re-rendered
+        if (!window.proUnlockInitialized) {
+            window.proUnlockInitialized = true;
+            document.body.addEventListener('click', (e) => {
+                if (e.target.classList.contains('unlockProButton')) {
+                    e.preventDefault();
+                    console.log('PRO Unlock Clicked');
+                    const proDashboard = document.getElementById('pro-dashboard');
+                    if (proDashboard) {
+                        proDashboard.classList.add('unlocked');
+                        const overlays = document.querySelectorAll('.pro-lock-overlay');
+                        overlays.forEach(o => o.style.display = 'none');
+                    }
+                    try {
+                        localStorage.setItem('uki-pro-unlocked', 'true');
+                    } catch (err) { console.warn('LC error', err); }
+                    alert('Dziękuję za wsparcie! Funkcje PRO zostały odblokowane.');
+                }
+            });
+        }
+
+        // Initialize State for PRO
+        try {
+            if (localStorage.getItem('uki-pro-unlocked') === 'true') {
+                const proDashboard = document.getElementById('pro-dashboard');
+                if (proDashboard) proDashboard.classList.add('unlocked');
+                const overlays = document.querySelectorAll('.pro-lock-overlay');
+                overlays.forEach(o => o.style.display = 'none');
+            }
+        } catch (err) { }
     },
 
     initMobileMenu: () => {
@@ -173,7 +246,11 @@ export const AppUI = {
                 body.classList.remove('dark-theme');
                 if (themeToggle) themeToggle.checked = false;
             }
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            try {
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            } catch (e) {
+                console.warn('LocalStorage access denied:', e);
+            }
         }
 
         function setLiquidGlass(isEnabled) {
@@ -184,12 +261,16 @@ export const AppUI = {
                 body.classList.add('glass-off');
                 if (glassToggle) glassToggle.checked = false;
             }
-            localStorage.setItem('uki-liquid-glass', isEnabled ? 'on' : 'off');
+            try {
+                localStorage.setItem('uki-liquid-glass', isEnabled ? 'on' : 'off');
+            } catch (e) { console.warn('LC error', e); }
         }
 
         function setWallpaper(url) {
             body.style.backgroundImage = url;
-            localStorage.setItem('uki-wallpaper', url);
+            try {
+                localStorage.setItem('uki-wallpaper', url);
+            } catch (e) { console.warn('LC error', e); }
             wallpaperThumbs.forEach(t => t.classList.toggle('active', t.getAttribute('data-wallpaper') === url));
         }
 
@@ -197,7 +278,9 @@ export const AppUI = {
             if (globalWaterTypeSelect) globalWaterTypeSelect.value = val;
             if (sacWaterType) sacWaterType.value = val;
             if (ballastWaterType) ballastWaterType.value = val;
-            localStorage.setItem('uki-water-type', val);
+            try {
+                localStorage.setItem('uki-water-type', val);
+            } catch (e) { console.warn('LC error', e); }
         }
 
         if (themeToggle) themeToggle.addEventListener('change', () => setTheme(themeToggle.checked));
@@ -209,16 +292,41 @@ export const AppUI = {
         if (ballastWaterType) ballastWaterType.addEventListener('change', () => setWaterType(ballastWaterType.value));
 
         // Init
-        const savedTheme = localStorage.getItem('theme');
+        let savedTheme = null;
+        try {
+            savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                setTheme(false);
+            }
+        } catch (e) { console.warn('LC error', e); }
         setTheme(savedTheme === 'dark' || savedTheme === null);
 
-        const savedGlass = localStorage.getItem('uki-liquid-glass');
+        let savedGlass = null;
+        try {
+            savedGlass = localStorage.getItem('uki-liquid-glass');
+            if (savedGlass === 'off') {
+                setLiquidGlass(false);
+            }
+        } catch (e) { console.warn('LC error', e); }
         setLiquidGlass(savedGlass === 'on' || savedGlass === null);
 
-        const savedWallpaper = localStorage.getItem('uki-wallpaper');
+        let savedWallpaper = null;
+        try {
+            savedWallpaper = localStorage.getItem('uki-wallpaper');
+            if (savedWallpaper) {
+                setWallpaper(savedWallpaper);
+            }
+        } catch (e) { console.warn('LC error', e); }
         setWallpaper(savedWallpaper || "url('img/bg/background_uki.jpg')");
 
-        const savedWater = localStorage.getItem('uki-water-type');
+        let savedWater = null;
+        try {
+            savedWater = localStorage.getItem('uki-water-type');
+            if (savedWater) {
+                const waterSelect = document.getElementById('water-type-select');
+                if (waterSelect) waterSelect.value = savedWater;
+            }
+        } catch (e) { console.warn('LC error', e); }
         setWaterType(savedWater || 'fresh');
     },
 
@@ -275,13 +383,10 @@ export const AppUI = {
             }
         });
 
-        // SOS Button
-        const emergencyBtn = document.getElementById('emergency-btn');
-        if (emergencyBtn) {
-            emergencyBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                showTooltip(document.getElementById('emergency-content').innerHTML, true);
-            });
-        }
-    }
+
+    },
+
+
+
+
 };

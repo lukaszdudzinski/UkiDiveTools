@@ -1,0 +1,14 @@
+INSTRUKCJA URUCHOMIENIA APLIKACJI (Uki's Dive Tools)
+
+1. NIE KLIKAJ w plik "index.html".
+   (Przeglądarki blokują nowoczesne aplikacje otwierane w ten sposób).
+
+2. ZNAJDŹ plik "start_app.cmd" w tym folderze.
+   (Ma ikonkę zębatki lub okna konsoli).
+
+3. KLIKNIJ go dwukrotnie.
+   - Pojawi się czarne okno (to jest serwer - nie zamykaj go!).
+   - Przeglądarka sama otworzy poprawny adres: http://localhost:8081
+
+4. Jeśli zobaczysz błędy:
+   - Wciśnij CTRL + F5 w przeglądarce, aby odświeżyć.
