@@ -1,28 +1,58 @@
-const CACHE_NAME = 'uki-dive-tools-v2';
-const ASSETS = [
+const CACHE_NAME = 'uki-dive-tools-v2026-3-6-01';
+// Core assets that MUST be cached immediately
+const CORE_ASSETS = [
     './',
     './index.html',
     './style.css',
     './src/main.js',
-    './src/modules/ui/AppUI.js',
-    './src/modules/ui/QuizUI.js',
-    './src/modules/ui/LecturesUI.js',
-    './src/modules/data/LecturesData.js',
-    './img/logo.jpg'
+    './img/logo.jpg',
+    './img/bg/background_uki.jpg',
+    './manifest.json'
 ];
 
 self.addEventListener('install', (e) => {
+    self.skipWaiting(); // Activate worker immediately
     e.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll(ASSETS);
+            return cache.addAll(CORE_ASSETS);
         })
     );
+});
+
+self.addEventListener('activate', (e) => {
+    e.waitUntil(
+        caches.keys().then((keyList) => {
+            return Promise.all(keyList.map((key) => {
+                if (key !== CACHE_NAME) {
+                    return caches.delete(key);
+                }
+            }));
+        })
+    );
+    return self.clients.claim(); // Take control of all clients immediately
 });
 
 self.addEventListener('fetch', (e) => {
     e.respondWith(
         caches.match(e.request).then((response) => {
-            return response || fetch(e.request);
+            if (response) {
+                return response; // Hit cache
+            }
+            return fetch(e.request).then((fetchResponse) => {
+                // Return if not valid
+                if (!fetchResponse || fetchResponse.status !== 200 || fetchResponse.type !== 'basic') {
+                    return fetchResponse;
+                }
+
+                // Clone response to cache it dynamically
+                const responseToCache = fetchResponse.clone();
+                caches.open(CACHE_NAME).then((cache) => {
+                    cache.put(e.request, responseToCache);
+                });
+
+                return fetchResponse;
+            });
         })
     );
 });
+

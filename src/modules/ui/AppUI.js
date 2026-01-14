@@ -5,7 +5,7 @@ import { initBallastUI } from './calculators/BallastUI.js';
 import { LecturesUI } from './LecturesUI.js';
 import { QuizUI } from './QuizUI.js';
 
-export const APP_VERSION = 'v1.6.0';
+export const APP_VERSION = 'v2026.3.6.01';
 
 export const AppUI = {
     init: () => {
