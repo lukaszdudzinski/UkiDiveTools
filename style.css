@@ -786,8 +786,19 @@ h3,
   margin-bottom: 25px;
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.2);
-  overflow: hidden;
+  overflow-x: auto;
+  /* Allow horizontal scrolling */
+  overflow-y: hidden;
   border: 1px solid #4a4a4a;
+  -webkit-overflow-scrolling: touch;
+  /* Smooth scrolling on iOS */
+  scrollbar-width: none;
+  /* Hide scrollbar Firefox */
+}
+
+.sub-tab-nav::-webkit-scrollbar {
+  display: none;
+  /* Hide scrollbar Chrome/Safari */
 }
 
 .sub-tab-button {
@@ -3679,10 +3690,17 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
   border: 1px solid rgba(0, 209, 178, 0.3);
   border-radius: 12px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 209, 178, 0.2);
-  max-width: 700px;
+  max-width: 500px;
   width: 100%;
   max-height: 90vh;
+  min-height: 400px;
+  /* Force minimum vertical size */
   overflow-y: auto;
+  /* Auto vertical scroll */
+  overflow-x: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   animation: quiz-pop-in 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
@@ -3805,18 +3823,27 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
   line-height: 1.4;
 }
 
+.quiz-feedback:empty {
+  display: none;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
 .quiz-feedback.error {
   border-left-color: #ff3860;
   font-weight: bold;
 }
 
 #quiz-result-screen {
-  padding: 40px 20px;
+  padding: 10px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100%;
+  width: 100%;
 }
 
 .quiz-score-circle {
@@ -4068,41 +4095,7 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
   box-shadow: 0 0 20px rgba(0, 209, 178, 0.4);
 }
 
-/* --- SUB-TAB NAVIGATION (Naprawa braku stylów) --- */
-.sub-tab-nav {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-  background: rgba(0, 0, 0, 0.2);
-  padding: 10px;
-  border-radius: 12px;
-}
-
-.sub-tab-button {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #b0b0b0;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.9em;
-  transition: all 0.3s ease;
-}
-
-.sub-tab-button:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.4);
-}
-
-.sub-tab-button.active {
-  background: #00d1b2;
-  color: #1e1e1e;
-  border-color: #00d1b2;
-  font-weight: 600;
-  box-shadow: 0 0 10px rgba(0, 209, 178, 0.4);
-}
+/* Removed duplicate sub-tab-nav definitions */
 
 /* --- EMERGENCY FLASH --- */
 @keyframes flashRed {

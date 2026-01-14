@@ -5,12 +5,26 @@ import { initBallastUI } from './calculators/BallastUI.js';
 import { LecturesUI } from './LecturesUI.js';
 import { QuizUI } from './QuizUI.js';
 
+export const APP_VERSION = 'v1.6.0';
+
 export const AppUI = {
     init: () => {
         AppUI.initNavigation();
         AppUI.initTheme();
         AppUI.initTooltips();
         AppUI.initGlobalButtons();
+
+        // Dynamic Version Update
+        const versionDisplays = document.querySelectorAll('.version-info, .app-version-display');
+        versionDisplays.forEach(el => {
+            if (el.classList.contains('version-info') && !el.closest('.settings-info-row')) {
+                el.textContent = `Uki's Dive Tools ${APP_VERSION}`;
+            } else {
+                el.textContent = APP_VERSION;
+            }
+        });
+
+        // Initialize Sub-Modules
 
         // Initialize Sub-Modules
         initNitroxUI();
