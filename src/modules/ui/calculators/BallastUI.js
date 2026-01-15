@@ -45,10 +45,11 @@ function initBallastForm() {
                 const tankType = document.getElementById('ballastTank').value;
                 const waterType = document.getElementById('ballastWater').value;
                 const bodyType = document.getElementById('ballastBodyType').value;
-                const warmerType = document.getElementById('ballastWarmer').value;
-                const plateType = document.getElementById('ballastPlate').value;
+                const warmerType = document.getElementById('ballastWarmer') ? document.getElementById('ballastWarmer').value : null;
+                const plateType = document.getElementById('ballastPlate') ? document.getElementById('ballastPlate').value : null;
+                const vestType = document.getElementById('ballastVest') ? document.getElementById('ballastVest').value : 'none';
 
-                const result = BallastCalculator.calculateBallast(weight, suitType, tankType, bodyType, waterType, warmerType, plateType);
+                const result = BallastCalculator.calculateBallast(weight, suitType, tankType, bodyType, waterType, warmerType, plateType, vestType);
 
                 const explanationHTML = `
                     <div class="formula-box-small">
@@ -66,7 +67,11 @@ function initBallastForm() {
                     <div class="calculation-details" style="display: none;">${explanationHTML}</div>
                     <div class="result-section">
                         <p class="result-label">Szacowany Balast</p>
-                        <p class="result-value-main">${result.totalBallast}<span class="unit">kg</span></p>
+                        <p class="result-value-main">~${result.totalBallast}<span class="unit">kg</span></p>
+                        <p class="result-sub-value" style="font-size: 0.9em; color: #aaa;">(Zakres: ${result.minBallast} - ${result.maxBallast} kg)</p>
+                    </div>
+                    <div class="result-disclaimer" style="text-align: center; font-size: 0.8em; margin-top: 5px;">
+                        <span style="color: #ff3860; font-weight: bold;">Wymagane sprawdzenie w wodzie!</span>
                     </div>`;
 
                 ballastResultContainer.style.display = 'block';

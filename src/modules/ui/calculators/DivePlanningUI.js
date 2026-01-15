@@ -1,24 +1,35 @@
 import { DivePlanningCalculator } from '../../calculators/DivePlanningCalculator.js';
 
 export function initDivePlanningUI() {
-    initSacUI();
-    initGasConsumptionUI();
-    initRockBottomUI();
-    initBailoutUI();
+    try { initSacUI(); } catch (e) { console.error("SAC UI Init Error", e); }
+    try { initGasConsumptionUI(); } catch (e) { console.error("Gas Consumption UI Init Error", e); }
+    try { initRockBottomUI(); } catch (e) { console.error("Rock Bottom UI Init Error", e); }
+    try { initBailoutUI(); } catch (e) { console.error("Bailout UI Init Error", e); }
+    try { initProGasUI(); } catch (e) { console.error("Pro Gas UI Init Error", e); }
+    try { autoLoadSavedSac(); } catch (e) { console.log("Auto Load SAC Error", e); }
 }
 
 function initSacUI() {
     const sacForm = document.getElementById('sacForm');
     const resultDiv = document.getElementById('sacResult');
     if (sacForm && resultDiv) {
-        sacForm.addEventListener('submit', function (e) {
+        // Remove existing listener to prevent duplicates if init called twice (though clonning is safer)
+        const newForm = sacForm.cloneNode(true);
+        sacForm.parentNode.replaceChild(newForm, sacForm);
+
+        newForm.addEventListener('submit', function (e) {
             e.preventDefault();
+            console.log("SAC Form Submitted");
             try {
                 const p1 = parseFloat(document.getElementById('p1').value);
                 const p2 = parseFloat(document.getElementById('p2').value);
                 const vb = parseFloat(document.getElementById('vb').value);
                 const time = parseFloat(document.getElementById('time').value);
-                const depth = parseFloat(document.getElementById('avgDepth').value);
+                const depth = parseFloat(document.getElementById('depth').value); // ID mismatch fix: HTML has 'depth', not 'avgDepth' in some versions?
+                // Checking HTML (Step 18, L329): id="depth". 
+                // Previous code (Step 13, L21): id="avgDepth". BUG FOUND!
+                // Fixed ID to 'depth'.
+
                 const waterTypeElement = document.getElementById('waterType');
                 const isFreshWater = waterTypeElement ? waterTypeElement.value === 'fresh' : false;
                 const pressureConversion = isFreshWater ? (10 / 10.3) : 1.0;
@@ -26,6 +37,27 @@ function initSacUI() {
                 const avgPressure = (depth / 10 * pressureConversion) + 1;
                 const consumedGas = (p1 - p2) * vb;
                 const sac = DivePlanningCalculator.calculateSac(consumedGas, avgPressure, time);
+
+                // Save SAC Logic (Button)
+                window.saveCalculatedSac = function () {
+                    try {
+                        localStorage.setItem('uki-user-sac', sac.toFixed(1));
+
+                        // Update inputs immediately
+                        const gcSAC = document.getElementById('gcSAC');
+                        if (gcSAC) gcSAC.value = sac.toFixed(1);
+                        const proSAC = document.getElementById('proSAC');
+                        if (proSAC) proSAC.value = sac.toFixed(1);
+                        const rbSAC = document.getElementById('rbSAC');
+                        if (rbSAC) rbSAC.value = sac.toFixed(1);
+
+                        // Update Settings Display
+                        const settingsDisplay = document.getElementById('settings-sac-value');
+                        if (settingsDisplay) settingsDisplay.textContent = sac.toFixed(1) + ' l/min';
+
+                        // alert(`Zapisano SAC: ${sac.toFixed(1)} l/min`); // Suppressed per user request
+                    } catch (e) { console.warn("SAC Save Failed", e); }
+                };
 
                 const explanationHTML = `
                     <div class="formula-box-small">
@@ -36,6 +68,11 @@ function initSacUI() {
                             <li>Śr. ciśnienie (ATA): (${depth}m / 10) + 1 = <strong>${avgPressure.toFixed(2)} ATA</strong></li>
                             <li>SAC: ${consumedGas.toFixed(0)} / (${avgPressure.toFixed(2)} * ${time}) = <strong>${sac.toFixed(1)} l/min</strong></li>
                         </ul>
+                        <div style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 5px;">
+                            <strong>Interpretacja:</strong><br>
+                            Twój SAC to ${sac.toFixed(1)} l/min. Oznacza to, że na powierzchni zużywasz tyle gazu w minutę. 
+                            Użyj tej wartości w planowaniu gazu (Rock Bottom, Gas Consumption) dla przyszłych nurkowań.
+                        </div>
                     </div>
                 `;
 
@@ -45,7 +82,13 @@ function initSacUI() {
                     <div class="result-section">
                         <p class="result-label">Twój wskaźnik SAC</p>
                         <p class="result-value-main">${sac.toFixed(1)}<span class="unit">l/min</span></p>
-                    </div>`;
+                    </div>
+                    <div style="text-align: center; margin-top: 10px;">
+                        <button type="button" onclick="saveCalculatedSac()" style="width: 100%; margin-top: 10px; background-color: #00d1b2; color: #1e1e1e; font-weight: bold; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer;">Zapisz wynik</button>
+                    </div>
+                     <p class="result-disclaimer" style="text-align: center; color: #bbb; font-size: 0.8em; margin-top: 5px;">
+                        Obliczony SAC: ${sac.toFixed(1)} l/min
+                    </p>`;
                 resultDiv.style.display = 'block';
                 resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             } catch (error) { console.error(error); }
@@ -57,36 +100,94 @@ function initGasConsumptionUI() {
     const gcForm = document.getElementById('gasConsumptionForm');
     const gcResultContainer = document.getElementById('gcResult');
     if (gcForm && gcResultContainer) {
-        gcForm.addEventListener('submit', function (e) {
+        const newForm = gcForm.cloneNode(true);
+        gcForm.parentNode.replaceChild(newForm, gcForm);
+
+        newForm.addEventListener('submit', function (e) {
             e.preventDefault();
             try {
-                const sac = parseFloat(document.getElementById('gcSac').value);
+                const sac = parseFloat(document.getElementById('gcSAC').value);
                 const depth = parseFloat(document.getElementById('gcDepth').value);
                 const bottomTime = parseFloat(document.getElementById('gcBottomTime').value);
                 const tankSize = parseFloat(document.getElementById('gcTankSize').value);
                 const reservePressure = parseFloat(document.getElementById('gcReserve').value);
 
-                // Defaults or extra inputs
+                // Extra params from form or defaults
+                const descentRate = parseFloat(document.getElementById('gcDescentRate').value) || 20;
+                const ascentRate = parseFloat(document.getElementById('gcAscentRate').value) || 10;
+                const stopDepth = parseFloat(document.getElementById('gcStopDepth').value) || 5;
+                const stopTime = parseFloat(document.getElementById('gcStopTime').value) || 3;
+                const startPressure = parseFloat(document.getElementById('gcStartPressure').value) || 200;
+
                 const consumptionParams = {
                     sac, depth, bottomTime,
-                    descentRate: 20, ascentRate: 10,
-                    stopDepth: 5, stopTime: 3,
-                    tankSize, startPressure: 200 // Default start pressure if not in form?
+                    descentRate, ascentRate,
+                    stopDepth, stopTime,
+                    tankSize, startPressure
                 };
 
-                // Note: The simple GC calculator in script.js (lines 710+) seems to use simplified inputs compared to PRO version
-                // But it calls calculateGasConsumption which needs many params.
-                // Assuming defaults for simple calculator.
-
                 const consumptionResult = DivePlanningCalculator.calculateGasConsumption(consumptionParams);
-
                 const requiredReserveLiters = tankSize * reservePressure;
 
-                // Render logic here is complex in script.js (renderConsumptionResult helper).
-                // I will simplify or copy the render logic.
-                // Reusing renderConsumptionResult logic inline for module independence or creating a helper function within this module.
+                // --- Educational Breakdown Calculation ---
+                const pSurf = 1.0;
+                const pDepth = (depth / 10) + 1.0;
+                const pStop = (stopDepth / 10) + 1.0;
 
-                renderConsumptionResult(gcResultContainer, consumptionResult, { requiredReserveLiters }, tankSize);
+                // 1. Descent
+                const descentTime = depth / descentRate;
+                const avgP_descent = (pSurf + pDepth) / 2;
+                const cons_descent = sac * avgP_descent * descentTime;
+
+                // 2. Bottom
+                const avgP_bottom = pDepth;
+                const cons_bottom = sac * avgP_bottom * bottomTime;
+
+                // 3. Ascent to Stop
+                const distToStop = depth - stopDepth;
+                const ascentTime1 = distToStop / ascentRate;
+                const avgP_ascent1 = (pDepth + pStop) / 2;
+                const cons_ascent1 = sac * avgP_ascent1 * ascentTime1;
+
+                // 4. Stop
+                const avgP_stop = pStop;
+                const cons_stop = sac * avgP_stop * stopTime;
+
+                // 5. Ascent to Surface
+                const ascentTime2 = stopDepth / ascentRate;
+                const avgP_ascent2 = (pStop + pSurf) / 2;
+                const cons_ascent2 = sac * avgP_ascent2 * ascentTime2;
+
+                const totalConsCheck = cons_descent + cons_bottom + cons_ascent1 + cons_stop + cons_ascent2;
+
+                const explanationHTML = `
+                    <div class="formula-box-small">
+                        <h5>Szczegóły Zużycia Gazu</h5>
+                        <p style="font-size:0.9em; margin-bottom:5px;">SAC: ${sac} l/min (Woda: słodka/słona ~1.0 ATA)</p>
+                        <ul style="font-size: 0.85em;">
+                            <li><strong>Zanurzenie:</strong> ${depth}m / ${descentRate}m/min = ${descentTime.toFixed(1)} min<br>
+                                Gaz: ${sac} * ${(avgP_descent).toFixed(2)} ATA * ${descentTime.toFixed(1)} = <strong>${cons_descent.toFixed(0)} l</strong></li>
+                            
+                            <li><strong>Pobyt na dnie:</strong> ${bottomTime} min @ ${depth}m<br>
+                                Gaz: ${sac} * ${avgP_bottom.toFixed(2)} ATA * ${bottomTime} = <strong>${cons_bottom.toFixed(0)} l</strong></li>
+                            
+                            <li><strong>Wynurzanie (do ${stopDepth}m):</strong> ${(distToStop).toFixed(1)}m<br>
+                                Gaz: ${sac} * ${avgP_ascent1.toFixed(2)} ATA * ${ascentTime1.toFixed(1)} = <strong>${cons_ascent1.toFixed(0)} l</strong></li>
+                            
+                            <li><strong>Przystanek:</strong> ${stopTime} min @ ${stopDepth}m<br>
+                                Gaz: ${sac} * ${avgP_stop.toFixed(2)} ATA * ${stopTime} = <strong>${cons_stop.toFixed(0)} l</strong></li>
+
+                            <li><strong>Ostatnie metry:</strong> ${stopDepth}m do 0m<br>
+                                Gaz: ${sac} * ${avgP_ascent2.toFixed(2)} ATA * ${ascentTime2.toFixed(1)} = <strong>${cons_ascent2.toFixed(0)} l</strong></li>
+                        </ul>
+                        <div style="margin-top: 5px; border-top: 1px solid #444; padding-top: 5px;">
+                            <strong>Suma Wyliczona: ~${totalConsCheck.toFixed(0)} l</strong><br>
+                            <span style="font-size:0.8em; color:#bbb;">(Może się różnić minimalnie od algorytmu głównego przez zaokrąglenia etapów)</span>
+                        </div>
+                    </div>
+                `;
+
+                renderConsumptionResult(gcResultContainer, consumptionResult, { requiredReserveLiters }, tankSize, explanationHTML);
 
             } catch (error) { console.error(error); }
         });
@@ -97,26 +198,33 @@ function initRockBottomUI() {
     const rbForm = document.getElementById('rbForm');
     const rbResultContainer = document.getElementById('rbResult');
     if (rbForm && rbResultContainer) {
-        rbForm.addEventListener('submit', function (e) {
+        const newForm = rbForm.cloneNode(true);
+        rbForm.parentNode.replaceChild(newForm, rbForm);
+
+        newForm.addEventListener('submit', function (e) {
             e.preventDefault();
             try {
-                const sac = parseFloat(document.getElementById('rbSac').value);
+                const sac = parseFloat(document.getElementById('rbSAC').value);
                 const depth = parseFloat(document.getElementById('rbDepth').value);
-                const tankSize = parseFloat(document.getElementById('rbTankSize').value);
-                const strategy = document.getElementById('rbStrategy').value; // 'safe', 'conservative'?
+                const tankSize = parseFloat(document.getElementById('rbVolume').value);
 
-                let safetyMargin = 0;
-                let stressFactor = 1.0;
+                // IDs check
+                // L433: rbSAC, L436: rbDepth, L438: rbVolume
+                // L440: rbStopDepth, L442: rbAscentRate, L446: rbStressFactor
+                // L448: rbDivers, L450: rbEmergencyTime, L452: rbSafetyMargin
 
-                // Logic from script.js lines around 680
-                // It seems to call calculateRockBottom(params)
+                const stopDepth = parseFloat(document.getElementById('rbStopDepth').value);
+                const ascentRate = parseFloat(document.getElementById('rbAscentRate').value);
+                const stressFactor = parseFloat(document.getElementById('rbStressFactor').value);
+                const divers = parseFloat(document.getElementById('rbDivers').value);
+                const emergencyTime = parseFloat(document.getElementById('rbEmergencyTime').value);
+                const safetyMargin = parseFloat(document.getElementById('rbSafetyMargin').value);
+
                 const params = {
-                    sac, depth, stopDepth: 5, ascentRate: 10,
-                    stressFactor: (strategy === 'conservative' ? 1.5 : 1.3), // heuristics
-                    divers: 2, // sharing gas
-                    emergencyTime: 1,
+                    sac, depth, stopDepth, ascentRate,
+                    stressFactor, divers, emergencyTime,
                     volume: tankSize,
-                    safetyMargin: (strategy === 'conservative' ? 20 : 10)
+                    safetyMargin
                 };
 
                 const d = DivePlanningCalculator.calculateRockBottom(params);
@@ -124,12 +232,18 @@ function initRockBottomUI() {
                 const explanationHTML = `
                     <div class="formula-box-small">
                         <h5>Obliczenia Rock Bottom</h5>
+                        <p style="font-size: 0.9em; margin-bottom: 5px;">Dla ${divers} nurków, przy SAC Stres = ${d.details.SAC_stressed.toFixed(1)} l/min.</p>
                         <ul>
-                            <li><strong>SAC Stres:</strong> ${d.details.SAC_stressed.toFixed(1)} l/min</li>
-                            <li><strong>Reakcja:</strong> ${d.details.SAC_stressed.toFixed(1)} * ${d.details.P_depth.toFixed(1)} ATA * ${params.emergencyTime} min * ${params.divers} os. = <strong>${d.details.Gas_reaction.toFixed(0)} l</strong></li>
-                            <li><strong>Wynurzenie:</strong> ${d.details.SAC_stressed.toFixed(1)} * ${d.details.P_avg_ascent.toFixed(1)} ATA * ${d.details.T_ascent.toFixed(1)} min * ${params.divers} os. = <strong>${d.details.Gas_ascent.toFixed(0)} l</strong></li>
-                            <li><strong>Suma:</strong> ${d.details.Gas_reaction.toFixed(0)} + ${d.details.Gas_ascent.toFixed(0)} = ${d.details.TotalGasLiters.toFixed(0)} l</li>
+                            <li><strong>Reakcja:</strong> ${d.details.Gas_reaction.toFixed(0)} l (czas na rozwiązanie problemu na dnie)</li>
+                            <li><strong>Wynurzenie:</strong> ${d.details.Gas_ascent.toFixed(0)} l (bezpieczny powrót na powierzchnię)</li>
+                            <li><strong>Suma Gazów:</strong> ${d.details.TotalGasLiters.toFixed(0)} l</li>
                         </ul>
+                        <div style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 5px; color: #ff3860;">
+                            <strong>Co to znaczy?</strong><br>
+                            Musisz mieć <strong>${d.roundedBars} bar</strong> żelaznej rezerwy. 
+                            Jeśli Twój manometr pokaże tę wartość, <strong>NATYCHMIAST</strong> rozpocznij wynurzanie. 
+                            To ilość gazu potrzebna na bezpieczny powrót z partnerem w sytuacji awaryjnej.
+                        </div>
                     </div>`;
 
                 rbResultContainer.innerHTML = `
@@ -138,7 +252,8 @@ function initRockBottomUI() {
                     <div class="result-section">
                         <p class="result-label">Rock Bottom (Min. Rezerwa)</p>
                         <p class="result-value-main" style="color: #ff3860 !important;">${d.roundedBars}<span class="unit">bar</span></p>
-                    </div>`;
+                    </div>
+                    <p class="result-disclaimer" style="text-align: center; color: #ff3860; font-size: 0.8em; margin-top: 5px;">Żelazne minimum do rozpoczęcia wynurzania!</p>`;
                 rbResultContainer.style.display = 'block';
                 rbResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
@@ -151,7 +266,10 @@ function initBailoutUI() {
     const bailoutForm = document.getElementById('bailoutForm');
     const bailoutResult = document.getElementById('bailoutResult');
     if (bailoutForm && bailoutResult) {
-        bailoutForm.addEventListener('submit', function (e) {
+        const newForm = bailoutForm.cloneNode(true);
+        bailoutForm.parentNode.replaceChild(newForm, bailoutForm);
+
+        newForm.addEventListener('submit', function (e) {
             e.preventDefault();
             try {
                 const sac = parseFloat(document.getElementById('bailoutSac').value);
@@ -161,27 +279,16 @@ function initBailoutUI() {
                 const ascentRate = parseFloat(document.getElementById('bailoutAscentRate').value);
                 const tankSize = parseFloat(document.getElementById('bailoutTank').value);
 
-                // Reusing Logic directly here or creating distinct calc in Calculator
-                // calculator/DivePlanningCalculator.js didn't implement calculateBailout specifically, 
-                // but calculateGasConsumption/RockBottom has similar logic.
-                // However, I should check if calculateBailout was extracted?
-                // Step 166: I wrote calculateRockBottom and calculateGasConsumption.
-                // Bailout logic from Step 146 is:
-                // gasReaction = sac * pressureAtDepth * reactionTime
-                // travelTime = (depth - targetDepth) / ascentRate
-                // gasAscent = sac * avgPressure * travelTime
-                // This is NOT exactly RockBottom, it uses targetDepth.
-
-                // I'll implement logic locally here OR add to Calculator. 
-                // Since I already wrote the module, I'll calculate it here using basic math or update Calculator.
-                // For simplicity now, let's keep logic here or use basic math helpers.
-
                 const pressureAtDepth = (depth / 10) + 1;
                 const gasReaction = sac * pressureAtDepth * reactionTime;
-                const travelTime = (depth - targetDepth) / ascentRate;
+
+                const travelDist = Math.abs(depth - targetDepth); // Ensure positive
+                const travelTime = travelDist / ascentRate;
+
                 const pressureAtTarget = (targetDepth / 10) + 1;
                 const avgPressure = (pressureAtDepth + pressureAtTarget) / 2;
                 const gasAscent = sac * avgPressure * travelTime;
+
                 const totalLitres = gasReaction + gasAscent;
                 const requiredBar = totalLitres / tankSize;
 
@@ -215,7 +322,116 @@ function initBailoutUI() {
     }
 }
 
-function renderConsumptionResult(container, consumptionData, reserveData, tankSize) {
+function initProGasUI() {
+    const proForm = document.getElementById('proGasForm');
+    const proResult = document.getElementById('proGasResult');
+    if (proForm && proResult) {
+        const newForm = proForm.cloneNode(true);
+        proForm.parentNode.replaceChild(newForm, proForm);
+
+        newForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            try {
+                // Collect Inputs
+                const sac = parseFloat(document.getElementById('gcSAC_pro').value);
+                const depth = parseFloat(document.getElementById('gcDepth_pro').value);
+                const bottomTime = parseFloat(document.getElementById('gcBottomTime_pro').value);
+                const descentRate = parseFloat(document.getElementById('gcDescentRate_pro').value);
+                const ascentRate = parseFloat(document.getElementById('gcAscentRate_pro').value);
+                const stopDepth = parseFloat(document.getElementById('gcStopDepth_pro').value);
+                const stopTime = parseFloat(document.getElementById('gcStopTime_pro').value);
+                const tankSize = parseFloat(document.getElementById('gcTankSize_pro').value);
+                const startPressure = parseFloat(document.getElementById('gcStartPressure_pro').value);
+
+                // RB Stuff
+                const stressFactor = parseFloat(document.getElementById('rbStressFactor_pro').value);
+                const divers = parseFloat(document.getElementById('rbDivers_pro').value);
+                const emergencyTime = parseFloat(document.getElementById('rbEmergencyTime_pro').value);
+                const safetyMargin = parseFloat(document.getElementById('rbSafetyMargin_pro').value);
+
+                // 1. Calculate Consumption
+                const consParams = {
+                    sac, depth, bottomTime, descentRate, ascentRate, stopDepth, stopTime, tankSize, startPressure
+                };
+                const consResult = DivePlanningCalculator.calculateGasConsumption(consParams);
+
+                // 2. Calculate RB
+                const rbParams = {
+                    sac, depth, stopDepth, ascentRate, stressFactor, divers, emergencyTime, volume: tankSize, safetyMargin
+                };
+                const rbResult = DivePlanningCalculator.calculateRockBottom(rbParams);
+
+                // --- Educational Breakdown (Combined) ---
+                const pSurf = 1.0;
+                const pDepth = (depth / 10) + 1.0;
+                const pStop = (stopDepth / 10) + 1.0;
+
+                // Consumption Breakdown
+                const descentTime = depth / descentRate;
+                const avgP_descent = (pSurf + pDepth) / 2;
+                const cons_descent = sac * avgP_descent * descentTime;
+
+                const avgP_bottom = pDepth;
+                const cons_bottom = sac * avgP_bottom * bottomTime;
+
+                const distToStop = depth - stopDepth;
+                const ascentTime1 = distToStop / ascentRate;
+                const avgP_ascent1 = (pDepth + pStop) / 2;
+                const cons_ascent1 = sac * avgP_ascent1 * ascentTime1;
+
+                const avgP_stop = pStop;
+                const cons_stop = sac * avgP_stop * stopTime;
+
+                const ascentTime2 = stopDepth / ascentRate;
+                const avgP_ascent2 = (pStop + pSurf) / 2;
+                const cons_ascent2 = sac * avgP_ascent2 * ascentTime2;
+
+                const totalConsCheck = cons_descent + cons_bottom + cons_ascent1 + cons_stop + cons_ascent2;
+
+                // RB Breakdown
+                const rb_details = rbResult.details;
+
+                const explanationHTML = `
+                    <div class="formula-box-small">
+                        <h5>Raport Planowania (PRO)</h5>
+                        <h6>1. Zużycie Gazu (Plan)</h6>
+                        <ul style="font-size: 0.85em;">
+                            <li><strong>Zanurzenie:</strong> ${cons_descent.toFixed(0)} l</li>
+                            <li><strong>Dno:</strong> ${cons_bottom.toFixed(0)} l</li>
+                            <li><strong>Wynurzenie + Stop:</strong> ${(cons_ascent1 + cons_stop + cons_ascent2).toFixed(0)} l</li>
+                            <li><strong>Suma Planu:</strong> ~${totalConsCheck.toFixed(0)} l</li>
+                        </ul>
+                        
+                        <h6 style="margin-top:10px;">2. Rock Bottom (Rezerwa)</h6>
+                        <p style="font-size: 0.8em; margin-bottom: 2px;">Dla ${divers} nurków, SAC Stres = ${rb_details.SAC_stressed.toFixed(1)} l/min</p>
+                        <ul style="font-size: 0.85em;">
+                            <li><strong>Reakcja (${emergencyTime} min):</strong> ${rb_details.Gas_reaction.toFixed(0)} l</li>
+                            <li><strong>Powrót (${rb_details.AscentTime.toFixed(1)} min):</strong> ${rb_details.Gas_ascent.toFixed(0)} l</li>
+                            <li><strong>Całkowity RB:</strong> ${rb_details.TotalGasLiters.toFixed(0)} l (${rbResult.roundedBars} bar)</li>
+                        </ul>
+                        <div style="margin-top: 5px; border-top: 1px solid #444; padding-top: 5px; color: #00d1b2;">
+                            <strong>Całkowite wymagane minimum:</strong> ${(totalConsCheck + rb_details.TotalGasLiters).toFixed(0)} l
+                        </div>
+                    </div>
+                `;
+
+                // 3. Render Combined
+                const requiredReserveLiters = rbResult.liters; // RB is the reserve!
+
+                renderConsumptionResult(proResult, consResult, { requiredReserveLiters }, tankSize, explanationHTML);
+
+                // Append RB Specifics
+                const rbLabel = document.createElement('div');
+                rbLabel.className = 'result-section';
+                rbLabel.innerHTML = `<p class="result-label">Wymagany Rock Bottom:</p><p class="result-value-main" style="color: #ff3860;">${rbResult.roundedBars}<span class="unit">bar</span></p>`;
+                proResult.appendChild(rbLabel);
+
+            } catch (error) { console.error(error); }
+        });
+    }
+}
+
+function renderConsumptionResult(container, consumptionData, reserveData, tankSize, explanationHTML = '') {
     const { totalDemandLiters, totalDemandBars, totalSupplyLiters, totalSupplyBars } = consumptionData;
     const { requiredReserveLiters } = reserveData;
     const remainingLiters = totalSupplyLiters - totalDemandLiters;
@@ -229,9 +445,14 @@ function renderConsumptionResult(container, consumptionData, reserveData, tankSi
         verdictHTML = `<div class="result-danger">RYZYKO (Naruszenie Rezerwy)</div>`;
     }
 
+    // Default explanation if missing
+    if (!explanationHTML) {
+        explanationHTML = `<div class="formula-box-small"><p>Brak szczegółów obliczeń.</p></div>`;
+    }
+
     container.innerHTML = `
         <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
-        <div class="calculation-details" style="display: none;"><p>Szczegóły w wersji PRO</p></div>
+        <div class="calculation-details" style="display: none;">${explanationHTML}</div>
         <div class="result-container-header"><h4>Zużycie Gazu</h4></div>
         <div class="result-section"><p class="result-label">Zapotrzebowanie (Plan):</p><p class="result-value-main">${totalDemandLiters.toFixed(0)}<span class="unit">l</span> <span>(${totalDemandBars.toFixed(1)} bar)</span></p></div>
         <div class="result-section"><p class="result-label">Pozostało:</p><p class="result-value-main">${remainingLiters.toFixed(0)}<span class="unit">l</span> <span>(${remainingBars.toFixed(1)} bar)</span></p></div>
@@ -240,4 +461,21 @@ function renderConsumptionResult(container, consumptionData, reserveData, tankSi
     container.style.display = 'block';
 
     // Add tooltip listener logic if needed globally, but likely handled by AppUI
+}
+
+function autoLoadSavedSac() {
+    const savedSac = localStorage.getItem('uki-user-sac');
+    if (!savedSac) return;
+
+    const gcSAC = document.getElementById('gcSAC');
+    if (gcSAC) gcSAC.value = savedSac;
+
+    // Pro Inputs might be named differently, need to check IDs or update future code
+    // Assuming proSAC for now, if not found, it's fine.
+    const proSAC = document.getElementById('gcSAC_pro');
+    if (proSAC) proSAC.value = savedSac;
+
+    // Also Rock Bottom SAC?
+    const rbSAC = document.getElementById('rbSAC');
+    if (rbSAC) rbSAC.value = savedSac;
 }

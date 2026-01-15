@@ -514,10 +514,13 @@ h3,
 }
 
 .tab-content-wrapper {
-  padding: 25px 40px;
+  padding: 25px 40px 100px 40px;
+  /* Increased bottom padding for mobile scrolling */
   height: 100%;
   overflow-y: auto;
   box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  /* Smooth scrolling on iOS */
 }
 
 /* STYL DLA NAGŁÓWKÓWK ZAKŁADEK (np. Ustawienia) */
@@ -574,13 +577,24 @@ h3,
 }
 
 /* POPRAWKA: Styl tekstu jak w menu */
+/* POPRAWKA: Styl tekstu jak w menu - wyraźniejszy */
 #welcome-screen .home-header p {
-  font-size: 1.2em;
-  color: #b0b0b0;
-  margin: 0;
-  font-weight: 500;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.95);
+  font-size: 1.3em;
+  color: #ffffff;
+  margin-top: 20px;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 1);
+  background: rgba(0, 0, 0, 0.3);
+  /* Subtle dark box for legibility */
+  padding: 15px 25px;
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   letter-spacing: 0.5px;
+  max-width: 80%;
+  line-height: 1.5;
 }
 
 /* ============================================================

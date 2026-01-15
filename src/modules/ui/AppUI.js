@@ -247,6 +247,8 @@ export const AppUI = {
         const body = document.body;
         const themeToggle = document.getElementById('theme-toggle');
         const glassToggle = document.getElementById('glass-toggle');
+        const versionEl = document.getElementById('app-version');
+        if (versionEl) versionEl.textContent = 'v2026.1.15.01';
         const wallpaperThumbs = document.querySelectorAll('.wallpaper-thumb');
         const globalWaterTypeSelect = document.getElementById('global-water-type');
         const sacWaterType = document.getElementById('waterType');
@@ -342,6 +344,23 @@ export const AppUI = {
             }
         } catch (e) { console.warn('LC error', e); }
         setWaterType(savedWater || 'fresh');
+
+        // Init Saved SAC Display
+        const savedSAC = localStorage.getItem('uki-user-sac');
+        const settingsSacVal = document.getElementById('settings-sac-value');
+        if (settingsSacVal) {
+            settingsSacVal.textContent = savedSAC ? (savedSAC + ' l/min') : 'Brak';
+        }
+
+        const resetSacBtn = document.getElementById('reset-sac-btn');
+        if (resetSacBtn) {
+            resetSacBtn.addEventListener('click', () => {
+                localStorage.removeItem('uki-user-sac');
+                if (settingsSacVal) settingsSacVal.textContent = 'Brak';
+                // Clear inputs? Maybe next reload.
+                alert('Zapisany SAC został usunięty.');
+            });
+        }
     },
 
     initTooltips: () => {

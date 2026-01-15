@@ -110,6 +110,12 @@ export const QuizUI = {
 
     handleAnswer: (selectedIndex) => {
         if (QuizUI.state.isAnswered) return;
+
+        // Remove focus to prevent sticky styles on mobile
+        if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+        }
+
         QuizUI.state.isAnswered = true;
 
         const { currentQuestionIndex, currentQuizData } = QuizUI.state;

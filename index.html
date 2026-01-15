@@ -274,9 +274,9 @@
                     <form id="proGasForm" class="two-column-form">
                         <div class="form-column">
                             <div class="input-group"><label for="gcSAC_pro">Twój SAC (l/min)</label><input type="number"
-                                    id="gcSAC_pro" value="20" required></div>
+                                    id="gcSAC_pro" value="20" step="0.1" required></div>
                             <div class="input-group"><label for="gcDepth_pro">Maks. Głębokość (m)</label><input
-                                    type="number" id="gcDepth_pro" value="30" required></div>
+                                    type="number" id="gcDepth_pro" value="30" step="0.1" required></div>
                             <div class="input-group"><label for="gcBottomTime_pro">Czas Denny (min)</label><input
                                     type="number" id="gcBottomTime_pro" value="20" required></div>
                             <div class="input-group"><label>Prędkość Zanurzania (m/min)</label><input type="number"
@@ -284,23 +284,23 @@
                             <div class="input-group"><label>Prędkość Wynurzania (m/min)</label><input type="number"
                                     id="gcAscentRate_pro" value="10" required></div>
                             <div class="input-group"><label>Głęb. Przystanku (m)</label><input type="number"
-                                    id="gcStopDepth_pro" value="5" required></div>
+                                    id="gcStopDepth_pro" value="5" step="0.1" required></div>
                         </div>
                         <div class="form-column">
                             <div class="input-group"><label>Czas Przystanku (min)</label><input type="number"
                                     id="gcStopTime_pro" value="3" required></div>
                             <div class="input-group"><label>Pojemność Butli (l)</label><input type="number"
-                                    id="gcTankSize_pro" value="15" required></div>
+                                    id="gcTankSize_pro" value="15" step="0.1" required></div>
                             <div class="input-group"><label>Ciśnienie start. (bar)</label><input type="number"
                                     id="gcStartPressure_pro" value="200" required></div>
                             <div class="input-group"><label>Mnożnik SAC (Stres)</label><input type="number"
-                                    id="rbStressFactor_pro" value="2" required></div>
+                                    id="rbStressFactor_pro" value="2" step="0.1" required></div>
                             <div class="input-group"><label>Liczba Nurków (RB)</label><input type="number"
                                     id="rbDivers_pro" value="2" required></div>
                             <div class="input-group"><label>Czas Reakcji (min)</label><input type="number"
                                     id="rbEmergencyTime_pro" value="2" required></div>
                             <div class="input-group"><label>Dodatkowy Bufor (bar)</label><input type="number"
-                                    id="rbSafetyMargin_pro" value="10" required></div>
+                                    id="rbSafetyMargin_pro" value="10" step="0.1" required></div>
                         </div>
                         <div class="form-full-width">
                             <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
@@ -344,7 +344,7 @@
                                     </div></span><button type="submit">Oblicz SAC</button></div>
                         </div>
                     </form>
-                    <div id="result" class="result-container"></div>
+                    <div id="sacResult" class="result-container"></div>
                 </div>
 
                 <div id="nitrox-calculator" class="tab-content">
@@ -433,11 +433,11 @@
                                     <div class="input-group"><label for="rbSAC">Twój SAC (l/min)</label><input
                                             type="number" id="rbSAC" value="20" step="0.1" min="5" required></div>
                                     <div class="input-group"><label for="rbDepth">Maks. Głębokość (m)</label><input
-                                            type="number" id="rbDepth" value="40" min="1" required></div>
+                                            type="number" id="rbDepth" value="40" step="0.1" min="1" required></div>
                                     <div class="input-group"><label>Pojemność Butli (l)</label><input type="number"
-                                            id="rbVolume" value="24" min="1" required></div>
+                                            id="rbVolume" value="24" step="0.1" min="1" required></div>
                                     <div class="input-group"><label>Głęb. Przystanku (m)</label><input type="number"
-                                            id="rbStopDepth" value="6" min="0" required></div>
+                                            id="rbStopDepth" value="6" step="0.1" min="0" required></div>
                                     <div class="input-group"><label>Prędkość Wynurzania (m/min)</label><input
                                             type="number" id="rbAscentRate" value="10" min="1" required></div>
                                 </div>
@@ -467,9 +467,9 @@
                             <form id="gasConsumptionForm" class="two-column-form">
                                 <div class="form-column">
                                     <div class="input-group"><label>SAC (l/min)</label><input type="number" id="gcSAC"
-                                            value="20" required></div>
+                                            value="20" step="0.1" required></div>
                                     <div class="input-group"><label>Maks. Głębokość (m)</label><input type="number"
-                                            id="gcDepth" value="30" required></div>
+                                            id="gcDepth" value="30" step="0.1" required></div>
                                     <div class="input-group"><label>Czas Denny (min)</label><input type="number"
                                             id="gcBottomTime" value="20" required></div>
                                     <div class="input-group"><label>Prędkość Zanurzania (m/min)</label><input
@@ -479,11 +479,11 @@
                                 </div>
                                 <div class="form-column">
                                     <div class="input-group"><label>Głęb. Przystanku (m)</label><input type="number"
-                                            id="gcStopDepth" value="5" required></div>
+                                            id="gcStopDepth" value="5" step="0.1" required></div>
                                     <div class="input-group"><label>Czas Przystanku (min)</label><input type="number"
                                             id="gcStopTime" value="3" required></div>
                                     <div class="input-group"><label>Pojemność Butli (l)</label><input type="number"
-                                            id="gcTankSize" value="15" required></div>
+                                            id="gcTankSize" value="15" step="0.1" required></div>
                                     <div class="input-group"><label>Ciśnienie start. (bar)</label><input type="number"
                                             id="gcStartPressure" value="200" required></div>
                                     <div class="input-group"><label>Rezerwa (bar)</label><input type="number"
@@ -524,7 +524,11 @@
                                     <option value="dryCrash">Suchy (Crash Neo)</option>
                                     <option value="dryNeo">Suchy (Neopren)</option>
                                 </select></div>
-                            <div class="input-group" id="ballast-warmer-group"><label>Ocieplacz</label><select
+                            <div class="input-group"><label>Dodatki</label><select id="ballastVest">
+                                    <option value="none" selected>Brak</option>
+                                    <option value="vest">Kamizelka (Docieplenie)</option>
+                                </select></div>
+                            <div class="input-group" id="ballast-warmer-group"><label>Ocieplacz (Suchy)</label><select
                                     id="ballastWarmer">
                                     <option value="thin" selected>Cienki (do 200g)</option>
                                     <option value="thick">Gruby (400g+)</option>
@@ -532,11 +536,28 @@
                         </div>
                         <div class="form-column">
                             <div class="input-group"><label>Butla</label><select id="ballastTank" required>
-                                    <option value="alu11">Alu 11L (S80)</option>
-                                    <option value="steel12">Stal 10/12L</option>
-                                    <option value="steel15" selected>Stal 15L</option>
-                                    <option value="twin7_200">Twin 2x7L (232b)</option>
-                                    <option value="twin12_200">Twin 2x12L (232b)</option>
+                                    <optgroup label="Pojedyncze (Single)">
+                                        <option value="alu11">Alu 11L (S80)</option>
+                                        <option value="alu7">Alu 7L</option>
+                                        <option value="steel7">Stal 7L (232b)</option>
+                                        <option value="steel10">Stal 10L (232b)</option>
+                                        <option value="steel10_300">Stal 10L (300b)</option>
+                                        <option value="steel12">Stal 12L (232b)</option>
+                                        <option value="steel12_300">Stal 12L (300b)</option>
+                                        <option value="steel15">Stal 15L (232b)</option>
+                                    </optgroup>
+                                    <optgroup label="Zestawy (Twin)">
+                                        <option value="twin7_232">Twin 2x7L (232b)</option>
+                                        <option value="twin7_300">Twin 2x7L (300b)</option>
+                                        <option value="twin85_232">Twin 2x8.5L (232b)</option>
+                                        <option value="twin85_300">Twin 2x8.5L (300b)</option>
+                                        <option value="twin10_232">Twin 2x10L (232b)</option>
+                                        <option value="twin10_300">Twin 2x10L (300b)</option>
+                                        <option value="twin12_232">Twin 2x12L (232b)</option>
+                                        <option value="twin12_300">Twin 2x12L (300b)</option>
+                                        <option value="twin15_232">Twin 2x15L (232b)</option>
+                                        <option value="twin15_300">Twin 2x15L (300b)</option>
+                                    </optgroup>
                                 </select></div>
                             <div class="input-group" id="ballast-plate-group" style="display: none;">
                                 <label>Płyta</label><select id="ballastPlate">
@@ -788,25 +809,39 @@
                                                 <li>Pianka 3mm: +1 kg</li>
                                                 <li>Pianka 5mm: +3 kg</li>
                                                 <li>Pianka 7mm: +5 kg</li>
-                                                <li>Suchy (Laminat/Crash): +8 kg</li>
-                                                <li>Suchy + Gruby Ocieplacz: +12 kg</li>
+                                                <li>Suchy (Laminat/Crash/Trilaminat): +6-8 kg</li>
+                                                <li>Suchy (Neopren): +8-10 kg</li>
+                                                <li>Ocieplacz Cienki / Gruby: +0 / +5 kg</li>
+                                                <li>Docieplenie (Kamizelka): +2 kg</li>
                                             </ul>
                                         </li>
-                                        <li><strong>Butle:</strong>
+                                        <li><strong>Butle (Single):</strong>
                                             <ul>
                                                 <li>Alu 11L (S80): +2 kg</li>
-                                                <li>Stal 12L (krótka/długa): -2 kg</li>
-                                                <li>Stal 15L: -3 kg</li>
-                                                <li>Twin 2x7L: -4 kg</li>
-                                                <li>Twin 2x12L: -8 kg</li>
+                                                <li>Alu 7L: +1 kg</li>
+                                                <li>Stal 7L/10L (232): -1/-2 kg</li>
+                                                <li>Stal 12L (232): -2 kg</li>
+                                                <li>Stal 15L (232): -3 kg</li>
+                                                <li>Stal 10L/12L (300): -3/-4.5 kg</li>
+                                            </ul>
+                                        </li>
+                                        <li><strong>Zestawy Twin:</strong>
+                                            <ul>
+                                                <li>Twin 2x7L (232/300): -5/-10 kg</li>
+                                                <li>Twin 2x8.5L (232/300): -6/-11 kg</li>
+                                                <li>Twin 2x10L (232/300): -7/-13 kg</li>
+                                                <li>Twin 2x12L (232/300): -10/-14 kg</li>
+                                                <li>Twin 2x15L (232/300): -12/-17 kg</li>
                                             </ul>
                                         </li>
                                         <li><strong>Inne:</strong>
                                             <ul>
-                                                <li>Płyta Stalowa: -2 kg</li>
+                                                <li>Płyta Stalowa: -2.5 kg</li>
+                                                <li>Płyta Alu: -0.5 kg</li>
                                                 <li>Woda Słona: +2.5 kg</li>
                                                 <li>Budowa Szczupła: -1 kg</li>
-                                                <li>Nadwaga: +1 kg</li>
+                                                <li>Budowa Atletyczna: -3 kg</li>
+                                                <li>Nadwaga: +2 kg</li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -857,6 +892,15 @@
                             data-wallpaper="url('img/bg/Generated Image September 22, 2025 - 3_04PM.png')">
                     </div>
                     <div class="settings-info-row" style="margin-top: 20px;">
+                        <span>Zapisany SAC</span>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span id="settings-sac-value"
+                                style="font-weight: bold; color: var(--primary-color);">Brak</span>
+                            <button id="reset-sac-btn" class="secondary" style="padding: 2px 8px; font-size: 0.8em;"
+                                title="Wyczyść zapisany SAC">×</button>
+                        </div>
+                    </div>
+                    <div class="settings-info-row" style="margin-top: 5px;">
                         <span>Wersja Aplikacji</span>
                         <span class="app-version-display"
                             style="font-weight: bold; color: var(--primary-color);">Loading...</span>

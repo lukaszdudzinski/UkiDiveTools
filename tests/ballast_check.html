@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ballast Test</title>
+</head>
+
+<body>
+    <div id="result">Waiting...</div>
+    <script type="module">
+        import { BallastCalculator } from '../src/modules/calculators/BallastCalculator.js';
+
+        // User Scenario: 80kg, Athletic, Dry Crash, Thick Warmer, Vest, Twin 7L 300bar, Steel Plate, Fresh Water
+        const weight = 80;
+        const suit = 'dryCrash';
+        const tank = 'twin7_300';
+        const body = 'athletic';
+        const water = 'fresh';
+        const warmer = 'thick';
+        const plate = 'steel';
+        const vest = 'vest';
+
+        const res = BallastCalculator.calculateBallast(weight, suit, tank, body, water, warmer, plate, vest);
+
+        document.getElementById('result').innerText = `Result: ${res.totalBallast} kg (Details: Base=${res.baseBallast.toFixed(1)}, Suit=${res.suitName}, Tank=${res.tankName})`;
+        console.log("Calculation Result:", res);
+    </script>
+</body>
+
+</html>
