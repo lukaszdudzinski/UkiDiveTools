@@ -5,7 +5,7 @@ import { initBallastUI } from './calculators/BallastUI.js';
 import { LecturesUI } from './LecturesUI.js';
 import { QuizUI } from './QuizUI.js';
 
-export const APP_VERSION = 'v2026.3.6.01';
+export const APP_VERSION = 'v2026.1.15.01';
 
 export const AppUI = {
     init: () => {
@@ -248,7 +248,7 @@ export const AppUI = {
         const themeToggle = document.getElementById('theme-toggle');
         const glassToggle = document.getElementById('glass-toggle');
         const versionEl = document.getElementById('app-version');
-        if (versionEl) versionEl.textContent = 'v2026.1.15.01';
+        // if (versionEl) versionEl.textContent = 'v2026.1.15.01'; // Managed by APP_VERSION constant now
         const wallpaperThumbs = document.querySelectorAll('.wallpaper-thumb');
         const globalWaterTypeSelect = document.getElementById('global-water-type');
         const sacWaterType = document.getElementById('waterType');
