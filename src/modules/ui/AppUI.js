@@ -6,7 +6,7 @@ import { LecturesUI } from './LecturesUI.js';
 import { QuizUI } from './QuizUI.js';
 import { ProAccess } from '../auth/ProAccess.js';
 
-export const APP_VERSION = 'v2026.1.15.01';
+export const APP_VERSION = 'v2026.1.16.02';
 
 export const AppUI = {
     init: () => {
