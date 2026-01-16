@@ -6,7 +6,7 @@ import { LecturesUI } from './LecturesUI.js';
 import { QuizUI } from './QuizUI.js';
 import { ProAccess } from '../auth/ProAccess.js';
 
-export const APP_VERSION = 'v2026.1.16.02';
+export const APP_VERSION = 'v2026.1.16.03';
 
 export const AppUI = {
     init: () => {
@@ -447,19 +447,27 @@ export const AppUI = {
         }
 
         // Init PRO Status Display
-        const proStatusDisplay = document.getElementById('pro-status-display');
-
-        if (proStatusDisplay) {
-            const isUnlocked = ProAccess.isUnlocked();
-            proStatusDisplay.textContent = isUnlocked ? 'Aktywny' : 'Zablokowany';
-            proStatusDisplay.style.color = isUnlocked ? '#00d1b2' : '#DC143C';
-        }
+        // Logic moved to AppUI.initProState() for dynamic updates
         AppUI.initProState(); // Call the new function here
     },
 
     initProState: () => {
         // Run this immediately on init to prevent flash of locked content
         const isUnlocked = ProAccess.isUnlocked();
+
+        // Always update the Settings Panel text if it exists
+        const proStatusDisplay = document.getElementById('pro-status-display');
+        const resetProBtn = document.getElementById('reset-pro-btn');
+
+        if (proStatusDisplay) {
+            proStatusDisplay.textContent = isUnlocked ? 'Aktywny' : 'Zablokowany';
+            proStatusDisplay.style.color = isUnlocked ? '#00d1b2' : '#DC143C';
+        }
+
+        if (resetProBtn) {
+            resetProBtn.style.display = isUnlocked ? 'block' : 'none';
+        }
+
         if (isUnlocked) {
             const proDashboard = document.getElementById('pro-dashboard');
             if (proDashboard) proDashboard.classList.add('unlocked');
@@ -468,6 +476,9 @@ export const AppUI = {
             overlays.forEach(o => o.style.display = 'none');
 
             document.querySelectorAll('.locked-feature').forEach(el => el.classList.remove('locked-feature'));
+        } else {
+            // Optional: ensure locked state is visually enforced if we ever call this to re-lock
+            // But for now, reload() is used for locking, so this is mainly for unlock or init.
         }
     },
 
