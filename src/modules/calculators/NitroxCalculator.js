@@ -38,5 +38,37 @@ export const NitroxCalculator = {
             cnsPerMin: cnsPerMin,
             totalCns: totalCns
         };
+    },
+
+    checkSafety: (depth, fo2, isFreshWater = false) => {
+        const ata = DiveMath.calculateATA(depth, isFreshWater);
+        const ppo2 = fo2 * ata;
+
+        let status = 'SAFE';
+        if (ppo2 > 1.6) status = 'TOXIC';
+        else if (ppo2 > 1.4) status = 'WARNING';
+
+        let maxSafeDepth = 0;
+        let safeEAD = 0;
+
+        if (status !== 'SAFE') {
+            // Calculate max depth for PPO2 1.4 (Safety Limit)
+            // ATA = PPO2 / FO2
+            // Depth = (ATA - 1) * 10
+            const safeLegacyATA = 1.4 / fo2;
+            const pressureDrop = isFreshWater ? (10 / 10.3) : 1.0;
+            maxSafeDepth = Math.floor(((safeLegacyATA - 1) * 10) / pressureDrop);
+
+            // Calculate EAD for this safe depth
+            const fn2 = 1.0 - fo2;
+            safeEAD = ((maxSafeDepth + 10) * (fn2 / 0.79)) - 10;
+        }
+
+        return {
+            status,
+            currentPpO2: ppo2,
+            maxSafeDepth,
+            safeEAD
+        };
     }
 };

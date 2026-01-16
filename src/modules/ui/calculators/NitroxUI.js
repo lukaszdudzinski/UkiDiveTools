@@ -5,6 +5,36 @@ export function initNitroxUI() {
     initEadUI();
     initBestMixUI();
     initCnsUI();
+
+    // Real-time Validation for O2 Input
+    const o2Input = document.getElementById('nitroxO2');
+    if (o2Input) {
+        o2Input.addEventListener('input', function () {
+            const val = parseFloat(this.value);
+            const isValid = val >= 21 && val <= 100;
+            const errorHTML = '<div class="result-error" style="color: #ff3860; font-weight: bold; padding: 10px;">Błąd: Niedozwolona zawartość tlenu.<br>Wprowadź wartość od 21% do 100%.</div>';
+
+            ['modResult', 'eadResult', 'cnsResult'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    if (!isValid && !isNaN(val)) {
+                        el.innerHTML = errorHTML;
+                        el.style.display = 'block';
+                    } else {
+                        // Hide error if valid (user will click calculate to see real result, or we could auto-calc but requirement is just validation)
+                        // If previously showing THIS error, clear it. 
+                        // To avoid clearing calculated results, we check innerHTML content or just leave it until Calculate is clicked?
+                        // User said "immediately after typing... should see error". 
+                        // If valid, maybe just hide the error box if it contains the error?
+                        if (el.innerHTML.includes('Błąd: Niedozwolona')) {
+                            el.style.display = 'none';
+                            el.innerHTML = '';
+                        }
+                    }
+                }
+            });
+        });
+    }
 }
 
 function initModUI() {
@@ -15,6 +45,14 @@ function initModUI() {
             e.preventDefault();
             try {
                 const o2 = parseFloat(document.getElementById('nitroxO2').value) / 100;
+
+                // Input Validation
+                if (o2 < 0.21 || o2 > 1.0) {
+                    modResult.innerHTML = '<div class="result-error" style="color: #ff3860; font-weight: bold; padding: 10px;">Błąd: Niedozwolona zawartość tlenu.<br>Wprowadź wartość od 21% do 100%.</div>';
+                    modResult.style.display = 'block';
+                    return;
+                }
+
                 const ppo2 = parseFloat(document.getElementById('modPO2').value);
                 const mod = NitroxCalculator.calculateMod(o2, ppo2);
 
@@ -42,7 +80,46 @@ function initEadUI() {
             e.preventDefault();
             try {
                 const o2 = parseFloat(document.getElementById('nitroxO2').value) / 100;
+
+                // Input Validation
+                if (o2 < 0.21 || o2 > 1.0) {
+                    eadResult.innerHTML = '<div class="result-error" style="color: #ff3860; font-weight: bold; padding: 10px;">Błąd: Niedozwolona zawartość tlenu.<br>Wprowadź wartość od 21% do 100%.</div>';
+                    eadResult.style.display = 'block';
+                    return;
+                }
+
                 const depth = parseFloat(document.getElementById('eadDepth').value);
+
+                // 1. Safety Check
+                const safety = NitroxCalculator.checkSafety(depth, o2);
+
+                if (safety.status === 'TOXIC' || safety.status === 'WARNING') {
+                    const isToxic = safety.status === 'TOXIC';
+                    const color = isToxic ? '#ff3860' : '#ffdd57'; // Red or Yellow
+                    const title = isToxic ? 'NURKOWANIE ZABRONIONE' : 'OSTRZEŻENIE';
+                    const textColor = isToxic ? '#fff' : '#333';
+
+                    const warningHTML = `
+                        <div class="result-section" style="background: ${color}; color: ${textColor}; border: 2px solid ${textColor}; padding: 15px;">
+                            <h4 style="margin: 0 0 10px 0; text-transform: uppercase;">⚠️ ${title} ⚠️</h4>
+                            <p style="margin-bottom: 5px; font-weight: bold;">Toksyczność Tlenowa!</p>
+                            <p>Twoje ppO2: <strong>${safety.currentPpO2.toFixed(2)} ATA</strong> (Limit: 1.4/1.6)</p>
+                            <hr style="border-color: rgba(0,0,0,0.2); margin: 10px 0;">
+                            <p style="font-size: 0.9em;">
+                                Dla EAN${(o2 * 100).toFixed(0)} maksymalna bezpieczna głębokość to <strong>${safety.maxSafeDepth}m</strong>.
+                            </p>
+                            <p style="font-size: 0.9em; margin-top: 5px;">
+                                EAD dla ${safety.maxSafeDepth}m wynosi: <strong>${safety.safeEAD.toFixed(1)}m</strong>
+                            </p>
+                        </div>
+                     `;
+                    eadResult.innerHTML = warningHTML;
+                    eadResult.style.display = 'block';
+                    eadResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    return;
+                }
+
+                // 2. Normal Calculation (Safe)
                 const ead = NitroxCalculator.calculateEad(depth, o2);
                 const n2 = 1.0 - o2;
 
@@ -105,12 +182,49 @@ function initCnsUI() {
             e.preventDefault();
             try {
                 const o2 = parseFloat(document.getElementById('nitroxO2').value) / 100;
+
+                // Input Validation
+                if (o2 < 0.21 || o2 > 1.0) {
+                    cnsResult.innerHTML = '<div class="result-error" style="color: #ff3860; font-weight: bold; padding: 10px;">Błąd: Niedozwolona zawartość tlenu.<br>Wprowadź wartość od 21% do 100%.</div>';
+                    cnsResult.style.display = 'block';
+                    return;
+                }
+
                 const depth = parseFloat(document.getElementById('cnsDepth').value);
                 const time = parseFloat(document.getElementById('cnsTime').value);
                 const waterTypeElement = document.getElementById('global-water-type');
                 const isFreshWater = waterTypeElement ? waterTypeElement.value === 'fresh' : false;
 
                 const result = NitroxCalculator.calculateCns(depth, o2, time, isFreshWater);
+
+                // Safety Check
+                const safety = NitroxCalculator.checkSafety(depth, o2, isFreshWater);
+
+                if (safety.status === 'TOXIC' || safety.status === 'WARNING') {
+                    const isToxic = safety.status === 'TOXIC';
+                    const color = isToxic ? '#ff3860' : '#ffdd57';
+                    const title = isToxic ? 'NURKOWANIE ZABRONIONE' : 'OSTRZEŻENIE';
+                    const textColor = isToxic ? '#fff' : '#333';
+
+                    const warningHTML = `
+                        <div class="result-section" style="background: ${color}; color: ${textColor}; border: 2px solid ${textColor}; padding: 15px;">
+                            <h4 style="margin: 0 0 10px 0; text-transform: uppercase;">⚠️ ${title} ⚠️</h4>
+                            <p style="margin-bottom: 5px; font-weight: bold;">Toksyczność Tlenowa!</p>
+                            <p>Twoje ppO2: <strong>${safety.currentPpO2.toFixed(2)} ATA</strong> (Limit: 1.4/1.6)</p>
+                            <hr style="border-color: rgba(0,0,0,0.2); margin: 10px 0;">
+                            <p style="font-size: 0.9em;">
+                                Dla EAN${(o2 * 100).toFixed(0)} maksymalna bezpieczna głębokość to <strong>${safety.maxSafeDepth}m</strong>.
+                            </p>
+                            <p style="font-size: 0.9em; margin-top: 5px;">
+                                EAD dla ${safety.maxSafeDepth}m wynosi: <strong>${safety.safeEAD.toFixed(1)}m</strong>
+                            </p>
+                        </div>
+                     `;
+                    cnsResult.innerHTML = warningHTML;
+                    cnsResult.style.display = 'block';
+                    cnsResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    return;
+                }
 
                 const explanationHTML = `<div class="formula-box-small"><h5>Obliczenia CNS</h5><ul><li>PPO2 na dnie: <strong>${result.ppo2.toFixed(2)} ATA</strong></li><li>Limit NOAA dla ${result.ppo2.toFixed(1)} ATA: ${result.cnsPerMin}% / min</li><li>Zużycie limitu: ${result.cnsPerMin}% * ${time} min = <strong>${result.totalCns.toFixed(1)}%</strong></li></ul></div>`;
 

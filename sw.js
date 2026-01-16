@@ -1,4 +1,4 @@
-const CACHE_NAME = 'uki-dive-tools-v2026-1-15-01';
+const CACHE_NAME = 'uki-dive-tools-v2026-1-16-02'; // Force refresh
 // Core assets that MUST be cached immediately
 const CORE_ASSETS = [
     './',

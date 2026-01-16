@@ -4,6 +4,7 @@ import { initDivePlanningUI } from './calculators/DivePlanningUI.js';
 import { initBallastUI } from './calculators/BallastUI.js';
 import { LecturesUI } from './LecturesUI.js';
 import { QuizUI } from './QuizUI.js';
+import { ProAccess } from '../auth/ProAccess.js';
 
 export const APP_VERSION = 'v2026.1.15.01';
 
@@ -12,7 +13,9 @@ export const AppUI = {
         AppUI.initNavigation();
         AppUI.initTheme();
         AppUI.initTooltips();
+        AppUI.initTooltips();
         AppUI.initGlobalButtons();
+        // AppUI.initProState(); // REMOVED: Redundant, called inside initTheme
 
         // Dynamic Version Update
         const versionDisplays = document.querySelectorAll('.version-info, .app-version-display');
@@ -40,75 +43,156 @@ export const AppUI = {
     },
 
     initGlobalButtons: () => {
-        // 1. SOS Button - Global Listener
-        const emergencyBtn = document.getElementById('emergency-btn');
-        if (emergencyBtn) {
-            // Remove old listeners wrapper (optional check)
-            emergencyBtn.replaceWith(emergencyBtn.cloneNode(true));
-            const newEmergencyBtn = document.getElementById('emergency-btn'); // Re-select after clone
-            newEmergencyBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                console.log('SOS Button Clicked');
-                const emergencyContent = document.getElementById('emergency-content');
-                if (emergencyContent) {
-                    // Direct manipulation of global tooltip to ensure it works
-                    const tooltipBody = document.getElementById('tooltip-body');
-                    const globalTooltip = document.getElementById('global-tooltip');
-                    const tooltipOverlay = document.getElementById('tooltip-overlay');
+        console.log("AppUI: initGlobalButtons starting...");
 
-                    if (tooltipBody && globalTooltip && tooltipOverlay) {
-                        tooltipBody.innerHTML = emergencyContent.innerHTML;
-                        globalTooltip.style.display = 'block';
-                        tooltipOverlay.style.display = 'block';
-                        globalTooltip.classList.add('emergency-modal');
-                    }
-                }
-            });
-        }
-
-        // 2. Donation Button - Global Listener
-        const donationLink = document.getElementById('donation-link');
-        if (donationLink) {
-            donationLink.replaceWith(donationLink.cloneNode(true));
-            const newDonationLink = document.getElementById('donation-link');
-            newDonationLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                console.log('Donation Button Clicked');
-                alert('Dziękuję za chęć wsparcia! (Link do płatności wkrótce)');
-            });
-        }
-
-        // 3. PRO Unlock - Event Delegation for robustness (handles dynamic overlays)
-        // Using document.body to catch clicks on elements that might be re-rendered
-        if (!window.proUnlockInitialized) {
-            window.proUnlockInitialized = true;
-            document.body.addEventListener('click', (e) => {
-                if (e.target.classList.contains('unlockProButton')) {
-                    e.preventDefault();
-                    console.log('PRO Unlock Clicked');
-                    const proDashboard = document.getElementById('pro-dashboard');
-                    if (proDashboard) {
-                        proDashboard.classList.add('unlocked');
-                        const overlays = document.querySelectorAll('.pro-lock-overlay');
-                        overlays.forEach(o => o.style.display = 'none');
-                    }
-                    try {
-                        localStorage.setItem('uki-pro-unlocked', 'true');
-                    } catch (err) { console.warn('LC error', err); }
-                    alert('Dziękuję za wsparcie! Funkcje PRO zostały odblokowane.');
-                }
-            });
-        }
-
-        // Initialize State for PRO
-        try {
-            if (localStorage.getItem('uki-pro-unlocked') === 'true') {
-                const proDashboard = document.getElementById('pro-dashboard');
-                if (proDashboard) proDashboard.classList.add('unlocked');
-                const overlays = document.querySelectorAll('.pro-lock-overlay');
-                overlays.forEach(o => o.style.display = 'none');
+        // GLOBAL FALLBACK for User
+        window.debugForceUnlock = async () => {
+            const code = prompt("DEBUG: Podaj kod:");
+            if (await ProAccess.unlock(code)) {
+                alert("Odblokowano (Debug)");
+                location.reload();
+            } else {
+                alert("Błąd kodu");
             }
-        } catch (err) { }
+        };
+
+        // 1. SOS Button
+        try {
+            const emergencyBtn = document.getElementById('emergency-btn');
+            if (emergencyBtn) {
+                emergencyBtn.replaceWith(emergencyBtn.cloneNode(true));
+                document.getElementById('emergency-btn').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    console.log('SOS Button Clicked');
+                    const emergencyContent = document.getElementById('emergency-content');
+                    if (emergencyContent && AppUI.showModal) {
+                        AppUI.showModal(emergencyContent.innerHTML, true);
+                    }
+                });
+            }
+        } catch (e) { console.error("SOS Init Error", e); }
+
+        // 2. Donation Button
+        try {
+            const donationLink = document.getElementById('donation-link');
+            if (donationLink) {
+                donationLink.replaceWith(donationLink.cloneNode(true));
+                document.getElementById('donation-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alert('Dziękuję za chęć wsparcia! (Link do płatności wkrótce)');
+                });
+            }
+        } catch (e) { console.error("Donation Init Error", e); }
+
+        // 3. PRO Unlock - Direct Listener Attachment
+        try {
+            // Use a more specific selector if possible, or ensure we catching the right elements
+            const unlockButtons = document.querySelectorAll('.unlockProButton');
+            console.log(`AppUI: Found ${unlockButtons.length} unlock buttons.`);
+
+            if (unlockButtons.length === 0) {
+                console.warn("AppUI: No unlock buttons found! Check HTML.");
+            }
+
+            unlockButtons.forEach((btn, index) => {
+                // Remove old listeners is hard without AbortController, but addEventListener is safer than onclick override
+                // We'll clone the node to wipe old listeners if we suspect interference, 
+                // but standard addEventListener usually works fine unless something stops propagation earlier.
+
+                // Let's use specific click handler function to avoid closure messing up? No, arrow func is fine.
+
+                btn.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    e.stopPropagation(); // Stop bubbling immediately
+                    console.log(`Unlock Button Clicked (Index: ${index})`);
+
+                    const code = prompt("Podaj kod odblokowujący (otrzymałeś go po postawieniu kawy):");
+                    if (!code) {
+                        console.log("Unlock cancelled: no code arrived");
+                        return;
+                    }
+
+                    console.log("Attempting unlock with code...");
+                    const success = await ProAccess.unlock(code);
+
+                    if (success) {
+                        console.log("Unlock successful!");
+                        // Calculate expiry for display immediately
+                        const expiryDate = new Date(Date.now() + (30 * 24 * 60 * 60 * 1000));
+                        const dateStr = expiryDate.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+                        const successMsg = `
+                            <div style="text-align: center;">
+                                <h2 style="color: #00d1b2; margin-bottom: 15px;">Dziękuję za wsparcie! ☕</h2>
+                                <p style="font-size: 1.1em; line-height: 1.6;">
+                                    Strefa PRO została pomyślnie uruchomiona.<br>
+                                    Twój dostęp jest aktywny przez 30 dni.
+                                </p>
+                                <p style="margin-top: 15px; font-weight: bold; color: #fff;">
+                                    Wygasa: ${dateStr}
+                                </p>
+                            </div>
+                        `;
+
+                        if (AppUI.showModal) AppUI.showModal(successMsg, true);
+                        else alert('Dziękuję! Strefa PRO aktywna do ' + dateStr);
+
+                        AppUI.initProState();
+                    } else {
+                        console.warn("Unlock failed: invalid code");
+                        alert('Błędny kod. Spróbuj ponownie.');
+                    }
+                });
+            });
+        } catch (e) { console.error("Unlock Button Init Error", e); }
+
+
+        // 4. Settings: Re-Lock Button
+        try {
+            const resetProBtn = document.getElementById('reset-pro-btn');
+            if (resetProBtn && ProAccess) {
+                resetProBtn.style.display = ProAccess.isUnlocked() ? 'block' : 'none';
+                resetProBtn.onclick = () => {
+                    if (confirm("Czy chcesz zablokować funkcje PRO (do testów)?")) {
+                        ProAccess.lock();
+                    }
+                };
+            }
+        } catch (e) { console.error("Settings Lock Btn Error", e); }
+
+        // 5. Settings: PRO Info Icon
+        try {
+            const proInfoIcon = document.querySelector('.settings-info-row .tooltip-trigger');
+            if (proInfoIcon && ProAccess) {
+                proInfoIcon.replaceWith(proInfoIcon.cloneNode(true));
+                const newProInfoIcon = document.querySelector('.settings-info-row .tooltip-trigger');
+
+                newProInfoIcon.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (ProAccess.isUnlocked()) {
+                        const expiryDate = ProAccess.getExpiryDate();
+                        let msg = '';
+                        if (expiryDate) {
+                            const dateStr = expiryDate.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                            msg = `<div style="text-align: center;">
+                                <h2 style="color: #00d1b2; margin-bottom: 15px;">Dziękuję za wsparcie! ☕</h2>
+                                <h3 style="color: #ffffff; margin-bottom: 10px; font-size: 1.2em;">Status Strefy PRO</h3>
+                                <p style="font-size: 1.1em; line-height: 1.6;">
+                                    Twój dostęp jest aktywny.<br>
+                                    Wygasa: <strong>${dateStr}</strong>
+                                </p>
+                            </div>`;
+                        } else {
+                            msg = `<div style="text-align: center;">...</div>`; // Keep short
+                        }
+                        if (AppUI.showModal) AppUI.showModal(msg, true);
+                    } else {
+                        if (AppUI.showModal) AppUI.showModal(`<div style="text-align: center;"><p style="color: #DC143C;">Strefa PRO nie jest aktywna.<br>Postaw kawę, aby odblokować.</p></div>`, true);
+                    }
+                });
+            }
+        } catch (e) { console.error("Settings Info Icon Error", e); }
     },
 
     initMobileMenu: () => {
@@ -361,32 +445,65 @@ export const AppUI = {
                 alert('Zapisany SAC został usunięty.');
             });
         }
+
+        // Init PRO Status Display
+        const proStatusDisplay = document.getElementById('pro-status-display');
+
+        if (proStatusDisplay) {
+            const isUnlocked = ProAccess.isUnlocked();
+            proStatusDisplay.textContent = isUnlocked ? 'Aktywny' : 'Zablokowany';
+            proStatusDisplay.style.color = isUnlocked ? '#00d1b2' : '#DC143C';
+        }
+        AppUI.initProState(); // Call the new function here
     },
 
-    initTooltips: () => {
+    initProState: () => {
+        // Run this immediately on init to prevent flash of locked content
+        const isUnlocked = ProAccess.isUnlocked();
+        if (isUnlocked) {
+            const proDashboard = document.getElementById('pro-dashboard');
+            if (proDashboard) proDashboard.classList.add('unlocked');
+
+            const overlays = document.querySelectorAll('.pro-lock-overlay');
+            overlays.forEach(o => o.style.display = 'none');
+
+            document.querySelectorAll('.locked-feature').forEach(el => el.classList.remove('locked-feature'));
+        }
+    },
+
+    // MERGED: Function moved to main definition above.
+    // Replaced with empty space or removed completely.
+
+    showModal: (html, isEmergency = false) => {
         const globalTooltip = document.getElementById('global-tooltip');
         const tooltipOverlay = document.getElementById('tooltip-overlay');
         const tooltipBody = document.getElementById('tooltip-body');
-        const tooltipCloseBtn = document.getElementById('tooltip-close-btn');
 
         if (!globalTooltip || !tooltipOverlay || !tooltipBody) return;
 
-        function showTooltip(html, isEmergency = false) {
-            tooltipBody.innerHTML = html;
-            globalTooltip.style.display = 'block';
-            tooltipOverlay.style.display = 'block';
-            if (isEmergency) globalTooltip.classList.add('emergency-modal');
-            else globalTooltip.classList.remove('emergency-modal');
-        }
+        tooltipBody.innerHTML = html;
+        globalTooltip.style.display = 'block';
+        tooltipOverlay.style.display = 'block';
+        if (isEmergency) globalTooltip.classList.add('emergency-modal');
+        else globalTooltip.classList.remove('emergency-modal');
+    },
 
-        function hideTooltip() {
-            globalTooltip.style.display = 'none';
-            tooltipOverlay.style.display = 'none';
-            tooltipBody.innerHTML = '';
-        }
+    closeModal: () => {
+        const globalTooltip = document.getElementById('global-tooltip');
+        const tooltipOverlay = document.getElementById('tooltip-overlay');
+        const tooltipBody = document.getElementById('tooltip-body');
 
-        if (tooltipCloseBtn) tooltipCloseBtn.addEventListener('click', hideTooltip);
-        tooltipOverlay.addEventListener('click', hideTooltip);
+        if (globalTooltip) globalTooltip.style.display = 'none';
+        if (tooltipOverlay) tooltipOverlay.style.display = 'none';
+        if (tooltipBody) tooltipBody.innerHTML = '';
+    },
+
+    initTooltips: () => {
+        const tooltipOverlay = document.getElementById('tooltip-overlay');
+        const tooltipCloseBtn = document.getElementById('tooltip-close-btn');
+
+        if (tooltipCloseBtn) tooltipCloseBtn.addEventListener('click', AppUI.closeModal);
+        if (tooltipOverlay) tooltipOverlay.addEventListener('click', AppUI.closeModal);
 
         // Tooltip triggers
         document.addEventListener('click', (e) => {
@@ -401,9 +518,9 @@ export const AppUI = {
                     const unlocked = document.querySelector('#pro-dashboard')?.classList.contains('unlocked');
 
                     if (!isPro || unlocked) {
-                        showTooltip(details.innerHTML);
+                        AppUI.showModal(details.innerHTML);
                     } else {
-                        showTooltip("<div style='text-align:center;'><h4>🔒 Funkcja PRO</h4><p>Szczegółowe obliczenia są dostępne w wersji PRO.</p></div>");
+                        AppUI.showModal("<div style='text-align:center;'><h4>🔒 Funkcja PRO</h4><p>Szczegółowe obliczenia są dostępne w wersji PRO.</p></div>");
                     }
                 }
                 return;
@@ -412,7 +529,7 @@ export const AppUI = {
             // Tooltip buttons in content
             if (e.target.classList.contains('tooltip-button')) {
                 const content = e.target.querySelector('.tooltip-content');
-                if (content) showTooltip(content.innerHTML);
+                if (content) AppUI.showModal(content.innerHTML);
             }
         });
 

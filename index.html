@@ -102,9 +102,16 @@
 
                     <div class="pro-dashboard-wrapper">
                         <div id="pro-overlay-lock" class="pro-lock-overlay">
-                            <img src="img/logo.jpg" alt="Uki Logo" class="pro-overlay-logo">
-                            <div class="lock-message">🔒 Funkcje zablokowane</div>
-                            <button class="unlockProButton pulse-button">Postaw kawę aby odblokować wszystko! ☕</button>
+                            <img src="img/logo.jpg" alt="Logo" class="pro-overlay-logo">
+                            <!-- Text Only - Red Uppercase -->
+                            <div class="lock-message" style="text-transform: uppercase; letter-spacing: 1px;">FUNKCJE
+                                ZABLOKOWANE</div>
+
+                            <!-- Simple Text Button (Matching Donation Style) -->
+                            <button class="unlockProButton pulse-button"
+                                style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                POSTAW KAWĘ ABY ODBLOKOWAĆ
+                            </button>
                         </div>
 
                         <div id="pro-tools-grid" class="dashboard-grid locked-grid">
@@ -896,8 +903,22 @@
                         <div style="display:flex; align-items:center; gap:10px;">
                             <span id="settings-sac-value"
                                 style="font-weight: bold; color: var(--primary-color);">Brak</span>
-                            <button id="reset-sac-btn" class="secondary" style="padding: 2px 8px; font-size: 0.8em;"
-                                title="Wyczyść zapisany SAC">×</button>
+                            <button id="reset-sac-btn" class="icon-btn danger" title="Wyczyść zapisany SAC">×</button>
+                        </div>
+                    </div>
+                    <div class="settings-info-row" style="margin-top: 5px;">
+                        <span>Status Strefy PRO
+                            <span class="tooltip-trigger"
+                                style="margin-left: 8px; font-size: 0.9em; color: #00d1b2; cursor: help; border: 1px solid #00d1b2; border-radius: 50%; width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; font-weight: bold;">i
+                                <div class="tooltip-content" style="width: 250px; text-align: left;">
+                                    <p>Aktywność Strefy PRO jest ważna przez 30 dni.</p>
+                                </div>
+                            </span>
+                        </span>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <span id="pro-status-display" style="font-weight: bold; color: #00d1b2;">Aktywny</span>
+                            <button id="reset-pro-btn" class="icon-btn warning"
+                                title="Zablokuj ponownie (Test)">🔒</button>
                         </div>
                     </div>
                     <div class="settings-info-row" style="margin-top: 5px;">
@@ -950,6 +971,13 @@
                 <p style="font-size: 0.9em; color: #888;">Zachowaj spokój. Twoje działanie może uratować życie.</p>
             </div>
         </div>
+    </div>
+
+    <!-- Global Tooltip / Modal Structure -->
+    <div id="tooltip-overlay" style="display: none;"></div>
+    <div id="global-tooltip" class="tooltip-content" style="display: none;">
+        <button id="tooltip-close-btn">×</button>
+        <div id="tooltip-body"></div>
     </div>
 
     <!-- Quiz Modal Structure -->

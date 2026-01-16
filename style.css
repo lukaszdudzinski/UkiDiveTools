@@ -650,63 +650,81 @@ h3,
   transition: all 0.5s ease;
 }
 
+/* RESTYLED PRO LOCK OVERLAY (Matching Donation Button) */
 .pro-lock-overlay {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
-  background: rgba(20, 20, 20, 0.85);
+
+  /* Dark background like donation wrapper */
+  background: rgba(40, 40, 40, 0.95);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  padding: 25px 40px;
-  border-radius: 15px;
-  border: 1px solid #DC143C;
+
+  padding: 30px 40px;
+  border-radius: 12px;
+
+  /* Pulsing border - matching PRO turquoise/cyan */
+  border: 1px solid rgba(0, 209, 178, 0.3);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  animation: pulse-border-cyan 3s infinite ease-in-out;
+
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 80%;
-  max-width: 400px;
+  max-width: 450px;
   transition: all 0.5s ease;
 }
 
 .pro-overlay-logo {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #00d1b2;
-  box-shadow: 0 0 20px rgba(0, 209, 178, 0.4);
-  margin-bottom: 15px;
-  animation: pulse-glow-dark 3s infinite alternate;
+  border: 2px solid #00d1b2;
+  box-shadow: 0 0 15px rgba(0, 209, 178, 0.3);
+  margin-bottom: 20px;
+  /* Removed pulse-glow-dark animation to be cleaner */
 }
 
+/* "Funkcje zablokowane" - Red text to indicate status */
 .lock-message {
   color: #DC143C;
-  font-size: 1.2em;
-  margin-bottom: 15px;
+  font-size: 1.3em;
+  margin-bottom: 25px;
   font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .pulse-button {
-  background-color: #00d1b2;
-  color: #1e1e1e;
+  background-color: transparent;
+  color: #00d1b2;
+  /* Text color matching border */
   font-weight: bold;
-  border: none;
+  border: 1px solid #00d1b2;
+  /* Outline style */
   padding: 12px 24px;
   font-size: 1.1em;
-  border-radius: 50px;
+  border-radius: 6px;
+  /* Less rounded, more boxy like new standard */
   cursor: pointer;
-  animation: pulse-scale 2s infinite;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  /* subtle glow animation on button itself too? */
+  box-shadow: 0 0 10px rgba(0, 209, 178, 0.1);
 }
 
 .pulse-button:hover {
-  background-color: #00c4a7;
-  color: #fff;
+  background-color: #00d1b2;
+  color: #1e1e1e;
+  box-shadow: 0 0 20px rgba(0, 209, 178, 0.4);
 }
 
 .unlocked .pro-lock-overlay {
@@ -1602,6 +1620,25 @@ body:not(.dark-theme) li a {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
+/* LIGHT MODE: Better contrast for Sub-Tab Buttons (Selection Bar) */
+body:not(.dark-theme) .sub-tab-button {
+  color: #333333;
+  /* Dark text for inactive tabs */
+  font-weight: 600;
+  text-shadow: none;
+}
+
+body:not(.dark-theme) .sub-tab-button:hover {
+  color: #000000;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Fix for Active Tab in Light Mode: Must be white text on dark background */
+body:not(.dark-theme) .sub-tab-button.active {
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
 /* --- WYŁĄCZONE SZKŁO (body.glass-off) --- */
 body.glass-off .sidebar-nav,
 body.glass-off .app-content {
@@ -2452,63 +2489,138 @@ h3,
   transition: all 0.5s ease;
 }
 
+/* RESTYLED PRO LOCK OVERLAY (Matching Donation Button) */
+/* RESTYLED PRO LOCK OVERLAY (Red Glow as requested) */
 .pro-lock-overlay {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
-  background: rgba(20, 20, 20, 0.85);
+
+  /* Dark background */
+  background: rgba(20, 20, 20, 0.95);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  padding: 25px 40px;
-  border-radius: 15px;
-  border: 1px solid #DC143C;
+
+  padding: 30px 40px;
+  border-radius: 12px;
+
+  /* Pulsing border - RED GLOW */
+  border: 1px solid rgba(220, 20, 60, 0.3);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  animation: pulse-red 3s infinite ease-in-out;
+
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 80%;
-  max-width: 400px;
+  max-width: 450px;
   transition: all 0.5s ease;
 }
 
 .pro-overlay-logo {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #00d1b2;
-  box-shadow: 0 0 20px rgba(0, 209, 178, 0.4);
-  margin-bottom: 15px;
-  animation: pulse-glow-dark 3s infinite alternate;
+  border: 2px solid #DC143C;
+  box-shadow: 0 0 15px rgba(220, 20, 60, 0.4);
+  margin-bottom: 20px;
 }
 
+@keyframes pulse-red {
+  0% {
+    border-color: rgba(220, 20, 60, 0.3);
+    box-shadow: 0 0 5px rgba(220, 20, 60, 0.1);
+  }
+
+  50% {
+    border-color: rgba(220, 20, 60, 1);
+    box-shadow: 0 0 20px rgba(220, 20, 60, 0.5);
+  }
+
+  100% {
+    border-color: rgba(220, 20, 60, 0.3);
+    box-shadow: 0 0 5px rgba(220, 20, 60, 0.1);
+  }
+}
+
+/* UNIFORM ICON BUTTONS FOR SETTINGS */
+.icon-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  cursor: pointer;
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  transition: all 0.2s ease;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+
+.icon-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.icon-btn.danger:hover {
+  background-color: rgba(220, 20, 60, 0.2);
+  border-color: #DC143C;
+  color: #DC143C;
+}
+
+.icon-btn.warning:hover {
+  background-color: rgba(255, 221, 87, 0.2);
+  border-color: #ffdd57;
+  color: #ffdd57;
+}
+
+/* "FUNKCJA ZABLOKOWANA" - Red text */
 .lock-message {
   color: #DC143C;
-  font-size: 1.2em;
-  margin-bottom: 15px;
+  font-size: 1.3em;
+  margin-bottom: 25px;
   font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.pulse-button {
-  background-color: #00d1b2;
-  color: #1e1e1e;
+/* Lock Button - Delicate Outline Style matching user request */
+.pro-lock-overlay .pulse-button {
+  background-color: transparent;
+  color: #00d1b2;
+  /* Keeping cyan to match 'Postaw Kawę' branding but distinct from red window/text */
   font-weight: bold;
-  border: none;
+  border: 1px solid #00d1b2;
   padding: 12px 24px;
+  /* Standard padding */
   font-size: 1.1em;
-  border-radius: 50px;
+  border-radius: 6px;
+  /* Boxy like settings icons */
   cursor: pointer;
-  animation: pulse-scale 2s infinite;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 10px rgba(0, 209, 178, 0.1);
+  animation: none;
+  /* No pulse on button itself */
 }
 
-.pulse-button:hover {
-  background-color: #00c4a7;
-  color: #fff;
+.pro-lock-overlay .pulse-button:hover {
+  background-color: rgba(0, 209, 178, 0.1);
+  box-shadow: 0 0 15px rgba(0, 209, 178, 0.3);
+  transform: translateY(-1px);
 }
 
 .unlocked .pro-lock-overlay {
@@ -2564,6 +2676,35 @@ h3,
   line-height: 1.3;
   margin: 0;
   font-style: normal !important;
+}
+
+/* --- POPRAWKA CZYTELNOŚCI ZAKŁADEK (Light Mode + Shadow - FINAL FIX) --- */
+html body:not(.dark-theme) .tab-nav button.tab-btn,
+html body:not(.dark-theme) .tab-nav .tab-btn {
+  color: #ffffff !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95), 0 0 2px rgba(0, 0, 0, 0.85) !important;
+  background-color: rgba(0, 0, 0, 0.35) !important;
+  font-weight: 700 !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  opacity: 1 !important;
+}
+
+html body:not(.dark-theme) .tab-nav button.tab-btn:hover,
+html body:not(.dark-theme) .tab-nav .tab-btn:hover {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  color: #fff !important;
+}
+
+body:not(.dark-theme) .tab-btn:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #000;
+}
+
+body:not(.dark-theme) .tab-btn.active {
+  background-color: #00d1b2;
+  color: #000000 !important;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .dashboard-card.disabled-card {
