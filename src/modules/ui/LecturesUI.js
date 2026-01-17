@@ -91,7 +91,7 @@ export const LecturesUI = {
                 btn.textContent = 'Sprawdź Wiedzę (Quiz)';
 
                 btn.addEventListener('click', () => {
-                    QuizUI.startQuiz(lecture.quiz);
+                    QuizUI.startQuiz(lecture.quiz, lecture.id);
                 });
 
                 quizBtnContainer.appendChild(btn);

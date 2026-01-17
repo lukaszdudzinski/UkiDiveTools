@@ -218,6 +218,94 @@
                 ],
                 correctAnswer: 3,
                 explanation: "Wszystkie te czynniki mogą prowadzić do uwięzienia powietrza w płucach (air trapping) i zwiększać ryzyko UCP podczas wynurzania."
+            },
+            {
+                question: "Co to jest 'blokada wsteczna'?",
+                options: [
+                    "Niemożność zanurzenia się",
+                    "Ból ucha podczas wynurzania spowodowany rozprężającym się powietrzem",
+                    "Zablokowanie automatu oddechowego",
+                    "Skurcz mięśni nóg"
+                ],
+                correctAnswer: 1,
+                explanation: "Blokada wsteczna (reverse block) to rzadka sytuacja, gdy powietrze uwięzione w uchu środkowym nie może się wydostać podczas wynurzania, powodując ból."
+            },
+            {
+                question: "Jak nazywa się uraz ciśnieniowy zęba?",
+                options: [
+                    "Barodontalgia",
+                    "Barotitis",
+                    "Barosinusitis",
+                    "Baro-dentalizm"
+                ],
+                correctAnswer: 0,
+                explanation: "Barodontalgia to ból zęba spowodowany zmianą ciśnienia, gdy pęcherzyk powietrza (np. pod plombą) kurczy się lub rozszerza."
+            },
+            {
+                question: "Jak zapobiec barotraumie maski?",
+                options: [
+                    "Mocno docisnąć maskę do twarzy",
+                    "Wdmuchiwać nosem powietrze do maski podczas zanurzania",
+                    "Pauzować co metr",
+                    "Kupić maskę z zaworkiem"
+                ],
+                correctAnswer: 1,
+                explanation: "Aby wyrównać podciśnienie w masce (squeeze), należy regularnie wypuszczać odrobinę powietrza nosem do jej wnętrza."
+            },
+            {
+                question: "Co sygnalizuje ból w okolicy czoła lub kości policzkowych podczas zanurzania?",
+                options: [
+                    "Barotraumę zatok",
+                    "Ból głowy z napięcia",
+                    "Barotraumę maski",
+                    "Zatrucie tlenowe"
+                ],
+                correctAnswer: 0,
+                explanation: "Sygnalizuje kłopoty z wyrównaniem ciśnienia w zatokach, co prowadzi do barotraumy (tzw. 'squeeze' zatokowy)."
+            },
+            {
+                question: "Co się stanie, jeśli pęknie błona bębenkowa pod wodą?",
+                options: [
+                    "Woda zalewająca ucho środkowe spowoduje silny zawrót głowy i nudności",
+                    "Nic poważnego, tylko ból",
+                    "Utrata słuchu na zawsze",
+                    "Natychmiastowa utrata przytomności"
+                ],
+                correctAnswer: 0,
+                explanation: "Zimna woda wlewająca się do ucha środkowego podrażnia błędnik, powodując gwałtowne zawroty głowy (efekt kaloryczny) i dezorientację."
+            },
+            {
+                question: "Jak prawidłowo wykonywać manewr Valsalvy?",
+                options: [
+                    "Dmuchać z całej siły aż uszy 'strzelą'",
+                    "Dmuchać delikatnie przy zatkanym nosie, nie na siłę",
+                    "Tylko przełykać ślinę",
+                    "Czekać aż ciśnienie samo się wyrówna"
+                ],
+                correctAnswer: 1,
+                explanation: "Manewr Valsalvy należy wykonywać delikatnie. Użycie zbyt dużej siły może uszkodzić ucho wewnętrzne (okienko owalne)."
+            },
+            {
+                question: "Dlaczego strefa 0-10 metrów jest najbardziej ryzykowna dla barotraumy?",
+                options: [
+                    "Bo tam jest najzimniej",
+                    "Bo tam następują największe procentowe zmiany objętości gazu",
+                    "Bo tam jest największy ruch wody",
+                    "Bo tam jest najwięcej nurków"
+                ],
+                correctAnswer: 1,
+                explanation: "Zgodnie z prawem Boyle'a, objętość gazu zmienia się o 50% między 0 a 10m (z 100% na 50%), co jest największą zmianą w całym profilu nurkowania."
+            },
+            {
+                question: "Gdzie leczy się poważne urazy ciśnieniowe (DCS/AGE)?",
+                options: [
+                    "Na SORze",
+                    "W komorze dekompresyjnej (hiperbarycznej)",
+                    "W domu aspiryną",
+                    "Pod wodą"
+                ],
+                correctAnswer: 1,
+                explanation: "Jedynym skutecznym leczeniem w przypadku zatorów gazowych i DCS jest rekompresja w komorze hiperbarycznej."
             }
         ]
     },
@@ -419,6 +507,94 @@
                 ],
                 correctAnswer: 1,
                 explanation: "'Bends' to klasyczny objaw DCS Typ I - intensywny ból w dużych stawach (kolana, łokcie), który zmusza poszkodowanego do trzymania stawu w pozycji zgięcia dla ulgi."
+            },
+            {
+                question: "Czym jest PFO (Przetrwały Otwór Owalny) w kontekście DCS?",
+                options: [
+                    "Wadą automatu oddechowego",
+                    "Wadą serca, która zwiększa ryzyko przedostania się pęcherzyków do tętnic",
+                    "Chorobą płuc",
+                    "Techniką wynurzania"
+                ],
+                correctAnswer: 1,
+                explanation: "PFO to połączenie między przedsionkami serca. Pozwala pęcherzykom azotu ominąć filtr płucny i trafić bezpośrednio do mózgu, zwiększając ryzyko DCS II."
+            },
+            {
+                question: "Jak objawia się DCS skórny?",
+                options: [
+                    "Jako skaleczenia",
+                    "Jako swędząca wysypka lub marmurkowate plamy na skórze",
+                    "Jako oparzenie",
+                    "Jako bladość twarzy"
+                ],
+                correctAnswer: 1,
+                explanation: "DCS skórny często objawia się swędzeniem (świąd) lub charakterystyczną marmurkowatością na tułowiu i ramionach."
+            },
+            {
+                question: "Co to jest 'The Chokes'?",
+                options: [
+                    "Dławienie się wodą",
+                    "Płucna postać DCS (DCS II), objawiająca się kaszlem i dusznością",
+                    "Technika ratownicza",
+                    "Rodzaj sprzętu"
+                ],
+                correctAnswer: 1,
+                explanation: "'Chokes' to bardzo groźna postać DCS, gdzie pęcherzyki blokują krążenie w płucach, powodując duszność, suchy kaszel i ból w klatce."
+            },
+            {
+                question: "Który z poniższych jest niespecyficznym, ale częstym objawem DCS?",
+                options: [
+                    "Głód",
+                    "Niezwykłe, skrajne zmęczenie po nurkowaniu",
+                    "Euforia",
+                    "Czkawka"
+                ],
+                correctAnswer: 1,
+                explanation: "Nieuzasadnione, skrajne zmęczenie po nurkowaniu (niewspółmierne do wysiłku) jest często ignorowanym objawem łagodnej DCS."
+            },
+            {
+                question: "Dlaczego odwodnienie zwiększa ryzyko DCS?",
+                options: [
+                    "Bo krew gęstnieje i gorzej transportuje azot do płuc",
+                    "Bo nurek szybciej marznie",
+                    "Bo automat podaje suche powietrze",
+                    "Nie ma wpływu"
+                ],
+                correctAnswer: 0,
+                explanation: "Zagęszczona krew (hemokoncentracja) ma gorszą perfuzję, co utrudnia skuteczną eliminację azotu z tkanek."
+            },
+            {
+                question: "Dlaczego profil nurkowania typu 'jo-jo' jest niebezpieczny?",
+                options: [
+                    "Bo zużywa dużo powietrza",
+                    "Bo wielokrotne zmiany ciśnienia sprzyjają formowaniu się i wzrostowi mikropęcherzyków",
+                    "Bo błędnik szaleje",
+                    "Jest bezpieczny"
+                ],
+                correctAnswer: 1,
+                explanation: "Wielokrotne zanurzanie i wynurzanie sprzyja powiększaniu się istniejących pęcherzyków gazu i zwiększa ryzyko DCS."
+            },
+            {
+                question: "Jaka jest rola 100% tlenu w pierwszej pomocy przy DCS?",
+                options: [
+                    "Tylko uśmierza ból",
+                    "Tworzy maksymalny gradient ciśnień, przyspieszając wypłukiwanie azotu",
+                    "Usypia poszkodowanego",
+                    "Chłodzi organizm"
+                ],
+                correctAnswer: 1,
+                explanation: "Oddychanie czystym tlenem maksymalizuje różnicę ciśnień między azotem w tkankach a płucami, drastycznie przyspieszając jego eliminację."
+            },
+            {
+                question: "Dlaczego tkanka tłuszczowa ma znaczenie w DCS?",
+                options: [
+                    "Azot rozpuszcza się w tłuszczu 5x lepiej niż w wodzie",
+                    "Tłuszcz chroni przed zimnem, więc zmniejsza ryzyko",
+                    "Nie ma znaczenia",
+                    "Tłuszcz szybciej oddaje azot"
+                ],
+                correctAnswer: 0,
+                explanation: "Tkanka tłuszczowa jest magazynem azotu (azot jest lipofilny). Osoby otyłe mogą gromadzić więcej azotu i wolniej go oddawać."
             }
         ]
     },
@@ -600,6 +776,116 @@
                 ],
                 correctAnswer: 1,
                 explanation: "Przystanek bezpieczeństwa (3-5 min na 5m) jest zawsze zalecany, niezależnie od mieszanki, aby dodatkowo zredukować ryzyko choroby dekompresyjnej."
+            },
+            {
+                question: "Jaki jest główny objaw toksyczności tlenowej CNS?",
+                options: [
+                    "Kaszel",
+                    "Drgawki (Convulsions)",
+                    "Wypieki na twarzy",
+                    "Ból stawów"
+                ],
+                correctAnswer: 1,
+                explanation: "Drgawki (ataki padaczkowe) są najpoważniejszym i najgroźniejszym objawem toksyczności tlenowej pod wodą, grożącym utonięciem."
+            },
+            {
+                question: "Czym jest 'Best Mix' (Najlepsza Mieszanka) dla danej głębokości?",
+                options: [
+                    "Mieszanka, która ma 21% tlenu",
+                    "Mieszanka, która na planowanej głębokości osiąga dokładnie PPO2 = 1.4 ATA",
+                    "Mieszanka z helem",
+                    "Najtańsza mieszanka"
+                ],
+                correctAnswer: 1,
+                explanation: "Best Mix to taka mieszanka Nitroksowa, która maksymalizuje zawartość tlenu (a tym samym minimalizuje azot) nie przekraczając limitu MOD."
+            },
+            {
+                question: "Dlaczego butla z Nitroksem ma zielono-żółty pasek?",
+                options: [
+                    "Dla ozdoby",
+                    "Aby odróżnić ją od butli z powietrzem (wymóg bezpieczeństwa)",
+                    "Oznacza butlę stalową",
+                    "Oznacza butlę aluminiową"
+                ],
+                correctAnswer: 1,
+                explanation: "Standardowe oznaczenie butli Nitroxowych to pas koloru zielonego i żółtego oraz wyraźny napis NITROX lub EANx, aby uniknąć pomyłkowego użycia."
+            },
+            {
+                question: "Jaki jest skład powietrza atmosferycznego?",
+                options: [
+                    "100% tlen",
+                    "50% tlen, 50% azot",
+                    "21% tlen, 78% azot, 1% inne gazy",
+                    "100% azot"
+                ],
+                correctAnswer: 2,
+                explanation: "Powietrze to w przybliżeniu 21% tlenu i 79% azotu. Nitrox to każda mieszanka, gdzie tlenu jest >21%."
+            },
+            {
+                question: "Jakie ciśnienie absolutne (całkowite) panuje na głębokości 20 metrów?",
+                options: [
+                    "1 ATA",
+                    "2 ATA",
+                    "3 ATA",
+                    "4 ATA"
+                ],
+                correctAnswer: 2,
+                explanation: "Na powierzchni mamy 1 ATA. Co 10m dochodzi 1 ATA. 20m/10 = 2 ATA wody + 1 ATA atmosfery = 3 ATA."
+            },
+            {
+                question: "Czym jest Hipoksja?",
+                options: [
+                    "Niedoborem tlenu",
+                    "Nadmiarem tlenu",
+                    "Zatruciem azotowym",
+                    "Stachem przed wodą"
+                ],
+                correctAnswer: 0,
+                explanation: "Hipoksja to stan niedotlenienia. Może wystąpić, gdy oddychamy mieszanką o zbyt niskiej zawartości tlenu na płytkiej głębokości."
+            },
+            {
+                question: "Po co w ogóle stosujemy Nitrox w rekreacji?",
+                options: [
+                    "Żeby nurkować głębiej",
+                    "Żeby wydłużyć czas bezdekompresyjny (limit NDL)",
+                    "Żeby zużywać mniej gazu",
+                    "Żeby nie było zimno"
+                ],
+                correctAnswer: 1,
+                explanation: "Główny cel to mniej azotu w mieszance = wolniejsze nasycanie tkanek = dłuższy czas, jaki możemy spędzić na dnie bez dekompresji."
+            },
+            {
+                question: "Co to jest EAD (Equivalent Air Depth)?",
+                options: [
+                    "Rzeczywista głębokość nurkowania",
+                    "Głębokość, na której oddychając powietrzem wchłonęlibyśmy tyle samo azotu co na Nitroxie",
+                    "Głębokość przystanku bezpieczeństwa",
+                    "Maksymalna głębokość operacyjna"
+                ],
+                correctAnswer: 1,
+                explanation: "EAD pozwala używać tabel powietrznych do nurkowań na Nitroxie, przeliczając głębokość na 'płytszą' (ekwiwalentną powietrzną)."
+            },
+            {
+                question: "Do czego kalibrujemy analizator tlenu?",
+                options: [
+                    "Do czystego tlenu (100%)",
+                    "Do powietrza atmosferycznego (20.9% / 21%)",
+                    "Do azotu",
+                    "Nie trzeba kalibrować"
+                ],
+                correctAnswer: 1,
+                explanation: "Analizator kalibrujemy zazwyczaj na powietrzu atmosferycznym, przyjmując odczyt 20.9% lub 21.0% jako punkt odniesienia."
+            },
+            {
+                question: "Jeśli Twój analizator pokazuje 32.5% O2, jaką wartość przyjmujesz do obliczeń MOD?",
+                options: [
+                    "32% (bardziej konserwatywnie dla dekompresji, ale nie dla MOD)",
+                    "33% (bardziej konserwatywnie dla toksyczności tlenowej)",
+                    "Średnią",
+                    "Ignorujesz to"
+                ],
+                correctAnswer: 1,
+                explanation: "Do obliczeń MOD (bezpieczeństwo tlenowe) zawsze przyjmujemy wartość wyższą/bardziej restrykcyjną. Jeśli analizator się waha, bezpieczniej założyć, że tlenu jest więcej."
             }
         ]
     },
@@ -943,6 +1229,105 @@
                 ],
                 correctAnswer: 1,
                 explanation: "Mimo różnych mechanizmów, oba wymagają natychmiastowego podania 100% tlenu i leczenia w komorze dekompresyjnej. Czas jest kluczowy!"
+            },
+            {
+                question: "Mechanizm bólu: Jaka jest różnica między bólem w Barotraumie a DCS?",
+                options: [
+                    "Nie ma różnicy",
+                    "Barotrauma: ból ostry, miejscowy, narastający przy zmianie ciśnienia. DCS: ból tępy, głęboki, stały.",
+                    "Barotrauma nie boli, DCS boli bardzo",
+                    "Barotrauma to swędzenie, DCS to ból"
+                ],
+                correctAnswer: 1,
+                explanation: "Barotrauma to uraz mechaniczny (np. naciągnięcie błony), co daje ostry ból skorelowany z ciśnieniem. Ból w DCS ('bends') jest często trudny do zlokalizowania, tępy i głęboki."
+            },
+            {
+                question: "Który uraz jest bardziej prawdopodobny, jeśli objawy wystąpiły 2 minuty po wynurzeniu?",
+                options: [
+                    "DCS (Choroba Dekompresyjna)",
+                    "AGE (Zator Gazowy / Barotrauma Płuc)",
+                    "Narkoza azotowa",
+                    "Hipotermia"
+                ],
+                correctAnswer: 1,
+                explanation: "Objawy natychmiastowe (0-10 min) po wynurzeniu niemal zawsze sugerują zator gazowy (AGE) lub barotraumę płuc. DCS zazwyczaj rozwija się wolniej (powyżej 15-20 min)."
+            },
+            {
+                question: "Które prawo gazowe odpowiada za Barotraumę, a które za DCS?",
+                options: [
+                    "Oba Prawo Archimedesa",
+                    "Barotrauma: Boyle (objętość). DCS: Henry (rozpuszczalność).",
+                    "Barotrauma: Henry. DCS: Boyle.",
+                    "Barotrauma: Dalton. DCS: Charles."
+                ],
+                correctAnswer: 1,
+                explanation: "Boyle wyjaśnia mechaniczne zmiany objętości (rozrywanie tkanek). Henry wyjaśnia nasycanie tkanek gazem (bąbelki w krwi)."
+            },
+            {
+                question: "Co to są 'Silent Bubbles' (Ciche Pęcherzyki)?",
+                options: [
+                    "Pęcherzyki, które nie pękają",
+                    "Mikropęcherzyki w żyle, które nie dają objawów DCS, ale są obecne po wielu nurkowaniach",
+                    "Pęcherzyki w napoju",
+                    "Pęcherzyki w masce"
+                ],
+                correctAnswer: 1,
+                explanation: "Ciche pęcherzyki występują po wielu nurkowaniach bezobjawowo. Są filtrowane przez płuca, ale ich nadmiar może prowadzić do DCS."
+            },
+            {
+                question: "Jakie nawodnienie jest zalecane w pierwszej pomocy przy DCS?",
+                options: [
+                    "Kawa lub herbata",
+                    "Alkohol",
+                    "Woda niegazowana, jeśli poszkodowany jest przytomny",
+                    "Nic nie podawać"
+                ],
+                correctAnswer: 2,
+                explanation: "Nawodnienie (ok. 1 litr w ciągu godziny) pomaga rozrzedzić krew i poprawić mikrokrążenie, co ułatwia eliminację azotu."
+            },
+            {
+                question: "W którym przypadku transport do komory jest pilniejszy?",
+                options: [
+                    "W obu jest krytycznie ważny",
+                    "Tylko przy DCS skórnym",
+                    "Tylko przy bólu ucha",
+                    "Można poczekać do jutra"
+                ],
+                correctAnswer: 0,
+                explanation: "Zarówno AGE (zator) jak i ciężki DCS są stanami zagrożenia życia/zdrowia. W obu przypadkach czas dotarcia do komory decyduje o rokowaniach."
+            },
+            {
+                question: "Czy podanie tlenu może zaszkodzić przy Barotraumie?",
+                options: [
+                    "Tak, może rozerwać płuca",
+                    "Nie, tlen jest zawsze korzystny w wypadkach nurkowych",
+                    "Zależy od głębokości",
+                    "Tylko na receptę"
+                ],
+                correctAnswer: 1,
+                explanation: "W pierwszej pomocy na powierzchni (1 ATA) tlen 100% jest bezpieczny i zawsze zalecany przy podejrzeniu jakiegokolwiek urazu ciśnieniowego."
+            },
+            {
+                question: "Jakie jest ryzyko przy lataniu samolotem z nieleczoną odmą opłucnową (Barotrauma)?",
+                options: [
+                    "Brak ryzyka",
+                    "Rozprężenie gazu w opłucnej na wysokości może doprowadzić do zapaści płuca i śmierci",
+                    "Tylko ból ucha",
+                    "Szybsze wyzdrowienie"
+                ],
+                correctAnswer: 1,
+                explanation: "Obniżone ciśnienie w samolocie spowoduje rozprężenie powietrza w jamie opłucnej (zgodnie z prawem Boyle'a), co może być śmiertelne."
+            },
+            {
+                question: "Czy utrata przytomności po wynurzeniu to zawsze DCS?",
+                options: [
+                    "Tak",
+                    "Nie, częściej jest to objaw Zatoru Gazowego (AGE) wynikającego z Barotraumy Płuc",
+                    "To zawsze zmęczenie",
+                    "To wina sprzętu"
+                ],
+                correctAnswer: 1,
+                explanation: "Nagła utrata przytomności tuż po wynurzeniu jest klasycznym objawem masywnego zatoru gazowego (AGE), który trafia do mózgu."
             }
         ]
     },

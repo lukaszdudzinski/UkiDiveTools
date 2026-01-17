@@ -5,6 +5,7 @@ export const QuizUI = {
         currentScore: 0,
         wrongAnswers: 0,
         isAnswered: false,
+        currentLectureId: null,
         elementCACHE: {}
     },
 
@@ -48,16 +49,32 @@ export const QuizUI = {
         window.closeQuiz = QuizUI.closeQuiz;
     },
 
-    startQuiz: (quizData) => {
+    startQuiz: (quizData, lectureId) => {
         if (!quizData || quizData.length === 0) {
             console.error("No quiz data provided");
             return;
         }
 
-        // Shuffle and pick 10 (or less if not enough)
-        const shuffled = [...quizData].sort(() => 0.5 - Math.random());
-        const selectedQuestions = shuffled.slice(0, 10);
+        // Determine First Run vs Random
+        // Default to random if no ID provided (safety)
+        let selectedQuestions;
+        if (lectureId) {
+            const isCompleted = localStorage.getItem('quiz_completed_' + lectureId);
+            if (!isCompleted) {
+                // First time: Standard 10 questions (first 10)
+                selectedQuestions = quizData.slice(0, 10);
+            } else {
+                // Subsequent times: Random 10
+                const shuffled = [...quizData].sort(() => 0.5 - Math.random());
+                selectedQuestions = shuffled.slice(0, 10);
+            }
+        } else {
+            // Fallback for logic without IDs
+            const shuffled = [...quizData].sort(() => 0.5 - Math.random());
+            selectedQuestions = shuffled.slice(0, 10);
+        }
 
+        QuizUI.state.currentLectureId = lectureId;
         QuizUI.state.currentQuizData = selectedQuestions;
         QuizUI.state.currentQuestionIndex = 0;
         QuizUI.state.currentScore = 0;
@@ -247,6 +264,11 @@ export const QuizUI = {
 
         let message = '';
         let showReward = false;
+
+        // Mark this quiz ID as completed (attempted) so next time it randomizes
+        if (QuizUI.state.currentLectureId) {
+            localStorage.setItem('quiz_completed_' + QuizUI.state.currentLectureId, 'true');
+        }
 
         if (percentage === 100) {
             message = 'Gratulacje! Perfekcyjny wynik!';
