@@ -289,18 +289,7 @@ export const QuizUI = {
 
         // ALWAYS Reset innerHTML to ensure no "ghost" text or old elements remain
         els.quizResultScreen.innerHTML = `
-            <div class="result-content-wrapper" style="
-                text-align: center; 
-                display: flex; 
-                flex-direction: column; 
-                align-items: center; 
-                justify-content: center; 
-                height: auto; 
-                width: 100%;
-                padding: 20px; 
-                box-sizing: border-box;
-                overflow-x: hidden; 
-            ">
+            <div class="result-content-wrapper">
                 <div class="quiz-status-header" style="margin-bottom: 15px;">
                     <div class="quiz-score-circle" style="
                         width: 70px; 
@@ -321,15 +310,7 @@ export const QuizUI = {
                 
                 ${rewardHtml}
                 
-                <div class="result-buttons" style="
-                    display: flex; 
-                    flex-direction: column; 
-                    gap: 10px; 
-                    justify-content: center; 
-                    margin-top: 10px; 
-                    width: 100%; 
-                    max-width: 260px;
-                ">
+                <div class="result-buttons">
                     <button class="retry-button" onclick="restartQuiz()" style="
                         padding: 10px 20px; 
                         font-size: 0.95em; 

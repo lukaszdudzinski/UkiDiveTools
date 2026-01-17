@@ -1,4 +1,4 @@
-const CACHE_NAME = 'uki-dive-tools-v2026-1-17-03'; // Mobile Hover Fix
+const CACHE_NAME = 'uki-dive-tools-v2026-1-17-04'; // Quiz Align
 // Core assets that MUST be cached immediately
 const CORE_ASSETS = [
     './',
