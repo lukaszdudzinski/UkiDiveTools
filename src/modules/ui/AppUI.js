@@ -72,7 +72,8 @@ export const AppUI = {
             }
         } catch (e) { console.error("SOS Init Error", e); }
 
-        // 2. Donation Button
+        // 2. Donation Button - DEPRECATED (Now direct link in HTML)
+        /*
         try {
             const donationLink = document.getElementById('donation-link');
             if (donationLink) {
@@ -83,6 +84,7 @@ export const AppUI = {
                 });
             }
         } catch (e) { console.error("Donation Init Error", e); }
+        */
 
         // 3. PRO Unlock - Direct Listener Attachment
         try {

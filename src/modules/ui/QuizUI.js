@@ -87,6 +87,11 @@ export const QuizUI = {
         const { currentQuestionIndex, currentQuizData } = QuizUI.state;
         const els = QuizUI.state.elementCACHE;
 
+        // FIX: Remove focus from previous element to prevent "sticky" hover/focus states on mobile
+        if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+        }
+
         if (currentQuestionIndex < currentQuizData.length) {
             const questionData = currentQuizData[currentQuestionIndex];
 

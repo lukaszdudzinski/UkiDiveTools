@@ -1,4 +1,4 @@
-const CACHE_NAME = 'uki-dive-tools-v2026-1-16-03'; // Hotfix sync
+const CACHE_NAME = 'uki-dive-tools-v2026-1-17-01'; // BuyMeCoffee + QuizFix
 // Core assets that MUST be cached immediately
 const CORE_ASSETS = [
     './',
