@@ -4024,6 +4024,8 @@ body.glass-off:not(.dark-theme) .rb-info-section .result-value-main {
   flex-direction: column;
   gap: 10px;
   justify-content: center;
+  align-items: center;
+  /* FIX: Ensure buttons are perfectly centered */
   margin-top: 15px;
   width: 100%;
   max-width: 260px;
