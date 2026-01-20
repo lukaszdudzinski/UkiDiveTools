@@ -1,0 +1,56 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - button "Otwórz menu" [ref=e5] [cursor=pointer]
+    - img "Logo" [ref=e9]
+    - heading "Uki's Dive Tools" [level=2] [ref=e10]
+  - navigation [ref=e11]:
+    - generic "Powrót do ekranu startowego" [ref=e12] [cursor=pointer]:
+      - img "Logo" [ref=e13]
+    - generic [ref=e14]:
+      - generic [ref=e15]:
+        - checkbox "Tryb Ciemny"
+      - generic [ref=e17]: Tryb Ciemny
+    - list [ref=e18]:
+      - listitem [ref=e19]:
+        - link "Strefa PRO" [ref=e20]:
+          - /url: "#"
+      - listitem [ref=e21]:
+        - link "Kalkulator SAC" [ref=e22]:
+          - /url: "#"
+      - listitem [ref=e23]:
+        - link "Kalkulator Nitrox" [ref=e24]:
+          - /url: "#"
+      - listitem [ref=e25]:
+        - link "Planowanie Gazu (Basic)" [ref=e26]:
+          - /url: "#"
+      - listitem [ref=e27]:
+        - link "Kalkulator Balastu" [ref=e28]:
+          - /url: "#"
+      - listitem [ref=e29]:
+        - link "Narzędzia Divemastera" [ref=e30]:
+          - /url: "#"
+      - listitem [ref=e31]:
+        - link "Wiedza Nurkowa" [ref=e32]:
+          - /url: "#"
+      - listitem [ref=e33]:
+        - link "Ustawienia" [ref=e34]:
+          - /url: "#"
+    - generic [ref=e35]:
+      - link "☕ Podoba Ci się to narzędzie? Postaw mi kawę!" [ref=e37]:
+        - /url: https://buymeacoffee.com/ukidives
+        - text: ☕ Podoba Ci się to narzędzie?
+        - strong [ref=e38]: Postaw mi kawę!
+      - link "🚨 WYPADEK? SOS / KOMORA" [ref=e40]:
+        - /url: "#"
+        - text: 🚨 WYPADEK?
+        - strong [ref=e41]: SOS / KOMORA
+      - generic [ref=e42]: Uki's Dive Tools v2026.1.17.05
+  - main [ref=e43]:
+    - generic [ref=e46]:
+      - img "Logo" [ref=e47]
+      - heading "Uki's Dive Tools" [level=2] [ref=e48]
+      - paragraph [ref=e49]: Wybierz kalkulator lub narzędzie z menu po lewej.
+```

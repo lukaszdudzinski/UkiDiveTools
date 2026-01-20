@@ -1,0 +1,89 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - button "Otwórz menu" [ref=e5] [cursor=pointer]
+      - img "Logo" [ref=e9]
+      - heading "Uki's Dive Tools" [level=2] [ref=e10]
+    - navigation [ref=e11]:
+      - generic "Powrót do ekranu startowego" [ref=e12] [cursor=pointer]:
+        - img "Logo" [ref=e13]
+      - generic [ref=e14]:
+        - generic [ref=e15]:
+          - checkbox "Tryb Ciemny" [checked]
+        - generic [ref=e17]: Tryb Ciemny
+      - list [ref=e18]:
+        - listitem [ref=e19]:
+          - link "Strefa PRO" [ref=e20] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e21]:
+          - link "Kalkulator SAC" [ref=e22] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e23]:
+          - link "Kalkulator Nitrox" [ref=e24] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e25]:
+          - link "Planowanie Gazu (Basic)" [ref=e26] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e27]:
+          - link "Kalkulator Balastu" [ref=e28] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e29]:
+          - link "Narzędzia Divemastera" [ref=e30] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e31]:
+          - link "Wiedza Nurkowa" [ref=e32] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e33]:
+          - link "Ustawienia" [ref=e34] [cursor=pointer]:
+            - /url: "#"
+      - generic [ref=e35]:
+        - link "☕ Podoba Ci się to narzędzie? Postaw mi kawę!" [ref=e37] [cursor=pointer]:
+          - /url: https://buymeacoffee.com/ukidives
+          - text: ☕ Podoba Ci się to narzędzie?
+          - strong [ref=e38]: Postaw mi kawę!
+        - link "🚨 WYPADEK? SOS / KOMORA" [active] [ref=e40] [cursor=pointer]:
+          - /url: "#"
+          - text: 🚨 WYPADEK?
+          - strong [ref=e41]: SOS / KOMORA
+        - generic [ref=e42]: Uki's Dive Tools v2026.1.17.05
+    - main [ref=e43]:
+      - generic [ref=e46]:
+        - img "Logo" [ref=e47]
+        - heading "Uki's Dive Tools" [level=2] [ref=e48]
+        - paragraph [ref=e49]: Wybierz kalkulator lub narzędzie z menu po lewej.
+  - generic [ref=e51]:
+    - button "×" [ref=e52] [cursor=pointer]
+    - generic [ref=e54]:
+      - heading "🚨 PROCEDURA AWARYJNA 🚨" [level=2] [ref=e55]
+      - generic [ref=e56]:
+        - heading "1. OCENA SYTUACJI" [level=3] [ref=e57]
+        - list [ref=e58]:
+          - listitem [ref=e59]: Zatrzymaj nurkowanie / Wyjdź z wody.
+          - listitem [ref=e60]: Podaj tlen 100% (jeśli dostępny) przy podejrzeniu DCS.
+          - listitem [ref=e61]: Nie podawaj wody nieprzytomnemu.
+      - generic [ref=e62]:
+        - heading "2. NUMERY ALARMOWE" [level=3] [ref=e63]
+        - generic [ref=e64]:
+          - paragraph [ref=e65]:
+            - strong [ref=e66]: "Europejski Numer Alarmowy:"
+            - link "112" [ref=e67] [cursor=pointer]:
+              - /url: tel:112
+          - paragraph [ref=e68]:
+            - strong [ref=e69]: "DAN International:"
+            - link "+39 06 4211 5685" [ref=e70] [cursor=pointer]:
+              - /url: tel:+390642115685
+          - paragraph [ref=e71]:
+            - strong [ref=e72]: "Krajowy Ośrodek Medycyny Hiperbarycznej (Gdynia):"
+            - link "+48 58 622 51 63" [ref=e73] [cursor=pointer]:
+              - /url: tel:+48586225163
+      - generic [ref=e74]:
+        - heading "3. PRZYGOTUJ DANE DLA RATOWNIKÓW" [level=3] [ref=e75]
+        - list [ref=e76]:
+          - listitem [ref=e77]: Profil nurkowania (Głębokość, Czas, Gazy).
+          - listitem [ref=e78]: Objawy i czas ich wystąpienia.
+          - listitem [ref=e79]: Komputer nurkowy poszkodowanego (ZABIERZ GO ze sobą dla lekarzy!).
+      - paragraph [ref=e81]: Zachowaj spokój. Twoje działanie może uratować życie.
+```

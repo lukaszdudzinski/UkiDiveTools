@@ -1,0 +1,88 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - button "Otwórz menu" [ref=e4] [cursor=pointer]
+      - img "Logo" [ref=e8]
+      - heading "Uki's Dive Tools" [level=2] [ref=e9]
+    - navigation [ref=e10]:
+      - generic "Powrót do ekranu startowego" [ref=e11] [cursor=pointer]:
+        - img "Logo" [ref=e12]
+      - generic [ref=e13]:
+        - generic [ref=e14]:
+          - checkbox "Tryb Ciemny" [checked]
+        - generic [ref=e16]: Tryb Ciemny
+      - list [ref=e17]:
+        - listitem [ref=e18]:
+          - link "Strefa PRO" [ref=e19] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e20]:
+          - link "Kalkulator SAC" [ref=e21] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e22]:
+          - link "Kalkulator Nitrox" [ref=e23] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e24]:
+          - link "Planowanie Gazu (Basic)" [ref=e25] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e26]:
+          - link "Kalkulator Balastu" [ref=e27] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e28]:
+          - link "Narzędzia Divemastera" [ref=e29] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e30]:
+          - link "Wiedza Nurkowa" [ref=e31] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e32]:
+          - link "Ustawienia" [ref=e33] [cursor=pointer]:
+            - /url: "#"
+      - generic [ref=e34]:
+        - link "☕ Podoba Ci się to narzędzie? Postaw mi kawę!" [ref=e36] [cursor=pointer]:
+          - /url: https://buymeacoffee.com/ukidives
+          - text: ☕ Podoba Ci się to narzędzie?
+          - strong [ref=e37]: Postaw mi kawę!
+        - link "🚨 WYPADEK? SOS / KOMORA" [ref=e39] [cursor=pointer]:
+          - /url: "#"
+          - text: 🚨 WYPADEK?
+          - strong [ref=e40]: SOS / KOMORA
+        - generic [ref=e41]: Uki's Dive Tools v2026.1.17.05
+    - main [ref=e42]:
+      - generic [ref=e44]:
+        - heading "Ustawienia" [level=3] [ref=e45]
+        - generic [ref=e46]:
+          - generic [ref=e47]: Efekt Szklany (Liquid Glass)
+          - generic [ref=e48]:
+            - checkbox "Efekt Szklany (Liquid Glass)" [checked]
+        - generic [ref=e50]:
+          - generic [ref=e51]: Domyślny Rodzaj Wody
+          - combobox "Domyślny Rodzaj Wody" [ref=e52]:
+            - option "Woda słodka" [selected]
+            - option "Woda słona"
+        - heading "Zmień Tapetę" [level=4] [ref=e53]
+        - generic [ref=e54]:
+          - img [ref=e55] [cursor=pointer]
+          - img [ref=e56] [cursor=pointer]
+          - img [ref=e57] [cursor=pointer]
+          - img [ref=e58] [cursor=pointer]
+        - generic [ref=e59]:
+          - generic [ref=e60]: Zapisany SAC
+          - generic [ref=e61]:
+            - generic [ref=e62]: Brak
+            - button "×" [ref=e63] [cursor=pointer]
+        - generic [ref=e64]:
+          - generic [ref=e65]:
+            - text: Status Strefy PRO
+            - generic [ref=e66]: i
+          - generic [ref=e68]: Zablokowany
+        - generic [ref=e69]:
+          - generic [ref=e70]: Wersja Aplikacji
+          - generic [ref=e71]: v2026.1.17.05
+  - generic [ref=e73]:
+    - button "×" [ref=e74] [cursor=pointer]
+    - paragraph [ref=e77]:
+      - text: Strefa PRO nie jest aktywna.
+      - text: Postaw kawę, aby odblokować.
+```
