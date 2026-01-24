@@ -1,83 +1,99 @@
 import { BallastCalculator } from '../../calculators/BallastCalculator.js';
+import { AppUI } from '../AppUI.js';
 
 export function initBallastUI() {
-    initBallastForm();
-}
+    const form = document.getElementById('ballastForm');
+    const weightInput = document.getElementById('ballastWeight');
+    const bodyTypeSelect = document.getElementById('ballastBodyType');
+    const suitSelect = document.getElementById('ballastSuit');
+    const vestSelect = document.getElementById('ballastVest');
+    const warmerSelect = document.getElementById('ballastWarmer');
+    const tankSelect = document.getElementById('ballastTank');
+    const plateSelect = document.getElementById('ballastPlate');
+    const waterSelect = document.getElementById('ballastWater');
+    const resultContainer = document.getElementById('ballastResult');
 
-function initBallastForm() {
-    const ballastForm = document.getElementById('ballastForm');
-    const ballastResultContainer = document.getElementById('ballastResult');
-    const ballastSuitSelect = document.getElementById('ballastSuit');
-    const ballastWarmerGroup = document.getElementById('ballast-warmer-group');
-    const ballastTankSelect = document.getElementById('ballastTank');
-    const ballastPlateGroup = document.getElementById('ballast-plate-group');
+    const warmerGroup = document.getElementById('ballast-warmer-group');
+    const plateGroup = document.getElementById('ballast-plate-group');
 
-    function updateBallastDependents() {
-        if (!ballastSuitSelect || !ballastTankSelect) return;
-        const suit = ballastSuitSelect.value;
-        const tank = ballastTankSelect.value;
+    if (!form) return;
 
-        if (suit === 'dryTri' || suit === 'dryNeo' || suit === 'dryCrash') {
-            if (ballastWarmerGroup) ballastWarmerGroup.style.display = 'block';
+    // Dynamic Field Visibility
+    function updateVisibility() {
+        const suit = suitSelect.value;
+        const tank = tankSelect.value;
+
+        // Warmer only for dry suits
+        if (suit.startsWith('dry')) {
+            warmerGroup.style.display = 'flex';
         } else {
-            if (ballastWarmerGroup) ballastWarmerGroup.style.display = 'none';
+            warmerGroup.style.display = 'none';
         }
 
-        if (tank.includes('twin')) {
-            if (ballastPlateGroup) ballastPlateGroup.style.display = 'block';
+        // Plate usually for twinsets or wing config (implied by twin)
+        // For simplicity, let's show for twins
+        if (tank.startsWith('twin')) {
+            plateGroup.style.display = 'flex';
         } else {
-            if (ballastPlateGroup) ballastPlateGroup.style.display = 'none';
+            plateGroup.style.display = 'none';
         }
     }
 
-    if (ballastSuitSelect) {
-        ballastSuitSelect.addEventListener('change', updateBallastDependents);
-        if (ballastTankSelect) ballastTankSelect.addEventListener('change', updateBallastDependents);
-        updateBallastDependents();
-    }
+    suitSelect.addEventListener('change', updateVisibility);
+    tankSelect.addEventListener('change', updateVisibility);
+    updateVisibility(); // Init
 
-    if (ballastForm && ballastResultContainer) {
-        ballastForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            try {
-                const weight = parseFloat(document.getElementById('ballastWeight').value);
-                const suitType = document.getElementById('ballastSuit').value;
-                const tankType = document.getElementById('ballastTank').value;
-                const waterType = document.getElementById('ballastWater').value;
-                const bodyType = document.getElementById('ballastBodyType').value;
-                const warmerType = document.getElementById('ballastWarmer') ? document.getElementById('ballastWarmer').value : null;
-                const plateType = document.getElementById('ballastPlate') ? document.getElementById('ballastPlate').value : null;
-                const vestType = document.getElementById('ballastVest') ? document.getElementById('ballastVest').value : 'none';
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        try {
+            const weight = parseFloat(weightInput.value);
+            const suit = suitSelect.value;
+            const tank = tankSelect.value;
+            const body = bodyTypeSelect.value;
+            const water = waterSelect.value;
+            const warmer = warmerSelect.value;
+            const plate = plateSelect.value;
+            const vest = vestSelect.value;
 
-                const result = BallastCalculator.calculateBallast(weight, suitType, tankType, bodyType, waterType, warmerType, plateType, vestType);
+            // Call Calculator with correct positional arguments
+            // calculateBallast: (weight, suitType, tankType, bodyType, waterType, warmerType, plateType, vestType)
+            const result = BallastCalculator.calculateBallast(
+                weight, suit, tank, body, water, warmer, plate, vest
+            );
 
-                const explanationHTML = `
+            resultContainer.innerHTML = `
+                <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
+                <div class="calculation-details" style="display: none;">
                     <div class="formula-box-small">
-                        <h5>Składowe Balastu</h5>
-                        <ul>
-                            <li>Baza (ok. 10% wagi): <strong>${result.baseBallast.toFixed(1)} kg</strong></li>
-                            <li>${result.suitName}: <strong>+${result.suitMod} kg</strong></li>
-                            <li>Woda (${result.waterMod > 0 ? 'Słona' : 'Słodka'}): <strong>+${result.waterMod} kg</strong></li>
-                            <li>Butla (${result.tankName}): <strong>${result.tankMod > 0 ? '+' : ''}${result.tankMod} kg</strong></li>
-                        </ul>
-                    </div>`;
-
-                ballastResultContainer.innerHTML = `
-                    <div class="result-info-icon tooltip-trigger" data-tooltip-type="calculation" data-pro-feature="false">i</div>
-                    <div class="calculation-details" style="display: none;">${explanationHTML}</div>
-                    <div class="result-section">
-                        <p class="result-label">Szacowany Balast</p>
-                        <p class="result-value-main">~${result.totalBallast}<span class="unit">kg</span></p>
-                        <p class="result-sub-value" style="font-size: 0.9em; color: #aaa;">(Zakres: ${result.minBallast} - ${result.maxBallast} kg)</p>
+                        <p>Baza (Ciało): ${result.baseBallast.toFixed(1)} kg</p>
+                        <p>Skafander: ${result.suitMod.toFixed(1)} kg</p>
+                        <p>Sprzęt (Butla/Płyta): ${result.tankMod.toFixed(1)} kg</p>
+                        <p>Woda: ${result.waterMod.toFixed(1)} kg</p>
                     </div>
-                    <div class="result-disclaimer" style="text-align: center; font-size: 0.8em; margin-top: 5px;">
-                        <span style="color: #ff3860; font-weight: bold;">Wymagane sprawdzenie w wodzie!</span>
-                    </div>`;
+                </div>
+                <div class="result-container-header"><h4>Sugerowany Balast</h4></div>
+                <div class="result-section">
+                    <p class="result-label">Całkowita waga ołowiu:</p>
+                    <p class="result-value-main">${result.totalBallast.toFixed(1)} <span class="unit">kg</span></p>
+                </div>
+                <div class="result-section" style="margin-top: 15px;">
+                    <p class="result-label" style="font-size: 0.9em; color: #b0b0b0;">Sugerowany balast do zabrania:</p>
+                    <p class="result-value-sub" style="font-size: 1.1em; color: #e0e0e0; margin-top: 5px;">
+                        ~ ${result.minBallast} - ${result.maxBallast} kg
+                    </p>
+                </div>
+                <div class="result-section" style="margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                    <p style="font-size: 0.9em; color: #ffd700;">⚠️ Wynik orientacyjny. Wykonaj wyważenie w wodzie!</p>
+                </div>
+            `;
+            resultContainer.style.display = 'block';
 
-                ballastResultContainer.style.display = 'block';
-                ballastResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-            } catch (error) { console.error(error); }
-        });
-    }
+            // Use global scroller
+            if (AppUI && AppUI.scrollToResult) {
+                AppUI.scrollToResult(resultContainer);
+            }
+        } catch (error) { console.error(error); }
+    });
 }
+
+

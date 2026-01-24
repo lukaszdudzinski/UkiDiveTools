@@ -33,14 +33,14 @@ test.describe('UI Components & Settings', () => {
         const body = page.locator('body');
         await expect(body).not.toHaveClass(/light-mode/);
 
-        // Toggle ON
+        // Toggle ON (Light Mode)
         const slider = toggleLabel.locator('.slider');
         await slider.click();
-        await expect(body).toHaveClass(/light-mode/);
+        await expect(body).not.toHaveClass(/dark-theme/);
 
-        // Toggle OFF
+        // Toggle OFF (Dark Mode)
         await slider.click();
-        await expect(body).not.toHaveClass(/light-mode/);
+        await expect(body).toHaveClass(/dark-theme/);
     });
 
     test('Settings: Liquid Glass Toggle', async ({ page, isMobile }) => {
@@ -126,7 +126,7 @@ test.describe('UI Components & Settings', () => {
         // Or Settings -> PRO Status has tooltip
         await navigateTo(page, isMobile, 'Ustawienia', 'settings-panel');
 
-        const infoIcon = page.locator('.settings-info-row .tooltip-trigger').first();
+        const infoIcon = page.locator('#settings-panel .tooltip-trigger').first();
         await expect(infoIcon).toBeVisible();
 
         // Click to open modal

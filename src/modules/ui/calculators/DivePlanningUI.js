@@ -1,4 +1,5 @@
 import { DivePlanningCalculator } from '../../calculators/DivePlanningCalculator.js';
+import { AppUI } from '../AppUI.js';
 
 export function initDivePlanningUI() {
     try { initSacUI(); } catch (e) { console.error("SAC UI Init Error", e); }
@@ -84,13 +85,14 @@ function initSacUI() {
                         <p class="result-value-main">${sac.toFixed(1)}<span class="unit">l/min</span></p>
                     </div>
                     <div style="text-align: center; margin-top: 10px;">
-                        <button type="button" onclick="saveCalculatedSac()" style="width: 100%; margin-top: 10px; background-color: #00d1b2; color: #1e1e1e; font-weight: bold; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer;">Zapisz wynik</button>
+                        <button type="button" onclick="saveCalculatedSac()" class="action-button">Zapisz wynik</button>
                     </div>
                      <p class="result-disclaimer" style="text-align: center; color: #bbb; font-size: 0.8em; margin-top: 5px;">
                         Obliczony SAC: ${sac.toFixed(1)} l/min
                     </p>`;
                 resultDiv.style.display = 'block';
-                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                resultDiv.style.display = 'block';
+                if (AppUI && AppUI.scrollToResult) AppUI.scrollToResult(resultDiv);
             } catch (error) { console.error(error); }
         });
     }
@@ -255,7 +257,8 @@ function initRockBottomUI() {
                     </div>
                     <p class="result-disclaimer" style="text-align: center; color: #ff3860; font-size: 0.8em; margin-top: 5px;">Żelazne minimum do rozpoczęcia wynurzania!</p>`;
                 rbResultContainer.style.display = 'block';
-                rbResultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                rbResultContainer.style.display = 'block';
+                if (AppUI && AppUI.scrollToResult) AppUI.scrollToResult(rbResultContainer);
 
             } catch (error) { console.error(error); }
         });
@@ -315,7 +318,8 @@ function initBailoutUI() {
                         <p class="result-value-main" style="color: #ff3860 !important;">${Math.ceil(requiredBar)}<span class="unit">bar</span></p>
                     </div>`;
                 bailoutResult.style.display = 'block';
-                bailoutResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                bailoutResult.style.display = 'block';
+                if (AppUI && AppUI.scrollToResult) AppUI.scrollToResult(bailoutResult);
 
             } catch (error) { console.error(error); }
         });
@@ -323,43 +327,66 @@ function initBailoutUI() {
 }
 
 function initProGasUI() {
+    console.log("Initializing ProGas UI...");
     const proForm = document.getElementById('proGasForm');
     const proResult = document.getElementById('proGasResult');
+
     if (proForm && proResult) {
+        // Clone to ensure clean event listeners
         const newForm = proForm.cloneNode(true);
         proForm.parentNode.replaceChild(newForm, proForm);
 
         newForm.addEventListener('submit', function (e) {
             e.preventDefault();
+            console.log("ProGas Form Submitted");
             try {
+                // Helper to safely get float value
+                const getVal = (id) => {
+                    const el = document.getElementById(id);
+                    if (!el) {
+                        console.error(`Missing element: ${id}`);
+                        throw new Error(`Brak pola: ${id}`);
+                    }
+                    const val = parseFloat(el.value);
+                    if (isNaN(val)) {
+                        console.error(`Invalid value for: ${id}`);
+                        throw new Error(`Nieprawidłowa wartość w polu: ${id}`);
+                    }
+                    return val;
+                };
+
                 // Collect Inputs
-                const sac = parseFloat(document.getElementById('gcSAC_pro').value);
-                const depth = parseFloat(document.getElementById('gcDepth_pro').value);
-                const bottomTime = parseFloat(document.getElementById('gcBottomTime_pro').value);
-                const descentRate = parseFloat(document.getElementById('gcDescentRate_pro').value);
-                const ascentRate = parseFloat(document.getElementById('gcAscentRate_pro').value);
-                const stopDepth = parseFloat(document.getElementById('gcStopDepth_pro').value);
-                const stopTime = parseFloat(document.getElementById('gcStopTime_pro').value);
-                const tankSize = parseFloat(document.getElementById('gcTankSize_pro').value);
-                const startPressure = parseFloat(document.getElementById('gcStartPressure_pro').value);
+                const sac = getVal('gcSAC_pro');
+                const depth = getVal('gcDepth_pro');
+                const bottomTime = getVal('gcBottomTime_pro');
+                const descentRate = getVal('gcDescentRate_pro');
+                const ascentRate = getVal('gcAscentRate_pro');
+                const stopDepth = getVal('gcStopDepth_pro');
+                const stopTime = getVal('gcStopTime_pro');
+                const tankSize = getVal('gcTankSize_pro');
+                const startPressure = getVal('gcStartPressure_pro');
 
                 // RB Stuff
-                const stressFactor = parseFloat(document.getElementById('rbStressFactor_pro').value);
-                const divers = parseFloat(document.getElementById('rbDivers_pro').value);
-                const emergencyTime = parseFloat(document.getElementById('rbEmergencyTime_pro').value);
-                const safetyMargin = parseFloat(document.getElementById('rbSafetyMargin_pro').value);
+                const stressFactor = getVal('rbStressFactor_pro');
+                const divers = getVal('rbDivers_pro');
+                const emergencyTime = getVal('rbEmergencyTime_pro');
+                const safetyMargin = getVal('rbSafetyMargin_pro');
+
+                console.log("ProGas Inputs Collected", { sac, depth, bottomTime });
 
                 // 1. Calculate Consumption
                 const consParams = {
                     sac, depth, bottomTime, descentRate, ascentRate, stopDepth, stopTime, tankSize, startPressure
                 };
                 const consResult = DivePlanningCalculator.calculateGasConsumption(consParams);
+                console.log("Consumption Calculated", consResult);
 
                 // 2. Calculate RB
                 const rbParams = {
                     sac, depth, stopDepth, ascentRate, stressFactor, divers, emergencyTime, volume: tankSize, safetyMargin
                 };
                 const rbResult = DivePlanningCalculator.calculateRockBottom(rbParams);
+                console.log("RB Calculated", rbResult);
 
                 // --- Educational Breakdown (Combined) ---
                 const pSurf = 1.0;
@@ -406,7 +433,7 @@ function initProGasUI() {
                         <p style="font-size: 0.8em; margin-bottom: 2px;">Dla ${divers} nurków, SAC Stres = ${rb_details.SAC_stressed.toFixed(1)} l/min</p>
                         <ul style="font-size: 0.85em;">
                             <li><strong>Reakcja (${emergencyTime} min):</strong> ${rb_details.Gas_reaction.toFixed(0)} l</li>
-                            <li><strong>Powrót (${rb_details.AscentTime.toFixed(1)} min):</strong> ${rb_details.Gas_ascent.toFixed(0)} l</li>
+                            <li><strong>Powrót (${rb_details.T_ascent.toFixed(1)} min):</strong> ${rb_details.Gas_ascent.toFixed(0)} l</li>
                             <li><strong>Całkowity RB:</strong> ${rb_details.TotalGasLiters.toFixed(0)} l (${rbResult.roundedBars} bar)</li>
                         </ul>
                         <div style="margin-top: 5px; border-top: 1px solid #444; padding-top: 5px; color: #00d1b2;">
@@ -426,8 +453,19 @@ function initProGasUI() {
                 rbLabel.innerHTML = `<p class="result-label">Wymagany Rock Bottom:</p><p class="result-value-main" style="color: #ff3860;">${rbResult.roundedBars}<span class="unit">bar</span></p>`;
                 proResult.appendChild(rbLabel);
 
-            } catch (error) { console.error(error); }
+                // Explicitly scroll to result
+                console.log("Scrolling to result...");
+                console.log("Scrolling to result...");
+                if (AppUI && AppUI.scrollToResult) AppUI.scrollToResult(proResult);
+
+            } catch (error) {
+                console.error("ProGas Calculation Error:", error);
+                proResult.innerHTML = `<div class="result-error" style="color: #ff3860; padding: 10px; border: 1px solid #ff3860;">Błąd obliczeń: ${error.message}</div>`;
+                proResult.style.display = 'block';
+            }
         });
+    } else {
+        console.warn("ProGas UI elements not found (probably not loaded in DOM yet).");
     }
 }
 
@@ -470,12 +508,11 @@ function autoLoadSavedSac() {
     const gcSAC = document.getElementById('gcSAC');
     if (gcSAC) gcSAC.value = savedSac;
 
-    // Pro Inputs might be named differently, need to check IDs or update future code
-    // Assuming proSAC for now, if not found, it's fine.
     const proSAC = document.getElementById('gcSAC_pro');
     if (proSAC) proSAC.value = savedSac;
 
-    // Also Rock Bottom SAC?
     const rbSAC = document.getElementById('rbSAC');
     if (rbSAC) rbSAC.value = savedSac;
 }
+
+

@@ -1,4 +1,5 @@
 import { NitroxCalculator } from '../../calculators/NitroxCalculator.js';
+import { AppUI } from '../AppUI.js';
 
 export function initNitroxUI() {
     initModUI();
@@ -66,7 +67,8 @@ function initModUI() {
                         <p class="result-value-main">${mod.toFixed(1)}<span class="unit">m</span></p>
                     </div>`;
                 modResult.style.display = 'block';
-                modResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                modResult.style.display = 'block';
+                if (AppUI && AppUI.scrollToResult) AppUI.scrollToResult(modResult);
             } catch (error) { console.error(error); }
         });
     }
@@ -115,7 +117,8 @@ function initEadUI() {
                      `;
                     eadResult.innerHTML = warningHTML;
                     eadResult.style.display = 'block';
-                    eadResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    eadResult.style.display = 'block';
+                    if (AppUI && AppUI.scrollToResult) AppUI.scrollToResult(eadResult);
                     return;
                 }
 
@@ -133,7 +136,8 @@ function initEadUI() {
                         <p class="result-value-main">${ead.toFixed(1)}<span class="unit">m</span></p>
                     </div>`;
                 eadResult.style.display = 'block';
-                eadResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                eadResult.style.display = 'block';
+                if (window.AppUI && AppUI.scrollToResult) AppUI.scrollToResult(eadResult);
             } catch (error) { console.error(error); }
         });
     }
@@ -168,7 +172,8 @@ function initBestMixUI() {
                         <p class="result-value-main">EAN${bestMixPercent}</p>
                     </div>`;
                 bestMixResult.style.display = 'block';
-                bestMixResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                bestMixResult.style.display = 'block';
+                if (AppUI && AppUI.scrollToResult) AppUI.scrollToResult(bestMixResult);
             } catch (error) { console.error(error); }
         });
     }
@@ -222,7 +227,8 @@ function initCnsUI() {
                      `;
                     cnsResult.innerHTML = warningHTML;
                     cnsResult.style.display = 'block';
-                    cnsResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    cnsResult.style.display = 'block';
+                    if (AppUI && AppUI.scrollToResult) AppUI.scrollToResult(cnsResult);
                     return;
                 }
 
@@ -236,8 +242,11 @@ function initCnsUI() {
                         <p class="result-value-main">${result.totalCns.toFixed(1)}<span class="unit">%</span></p>
                     </div>`;
                 cnsResult.style.display = 'block';
-                cnsResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                cnsResult.style.display = 'block';
+                if (window.AppUI && AppUI.scrollToResult) AppUI.scrollToResult(cnsResult);
             } catch (error) { console.error(error); }
         });
     }
 }
+
+

@@ -1,0 +1,87 @@
+/* ============================================================
+   WYKŁADY / LECTURES - GRID + VIEWER
+   ============================================================ */
+.lectures-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.lectures-grid-wrapper[hidden],
+.lecture-viewer[hidden] {
+    display: none;
+}
+
+.lecture-viewer {
+    background-color: rgba(10, 10, 10, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 300px;
+}
+
+.lecture-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.lecture-controls button {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #eaeaea;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.lecture-title {
+    color: #ffffff;
+    margin: 0;
+    font-size: 1.25em;
+}
+
+.lecture-body {
+    color: #e6e6e6;
+    line-height: 1.6;
+}
+
+.lecture-toc {
+    border-left: 1px solid rgba(255, 255, 255, 0.04);
+    padding-left: 12px;
+    margin-left: 10px;
+    color: #bdbdbd;
+    max-height: 380px;
+    overflow: auto;
+}
+
+/* When viewer replaces the list, make sure layout is comfortable */
+.lectures-wrapper.replace-mode {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 18px;
+    align-items: start;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .lectures-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .lectures-wrapper.replace-mode {
+        grid-template-columns: 1fr;
+    }
+
+    .lecture-viewer {
+        padding: 14px;
+    }
+}

@@ -1,0 +1,274 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3] [cursor=pointer]:
+      - button "Otwórz menu" [ref=e4]
+      - img "Logo" [ref=e8]
+      - heading "Uki's Dive Tools" [level=2] [ref=e9]
+    - navigation [ref=e10]:
+      - generic "Powrót do ekranu startowego" [ref=e11] [cursor=pointer]:
+        - img "Logo" [ref=e12]
+        - heading "Uki's Dive Tools" [level=1] [ref=e13]
+      - generic [ref=e14]:
+        - generic [ref=e15]:
+          - checkbox "Tryb Ciemny" [checked]
+        - generic [ref=e17]: Tryb Ciemny
+      - list [ref=e18]:
+        - listitem [ref=e19]:
+          - link "Strefa PRO" [ref=e20]:
+            - /url: "#"
+        - listitem [ref=e21]:
+          - link "Kalkulator SAC" [ref=e22]:
+            - /url: "#"
+        - listitem [ref=e23]:
+          - link "Kalkulator Nitrox" [ref=e24]:
+            - /url: "#"
+        - listitem [ref=e25]:
+          - link "Planowanie Gazu (Basic)" [ref=e26]:
+            - /url: "#"
+        - listitem [ref=e27]:
+          - link "Kalkulator Balastu" [ref=e28]:
+            - /url: "#"
+        - listitem [ref=e29]:
+          - link "Narzędzia Divemastera" [ref=e30]:
+            - /url: "#"
+        - listitem [ref=e31]:
+          - link "Wiedza Nurkowa" [ref=e32]:
+            - /url: "#"
+        - listitem [ref=e33]:
+          - link "Uki's River Dive" [ref=e34]:
+            - /url: "#"
+        - listitem [ref=e35]:
+          - link "Ustawienia" [ref=e36]:
+            - /url: "#"
+      - generic [ref=e37]:
+        - link "☕ Podoba Ci się to narzędzie? Postaw mi kawę!" [ref=e39]:
+          - /url: https://buymeacoffee.com/ukidives
+          - text: ☕ Podoba Ci się to narzędzie?
+          - strong [ref=e40]: Postaw mi kawę!
+        - link "🚨 WYPADEK? SOS / KOMORA" [ref=e42]:
+          - /url: "#"
+          - text: 🚨 WYPADEK?
+          - strong [ref=e43]: SOS / KOMORA
+        - generic [ref=e44]: Uki's Dive Tools v2026.1.24.01
+    - main [ref=e45]:
+      - generic [ref=e47]:
+        - heading "Wiedza Nurkowa" [level=3] [ref=e48]
+        - navigation [ref=e49]:
+          - button "SAC" [ref=e50] [cursor=pointer]
+          - button "Nitrox" [ref=e51] [cursor=pointer]
+          - button "Gazy" [ref=e52] [cursor=pointer]
+          - button "Balast" [ref=e53] [cursor=pointer]
+          - button "Wykłady" [ref=e54] [cursor=pointer]
+        - main [ref=e58]:
+          - generic [ref=e59]:
+            - heading [level=2] [ref=e60]: Barotrauma
+            - button [ref=e62] [cursor=pointer]: Powrót
+          - navigation [ref=e63]:
+            - list [ref=e64]:
+              - listitem [ref=e65]:
+                - link [ref=e66]:
+                  - /url: "#toc-0"
+                  - text: "1. Fizyczne Podstawy Barotraumy: Prawo Boyle’a-Mariotte’a"
+              - listitem [ref=e67]:
+                - link [ref=e68]:
+                  - /url: "#toc-1"
+                  - text: 2. Rodzaje Barotraumy i Mechanizmy Uszkodzeń
+              - listitem [ref=e69]:
+                - link [ref=e70]:
+                  - /url: "#toc-2"
+                  - text: 3. Profilaktyka Barotraumy
+              - listitem [ref=e71]:
+                - link [ref=e72]:
+                  - /url: "#toc-3"
+                  - text: 4. Postępowanie w Sytuacjach Awaryjnych (Pierwsza Pomoc)
+          - article [ref=e73]:
+            - heading [level=2] [ref=e74]: "BAROTRAUMA (Uraz Ciśnieniowy): Pełny Przewodnik dla Początkujących Nurków"
+            - paragraph [ref=e75]: Barotrauma to uszkodzenie tkanek, które wynika z nadmiernej różnicy ciśnień między przestrzenią gazową w ciele a ciśnieniem otoczenia. Zrozumienie tego zjawiska jest fundamentalne, ponieważ woda nie jest naturalnym środowiskiem człowieka.
+            - heading [level=3] [ref=e76]: "1. Fizyczne Podstawy Barotraumy: Prawo Boyle’a-Mariotte’a"
+            - paragraph [ref=e77]: Wszystkie urazy ciśnieniowe są ściśle związane z Prawem Boyle’a-Mariotte’a. Prawo to opisuje zachowanie gazu w stałej temperaturze (przemiana izotermiczna).
+            - paragraph [ref=e78]:
+              - text: Prawo Boyle’a-Mariotte’a głosi, że objętość danej masy gazu (V) jest odwrotnie proporcjonalna do jego ciśnienia bezwzględnego (p) [p
+              - subscript [ref=e79]: "1"
+              - text: V
+              - subscript [ref=e80]: "1"
+              - text: = p
+              - subscript [ref=e81]: "2"
+              - text: V
+              - subscript [ref=e82]: "2"
+              - text: "]."
+            - list [ref=e83]:
+              - listitem [ref=e84]:
+                - strong [ref=e85]: "Ciśnienie Bezwzględne (Absolutne):"
+                - text: W nurkowaniu do obliczeń stosuje się ciśnienie bezwzględne (p), które jest sumą ciśnienia atmosferycznego (p
+                - subscript [ref=e86]: "0"
+                - text: ", czyli 1 bar na powierzchni) i ciśnienia hydrostatycznego (ciśnienia słupa wody)."
+              - listitem [ref=e87]:
+                - strong [ref=e88]: "Wpływ Głębokości:"
+                - text: Ciśnienie w wodzie wzrasta o około 1 bar na każde 10 metrów głębokości.
+              - listitem [ref=e89]:
+                - strong [ref=e90]: "Nieliniowa Zmiana Objętości:"
+                - text: Największa zmiana objętości gazu w stosunku do głębokości (aż o 100%) następuje w płytkiej wodzie, między 0 a 10 metrów.
+            - heading [level=4] [ref=e91]: "Fazy Powstawania Barotraumy:"
+            - list [ref=e92]:
+              - listitem [ref=e93]:
+                - strong [ref=e94]: "Podczas Zanurzania (Kompresja):"
+                - text: Wraz ze wzrostem ciśnienia zewnętrznego, objętość gazu w zamkniętych przestrzeniach ciała maleje. Jeśli ciśnienie nie jest wyrównane, powstaje siła ssąca, która uszkadza tkanki.
+              - listitem [ref=e95]:
+                - strong [ref=e96]: "Podczas Wynurzania (Rozprężanie):"
+                - text: Wraz ze spadkiem ciśnienia zewnętrznego, objętość gazu w zamkniętych lub częściowo zamkniętych przestrzeniach (np. płucach) rośnie. Jeśli uwięziony gaz nie ma ujścia, rozpręża się i wywołuje siłę napierającą/rozrywającą.
+            - separator [ref=e97]
+            - heading [level=3] [ref=e98]: 2. Rodzaje Barotraumy i Mechanizmy Uszkodzeń
+            - paragraph [ref=e99]: Barotrauma dotyczy wszystkich przestrzeni wypełnionych gazem, które są zamknięte lub mają ograniczoną drożność.
+            - heading [level=4] [ref=e100]: A. Urazy Związane głównie z Zanurzaniem (Kompresja)
+            - paragraph [ref=e101]: Te urazy wynikają z braku dodania powietrza do przestrzeni gazowych, aby zrównoważyć wzrost ciśnienia otoczenia.
+            - heading [level=5] [ref=e102]: "Uraz Ciśnieniowy Ucha Środkowego (UCU):"
+            - list [ref=e103]:
+              - listitem [ref=e104]:
+                - strong [ref=e105]: "Mechanizm:"
+                - text: Jest to najczęstszy uraz nurkowy. Ucho środkowe jest jamą gazową połączoną z gardłem trąbką Eustachiusza. Wzrastające ciśnienie odkształca błonę bębenkową do wewnątrz. Jeśli ciśnienie nie jest wyrównane, następuje bolesny efekt ssący w uchu środkowym. W skrajnych przypadkach błona bębenkowa może pęknąć.
+              - listitem [ref=e106]:
+                - strong [ref=e107]: "Objawy:"
+                - text: Narastający ucisk, przechodzący w kłujący ból. Nagłe ustąpienie kłującego bólu i dotkliwy ból spowodowany zalaniem ucha środkowego zimną i zanieczyszczoną wodą, nudności, wymioty oraz utrata orientacji w przestrzeni.
+            - heading [level=5] [ref=e108]: "Uraz Ciśnieniowy Zatok:"
+            - list [ref=e109]:
+              - listitem [ref=e110]:
+                - strong [ref=e111]: "Mechanizm:"
+                - text: Uraz następuje, gdy ujścia zatok są niedrożne (np. z powodu kataru, zapalenia zatok, polipów). Siła ssąca powoduje wysięk krwi z nabłonka do zamkniętej części zatoki.
+              - listitem [ref=e112]:
+                - strong [ref=e113]: "Objawy:"
+                - text: Uczucie pełności i silny ból w okolicy niedrożnej zatoki. Ból głowy, który może promieniować do oczodołu lub ucha.
+            - heading [level=5] [ref=e114]: "Uraz Ciśnieniowy Maski (Oczu i Twarzy):"
+            - list [ref=e115]:
+              - listitem [ref=e116]:
+                - strong [ref=e117]: "Mechanizm:"
+                - text: Maska jest przestrzenią gazową. Brak wyrównania ciśnienia w masce podczas zanurzania powoduje, że wzrastające ciśnienie wywołuje siłę ssącą na twarz i oczy.
+              - listitem [ref=e118]:
+                - strong [ref=e119]: "Skutki:"
+                - text: Pękanie drobnych naczyń krwionośnych skóry twarzy, gałek ocznych i nosa. Silne krwawienie do wnętrza gałek ocznych może doprowadzić do uszkodzenia wzroku.
+            - heading [level=5] [ref=e120]: "Uraz Ciśnieniowy Zęba (Barodontalgia):"
+            - list [ref=e121]:
+              - listitem [ref=e122]:
+                - strong [ref=e123]: "Mechanizm (zanurzanie):"
+                - text: Rzadkie zjawisko związane z małymi komorami powietrznymi uwięzionymi pod nieprawidłowo założonymi plombami lub koronkami. Kompresja uwięzionego powietrza może prowadzić do silnego bólu zęba (barodontalgia).
+            - heading [level=4] [ref=e124]: B. Urazy Związane głównie z Wynurzaniem (Rozprężanie)
+            - paragraph [ref=e125]: Urazy te są wynikiem rozprężania się gazu zgodnie z Prawem Boyle’a-Mariotte’a, gdy maleje ciśnienie otoczenia.
+            - heading [level=5] [ref=e126]: "Uraz Ciśnieniowy Płuc (UCP):"
+            - list [ref=e127]:
+              - listitem [ref=e128]:
+                - strong [ref=e129]: "Najgroźniejszy uraz:"
+                - text: UCP jest najgroźniejszy dla zdrowia i życia spośród wszystkich urazów nurkowych.
+              - listitem [ref=e130]:
+                - strong [ref=e131]: "Przyczyna:"
+                - text: Powietrze zostaje całkowicie lub częściowo uwięzione w płucach podczas wynurzania się z aparatem oddechowym. Najczęstszą przyczyną jest wstrzymanie oddechu podczas wynurzania. UCP może wystąpić już przy wynurzeniu bez wydychania po pełnym wdechu z głębokości zaledwie 1 metra.
+              - listitem [ref=e132]:
+                - strong [ref=e133]: "Mechanizm Uszkodzenia:"
+                - text: "Rozprężające się powietrze mechanicznie uszkadza pęcherzyki płucne. Może to prowadzić do:"
+                - list [ref=e134]:
+                  - listitem [ref=e135]: "Tętniczych Zatorów Gazowych (AGE): Pęcherzyki powietrza dostają się do układu naczyniowego."
+                  - listitem [ref=e136]: "Odmy Opłucnowej: Powietrze dostaje się do jamy opłucnowej."
+                  - listitem [ref=e137]: "Odmy Śródpiersiowej/Podskórnej: Powietrze dostaje się do śródpiersia lub pod skórę szyi."
+              - listitem [ref=e138]:
+                - strong [ref=e139]: "Objawy AGE w Mózgu:"
+                - text: Utrata przytomności (często w ciągu 4-6 minut po wynurzeniu), ból głowy, drgawki, porażenie mięśni i paraliż, zaburzenia czuciowe (mrowienie, drętwienie) oraz zaburzenia zmysłów (mowy, słuchu, wzroku, równowagi).
+            - heading [level=5] [ref=e140]: "Uraz Ciśnieniowy Zatok (Rozprężny):"
+            - list [ref=e141]:
+              - listitem [ref=e142]:
+                - strong [ref=e143]: "Mechanizm:"
+                - text: Uwięzione powietrze rozpręża się podczas wynurzania, powodując wzrost ciśnienia na ściany zatoki. Ból ustępuje, gdy powietrze pokonuje opór zamkniętego ujścia.
+              - listitem [ref=e144]:
+                - strong [ref=e145]: "Objawy:"
+                - text: Silny ból w okolicy zamkniętej części zatoki i możliwe wyrzucenie z nosa krwi, wydzieliny i powietrza.
+            - heading [level=5] [ref=e146]: "Uraz Ciśnieniowy Przewodu Pokarmowego:"
+            - list [ref=e147]:
+              - listitem [ref=e148]:
+                - strong [ref=e149]: "Mechanizm:"
+                - text: Gaz uwięziony w żołądku lub jelitach (np. z połkniętego powietrza, napojów gazowanych) rozpręża się podczas wynurzania.
+              - listitem [ref=e150]:
+                - strong [ref=e151]: "Skutki:"
+                - text: Ucisk na żołądek, cofanie się treści żołądka do przełyku i odbijanie.
+            - heading [level=5] [ref=e152]: "Uraz Ciśnieniowy Zęba (Rozprężny):"
+            - list [ref=e153]:
+              - listitem [ref=e154]:
+                - strong [ref=e155]: "Mechanizm:"
+                - text: Trudność z wydostaniem się rozprężającego powietrza z komory pod plombą lub koroną.
+              - listitem [ref=e156]:
+                - strong [ref=e157]: "Skutki:"
+                - text: Może dojść do odwarstwienia plomby, poluzowania koronki lub pęknięcia zęba.
+            - separator [ref=e158]
+            - heading [level=3] [ref=e159]: 3. Profilaktyka Barotraumy
+            - paragraph [ref=e160]: Prawidłowa technika i dbałość o sprzęt są kluczowe dla uniknięcia urazów.
+            - heading [level=4] [ref=e161]: "Zapobieganie Urazom podczas Zanurzania (Ucho, Zatoki, Maska):"
+            - list [ref=e162]:
+              - listitem [ref=e163]:
+                - strong [ref=e164]: "Ucho i Zatoki:"
+                - list [ref=e165]:
+                  - listitem [ref=e166]: Wyrównuj ciśnienie często i delikatnie podczas zanurzania, szczególnie w płytkim zakresie głębokości.
+                  - listitem [ref=e167]: Stosuj metody takie jak próba Valsalvy, manewr Toynbee'ego lub manewr Frenzela. Próbę Valsalvy wykonuj bez zbędnej siły.
+                  - listitem [ref=e168]: Jeśli poczujesz narastający ucisk, zatrzymaj się, zmniejsz głębokość i spróbuj ponownie wyrównać ciśnienie.
+                  - listitem [ref=e169]: Nigdy nie nurkuj z katarem lub inną infekcją dróg oddechowych.
+              - listitem [ref=e170]:
+                - strong [ref=e171]: "Maska:"
+                - text: Okresowo wdmuchuj powietrze do wnętrza maski przez nos podczas zanurzania.
+              - listitem [ref=e172]:
+                - strong [ref=e173]: "Zęby:"
+                - text: Utrzymuj zęby w doskonałym stanie i regularnie odwiedzaj dentystę. W przypadku bólu zęba podczas zanurzania natychmiast zakończ nurkowanie.
+            - heading [level=4] [ref=e174]: "Zapobieganie UCP i Urazom Rozprężnym:"
+            - list [ref=e175]:
+              - listitem [ref=e176]:
+                - strong [ref=e177]: "Oddychanie:"
+                - text: W trakcie całego nurkowania oddychaj swobodnie i nigdy nie wstrzymuj oddechu podczas wynurzania.
+              - listitem [ref=e178]:
+                - strong [ref=e179]: "Prędkość Wynurzania:"
+                - text: Stosuj prawidłową prędkość wynurzania (zwykle nie większą niż 10 m/min).
+              - listitem [ref=e180]:
+                - strong [ref=e181]: "Stan Zdrowia:"
+                - text: Zachowaj co najmniej miesięczną przerwę w nurkowaniu po przebytych chorobach układu oddechowego, takich jak zapalenie oskrzeli lub płuc.
+              - listitem [ref=e182]:
+                - strong [ref=e183]: "Przewód Pokarmowy:"
+                - text: Unikaj spożywania pokarmów gazotwórczych i napojów gazowanych przed nurkowaniem.
+              - listitem [ref=e184]:
+                - strong [ref=e185]: "Aparatura:"
+                - text: Utrzymuj dobry stan techniczny sprzętu nurkowego, w tym automatów.
+              - listitem [ref=e186]:
+                - strong [ref=e187]: "Utrzymanie Czystości:"
+                - text: Dbałość o czystość uszu jest również ważna.
+            - separator [ref=e188]
+            - heading [level=3] [ref=e189]: 4. Postępowanie w Sytuacjach Awaryjnych (Pierwsza Pomoc)
+            - paragraph [ref=e190]: W przypadku podejrzenia poważnego urazu ciśnieniowego (UCP, zator gazowy) kluczowa jest szybkość działania, ponieważ skuteczność leczenia zależy głównie od szybkości podjęcia leczenia w komorze dekompresyjnej.
+            - list [ref=e191]:
+              - listitem [ref=e192]:
+                - strong [ref=e193]: "Ocena Sytuacji:"
+                - text: Jeśli masz wątpliwości, czy objawy wskazują na UCP, potraktuj je, jakby nimi były.
+              - listitem [ref=e194]:
+                - strong [ref=e195]: "Pomoc Medyczna:"
+                - text: Wezwij pomoc medyczną i powiadom służby o konieczności transportu poszkodowanego do komory dekompresyjnej.
+              - listitem [ref=e196]:
+                - strong [ref=e197]: "Tlenoterapia:"
+                - text: Podaj poszkodowanemu 100% tlen w maksymalnym przepływie tak szybko, jak to możliwe. Tlen jest najważniejszym lekarstwem, ponieważ poprawia utlenowanie tkanek, redukuje możliwość powstawania nowych zatorów i zmniejsza średnicę pęcherzyków gazowych.
+              - listitem [ref=e198]:
+                - strong [ref=e199]: "Pozycja:"
+                - text: Ułóż poszkodowanego w pozycji poziomej.
+              - listitem [ref=e200]:
+                - strong [ref=e201]: "Nawadnianie:"
+                - text: Jeśli poszkodowany jest przytomny, podaj mu do 1 litra ciepłych, słodkich, niegazowanych napojów.
+              - listitem [ref=e202]:
+                - strong [ref=e203]: "Resuscytacja:"
+                - text: Jeśli jest to konieczne, wykonaj podstawowe zabiegi resuscytacyjne (BLS).
+            - button [ref=e205] [cursor=pointer]: Sprawdź Wiedzę (Quiz)
+  - button "Wróć do menu" [ref=e206] [cursor=pointer]: ✕
+  - generic [ref=e208]:
+    - generic [ref=e209]:
+      - heading "Quiz - Sprawdź Wiedzę" [level=3] [ref=e210]
+      - button "×" [ref=e211] [cursor=pointer]
+    - generic [ref=e212]:
+      - generic [ref=e213]: Pytanie 4/10
+      - heading "Jakie prawo fizyczne rządzi urazami ciśnieniowymi (Barotrauma)?" [level=3] [ref=e214]
+      - generic [ref=e215]:
+        - button "Prawo Daltona" [ref=e216] [cursor=pointer]
+        - button "Prawo Henry'ego" [ref=e217] [cursor=pointer]
+        - button "Prawo Boyle'a-Mariotte'a" [ref=e218] [cursor=pointer]
+        - button "Prawo Archimedesa" [ref=e219] [cursor=pointer]
+```

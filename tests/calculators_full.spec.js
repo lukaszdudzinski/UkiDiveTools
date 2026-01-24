@@ -117,7 +117,7 @@ test.describe('Full Calculator Suite', () => {
 
         const result = page.locator('#ballastResult');
         await expect(result).toBeVisible();
-        await expect(result).toContainText('12.5kg');
+        await expect(result).toContainText('12.5 kg');
     });
 
 });

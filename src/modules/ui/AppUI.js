@@ -4,9 +4,10 @@ import { initDivePlanningUI } from './calculators/DivePlanningUI.js';
 import { initBallastUI } from './calculators/BallastUI.js';
 import { LecturesUI } from './LecturesUI.js';
 import { QuizUI } from './QuizUI.js';
+import { UkiRiverGameUI } from '../games/uki-river-dive/UkiRiverGameUI.js';
 import { ProAccess } from '../auth/ProAccess.js';
 
-export const APP_VERSION = 'v2026.1.17.05';
+export const APP_VERSION = 'v2026.1.24.01';
 
 export const AppUI = {
     init: () => {
@@ -37,6 +38,7 @@ export const AppUI = {
 
         LecturesUI.init();
         QuizUI.init(); // Sets up modal listeners
+        UkiRiverGameUI.init();
 
         // Mobile Menu
         AppUI.initMobileMenu();
@@ -233,6 +235,7 @@ export const AppUI = {
         const navLinks = document.querySelectorAll('.sidebar-nav ul a');
         const tabContents = document.querySelectorAll('.app-content > .tab-content-wrapper > .tab-content');
         const homeLinkHeader = document.getElementById('home-link-header');
+        const tilesHomeBtn = document.getElementById('tiles-mode-home-btn'); // New Button
 
         function switchTab(tabId) {
             navLinks.forEach(l => {
@@ -244,12 +247,36 @@ export const AppUI = {
                 if (content.id === tabId) {
                     content.classList.add('active-tab');
                     content.style.display = 'block';
+
+                    // Special case for Game
+                    if (tabId === 'river-dive-game' && UkiRiverGameUI.canvas) {
+                        UkiRiverGameUI.resizeCanvas();
+                    }
                 }
             });
+
+            // Mobile Home Button Logic (Show everywhere EXCEPT welcome screen)
+            if (tilesHomeBtn) {
+                // Check if we are on mobile (using media query match or simplified check)
+                const isMobile = window.innerWidth <= 768;
+                if (isMobile && tabId !== 'welcome-screen') {
+                    tilesHomeBtn.style.display = 'flex';
+                } else {
+                    tilesHomeBtn.style.display = 'none';
+                }
+            }
+
+            // If we are leaving the game tab, ensure game loop stops
+            if (tabId !== 'river-dive-game') {
+                UkiRiverGameUI.stopGame();
+            }
         }
 
         window.switchTab = switchTab; // Expose if needed
 
+        // --- Event Listeners ---
+
+        // 1. Sidebar Links
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -258,20 +285,33 @@ export const AppUI = {
             });
         });
 
+        // 2. Sidebar Header (Desktop Home)
         if (homeLinkHeader) {
             homeLinkHeader.addEventListener('click', (e) => {
                 e.preventDefault();
-                // Go Home Logic
-                navLinks.forEach(l => l.classList.remove('active'));
-                tabContents.forEach(content => {
-                    if (content.id === 'welcome-screen') {
-                        content.classList.add('active-tab');
-                        content.style.display = 'block';
-                    } else {
-                        content.classList.remove('active-tab');
-                        content.style.display = 'none';
+                switchTab('welcome-screen');
+            });
+        }
+
+        // 3. Mobile Header (Logo/Title Click -> Home)
+        const mobileHeaders = document.querySelectorAll('.mobile-header, .home-header');
+        mobileHeaders.forEach(header => {
+            header.addEventListener('click', (e) => {
+                // Only on mobile and if not already on welcome screen interaction
+                if (window.innerWidth <= 768) {
+                    const activeTab = document.querySelector('.tab-content.active-tab');
+                    if (activeTab && activeTab.id !== 'welcome-screen') {
+                        switchTab('welcome-screen');
                     }
-                });
+                }
+            });
+            header.style.cursor = 'pointer'; // Visual cue
+        });
+
+        // 4. Tiles Mode Home Button (Floating X)
+        if (tilesHomeBtn) {
+            tilesHomeBtn.addEventListener('click', () => {
+                switchTab('welcome-screen');
             });
         }
 
@@ -552,4 +592,47 @@ export const AppUI = {
 
 
 
+    scrollToResult: (element) => {
+        if (!element) return;
+
+        setTimeout(() => {
+            const container = document.querySelector('.tab-content-wrapper');
+            if (!container) return;
+
+            const rect = element.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+
+            // Check if element is already fully visible
+            const isFullyVisible = (
+                rect.top >= containerRect.top &&
+                rect.bottom <= containerRect.bottom
+            );
+
+            // If fully visible, don't scroll (user experience)
+            // if (isFullyVisible) return; // FORCE SCROLL disabled for now per user report
+
+            const currentScroll = container.scrollTop;
+            const relativeTop = rect.top - containerRect.top;
+            const containerHeight = containerRect.height;
+            const elementHeight = rect.height;
+
+            let targetScroll;
+
+            if (elementHeight < containerHeight) {
+                // Center the element
+                const offset = (containerHeight - elementHeight) / 2;
+                targetScroll = currentScroll + relativeTop - offset;
+            } else {
+                // Align to top with padding
+                targetScroll = currentScroll + relativeTop - 20;
+            }
+
+            container.scrollTo({
+                top: targetScroll,
+                behavior: 'smooth'
+            });
+        }, 150);
+    }
 };
+
+window.AppUI = AppUI;

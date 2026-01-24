@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Uki's Dive Tools</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="game_styles.css">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="img/logo.jpg">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -51,6 +52,8 @@
                 <li><a href="#" data-tab="ballast-calculator">Kalkulator Balastu</a></li>
                 <li><a href="#" data-tab="divemaster-tools">Narzędzia Divemastera</a></li>
                 <li><a href="#" data-tab="science-of-diving">Wiedza Nurkowa</a></li>
+                <li class="game-menu-item"><a href="#" data-tab="river-dive-game"
+                        style="color: #FFD700; font-weight: bold;">Uki's River Dive</a></li>
                 <li><a href="#" data-tab="settings-panel">Ustawienia</a></li>
             </ul>
 
@@ -84,10 +87,69 @@
             <div class="tab-content-wrapper">
 
                 <div id="welcome-screen" class="tab-content active-tab">
+                    <!-- Standard Header (Sidebar Mode) -->
                     <div class="home-header">
                         <img src="img/logo.jpg" alt="Logo" class="home-logo">
                         <h2>Uki's Dive Tools</h2>
-                        <p>Wybierz kalkulator lub narzędzie z menu po lewej.</p>
+                        <p>Wybierz narzędzie z menu</p>
+                    </div>
+
+                    <!-- Dashboard Grid (Smart View: Hidden on Desktop, Visible on Mobile via CSS) -->
+                    <div class="dashboard-grid">
+
+
+
+                        <!-- Standard Tools -->
+                        <div class="dashboard-card" onclick="switchTab('sac-calculator')">
+                            <h4>Kalkulator SAC</h4>
+                            <p>Zużycie gazu. Podstawa planowania.</p>
+                        </div>
+                        <div class="dashboard-card" onclick="switchTab('nitrox-calculator')">
+                            <h4>Kalkulator Nitrox</h4>
+                            <p>MOD, EAD, Best Mix, CNS %.</p>
+                        </div>
+                        <div class="dashboard-card" onclick="switchTab('gas-planning-calculator')">
+                            <h4>Planowanie Gazu</h4>
+                            <p>Symulacja zużycia i rezerwy.</p>
+                        </div>
+                        <div class="dashboard-card" onclick="switchTab('ballast-calculator')">
+                            <h4>Kalkulator Balastu</h4>
+                            <p>Dobierz ołów do konfiguracji.</p>
+                        </div>
+                        <div class="dashboard-card" onclick="switchTab('divemaster-tools')">
+                            <h4>Narzędzia DM</h4>
+                            <p>Checklisty odpraw i pakowania.</p>
+                        </div>
+                        <div class="dashboard-card" onclick="switchTab('pro-dashboard')" style="border-color: #00d1b2;">
+                            <h4>Strefa PRO</h4>
+                            <p>Zaawansowane narzędzia techniczne.</p>
+                        </div>
+                        <div class="dashboard-card" onclick="switchTab('science-of-diving')">
+                            <h4>Wiedza</h4>
+                            <p>Teoria i wzory nurkowe.</p>
+                        </div>
+
+                        <!-- GAME TILE (Mobile Only) -->
+                        <div class="dashboard-card" onclick="switchTab('river-dive-game')">
+                            <h4>Uki's River Dive</h4>
+                            <p>Zagraj w wolnej chwili!</p>
+                        </div>
+
+                        <!-- Special Row: Coffee & SOS (Bottom) -->
+                        <div class="tile-special-row">
+                            <div class="dashboard-card tile-coffee"
+                                onclick="window.open('https://buymeacoffee.com/ukidives', '_blank')">
+                                <h4 style="color: #4CAF50; text-shadow: 0 0 10px rgba(76, 175, 80, 0.6);">☕ Postaw Kawę
+                                </h4>
+                                <p>Wsparcie projektu</p>
+                            </div>
+                            <div class="dashboard-card tile-sos"
+                                onclick="document.getElementById('emergency-btn').click()">
+                                <h4 style="color: #FF5252; text-shadow: 0 0 10px rgba(255, 82, 82, 0.6);">🚨 SOS /
+                                    Awaria</h4>
+                                <p>Procedury ratunkowe</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -101,7 +163,8 @@
                         <div id="pro-overlay-lock" class="pro-lock-overlay">
                             <img src="img/logo.jpg" alt="Logo" class="pro-overlay-logo">
                             <!-- Text Only - Red Uppercase -->
-                            <div class="lock-message" style="text-transform: uppercase; letter-spacing: 1px;">FUNKCJE
+                            <div class="lock-message" style="text-transform: uppercase; letter-spacing: 1px;">
+                                FUNKCJE
                                 ZABLOKOWANE</div>
 
                             <!-- Primary Action: Buy Coffee -->
@@ -159,8 +222,9 @@
                         </div>
                         <div class="form-column">
                             <h4>2. Cel (Target)</h4>
-                            <div class="input-group"><label for="blendTargetBar">Ciśnienie Docelowe (bar)</label><input
-                                    type="number" id="blendTargetBar" value="200" min="0" step="1" required></div>
+                            <div class="input-group"><label for="blendTargetBar">Ciśnienie Docelowe
+                                    (bar)</label><input type="number" id="blendTargetBar" value="200" min="0" step="1"
+                                    required></div>
                             <div class="input-group"><label for="blendTargetO2">Docelowy % Tlenu</label><input
                                     type="number" id="blendTargetO2" value="32" min="21" max="100" step="0.1" required>
                             </div>
@@ -169,7 +233,8 @@
                             <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                         class="tooltip-content">
                                         <h4>Gas Blender (Metoda Parcjalna)</h4>
-                                        <p>Obliczamy ciśnienia parcjalne gazów, aby stworzyć Nitrox metodą "dolewania"
+                                        <p>Obliczamy ciśnienia parcjalne gazów, aby stworzyć Nitrox metodą
+                                            "dolewania"
                                             (Top-up).</p>
                                         <ol style="text-align: left; margin-left: 15px;">
                                             <li>Obliczamy, ile czystego tlenu trzeba dodać.</li>
@@ -184,7 +249,8 @@
                 <div id="trimix-calculator" class="tab-content pro-tool-view">
                     <button class="back-to-dashboard" onclick="backToDashboard()">Wróć do Strefy PRO</button>
                     <h3>Kalkulator Trimix</h3>
-                    <p style="color: #b0b0b0; margin-bottom: 20px; font-size: 0.9em;">Partial Pressure Blending: He → O2
+                    <p style="color: #b0b0b0; margin-bottom: 20px; font-size: 0.9em;">Partial Pressure Blending: He
+                        → O2
                         → Air (Top-up).</p>
                     <form id="trimixForm" class="two-column-form">
                         <div class="form-column">
@@ -221,9 +287,11 @@
                                         <h4>Trimix Blending (Partial Pressure)</h4>
                                         <p>Metoda mieszania parcjalnego dla Trimix:</p>
                                         <ol style="text-align: left; margin-left: 15px;">
-                                            <li><strong>Krok 1:</strong> Dodaj hel (100% He) do obliczonego ciśnienia.
+                                            <li><strong>Krok 1:</strong> Dodaj hel (100% He) do obliczonego
+                                                ciśnienia.
                                             </li>
-                                            <li><strong>Krok 2:</strong> Dodaj tlen (100% O2) do obliczonego ciśnienia.
+                                            <li><strong>Krok 2:</strong> Dodaj tlen (100% O2) do obliczonego
+                                                ciśnienia.
                                             </li>
                                             <li><strong>Krok 3:</strong> Dopełnij powietrzem (21% O2) do ciśnienia
                                                 docelowego.</li>
@@ -268,7 +336,8 @@
                                         <h4>Co to jest Bailout?</h4>
                                         <p>Żelazna rezerwa gazu na sytuację "worst-case".</p>
                                         <ol style="text-align: left; margin-left: 15px;">
-                                            <li><strong>Reakcja na dnie:</strong> Rozwiązanie problemu w stresie.</li>
+                                            <li><strong>Reakcja na dnie:</strong> Rozwiązanie problemu w stresie.
+                                            </li>
                                             <li><strong>Wynurzenie:</strong> Podróż do powierzchni.</li>
                                         </ol>
                                     </div></span><button type="submit">Oblicz Bailout</button></div>
@@ -280,7 +349,8 @@
                 <div id="pro-gas-calculator" class="tab-content pro-tool-view">
                     <button class="back-to-dashboard" onclick="backToDashboard()">Wróć do Strefy PRO</button>
                     <h3>Planowanie Zużycia + RB</h3>
-                    <p style="color: #b0b0b0; margin-bottom: 20px; font-size: 0.9em;">Symulacja zużycia z automatycznym
+                    <p style="color: #b0b0b0; margin-bottom: 20px; font-size: 0.9em;">Symulacja zużycia z
+                        automatycznym
                         wyliczeniem Rock Bottom.</p>
                     <form id="proGasForm" class="two-column-form">
                         <div class="form-column">
@@ -349,7 +419,8 @@
                             <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                         class="tooltip-content">
                                         <h4>SAC (Surface Air Consumption)</h4>
-                                        <p>Powierzchniowe zużycie gazu. Podstawowy parametr do planowania nurkowania.
+                                        <p>Powierzchniowe zużycie gazu. Podstawowy parametr do planowania
+                                            nurkowania.
                                         </p>
                                         <p><em>Wzór: (Zużyty Gaz [l]) / (Ciśnienie śr. [ATA] * Czas [min])</em></p>
                                     </div></span><button type="submit">Oblicz SAC</button></div>
@@ -374,8 +445,9 @@
                     <div class="sub-tab-content-wrapper">
                         <div id="mod-calculator" class="sub-tab-content active-sub-tab">
                             <form id="modForm">
-                                <div class="input-group"><label for="modPO2">Ciśnienie parcjalne (PPO₂)</label><input
-                                        type="number" id="modPO2" value="1.4" step="0.1" min="1.0" max="1.6" required>
+                                <div class="input-group"><label for="modPO2">Ciśnienie parcjalne
+                                        (PPO₂)</label><input type="number" id="modPO2" value="1.4" step="0.1" min="1.0"
+                                        max="1.6" required>
                                 </div>
                                 <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                             class="tooltip-content">
@@ -392,7 +464,8 @@
                                 <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                             class="tooltip-content">
                                             <h4>EAD (Equivalent Air Depth)</h4>
-                                            <p>Równoważna Głębokość Powietrzna. Pokazuje, jak "głęboko" czuje się Twój
+                                            <p>Równoważna Głębokość Powietrzna. Pokazuje, jak "głęboko" czuje się
+                                                Twój
                                                 organizm pod kątem nasycenia azotem.</p>
                                         </div></span><button type="submit">Oblicz EAD</button></div>
                             </form>
@@ -400,8 +473,9 @@
                         </div>
                         <div id="best-mix-calculator" class="sub-tab-content">
                             <form id="bestMixForm">
-                                <div class="input-group"><label for="bestMixDepth">Planowana głębokość (m)</label><input
-                                        type="number" id="bestMixDepth" step="0.1" value="30" min="1" required></div>
+                                <div class="input-group"><label for="bestMixDepth">Planowana głębokość
+                                        (m)</label><input type="number" id="bestMixDepth" step="0.1" value="30" min="1"
+                                        required></div>
                                 <div class="input-group"><label for="bestMixPO2">Maksymalne PPO₂ (bar)</label><input
                                         type="number" id="bestMixPO2" value="1.4" step="0.1" min="1.0" max="1.6"
                                         required></div>
@@ -423,7 +497,8 @@
                                 <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                             class="tooltip-content">
                                             <h4>%CNS (Toksyczność Tlenowa)</h4>
-                                            <p>Oblicza obciążenie Ośrodkowego Układu Nerwowego tlenem na podstawie PPO₂
+                                            <p>Oblicza obciążenie Ośrodkowego Układu Nerwowego tlenem na podstawie
+                                                PPO₂
                                                 i czasu.</p>
                                         </div></span><button type="submit">Oblicz CNS%</button></div>
                             </form>
@@ -463,12 +538,14 @@
                                             id="rbSafetyMargin" value="10" min="0" required></div>
                                 </div>
                                 <div class="form-full-width">
-                                    <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
-                                                class="tooltip-content">
+                                    <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?
+                                            <div class="tooltip-content">
                                                 <h4>Rock Bottom (RB)</h4>
-                                                <p>Minimalna ilość gazu na bezpieczny powrót we dwójkę w razie awarii.
+                                                <p>Minimalna ilość gazu na bezpieczny powrót we dwójkę w razie
+                                                    awarii.
                                                 </p>
-                                            </div></span><button type="submit">Oblicz Rock Bottom</button></div>
+                                            </div>
+                                        </span><button type="submit">Oblicz Rock Bottom</button></div>
                                 </div>
                             </form>
                             <div id="rbResult" class="result-container"></div>
@@ -501,11 +578,12 @@
                                             id="gcReserve" value="50" required></div>
                                 </div>
                                 <div class="form-full-width">
-                                    <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
-                                                class="tooltip-content">
+                                    <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?
+                                            <div class="tooltip-content">
                                                 <h4>Planowanie Zużycia Gazu</h4>
                                                 <p>Symuluje zużycie gazu w całym profilu nurkowym.</p>
-                                            </div></span><button type="submit">Oblicz Zużycie</button></div>
+                                            </div>
+                                        </span><button type="submit">Oblicz Zużycie</button></div>
                                 </div>
                             </form>
                             <div id="gcResult" class="result-container"></div>
@@ -539,8 +617,8 @@
                                     <option value="none" selected>Brak</option>
                                     <option value="vest">Kamizelka (Docieplenie)</option>
                                 </select></div>
-                            <div class="input-group" id="ballast-warmer-group"><label>Ocieplacz (Suchy)</label><select
-                                    id="ballastWarmer">
+                            <div class="input-group" id="ballast-warmer-group"><label>Ocieplacz
+                                    (Suchy)</label><select id="ballastWarmer">
                                     <option value="thin" selected>Cienki (do 200g)</option>
                                     <option value="thick">Gruby (400g+)</option>
                                 </select></div>
@@ -585,7 +663,8 @@
                             <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
                                         class="tooltip-content">
                                         <h4>Kalkulator Balastu</h4>
-                                        <p>Pomaga oszacować potrzebną ilość ołowiu. Zawsze wykonaj kontrolę pływalności.
+                                        <p>Pomaga oszacować potrzebną ilość ołowiu. Zawsze wykonaj kontrolę
+                                            pływalności.
                                         </p>
                                     </div></span><button type="submit">Oblicz Sugestię Balastu</button></div>
                         </div>
@@ -611,7 +690,8 @@
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-3"><label
                                         for="brief-cb-3">Warunki środowiskowe</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-4"><label
-                                        for="brief-cb-4">Życie podwodne i zagrożenia (Możliwe spotkania ze zwierzętami,
+                                        for="brief-cb-4">Życie podwodne i zagrożenia (Możliwe spotkania ze
+                                        zwierzętami,
                                         ryzyko poparzeń, skaleczeń)</label></div>
                             </div>
                             <div class="checklist-group">
@@ -624,10 +704,12 @@
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-7"><label
                                         for="brief-cb-7">Zarządzanie gazem</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-8"><label
-                                        for="brief-cb-8">Punkt zwrotny/zawracanie (Ciśnienie w butli, przy którym zespół
+                                        for="brief-cb-8">Punkt zwrotny/zawracanie (Ciśnienie w butli, przy którym
+                                        zespół
                                         rozpoczyna powrót, np. 130 bar)</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-9"><label
-                                        for="brief-cb-9">Tryb nurkowania (Nurkowanie bezdekompresyjne; profil trapezowy
+                                        for="brief-cb-9">Tryb nurkowania (Nurkowanie bezdekompresyjne; profil
+                                        trapezowy
                                         lub stopniowane wynurzanie – unikanie profilu typu "jo-jo")</label></div>
                             </div>
                             <div class="checklist-group">
@@ -640,11 +722,13 @@
                                         for="brief-cb-12">Kontrola sprzętu (Buddy Check) – Obowiązkowe wzajemne
                                         sprawdzenie sprzętu przed wejściem do wody</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-13"><label
-                                        for="brief-cb-13">Wejście do wody (Wskazanie metody: krok wykroczny, zsunięcie
+                                        for="brief-cb-13">Wejście do wody (Wskazanie metody: krok wykroczny,
+                                        zsunięcie
                                         się, przewrót w tył; maska/automat w ustach, napompowany BCD)</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-14"><label
                                         for="brief-cb-14">Zanurzanie (Kontrolowane zanurzenie – stopami w dół,
-                                        wyrównywanie ciśnienia w uszach i masce, użycie liny opustowej)</label></div>
+                                        wyrównywanie ciśnienia w uszach i masce, użycie liny opustowej)</label>
+                                </div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-15"><label
                                         for="brief-cb-15">Wynurzanie i przystanki (Prędkość wynurzania < 9 m/min;
                                             obowiązkowy przystanek bezpieczeństwa: 3-5 min na 5 m)</label>
@@ -656,17 +740,20 @@
                             <div class="checklist-group">
                                 <h4>IV. Bezpieczeństwo i awaryjne procedury</h4>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-17"><label
-                                        for="brief-cb-17">Procedura rozdzielenia (Zatrzymaj się, rozejrzyj się przez 30
+                                        for="brief-cb-17">Procedura rozdzielenia (Zatrzymaj się, rozejrzyj się przez
+                                        30
                                         sekund, wynurz się kontrolowanie)</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-18"><label
-                                        for="brief-cb-18">Procedura braku gazu / Out of Air (Podaj główny automat, użyj
+                                        for="brief-cb-18">Procedura braku gazu / Out of Air (Podaj główny automat,
+                                        użyj
                                         zapasowego; kontrolowane wynurzenie, użycie długiego węża)</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-19"><label
                                         for="brief-cb-19">Odwołanie nurkowania</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-20"><label
                                         for="brief-cb-20">Sprzęt ratunkowy/medyczny</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-21"><label
-                                        for="brief-cb-21">Odmowa nurkowania (Każdy nurek ma prawo zrezygnować w dowolnym
+                                        for="brief-cb-21">Odmowa nurkowania (Każdy nurek ma prawo zrezygnować w
+                                        dowolnym
                                         momencie bez konsekwencji)</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="brief-cb-22"><label
                                         for="brief-cb-22">Ratownik/Asekuracja</label></div>
@@ -717,7 +804,8 @@
                                 <div class="checklist-item"><input type="checkbox" id="pack-cb-17"><label
                                         for="pack-cb-17">Tabliczka do pisania</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="pack-cb-18"><label
-                                        for="pack-cb-18">Sprzęt zapasowy/Zestaw naprawczy (O-ringi, paski, podstawowe
+                                        for="pack-cb-18">Sprzęt zapasowy/Zestaw naprawczy (O-ringi, paski,
+                                        podstawowe
                                         narzędzia)</label></div>
                             </div>
                             <div class="checklist-group">
@@ -727,7 +815,8 @@
                                 <div class="checklist-item"><input type="checkbox" id="pack-cb-20"><label
                                         for="pack-cb-20">Apteczka pierwszej pomocy</label></div>
                                 <div class="checklist-item"><input type="checkbox" id="pack-cb-21"><label
-                                        for="pack-cb-21">Sprzęt łączności (Radio morskie, telefon, GPS)</label></div>
+                                        for="pack-cb-21">Sprzęt łączności (Radio morskie, telefon, GPS)</label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -761,7 +850,8 @@
                                 <div class="formula-box">
                                     <p class="formula">MOD = ((PPO2 / FO2) - 1) * 10</p>
                                     <ul class="detailed-legend">
-                                        <li><strong>PPO2:</strong> Maksymalne ciśnienie parcjalne tlenu (np. 1.4 ATA)
+                                        <li><strong>PPO2:</strong> Maksymalne ciśnienie parcjalne tlenu (np. 1.4
+                                            ATA)
                                         </li>
                                         <li><strong>FO2:</strong> Frakcja tlenu w mieszance (np. 0.32)</li>
                                         <li><strong>-1:</strong> Odjęcie ciśnienia atmosferycznego</li>
@@ -789,7 +879,8 @@
                                         <li><strong>SAC:</strong> Powierzchniowe zużycie gazu (l/min)</li>
                                         <li><strong>P_avg:</strong> Średnie ciśnienie otoczenia (ATA)</li>
                                         <li><strong>T:</strong> Czas trwania fazy (min)</li>
-                                        <li><strong>L_total:</strong> Całkowite zużycie (Zanurzenie + Dno + Wynurzenie +
+                                        <li><strong>L_total:</strong> Całkowite zużycie (Zanurzenie + Dno +
+                                            Wynurzenie +
                                             Przystanki)</li>
                                     </ul>
                                 </div>
@@ -799,7 +890,8 @@
                                     <ul class="detailed-legend">
                                         <li><strong>RB_bar:</strong> Minimalne ciśnienie rezerwy (bar)</li>
                                         <li><strong>L_reakcja:</strong> Gaz na rozwiązanie problemu na dnie (l)</li>
-                                        <li><strong>L_wynurz:</strong> Gaz na bezpieczny powrót na powierzchnię (l)</li>
+                                        <li><strong>L_wynurz:</strong> Gaz na bezpieczny powrót na powierzchnię (l)
+                                        </li>
                                         <li><strong>V_butli:</strong> Pojemność wodna butli (l)</li>
                                         <li><strong>SAC_stres:</strong> Zwykle 2x SAC normalny (stres)</li>
                                         <li><strong>Os.:</strong> Liczba nurków (np. 2 w zespole)</li>
@@ -881,13 +973,16 @@
                     </div>
                 </div>
 
+                <div id="river-dive-game" class="tab-content game-mode"></div>
+
                 <div id="settings-panel" class="tab-content">
                     <h3>Ustawienia</h3>
                     <div class="settings-toggle-row"><label for="glass-toggle">Efekt Szklany (Liquid
                             Glass)</label><label class="theme-switch" for="glass-toggle"><input type="checkbox"
                                 id="glass-toggle" /><span class="slider round"></span></label></div>
-                    <div class="settings-toggle-row"><label for="global-water-type">Domyślny Rodzaj Wody</label><select
-                            id="global-water-type" class="settings-select">
+
+                    <div class="settings-toggle-row"><label for="global-water-type">Domyślny Rodzaj
+                            Wody</label><select id="global-water-type" class="settings-select">
                             <option value="fresh">Woda słodka</option>
                             <option value="salt">Woda słona</option>
                         </select></div>
@@ -978,6 +1073,7 @@
     </div>
 
     <!-- Global Tooltip / Modal Structure -->
+    <button id="tiles-mode-home-btn" aria-label="Wróć do menu"></button>
     <div id="tooltip-overlay" style="display: none;"></div>
     <div id="global-tooltip" class="tooltip-content" style="display: none;">
         <button id="tooltip-close-btn">×</button>

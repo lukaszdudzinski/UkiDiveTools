@@ -87,7 +87,7 @@ export const LecturesUI = {
                 quizBtnContainer.style.textAlign = 'center';
 
                 const btn = document.createElement('button');
-                btn.className = 'quiz-start-btn-elegant';
+                btn.className = 'action-button';
                 btn.textContent = 'Sprawdź Wiedzę (Quiz)';
 
                 btn.addEventListener('click', () => {

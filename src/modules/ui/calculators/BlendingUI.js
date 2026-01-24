@@ -1,4 +1,5 @@
 import { BlendingCalculator } from '../../calculators/BlendingCalculator.js';
+import { AppUI } from '../AppUI.js';
 
 export function initBlendingUI() {
     initGasBlenderUI();
@@ -55,7 +56,8 @@ function initGasBlenderUI() {
                         <p class="result-value-sub">Do ciśnienia: ${targetBar} bar</p>
                     </div>`;
                 blenderResult.style.display = 'block';
-                blenderResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                blenderResult.style.display = 'block';
+                if (AppUI && AppUI.scrollToResult) AppUI.scrollToResult(blenderResult);
             } catch (error) { console.error(error); }
         });
     }
@@ -132,7 +134,7 @@ function initTrimixUI() {
                         <p class="result-value-sub">O<sub>2</sub>: ${targetO2}% | He: ${targetHe}% | N<sub>2</sub>: ${result.n2Percent.toFixed(1)}%</p>
                     </div>`;
                 trimixResult.style.display = 'block';
-                trimixResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                if (AppUI && AppUI.scrollToResult) AppUI.scrollToResult(trimixResult);
             } catch (error) { console.error(error); }
         });
     }
