@@ -97,6 +97,40 @@ export const LecturesUI = {
                 quizBtnContainer.appendChild(btn);
                 lectureBody.appendChild(quizBtnContainer);
             }
+
+            // Lightbox Logic for Infographics
+            const infographics = lectureBody.querySelectorAll('.lecture-infographic');
+            infographics.forEach(img => {
+                img.addEventListener('click', () => {
+                    // Create or get lightbox modal
+                    let lightbox = document.getElementById('lightbox-modal');
+                    if (!lightbox) {
+                        lightbox = document.createElement('div');
+                        lightbox.id = 'lightbox-modal';
+                        lightbox.className = 'lightbox-modal';
+                        lightbox.innerHTML = `
+                            <div class="lightbox-close-btn">&times;</div>
+                            <img class="lightbox-content" src="" alt="Full Screen Image">
+                        `;
+                        document.body.appendChild(lightbox);
+
+                        // Close events
+                        const closeBtn = lightbox.querySelector('.lightbox-close-btn');
+                        closeBtn.addEventListener('click', () => {
+                            lightbox.classList.remove('active');
+                        });
+                        lightbox.addEventListener('click', (e) => {
+                            if (e.target === lightbox) {
+                                lightbox.classList.remove('active');
+                            }
+                        });
+                    }
+
+                    const contentImg = lightbox.querySelector('.lightbox-content');
+                    contentImg.src = img.src;
+                    lightbox.classList.add('active');
+                });
+            });
         }
 
         // Switch View
