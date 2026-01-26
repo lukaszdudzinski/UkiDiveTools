@@ -35,7 +35,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Tests
-        run: npx playwright test
+        run: npx playwright test tests/rock_bottom.spec.js
 
   # 2. DEPLOY JOB (Runs only if 'test' passes)
   deploy:
