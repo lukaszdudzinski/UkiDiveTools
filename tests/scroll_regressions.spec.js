@@ -1,15 +1,16 @@
 import { test, expect } from '@playwright/test';
+import { openMobileMenuIfNeeded } from './test-helpers.js';
 
 test.describe('Scroll Behavior Regression', () => {
 
     test.beforeEach(async ({ page }) => {
-        await page.goto('index.html');
-        // Wait for app to init
+        await page.goto('/');
         await page.waitForTimeout(1000);
     });
 
-    test('Gas Consumption should scroll to result after calculation', async ({ page }) => {
+    test('Gas Consumption should scroll to result after calculation', async ({ page, isMobile }) => {
         // Navigate to Gas Planning
+        await openMobileMenuIfNeeded(page, isMobile);
         await page.getByRole('link', { name: 'Planowanie Gazu (Basic)' }).click();
 
         // Wait for potential sub-tab or form
@@ -43,8 +44,9 @@ test.describe('Scroll Behavior Regression', () => {
         await expect(result).toBeInViewport();
     });
 
-    test('Rock Bottom should scroll maximally down', async ({ page }) => {
+    test('Rock Bottom should scroll maximally down', async ({ page, isMobile }) => {
         // Navigate to Gas Planning
+        await openMobileMenuIfNeeded(page, isMobile);
         await page.getByRole('link', { name: 'Planowanie Gazu (Basic)' }).click();
 
         // Scroll to Rock Bottom section (it's lower down usually)

@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { openMobileMenuIfNeeded } from './test-helpers.js';
 
 test.describe('Settings & Presistence', () => {
 
@@ -6,24 +7,14 @@ test.describe('Settings & Presistence', () => {
         await page.goto('/');
 
         // Open Settings Tab
-        if (isMobile) {
-            await page.click('#mobile-menu-toggle');
-            await page.waitForTimeout(300);
-        }
+        await openMobileMenuIfNeeded(page, isMobile);
 
         // Settings are usually in the "Ustawienia" tab
-        // Adjust logic if settings are in a different location or modal
         const settingsTab = page.locator('a[data-tab="settings-panel"]');
 
-        // Assuming settings link exists, if not strictly visible in nav check flow
-        if (await settingsTab.isVisible()) {
-            await settingsTab.click();
-        } else {
-            // Fallback: If settings is a separate icon or modal
-            // Investigating index.html showed <div id="settings-panel" class="tab-content">
-            // So it acts like a normal tab.
-            // If checking fails, verify if "Ustawienia" text is used instead
-        }
+        // Check visibility after waiting for menu
+        // With helper, we are sure sidebar is visible if mobile
+        await settingsTab.click();
     });
 
     test('should toggle theme and persist after reload', async ({ page }) => {
