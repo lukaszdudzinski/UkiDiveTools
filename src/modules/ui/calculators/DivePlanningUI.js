@@ -190,6 +190,7 @@ function initGasConsumptionUI() {
                 `;
 
                 renderConsumptionResult(gcResultContainer, consumptionResult, { requiredReserveLiters }, tankSize, explanationHTML);
+                if (AppUI && AppUI.scrollToResult) AppUI.scrollToResult(gcResultContainer);
 
             } catch (error) { console.error(error); }
         });

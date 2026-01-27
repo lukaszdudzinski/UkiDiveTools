@@ -7,7 +7,7 @@ import { QuizUI } from './QuizUI.js';
 import { UkiRiverGameUI } from '../games/uki-river-dive/UkiRiverGameUI.js';
 import { ProAccess } from '../auth/ProAccess.js';
 
-export const APP_VERSION = 'v2026.1.24.01';
+export const APP_VERSION = 'v2026.1.27.01';
 
 export const AppUI = {
     init: () => {
@@ -90,62 +90,55 @@ export const AppUI = {
 
         // 3. PRO Unlock - Direct Listener Attachment
         try {
-            // Use a more specific selector if possible, or ensure we catching the right elements
             const unlockButtons = document.querySelectorAll('.unlockProButton');
-            console.log(`AppUI: Found ${unlockButtons.length} unlock buttons.`);
-
-            if (unlockButtons.length === 0) {
-                console.warn("AppUI: No unlock buttons found! Check HTML.");
-            }
-
             unlockButtons.forEach((btn, index) => {
-                // Remove old listeners is hard without AbortController, but addEventListener is safer than onclick override
-                // We'll clone the node to wipe old listeners if we suspect interference, 
-                // but standard addEventListener usually works fine unless something stops propagation earlier.
-
-                // Let's use specific click handler function to avoid closure messing up? No, arrow func is fine.
+                // Prevent duplicate listeners by checking a custom attribute
+                if (btn.dataset.listenerAttached === 'true') return;
+                btn.dataset.listenerAttached = 'true';
 
                 btn.addEventListener('click', async (e) => {
                     e.preventDefault();
-                    e.stopPropagation(); // Stop bubbling immediately
+                    e.stopPropagation();
                     console.log(`Unlock Button Clicked (Index: ${index})`);
 
-                    const code = prompt("Podaj kod odblokowujący (otrzymałeś go po postawieniu kawy):");
-                    if (!code) {
-                        console.log("Unlock cancelled: no code arrived");
-                        return;
-                    }
+                    // Use setTimeout to allow UI to update before blocking with prompt
+                    setTimeout(async () => {
+                        const code = prompt("Podaj kod odblokowujący (otrzymałeś go po postawieniu kawy):");
+                        if (!code) {
+                            console.log("Unlock cancelled: no code arrived");
+                            return;
+                        }
 
-                    console.log("Attempting unlock with code...");
-                    const success = await ProAccess.unlock(code);
+                        console.log("Attempting unlock with code...");
+                        const success = await ProAccess.unlock(code);
 
-                    if (success) {
-                        console.log("Unlock successful!");
-                        // Calculate expiry for display immediately
-                        const expiryDate = new Date(Date.now() + (30 * 24 * 60 * 60 * 1000));
-                        const dateStr = expiryDate.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                        if (success) {
+                            console.log("Unlock successful!");
+                            const expiryDate = new Date(Date.now() + (30 * 24 * 60 * 60 * 1000));
+                            const dateStr = expiryDate.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
-                        const successMsg = `
-                            <div style="text-align: center;">
-                                <h2 style="color: #00d1b2; margin-bottom: 15px;">Dziękuję za wsparcie! ☕</h2>
-                                <p style="font-size: 1.1em; line-height: 1.6;">
-                                    Strefa PRO została pomyślnie uruchomiona.<br>
-                                    Twój dostęp jest aktywny przez 30 dni.
-                                </p>
-                                <p style="margin-top: 15px; font-weight: bold; color: #fff;">
-                                    Wygasa: ${dateStr}
-                                </p>
-                            </div>
-                        `;
+                            const successMsg = `
+                                 <div style="text-align: center;">
+                                     <h2 style="color: #00d1b2; margin-bottom: 15px;">Dziękuję za wsparcie! ☕</h2>
+                                     <p style="font-size: 1.1em; line-height: 1.6;">
+                                         Strefa PRO została pomyślnie uruchomiona.<br>
+                                         Twój dostęp jest aktywny przez 30 dni.
+                                     </p>
+                                     <p style="margin-top: 15px; font-weight: bold; color: #fff;">
+                                         Wygasa: ${dateStr}
+                                     </p>
+                                 </div>
+                             `;
 
-                        if (AppUI.showModal) AppUI.showModal(successMsg, true);
-                        else alert('Dziękuję! Strefa PRO aktywna do ' + dateStr);
+                            if (AppUI.showModal) AppUI.showModal(successMsg, true);
+                            else alert('Dziękuję! Strefa PRO aktywna do ' + dateStr);
 
-                        AppUI.initProState();
-                    } else {
-                        console.warn("Unlock failed: invalid code");
-                        alert('Błędny kod. Spróbuj ponownie.');
-                    }
+                            AppUI.initProState();
+                        } else {
+                            console.warn("Unlock failed: invalid code");
+                            alert('Błędny kod. Spróbuj ponownie.');
+                        }
+                    }, 50);
                 });
             });
         } catch (e) { console.error("Unlock Button Init Error", e); }

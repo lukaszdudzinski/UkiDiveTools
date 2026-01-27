@@ -1,0 +1,94 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3] [cursor=pointer]:
+      - button "Otwórz menu" [ref=e4]
+      - img "Logo" [ref=e8]
+      - heading "Uki's Dive Tools" [level=2] [ref=e9]
+    - navigation [ref=e10]:
+      - generic "Powrót do ekranu startowego" [ref=e11] [cursor=pointer]:
+        - img "Logo" [ref=e12]
+        - heading "Uki's Dive Tools" [level=1] [ref=e13]
+      - generic [ref=e14]:
+        - generic [ref=e15]:
+          - checkbox "Tryb Ciemny" [checked]
+        - generic [ref=e17]: Tryb Ciemny
+      - list [ref=e18]:
+        - listitem [ref=e19]:
+          - link "Strefa PRO" [ref=e20] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e21]:
+          - link "Kalkulator SAC" [ref=e22] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e23]:
+          - link "Kalkulator Nitrox" [ref=e24] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e25]:
+          - link "Planowanie Gazu (Basic)" [ref=e26] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e27]:
+          - link "Kalkulator Balastu" [ref=e28] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e29]:
+          - link "Narzędzia Divemastera" [ref=e30] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e31]:
+          - link "Wiedza Nurkowa" [ref=e32] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e33]:
+          - link "Uki's River Dive" [ref=e34] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e35]:
+          - link "Ustawienia" [ref=e36] [cursor=pointer]:
+            - /url: "#"
+      - generic [ref=e37]:
+        - link "☕ Podoba Ci się to narzędzie? Postaw mi kawę!" [ref=e39] [cursor=pointer]:
+          - /url: https://buymeacoffee.com/ukidives
+          - text: ☕ Podoba Ci się to narzędzie?
+          - strong [ref=e40]: Postaw mi kawę!
+        - link "🚨 WYPADEK? SOS / KOMORA" [ref=e42] [cursor=pointer]:
+          - /url: "#"
+          - text: 🚨 WYPADEK?
+          - strong [ref=e43]: SOS / KOMORA
+        - generic [ref=e44]: Uki's Dive Tools v2026.1.27.01
+    - main [ref=e45]:
+      - generic [ref=e47]:
+        - generic [ref=e48] [cursor=pointer]:
+          - img "Logo" [ref=e49]
+          - heading "Uki's Dive Tools" [level=2] [ref=e50]
+        - generic [ref=e51]:
+          - generic [ref=e52] [cursor=pointer]:
+            - heading "Kalkulator SAC" [level=4] [ref=e53]
+            - paragraph [ref=e54]: Zużycie gazu. Podstawa planowania.
+          - generic [ref=e55] [cursor=pointer]:
+            - heading "Kalkulator Nitrox" [level=4] [ref=e56]
+            - paragraph [ref=e57]: MOD, EAD, Best Mix, CNS %.
+          - generic [ref=e58] [cursor=pointer]:
+            - heading "Planowanie Gazu" [level=4] [ref=e59]
+            - paragraph [ref=e60]: Symulacja zużycia i rezerwy.
+          - generic [ref=e61] [cursor=pointer]:
+            - heading "Kalkulator Balastu" [level=4] [ref=e62]
+            - paragraph [ref=e63]: Dobierz ołów do konfiguracji.
+          - generic [ref=e64] [cursor=pointer]:
+            - heading "Narzędzia DM" [level=4] [ref=e65]
+            - paragraph [ref=e66]: Checklisty odpraw i pakowania.
+          - generic [ref=e67] [cursor=pointer]:
+            - heading "Strefa PRO" [level=4] [ref=e68]
+            - paragraph [ref=e69]: Zaawansowane narzędzia techniczne.
+          - generic [ref=e70] [cursor=pointer]:
+            - heading "Wiedza" [level=4] [ref=e71]
+            - paragraph [ref=e72]: Teoria i wzory nurkowe.
+          - generic [ref=e73] [cursor=pointer]:
+            - heading "Uki's River Dive" [level=4] [ref=e74]
+            - paragraph [ref=e75]: Zagraj w wolnej chwili!
+          - generic [ref=e76]:
+            - generic [ref=e77] [cursor=pointer]:
+              - heading "☕ Postaw Kawę" [level=4] [ref=e78]
+              - paragraph [ref=e79]: Wsparcie projektu
+            - generic [ref=e80] [cursor=pointer]:
+              - heading "🚨 SOS / Awaria" [level=4] [ref=e81]
+              - paragraph [ref=e82]: Procedury ratunkowe
+  - text: ✕
+```

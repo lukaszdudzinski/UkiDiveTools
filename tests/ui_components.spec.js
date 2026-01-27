@@ -98,7 +98,7 @@ test.describe('UI Components & Settings', () => {
         }
 
         const sosBtn = page.locator('#emergency-btn'); // The wrapper
-        await sosBtn.click(); // Click wrapper or anchor inside?
+        await sosBtn.click({ force: true }); // Force click to bypass 'element is not stable' check due to CSS pulse animation
         // Wrapper has click listener in AppUI.js?
         // AppUI.js: document.getElementById('emergency-btn').addEventListener...
 
@@ -107,8 +107,12 @@ test.describe('UI Components & Settings', () => {
         // AppUI.showModal implementation uses #global-tooltip probably?
         // Or specific modal.
 
-        // Check for "PROCEDURA AWARYJNA" text visible anywhere
-        await expect(page.locator('text=PROCEDURA AWARYJNA')).toBeVisible();
+        // Wait for modal visibility first
+        const tooltip = page.locator('#global-tooltip');
+        await expect(tooltip).toBeVisible();
+
+        // Check for "PROCEDURA AWARYJNA" text visible inside the tooltip
+        await expect(tooltip.locator('text=PROCEDURA AWARYJNA')).toBeVisible();
     });
 
     test('Global Buttons: Coffee (Href Check)', async ({ page, isMobile }) => {

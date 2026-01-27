@@ -62,6 +62,30 @@
     overflow: auto;
 }
 
+/* Fix for TOC Link Clarity - Turquoise as requested */
+.lecture-toc ul {
+    list-style: disc;
+    /* or none if handled elsewhere, but keeping standard */
+    padding-left: 20px;
+}
+
+.lecture-toc li {
+    margin-bottom: 6px;
+}
+
+.lecture-toc a {
+    color: #00d1b2;
+    /* Turquoise / Teal matching app theme */
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.lecture-toc a:hover {
+    color: #00ffda;
+    /* Lighter turquoise on hover */
+    text-decoration: underline;
+}
+
 /* When viewer replaces the list, make sure layout is comfortable */
 .lectures-wrapper.replace-mode {
     display: grid;

@@ -11,16 +11,11 @@ test.describe('Settings & Presistence', () => {
 
         // Settings are usually in the "Ustawienia" tab
         const settingsTab = page.locator('a[data-tab="settings-panel"]');
-
-        // Check visibility after waiting for menu
-        // With helper, we are sure sidebar is visible if mobile
+        await expect(settingsTab).toBeVisible();
         await settingsTab.click();
     });
 
     test('should toggle theme and persist after reload', async ({ page }) => {
-        // Locate "Efekt Szklany" (Liquid Glass) Toggle which acts as a visual theme setting for now
-        // Or check checking for actual Dark/Light mode if strictly implemented (user has mentioned "Dark Mode" in passing)
-
         // Testing "Liquid Glass" as it's a confirmed setting in AppUI.js
         const glassToggle = page.locator('#glass-toggle');
 
@@ -47,8 +42,6 @@ test.describe('Settings & Presistence', () => {
         await page.reload();
 
         // 5. Verify Persistence
-        // Need to navigate back to settings to check checkbox state, 
-        // OR just check body class immediately (faster)
         if (initialChecked) {
             // Expect OFF persistence
             await expect(page.locator('body')).toHaveClass(/glass-off/);
@@ -57,45 +50,31 @@ test.describe('Settings & Presistence', () => {
         }
     });
 
-    test('should persist Water Type selection', async ({ page }) => {
-        // Ensure settings panel is visible
+    test('should persist Water Type selection', async ({ page, isMobile }) => {
         // Ensure settings panel is visible
         const settingsTab = page.locator('a[data-tab="settings-panel"]');
-        if (!await page.locator('#settings-panel').isVisible()) {
-            // Logic to open if somehow not open, but beforeEach should handle it.
-            // On mobile, re-open menu if needed
-            const isMobile = page.viewportSize().width < 768;
-            if (isMobile) {
-                await page.click('#mobile-menu-toggle');
-                await page.waitForTimeout(300);
-            }
-            await settingsTab.click();
-        }
+        await expect(settingsTab).toBeVisible();
 
+        // Ensure panel content loaded
         const waterSelect = page.locator('#global-water-type');
         await expect(waterSelect).toBeVisible();
 
         // Select 'salt' or 'fresh' opposite to current
-        // Value "salt" / "fresh"
+        // For robustness, let's force 'salt' then check
         await waterSelect.selectOption('salt');
 
         // Reload
         await page.reload();
 
-        // Check if value is still 'salt'
-        // Need to re-nav to settings? App usually loads settings to state on init
-
         // Handle Mobile Menu again after reload
-        const isMobile = page.viewportSize().width < 768; // Simple check or pass fixture if possible (params not avail here easily without refactor)
-        // Actually, we can check visibility.
-        if (!await settingsTab.isVisible()) {
-            const mobileMenuBtn = page.locator('#mobile-menu-toggle');
-            if (await mobileMenuBtn.isVisible()) {
-                await mobileMenuBtn.click();
-                await page.waitForTimeout(300);
-            }
-        }
+        await openMobileMenuIfNeeded(page, isMobile);
+
+        // Re-open setttings
+        await expect(settingsTab).toBeVisible();
         await settingsTab.click();
+
+        // Check value
+        await expect(waterSelect).toBeVisible();
         await expect(waterSelect).toHaveValue('salt');
     });
 });
