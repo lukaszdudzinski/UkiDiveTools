@@ -61,6 +61,24 @@ export const LecturesUI = {
 
         if (lectureTitle) lectureTitle.textContent = lecture.title;
 
+        // Audio Player Implementation
+        // We look for existing audio player or create one in a designated container
+        // To be safe, we will prepend it to lectureBody or use a specific container if we added one to HTML.
+        // For now, let's inject it into the body start if it exists.
+
+        let audioHtml = '';
+        if (lecture.audioSrc) {
+            audioHtml = `
+                <div class="lecture-audio-wrapper" style="margin: 0 0 20px 0; text-align: center; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                    <p style="margin-bottom: 8px; font-weight: bold; color: var(--color-text-primary);">🎧 Posłuchaj wykładu:</p>
+                    <audio controls style="width: 100%; max-width: 400px; height: 40px;">
+                        <source src="${lecture.audioSrc}" type="audio/mp4">
+                        Twoja przeglądarka nie obsługuje elementu audio.
+                    </audio>
+                </div>
+            `;
+        }
+
         // Generate TOC
         const tocHtml = LecturesUI.generateToc(lecture.content);
         if (lectureToc) {
@@ -77,7 +95,7 @@ export const LecturesUI = {
         });
 
         if (lectureBody) {
-            lectureBody.innerHTML = tempDiv.innerHTML;
+            lectureBody.innerHTML = audioHtml + tempDiv.innerHTML;
 
             // Add Quiz Button
             if (lecture.quiz && lecture.quiz.length > 0) {

@@ -38,6 +38,10 @@ test.describe('Night Diving Lecture', () => {
         const title = page.locator('#lecture-title');
         await expect(title).toHaveText('Nurkowanie Nocne i w Ograniczonej Widoczności');
 
+        // Verification: Audio Player
+        const audioPlayer = page.locator('audio');
+        await expect(audioPlayer).toBeVisible();
+
         // 4. Verify Infographic & Lightbox
         const infraEvolution = page.locator('img[src="img/lectures/night_evolution.jpg"]');
         await expect(infraEvolution).toBeVisible();
