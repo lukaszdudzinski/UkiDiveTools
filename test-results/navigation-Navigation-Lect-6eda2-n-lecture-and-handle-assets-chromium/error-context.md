@@ -1,0 +1,58 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - navigation [ref=e3]:
+      - generic "Powrót do ekranu startowego" [ref=e4] [cursor=pointer]:
+        - img "Logo" [ref=e5]
+        - heading "Uki's Dive Tools" [level=1] [ref=e6]
+      - generic [ref=e7]:
+        - generic [ref=e8]:
+          - checkbox "Tryb Ciemny" [checked]
+        - generic [ref=e10]: Tryb Ciemny
+      - list [ref=e11]:
+        - listitem [ref=e12]:
+          - link "Strefa PRO" [ref=e13] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e14]:
+          - link "Kalkulator SAC" [ref=e15] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e16]:
+          - link "Kalkulator Nitrox" [ref=e17] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e18]:
+          - link "Planowanie Gazu (Basic)" [ref=e19] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e20]:
+          - link "Kalkulator Balastu" [ref=e21] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e22]:
+          - link "Narzędzia Divemastera" [ref=e23] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e24]:
+          - link "Wiedza Nurkowa" [ref=e25] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e26]:
+          - link "Uki's River Dive" [ref=e27] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e28]:
+          - link "Ustawienia" [ref=e29] [cursor=pointer]:
+            - /url: "#"
+      - generic [ref=e30]:
+        - link "☕ Podoba Ci się to narzędzie? Postaw mi kawę!" [ref=e32] [cursor=pointer]:
+          - /url: https://buymeacoffee.com/ukidives
+          - text: ☕ Podoba Ci się to narzędzie?
+          - strong [ref=e33]: Postaw mi kawę!
+        - link "🚨 WYPADEK? SOS / KOMORA" [ref=e35] [cursor=pointer]:
+          - /url: "#"
+          - text: 🚨 WYPADEK?
+          - strong [ref=e36]: SOS / KOMORA
+        - generic [ref=e37]: Uki's Dive Tools v2026.1.28.01
+    - main [ref=e38]:
+      - generic [ref=e41] [cursor=pointer]:
+        - img "Logo" [ref=e42]
+        - heading "Uki's Dive Tools" [level=2] [ref=e43]
+        - paragraph [ref=e44]: Wybierz narzędzie z menu
+  - text: ✕
+```

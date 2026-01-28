@@ -4,6 +4,7 @@ export const nightDivingLecture = {
     readTime: '15 min',
     level: 'Advanced',
     audioSrc: 'audio/Tajemnice_i_bezpieczeństwo_nurkowania_po_zmroku.m4a',
+    presentationSrc: 'lectures/night-diving/Navigating_Low_Visibility_Diving.pdf',
     description: 'Noc w samo południe. Dlaczego w polskich wodach latarka jest Twoim najważniejszym partnerem?',
     content: `
         <p>Nurkowanie po zachodzie słońca to jedno z najbardziej ekscytujących doświadczeń w karierze płetwonurka. Znane Ci miejsca zmieniają się nie do poznania, a zmysły wyostrzają się, reagując na każdy ruch w snopie światła. W tym przewodniku dowiesz się, jak bezpiecznie wejść w świat mroku – niezależnie od tego, czy jest to noc na rafie, czy głębokie nurkowanie w polskim jeziorze.</p>

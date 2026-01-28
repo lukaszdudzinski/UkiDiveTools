@@ -97,6 +97,64 @@ export const LecturesUI = {
         if (lectureBody) {
             lectureBody.innerHTML = audioHtml + tempDiv.innerHTML;
 
+            // Presentation Button (Instructor Materials)
+            if (lecture.presentationSrc) {
+                const instructorSection = document.createElement('div');
+                instructorSection.className = 'instructor-materials';
+                instructorSection.style.cssText = `
+                    margin-top: 40px;
+                    padding: 20px;
+                    border-top: 1px solid rgba(255,255,255,0.1);
+                    text-align: center;
+                `;
+
+                // Icon in style of Screenshot 2 (Glass square with icon)
+                const pdfIcon = `
+                    <div style="
+                        display: inline-flex; align-items: center; justify-content: center;
+                        width: 40px; height: 40px;
+                        background: rgba(255, 255, 255, 0.1);
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                        border-radius: 12px;
+                        margin-right: 12px;
+                        flex-shrink: 0;
+                    ">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                `;
+
+                instructorSection.innerHTML = `
+                    <h4 style="margin-bottom: 20px; color: var(--color-text-muted); font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px;">Strefa Instruktora</h4>
+                    <button id="open-presentation-btn" class="action-button" style="
+                        display: inline-flex; align-items: center; justify-content: center;
+                        background: var(--color-bg-card); 
+                        border: 1px solid var(--color-primary); 
+                        padding: 12px 24px;
+                        color: var(--color-text-primary);
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                        transition: transform 0.2s;
+                        width: auto;
+                        max-width: 100%;
+                    ">
+                        ${pdfIcon}
+                        <span style="font-weight: 600; text-align: left;">Otwórz Prezentację (PDF)</span>
+                    </button>
+                    <p style="font-size: 0.8em; margin-top: 15px; color: #666;">Dostępne dla instruktorów i divemasterów.</p>
+                `;
+                lectureBody.appendChild(instructorSection);
+
+                const openPdfBtn = instructorSection.querySelector('#open-presentation-btn');
+                openPdfBtn.addEventListener('click', () => {
+                    LecturesUI.openPdfModal(lecture.presentationSrc, lecture.title);
+                });
+            }
+
             // Add Quiz Button
             if (lecture.quiz && lecture.quiz.length > 0) {
                 const quizBtnContainer = document.createElement('div');
@@ -157,6 +215,77 @@ export const LecturesUI = {
             lectureViewer.hidden = false;
             lectureViewer.focus();
         }
+    },
+
+    openPdfModal: (src, title) => {
+        // Mobile Check
+        const isMobile = window.innerWidth <= 768;
+
+        if (isMobile) {
+            // Mobile: Open directly in new tab/native viewer
+            if (confirm("Na urządzeniach mobilnych prezentacja otworzy się w nowej karcie (lub pobierze). Kontynuować?")) {
+                window.open(src, '_blank');
+            }
+            return;
+        }
+
+        // Desktop: Modal Embed
+        let modal = document.getElementById('pdf-modal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'pdf-modal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.9);
+                z-index: 10000;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            `;
+
+            modal.innerHTML = `
+                <div style="width: 90%; height: 90%; background: #fff; position: relative; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;">
+                    <div style="padding: 10px 20px; background: #222; color: #fff; display: flex; justify-content: space-between; align-items: center;">
+                        <h4 style="margin: 0; font-size: 1.1em;" id="pdf-modal-title">Prezentacja</h4>
+                        <button id="pdf-modal-close" style="background: none; border: none; color: #fff; font-size: 1.5em; cursor: pointer;">&times;</button>
+                    </div>
+                    <div id="pdf-container" style="flex: 1; background: #ccc;">
+                        <!-- Embed goes here -->
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+
+            modal.querySelector('#pdf-modal-close').addEventListener('click', () => {
+                modal.style.display = 'none';
+                modal.querySelector('#pdf-container').innerHTML = ''; // Clear to stop loading
+            });
+
+            // Close on background click
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    modal.querySelector('#pdf-container').innerHTML = '';
+                }
+            });
+        }
+
+        modal.querySelector('#pdf-modal-title').textContent = title || "Prezentacja";
+        const container = modal.querySelector('#pdf-container');
+
+        // Use <object> for better PDF compatibility than iframe in some cases
+        container.innerHTML = `
+            <object data="${src}" type="application/pdf" width="100%" height="100%">
+                <div style="display: flex; align-items: center; justify-content: center; height: 100%; flex-direction: column; color: #333;">
+                    <p>Twoja przeglądarka nie obsługuje podglądu PDF.</p>
+                    <a href="${src}" target="_blank" class="action-button" style="background: var(--color-primary); color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px;">Pobierz Plik PDF</a>
+                </div>
+            </object>
+        `;
+
+        modal.style.display = 'flex';
     },
 
     generateToc: (content) => {
