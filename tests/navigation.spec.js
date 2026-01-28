@@ -12,12 +12,25 @@ test.describe('Navigation Lecture', () => {
         // 1. Navigation
         await openMobileMenuIfNeeded(page, isMobile);
 
-        // Click on "Wiedza Nurkowa"
-        await page.click('button:has-text("Wiedza Nurkowa")');
+        await page.click('[data-tab="science-of-diving"]');
+
+        // Wait for tab content
+        const lectureTab = page.locator('#science-of-diving');
+        await expect(lectureTab).toHaveClass(/active-tab/);
+
+        // Ensure Wykłady subtab is active
+        const lecturesSubTab = page.locator('button[data-subtab="sod-lectures"]');
+        if (await lecturesSubTab.isVisible()) {
+            await lecturesSubTab.click();
+        }
+
+        // Wait for grid
+        const gridWrapper = page.locator('.lectures-grid-wrapper');
+        await gridWrapper.waitFor({ state: 'visible', timeout: 5000 });
 
         // Click on "Nawigacja w Nurkowaniu"
-        // Adjust selector if needed, assuming it's in the list
-        await page.click('li[data-id="navigation"]');
+        // Click on "Nawigacja w Nurkowaniu"
+        await page.click('.lecture-card[data-lecture-id="navigation"]');
 
         // 2. Verify Title
         const title = page.locator('#lecture-title');
@@ -48,8 +61,9 @@ test.describe('Navigation Lecture', () => {
         await quizButton.scrollIntoViewIfNeeded();
         await quizButton.click();
 
-        // Check if quiz started (first question appears)
-        await expect(page.locator('#quiz-container')).toBeVisible();
-        await expect(page.locator('.quiz-question')).toBeVisible();
+        // Check if quiz started (modal appears)
+        const modal = page.locator('#quiz-modal');
+        await expect(modal).toBeVisible();
+        await expect(page.locator('.quiz-option-btn').first()).toBeVisible();
     });
 });
