@@ -3,7 +3,7 @@ export const navigationLecture = {
     title: 'Nawigacja w Nurkowaniu – Sztuka Orientacji Podwodnej',
     readTime: '20 min',
     level: 'Advanced',
-    audioSrc: 'lectures/navigation/Nawigacja_podwodna_wbrew_własnym_zmysłom.m4a',
+    audioSrc: 'lectures/navigation/Dlaczego_nurkowie_instynktownie_pływają_w_kółko.m4a',
     presentationSrc: 'lectures/navigation/Nawigacja_Podwodna_Sztuka_i_Nauka.pdf',
     description: 'Jak ufać przyrządom, gdy zmysły zawodzą – kompas vs. intuicja.',
     content: `

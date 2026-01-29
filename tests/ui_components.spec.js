@@ -20,11 +20,8 @@ test.describe('UI Components & Settings', () => {
     });
 
     test('Theme Toggle (Dark/Light)', async ({ page, isMobile }) => {
-        // Theme toggle is in sidebar
-        if (isMobile) {
-            await page.click('#mobile-menu-toggle');
-            await page.waitForTimeout(300);
-        }
+        // Theme toggle is now in Settings
+        await navigateTo(page, isMobile, 'Ustawienia', 'settings-panel');
 
         const toggleLabel = page.locator('label[for="theme-toggle"].theme-switch');
         await expect(toggleLabel).toBeVisible();
@@ -122,7 +119,7 @@ test.describe('UI Components & Settings', () => {
         }
 
         const coffeeLink = page.locator('.donation-wrapper a');
-        await expect(coffeeLink).toHaveAttribute('href', /buymeacoffee\.com/);
+        await expect(coffeeLink).toHaveAttribute('href', /suppi\.pl/);
     });
 
     test('Tooltips: Visibility', async ({ page, isMobile }) => {

@@ -1,58 +1,85 @@
 # Page snapshot
 
 ```yaml
-- generic [active] [ref=e1]:
+- generic [ref=e1]:
   - generic [ref=e2]:
     - navigation [ref=e3]:
       - generic "Powrót do ekranu startowego" [ref=e4] [cursor=pointer]:
         - img "Logo" [ref=e5]
         - heading "Uki's Dive Tools" [level=1] [ref=e6]
-      - generic [ref=e7]:
-        - generic [ref=e8]:
-          - checkbox "Tryb Ciemny" [checked]
-        - generic [ref=e10]: Tryb Ciemny
-      - list [ref=e11]:
+      - list [ref=e7]:
+        - listitem [ref=e8]:
+          - link "Strefa PRO" [ref=e9] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e10]:
+          - link "Kalkulator SAC" [ref=e11] [cursor=pointer]:
+            - /url: "#"
         - listitem [ref=e12]:
-          - link "Strefa PRO" [ref=e13] [cursor=pointer]:
+          - link "Kalkulator Nitrox" [ref=e13] [cursor=pointer]:
             - /url: "#"
         - listitem [ref=e14]:
-          - link "Kalkulator SAC" [ref=e15] [cursor=pointer]:
+          - link "Planowanie Gazu (Basic)" [ref=e15] [cursor=pointer]:
             - /url: "#"
         - listitem [ref=e16]:
-          - link "Kalkulator Nitrox" [ref=e17] [cursor=pointer]:
+          - link "Kalkulator Balastu" [ref=e17] [cursor=pointer]:
             - /url: "#"
         - listitem [ref=e18]:
-          - link "Planowanie Gazu (Basic)" [ref=e19] [cursor=pointer]:
+          - link "Narzędzia Divemastera" [ref=e19] [cursor=pointer]:
             - /url: "#"
         - listitem [ref=e20]:
-          - link "Kalkulator Balastu" [ref=e21] [cursor=pointer]:
+          - link "Wiedza Nurkowa" [ref=e21] [cursor=pointer]:
             - /url: "#"
         - listitem [ref=e22]:
-          - link "Narzędzia Divemastera" [ref=e23] [cursor=pointer]:
+          - link "Uki's River Dive" [ref=e23] [cursor=pointer]:
             - /url: "#"
         - listitem [ref=e24]:
-          - link "Wiedza Nurkowa" [ref=e25] [cursor=pointer]:
+          - link "Ustawienia" [ref=e25] [cursor=pointer]:
             - /url: "#"
-        - listitem [ref=e26]:
-          - link "Uki's River Dive" [ref=e27] [cursor=pointer]:
-            - /url: "#"
-        - listitem [ref=e28]:
-          - link "Ustawienia" [ref=e29] [cursor=pointer]:
-            - /url: "#"
-      - generic [ref=e30]:
-        - link "☕ Podoba Ci się to narzędzie? Postaw mi kawę!" [ref=e32] [cursor=pointer]:
-          - /url: https://buymeacoffee.com/ukidives
+      - generic [ref=e26]:
+        - link "☕ Podoba Ci się to narzędzie? Postaw mi kawę!" [ref=e28] [cursor=pointer]:
+          - /url: https://suppi.pl/ukidives
           - text: ☕ Podoba Ci się to narzędzie?
-          - strong [ref=e33]: Postaw mi kawę!
-        - link "🚨 WYPADEK? SOS / KOMORA" [ref=e35] [cursor=pointer]:
+          - strong [ref=e29]: Postaw mi kawę!
+        - link "🚨 WYPADEK? SOS / KOMORA" [ref=e31] [cursor=pointer]:
           - /url: "#"
           - text: 🚨 WYPADEK?
-          - strong [ref=e36]: SOS / KOMORA
-        - generic [ref=e37]: Uki's Dive Tools v2026.1.28.01
-    - main [ref=e38]:
-      - generic [ref=e41] [cursor=pointer]:
-        - img "Logo" [ref=e42]
-        - heading "Uki's Dive Tools" [level=2] [ref=e43]
-        - paragraph [ref=e44]: Wybierz narzędzie z menu
+          - strong [ref=e32]: SOS / KOMORA
+        - generic [ref=e33]: Uki's Dive Tools v2026.1.29.01
+    - main [ref=e34]:
+      - generic [ref=e36]:
+        - heading "Wiedza Nurkowa" [level=3] [ref=e37]
+        - navigation [ref=e38]:
+          - button "Wykłady" [active] [ref=e39] [cursor=pointer]
+          - button "SAC" [ref=e40] [cursor=pointer]
+          - button "Nitrox" [ref=e41] [cursor=pointer]
+          - button "Gazy" [ref=e42] [cursor=pointer]
+          - button "Balast" [ref=e43] [cursor=pointer]
+        - generic [ref=e44]:
+          - generic [ref=e47]:
+            - button "Barotrauma Urazy ciśnieniowe. Fizyka, rodzaje, profilaktyka i pierwsza pomoc." [ref=e48] [cursor=pointer]:
+              - generic [ref=e49]:
+                - heading "Barotrauma" [level=4] [ref=e50]
+                - paragraph [ref=e51]: Urazy ciśnieniowe. Fizyka, rodzaje, profilaktyka i pierwsza pomoc.
+            - button "Choroba Dekompresyjna Mechanizm DCS, objawy, czynniki ryzyka i pierwsza pomoc w wypadku." [ref=e52] [cursor=pointer]:
+              - generic [ref=e53]:
+                - heading "Choroba Dekompresyjna" [level=4] [ref=e54]
+                - paragraph [ref=e55]: Mechanizm DCS, objawy, czynniki ryzyka i pierwsza pomoc w wypadku.
+            - button "Prawo Daltona Fundament nurkowania Nitroxowego. Definicja, wzory, MOD, EAD i bezpieczeństwo." [ref=e56] [cursor=pointer]:
+              - generic [ref=e57]:
+                - heading "Prawo Daltona" [level=4] [ref=e58]
+                - paragraph [ref=e59]: Fundament nurkowania Nitroxowego. Definicja, wzory, MOD, EAD i bezpieczeństwo.
+            - button "Barotrauma vs DCS Pełne porównanie urazów ciśnieniowych i choroby dekompresyjnej wraz z pierwszą pomocą." [ref=e60] [cursor=pointer]:
+              - generic [ref=e61]:
+                - heading "Barotrauma vs DCS" [level=4] [ref=e62]
+                - paragraph [ref=e63]: Pełne porównanie urazów ciśnieniowych i choroby dekompresyjnej wraz z pierwszą pomocą.
+            - button "Planowanie Gazu (Rock Bottom) Dlaczego \"50 bar\" to za mało? Metoda Rock Bottom / Minimum Gas." [ref=e64] [cursor=pointer]:
+              - generic [ref=e65]:
+                - heading "Planowanie Gazu (Rock Bottom)" [level=4] [ref=e66]
+                - paragraph [ref=e67]: Dlaczego "50 bar" to za mało? Metoda Rock Bottom / Minimum Gas.
+            - button "Nawigacja w Nurkowaniu – Sztuka Orientacji Podwodnej Jak ufać przyrządom, gdy zmysły zawodzą – kompas vs. intuicja." [ref=e68] [cursor=pointer]:
+              - generic [ref=e69]:
+                - heading "Nawigacja w Nurkowaniu – Sztuka Orientacji Podwodnej" [level=4] [ref=e70]
+                - paragraph [ref=e71]: Jak ufać przyrządom, gdy zmysły zawodzą – kompas vs. intuicja.
+          - text: • • • •
   - text: ✕
 ```

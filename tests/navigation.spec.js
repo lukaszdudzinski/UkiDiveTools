@@ -40,7 +40,7 @@ test.describe('Navigation Lecture', () => {
         const audioPlayer = page.locator('audio');
         await expect(audioPlayer).toBeVisible();
         const audioSrc = await audioPlayer.locator('source').getAttribute('src');
-        expect(audioSrc).toContain('Nawigacja_podwodna_wbrew');
+        expect(audioSrc).toContain('Dlaczego_nurkowie_instynktownie');
 
         // 4. Verify Infographics
         // Compass infographic

@@ -39,11 +39,7 @@
                 <h1>Uki's Dive Tools</h1>
             </div>
 
-            <div class="theme-switch-wrapper">
-                <label class="theme-switch" for="theme-toggle"><input type="checkbox" id="theme-toggle" /><span
-                        class="slider round"></span></label>
-                <label for="theme-toggle" class="theme-label">Tryb Ciemny</label>
-            </div>
+
 
             <ul>
                 <li class="pro-menu-item"><a href="#" data-tab="pro-dashboard">Strefa PRO</a></li>
@@ -60,8 +56,7 @@
 
             <div class="sidebar-footer">
                 <div class="donation-wrapper">
-                    <a href="https://buymeacoffee.com/ukidives" target="_blank" rel="noopener noreferrer"
-                        id="donation-link">
+                    <a href="https://suppi.pl/ukidives" target="_blank" rel="noopener noreferrer" id="donation-link">
                         Podoba Ci się to narzędzie?
                         <strong>Postaw mi kawę!</strong>
                     </a>
@@ -139,7 +134,7 @@
                         <!-- Special Row: Coffee & SOS (Bottom) -->
                         <div class="tile-special-row">
                             <div class="dashboard-card tile-coffee"
-                                onclick="window.open('https://buymeacoffee.com/ukidives', '_blank')">
+                                onclick="window.open('https://suppi.pl/ukidives', '_blank')">
                                 <h4 style="color: #4CAF50; text-shadow: 0 0 10px rgba(76, 175, 80, 0.6);">☕ Postaw Kawę
                                 </h4>
                                 <p>Wsparcie projektu</p>
@@ -169,7 +164,7 @@
                                 ZABLOKOWANE</div>
 
                             <!-- Primary Action: Buy Coffee -->
-                            <a href="https://buymeacoffee.com/ukidives" target="_blank" rel="noopener noreferrer"
+                            <a href="https://suppi.pl/ukidives" target="_blank" rel="noopener noreferrer"
                                 class="pulse-button"
                                 style="display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; margin-bottom: 20px;">
                                 ☕ POSTAW KAWĘ ABY ODBLOKOWAĆ
@@ -826,22 +821,72 @@
                 <div id="science-of-diving" class="tab-content">
                     <h3>Wiedza Nurkowa</h3>
                     <nav class="sub-tab-nav"><button class="sub-tab-button active"
+                            data-subtab="sod-lectures">Wykłady</button><button class="sub-tab-button"
                             data-subtab="sod-sac">SAC</button><button class="sub-tab-button"
                             data-subtab="sod-nitrox">Nitrox</button><button class="sub-tab-button"
                             data-subtab="sod-gas">Gazy</button><button class="sub-tab-button"
-                            data-subtab="sod-ballast">Balast</button><button class="sub-tab-button"
-                            data-subtab="sod-lectures">Wykłady</button></nav>
+                            data-subtab="sod-ballast">Balast</button></nav>
                     <div class="sub-tab-content-wrapper">
-                        <div id="sod-sac" class="sub-tab-content active-sub-tab">
+                        <div id="sod-lectures" class="sub-tab-content active-sub-tab">
+                            <div class="lectures-grid-wrapper">
+                                <div id="lecture-cards" class="lectures-grid"></div>
+                            </div>
+                            <div class="lectures-wrapper replace-mode">
+                                <section id="lecture-viewer" class="lecture-viewer" hidden aria-label="Lecture content">
+                                    <div class="lecture-controls">
+                                        <button id="lecture-back-btn">← Wróć</button>
+                                        <h4 id="lecture-title" class="lecture-title">Tytuł Wykładu</h4>
+                                    </div>
+                                    <div id="lecture-body" class="lecture-body"></div>
+                                </section>
+                                <aside id="lecture-toc" class="lecture-toc" hidden aria-label="Table of contents">
+                                </aside>
+                            </div>
+                        </div>
+                        <div id="sod-sac" class="sub-tab-content">
                             <div class="science-content">
-                                <h4>SAC</h4>
+                                <h4>Czym jest SAC?</h4>
+                                <p><strong>SAC (Surface Air Consumption)</strong>, znany również jako wskaźnik
+                                    powierzchniowego zużycia gazu, określa, ile litrów czynnika oddechowego zużywasz w
+                                    ciągu jednej minuty na powierzchni (przy ciśnieniu 1 bar). Jest to wartość
+                                    indywidualna dla każdego nurka, zależna od kondycji, stresu, wysiłku i sprzętu.</p>
+
+                                <h4>Dlaczego to jest ważne?</h4>
+                                <p>Znajomość własnego SAC jest fundamentem bezpiecznego planowania. Pozwala przewidzieć,
+                                    na jak długo wystarczy gazu w butli na dowolnej planowanej głębokości. Bez tej
+                                    wiedzy planowanie rezerw gazu (np. metodą Rock Bottom) jest niemożliwe.</p>
+
+                                <h4>Wzór do obliczenia SAC</h4>
                                 <div class="formula-box">
-                                    <p class="formula">SAC = ((P1 - P2) * Vb) / (Pśr * T)</p>
-                                    <ul>
-                                        <li>P1/P2: Ciśnienie start/koniec</li>
-                                        <li>Vb: Butla</li>
-                                        <li>Pśr: Średnie ciśnienie</li>
+                                    <p class="formula-main">SAC = (AC · V) / (t · P)</p>
+                                    <ul class="formula-legend">
+                                        <li><strong>AC</strong> = Zużyty gaz w barach (Ciśnienie początkowe – Ciśnienie
+                                            końcowe)</li>
+                                        <li><strong>V</strong> = Pojemność butli w litrach</li>
+                                        <li><strong>t</strong> = Czas nurkowania w minutach</li>
+                                        <li><strong>P</strong> = Ciśnienie absolutne na średniej głębokości (w barach)
+                                        </li>
                                     </ul>
+                                </div>
+
+                                <h4>Przykład obliczenia</h4>
+                                <p>Nurek używa butli 12-litrowej. Wykonał nurkowanie na głębokość 20 metrów (gdzie
+                                    panuje ciśnienie absolutne ok. 3 bar). Czas nurkowania wyniósł 40 minut, a w tym
+                                    czasie zużył 150 barów powietrza.</p>
+                                <div class="calculation-example">
+                                    SAC = (150 bar · 12 l) / (40 min · 3 bar)<br>
+                                    SAC = 1800 / 120<br>
+                                    <strong>SAC = 15 l/min</strong>
+                                </div>
+                                <p>Wynik: Ten nurek zużywa 15 litrów powietrza na minutę na powierzchni.</p>
+
+                                <div class="app-feature-highlight">
+                                    <h4>Funkcja Aplikacji Uki's Dive Tool</h4>
+                                    <p>Pamiętaj, że nie musisz liczyć tego ręcznie za każdym razem! Wyliczoną wartość
+                                        własnego SAC możesz zapisać w pamięci aplikacji Uki's Dive Tool.
+                                        Zapisana wartość będzie widoczna w sekcji <strong>Ustawienia</strong> i
+                                        aplikacja będzie ją automatycznie wykorzystywać do wszystkich przyszłych
+                                        kalkulacji planowania gazu i rezerwy.</p>
                                 </div>
                             </div>
                         </div>
@@ -981,6 +1026,10 @@
                     <div class="settings-toggle-row"><label for="glass-toggle">Efekt Szklany (Liquid
                             Glass)</label><label class="theme-switch" for="glass-toggle"><input type="checkbox"
                                 id="glass-toggle" /><span class="slider round"></span></label></div>
+
+                    <div class="settings-toggle-row"><label for="theme-toggle">Tryb Ciemny</label><label
+                            class="theme-switch" for="theme-toggle"><input type="checkbox" id="theme-toggle" /><span
+                                class="slider round"></span></label></div>
 
                     <div class="settings-toggle-row"><label for="global-water-type">Domyślny Rodzaj
                             Wody</label><select id="global-water-type" class="settings-select">

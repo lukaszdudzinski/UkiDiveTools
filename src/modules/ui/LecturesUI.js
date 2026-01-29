@@ -218,18 +218,7 @@ export const LecturesUI = {
     },
 
     openPdfModal: (src, title) => {
-        // Mobile Check
-        const isMobile = window.innerWidth <= 768;
-
-        if (isMobile) {
-            // Mobile: Open directly in new tab/native viewer
-            if (confirm("Na urządzeniach mobilnych prezentacja otworzy się w nowej karcie (lub pobierze). Kontynuować?")) {
-                window.open(src, '_blank');
-            }
-            return;
-        }
-
-        // Desktop: Modal Embed
+        // ALWAYS use Modal Embed (Both Desktop & Mobile) to prevent PWA exit
         let modal = document.getElementById('pdf-modal');
         if (!modal) {
             modal = document.createElement('div');
@@ -237,7 +226,7 @@ export const LecturesUI = {
             modal.style.cssText = `
                 position: fixed;
                 top: 0; left: 0; width: 100%; height: 100%;
-                background: rgba(0,0,0,0.9);
+                background: rgba(0,0,0,0.95);
                 z-index: 10000;
                 display: flex;
                 flex-direction: column;
@@ -246,12 +235,36 @@ export const LecturesUI = {
             `;
 
             modal.innerHTML = `
-                <div style="width: 90%; height: 90%; background: #fff; position: relative; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;">
-                    <div style="padding: 10px 20px; background: #222; color: #fff; display: flex; justify-content: space-between; align-items: center;">
-                        <h4 style="margin: 0; font-size: 1.1em;" id="pdf-modal-title">Prezentacja</h4>
-                        <button id="pdf-modal-close" style="background: none; border: none; color: #fff; font-size: 1.5em; cursor: pointer;">&times;</button>
+                <div style="width: 100%; height: 100%; background: #1e1e1e; position: relative; display: flex; flex-direction: column;">
+                    <div style="
+                        padding: 15px; 
+                        background: rgba(30, 30, 30, 0.95); 
+                        color: #fff; 
+                        display: flex; 
+                        justify-content: space-between; 
+                        align-items: center;
+                        border-bottom: 1px solid rgba(255,255,255,0.1);
+                        flex-shrink: 0;
+                    ">
+                        <h4 style="margin: 0; font-size: 1.1em; max-width: 80%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;" id="pdf-modal-title">Prezentacja</h4>
+                        <button id="pdf-modal-close" style="
+                            background: rgba(255, 56, 96, 0.2); 
+                            border: 1px solid #ff3860; 
+                            color: #ff3860;
+                            border-radius: 50%;
+                            width: 36px; height: 36px;
+                            padding: 0;
+                            cursor: pointer;
+                            display: flex; align-items: center; justify-content: center;
+                            transition: all 0.2s ease;
+                        ">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
                     </div>
-                    <div id="pdf-container" style="flex: 1; background: #ccc;">
+                    <div id="pdf-container" style="flex: 1; background: #333; overflow: hidden; position: relative;">
                         <!-- Embed goes here -->
                     </div>
                 </div>
@@ -262,25 +275,47 @@ export const LecturesUI = {
                 modal.style.display = 'none';
                 modal.querySelector('#pdf-container').innerHTML = ''; // Clear to stop loading
             });
-
-            // Close on background click
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.style.display = 'none';
-                    modal.querySelector('#pdf-container').innerHTML = '';
-                }
-            });
         }
 
-        modal.querySelector('#pdf-modal-title').textContent = title || "Prezentacja";
+        const modalTitle = modal.querySelector('#pdf-modal-title');
+        if (modalTitle) modalTitle.textContent = title || "Prezentacja";
+
         const container = modal.querySelector('#pdf-container');
 
-        // Use <object> for better PDF compatibility than iframe in some cases
+        // Use Google Docs Viewer for mobile compatibility without downloading? 
+        // Or simple object/iframe. 
+        // For local files in PWA, specific viewers might be tricky.
+        // Let's try standard object first, but add a clear DOWNLOAD button as fallback inside the viewer.
+
         container.innerHTML = `
-            <object data="${src}" type="application/pdf" width="100%" height="100%">
-                <div style="display: flex; align-items: center; justify-content: center; height: 100%; flex-direction: column; color: #333;">
-                    <p>Twoja przeglądarka nie obsługuje podglądu PDF.</p>
-                    <a href="${src}" target="_blank" class="action-button" style="background: var(--color-primary); color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px;">Pobierz Plik PDF</a>
+            <object data="${src}" type="application/pdf" width="100%" height="100%" style="border: none;">
+                <div style="
+                    display: flex; 
+                    align-items: center; 
+                    justify-content: center; 
+                    height: 100%; 
+                    flex-direction: column; 
+                    color: #e0e0e0; 
+                    padding: 20px; 
+                    text-align: center;
+                ">
+                    <p style="margin-bottom: 20px;">Twoja przeglądarka może nie obsługiwać podglądu PDF w trybie pełnoekranowym.</p>
+                    <a href="${src}" target="_blank" class="action-button" style="
+                        background: var(--color-primary); 
+                        color: #fff; 
+                        text-decoration: none; 
+                        padding: 12px 24px; 
+                        border-radius: 8px;
+                        font-weight: bold;
+                    ">Pobierz / Otwórz PDF</a>
+                    <button onclick="document.getElementById('pdf-modal').style.display='none'" style="
+                        margin-top: 20px;
+                        background: none;
+                        border: 1px solid #666;
+                        color: #aaa;
+                        padding: 8px 16px;
+                        border-radius: 4px;
+                    ">Zamknij podgląd</button>
                 </div>
             </object>
         `;
