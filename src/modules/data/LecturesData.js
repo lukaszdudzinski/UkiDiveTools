@@ -12,5 +12,6 @@ export const lecturesData = [
     daltonLecture,
     barotraumaVsDcsLecture,
     rockBottomLecture,
+    nightDivingLecture,
     navigationLecture
 ];
