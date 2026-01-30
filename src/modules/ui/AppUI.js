@@ -6,14 +6,14 @@ import { LecturesUI } from './LecturesUI.js';
 import { QuizUI } from './QuizUI.js';
 import { UkiRiverGameUI } from '../games/uki-river-dive/UkiRiverGameUI.js';
 import { ProAccess } from '../auth/ProAccess.js';
+import { nitroxQuiz } from '../data/lectures/nitrox-quiz.js';
 
-export const APP_VERSION = 'v2026.1.29.02';
+export const APP_VERSION = 'v2026.1.30.01';
 
 export const AppUI = {
     init: () => {
         AppUI.initNavigation();
         AppUI.initTheme();
-        AppUI.initTooltips();
         AppUI.initTooltips();
         AppUI.initGlobalButtons();
         // AppUI.initProState(); // REMOVED: Redundant, called inside initTheme
@@ -29,8 +29,6 @@ export const AppUI = {
         });
 
         // Initialize Sub-Modules
-
-        // Initialize Sub-Modules
         initNitroxUI();
         initBlendingUI();
         initDivePlanningUI();
@@ -39,6 +37,14 @@ export const AppUI = {
         LecturesUI.init();
         QuizUI.init(); // Sets up modal listeners
         UkiRiverGameUI.init();
+
+        // Nitrox Quiz Button Listener
+        const nitroxQuizBtn = document.getElementById('start-nitrox-quiz-btn');
+        if (nitroxQuizBtn) {
+            nitroxQuizBtn.addEventListener('click', () => {
+                QuizUI.startQuiz(nitroxQuiz, 'nitrox-science-quiz');
+            });
+        }
 
         // Mobile Menu
         AppUI.initMobileMenu();

@@ -877,26 +877,109 @@
                         </div>
                         <div id="sod-nitrox" class="sub-tab-content">
                             <div class="science-content">
-                                <h4>MOD (Maximum Operating Depth)</h4>
+                                <h3>Wstęp do Nitroksu (EANx)</h3>
+
+                                <h4>Czym jest Nitroks?</h4>
+                                <p><strong>Nitroks (Enriched Air Nitrox – EANx)</strong> to każda mieszanina azotu i
+                                    tlenu,
+                                    w której zawartość tlenu jest wyższa niż w powietrzu (czyli powyżej 21%).
+                                    Najpopularniejsze mieszanki to <strong>EAN32</strong> (32% tlenu) i
+                                    <strong>EAN36</strong> (36% tlenu).
+                                </p>
+                                <ul>
+                                    <li><strong>Zaleta:</strong> Mniej azotu w butli = mniej azotu w Twoim organizmie.
+                                        To
+                                        daje dłuższy czas bezdekompresyjny i większe bezpieczeństwo.</li>
+                                    <li><strong>Wada/Ryzyko:</strong> Więcej tlenu oznacza ryzyko toksyczności tlenowej.
+                                        Tlen staje się toksyczny pod zbyt dużym ciśnieniem. Dlatego musimy pilnować
+                                        głębokości (MOD).</li>
+                                </ul>
+
+                                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
+
+                                <h4>1. MOD – Maksymalna Głębokość Operacyjna</h4>
+                                <p><strong>MOD (Maximum Operating Depth)</strong> to graniczna głębokość, na którą
+                                    możesz
+                                    bezpiecznie zejść z daną mieszanką, nie przekraczając bezpiecznego ciśnienia
+                                    parcjalnego
+                                    tlenu (ppO₂).</p>
+                                <ul>
+                                    <li>Standardowy limit bezpieczeństwa dla nurkowań rekreacyjnych (faza denna):
+                                        <strong>1.4 ata</strong>
+                                    </li>
+                                    <li>Limit absolutny (awaryjny/dekompresyjny): <strong>1.6 ata</strong></li>
+                                </ul>
+
                                 <div class="formula-box">
-                                    <p class="formula">MOD = ((PPO2 / FO2) - 1) * 10</p>
-                                    <ul class="detailed-legend">
-                                        <li><strong>PPO2:</strong> Maksymalne ciśnienie parcjalne tlenu (np. 1.4
-                                            ATA)
-                                        </li>
-                                        <li><strong>FO2:</strong> Frakcja tlenu w mieszance (np. 0.32)</li>
-                                        <li><strong>-1:</strong> Odjęcie ciśnienia atmosferycznego</li>
-                                        <li><strong>*10:</strong> Konwersja z barów na metry</li>
+                                    <p class="formula-main">MOD = ((Limit ppO₂ / FO₂) - 1) * 10</p>
+                                    <ul class="formula-legend">
+                                        <li><strong>Limit ppO₂</strong>: Zazwyczaj 1.4</li>
+                                        <li><strong>FO₂</strong>: Frakcja tlenu (np. dla EAN32 wpisujemy 0.32)</li>
+                                        <li><strong>-1</strong>: Odjęcie ciśnienia atmosferycznego</li>
+                                        <li><strong>*10</strong>: Konwersja z barów na metry</li>
                                     </ul>
                                 </div>
-                                <h4>EAD (Equivalent Air Depth)</h4>
+                                <div class="calculation-example">
+                                    <p><strong>Przykład:</strong> EAN32, Limit 1.4 ata</p>
+                                    MOD = (1.4 / 0.32 - 1) * 10<br>
+                                    MOD = (4.375 - 1) * 10<br>
+                                    <strong>MOD = 33.7 metra</strong>
+                                </div>
+
+                                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
+
+                                <h4>2. Best Mix – Najlepsza Mieszanina</h4>
+                                <p>Sytuacja odwrotna do MOD. Wiesz, na jaką głębokość chcesz zanurkować, i chcesz
+                                    obliczyć,
+                                    jaka mieszanka da Ci najdłuższy czas na dnie.</p>
+
                                 <div class="formula-box">
-                                    <p class="formula">EAD = ((D + 10) * FN2 / 0.79) - 10</p>
-                                    <ul class="detailed-legend">
-                                        <li><strong>D:</strong> Aktualna głębokość (m)</li>
-                                        <li><strong>FN2:</strong> Frakcja azotu w mieszance (1 - FO2)</li>
-                                        <li><strong>0.79:</strong> Frakcja azotu w powietrzu (stała)</li>
+                                    <p class="formula-main">Best Mix = Limit ppO₂ / P_otoczenia</p>
+                                    <ul class="formula-legend">
+                                        <li><strong>P_otoczenia</strong>: (Głębokość / 10) + 1</li>
                                     </ul>
+                                </div>
+                                <div class="calculation-example">
+                                    <p><strong>Przykład:</strong> Głębokość 30m (4 ata), Limit 1.4 ata</p>
+                                    Best Mix = 1.4 / 4 = 0.35<br>
+                                    <strong>Wynik: EAN35 (35% O₂)</strong>
+                                </div>
+
+                                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
+
+                                <h4>3. EAD – Równoważna Głębokość Powietrzna</h4>
+                                <p><strong>EAD (Equivalent Air Depth)</strong> mówi nam, jaką głębokość mamy przyjąć do
+                                    odczytania limitu czasu z tabel powietrznych, używając Nitroksu.</p>
+
+                                <div class="formula-box">
+                                    <p class="formula-main">EAD = [ ((1 - FO₂) * (D + 10)) / 0.79 ] - 10</p>
+                                    <ul class="formula-legend">
+                                        <li><strong>1 - FO₂</strong>: Frakcja azotu w mieszance (FN₂)</li>
+                                        <li><strong>0.79</strong>: Frakcja azotu w powietrzu</li>
+                                        <li><strong>D</strong>: Głębokość rzeczywista</li>
+                                    </ul>
+                                </div>
+                                <div class="calculation-example">
+                                    <p><strong>Przykład:</strong> 30m na EAN32</p>
+                                    EAD = [ (0.68 * 40) / 0.79 ] - 10<br>
+                                    EAD = [ 27.2 / 0.79 ] - 10 = 34.4 - 10<br>
+                                    <strong>EAD = 24.4 metra</strong> (Zyskujesz czas, jakbyś był płycej!)
+                                </div>
+
+                                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
+
+                                <h4>4. CNS – Zegar Tlenowy</h4>
+                                <p><strong>CNS (Central Nervous System)</strong> określa stopień narażenia układu
+                                    nerwowego
+                                    na toksyczność tlenową. Przekroczenie 100% grozi drgawkami.</p>
+                                <p>Bezpieczna granica dla nurkowania rekreacyjnego to zazwyczaj nieprzekraczanie 80%.
+                                </p>
+
+                                <div style="margin-top: 40px; text-align: center;">
+                                    <button id="start-nitrox-quiz-btn" class="action-button"
+                                        style="width: 100%; max-width: 300px;">
+                                        Sprawdź Wiedzę (Quiz)
+                                    </button>
                                 </div>
                             </div>
                         </div>

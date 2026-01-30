@@ -56,7 +56,7 @@ test.describe('Navigation Lecture', () => {
         await expect(pdfButton).toBeVisible();
 
         // 6. Verify Quiz Start
-        const quizButton = page.locator('button:has-text("Sprawdź Wiedzę (Quiz)")');
+        const quizButton = page.locator('#lecture-viewer button:has-text("Sprawdź Wiedzę (Quiz)")');
         await expect(quizButton).toBeVisible();
         await quizButton.scrollIntoViewIfNeeded();
         await quizButton.click();
