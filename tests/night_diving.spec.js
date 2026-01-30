@@ -55,7 +55,7 @@ test.describe('Night Diving Lecture', () => {
         await expect(lightbox).not.toHaveClass(/active/);
 
         // 5. Quiz
-        const quizBtn = page.locator('button.action-button').filter({ hasText: 'Quiz' });
+        const quizBtn = page.locator('#lecture-viewer button.action-button').filter({ hasText: 'Quiz' });
         await expect(quizBtn).toBeVisible({ timeout: 10000 });
         await quizBtn.scrollIntoViewIfNeeded();
         await quizBtn.click();

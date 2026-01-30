@@ -41,7 +41,7 @@ test.describe('Quiz Flow', () => {
         await expect(viewer).toBeVisible();
 
         // Start Quiz
-        const startBtn = page.locator('button.action-button:has-text("Sprawdź Wiedzę (Quiz)")');
+        const startBtn = page.locator('#lecture-viewer button.action-button:has-text("Sprawdź Wiedzę (Quiz)")');
         console.log('Waiting for Start Quiz button...');
         // It might be down the page, ensure it's scrolled
         await startBtn.scrollIntoViewIfNeeded();

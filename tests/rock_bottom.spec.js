@@ -73,7 +73,7 @@ test.describe('Rock Bottom Lecture & Quiz Flow', () => {
         await expect(lightbox).not.toHaveClass(/active/);
 
         // Start Quiz
-        const startBtn = page.locator('button.action-button:has-text("Sprawdź Wiedzę (Quiz)")');
+        const startBtn = page.locator('#lecture-viewer button.action-button:has-text("Sprawdź Wiedzę (Quiz)")');
         console.log('Waiting for Start Quiz button...');
         await startBtn.scrollIntoViewIfNeeded();
         await expect(startBtn).toBeVisible();
