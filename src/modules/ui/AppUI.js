@@ -4,9 +4,9 @@ import { initDivePlanningUI } from './calculators/DivePlanningUI.js';
 import { initBallastUI } from './calculators/BallastUI.js';
 import { LecturesUI } from './LecturesUI.js';
 import { QuizUI } from './QuizUI.js';
+import { ScienceUI } from './ScienceUI.js'; // New Import
 import { UkiRiverGameUI } from '../games/uki-river-dive/UkiRiverGameUI.js';
 import { ProAccess } from '../auth/ProAccess.js';
-import { nitroxQuiz } from '../data/lectures/nitrox-quiz.js';
 
 export const APP_VERSION = 'v2026.1.30.01';
 
@@ -16,7 +16,6 @@ export const AppUI = {
         AppUI.initTheme();
         AppUI.initTooltips();
         AppUI.initGlobalButtons();
-        // AppUI.initProState(); // REMOVED: Redundant, called inside initTheme
 
         // Dynamic Version Update
         const versionDisplays = document.querySelectorAll('.version-info, .app-version-display');
@@ -36,15 +35,8 @@ export const AppUI = {
 
         LecturesUI.init();
         QuizUI.init(); // Sets up modal listeners
+        ScienceUI.init(); // New Init
         UkiRiverGameUI.init();
-
-        // Nitrox Quiz Button Listener
-        const nitroxQuizBtn = document.getElementById('start-nitrox-quiz-btn');
-        if (nitroxQuizBtn) {
-            nitroxQuizBtn.addEventListener('click', () => {
-                QuizUI.startQuiz(nitroxQuiz, 'nitrox-science-quiz');
-            });
-        }
 
         // Mobile Menu
         AppUI.initMobileMenu();
