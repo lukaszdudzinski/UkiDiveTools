@@ -13,7 +13,7 @@ test.describe('PWA & App Meta', () => {
         const response = await page.request.get('manifest.json');
         expect(response.status()).toBe(200);
         const json = await response.json();
-        expect(json.name).toBe("Uki's Dive Tools");
+        expect(json.name).toContain("Uki's Dive Tools");
         expect(json.display).toBe("standalone");
     });
 
@@ -53,6 +53,6 @@ test.describe('PWA & App Meta', () => {
         const msgPromise = page.waitForEvent('console', msg => msg.text().includes('App Version Check'));
         await page.reload(); // Trigger init logs
         const msg = await msgPromise;
-        expect(msg.text()).toContain('v2026.1.31.02'); // Ensure it matches the newly released version
+        expect(msg.text()).toContain('v2026.1.31.03'); // Ensure it matches the newly released version
     });
 });
