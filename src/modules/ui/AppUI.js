@@ -8,7 +8,7 @@ import { ScienceUI } from './ScienceUI.js'; // New Import
 import { UkiRiverGameUI } from '../games/uki-river-dive/UkiRiverGameUI.js';
 import { ProAccess } from '../auth/ProAccess.js';
 
-export const APP_VERSION = 'v2026.1.31.02';
+export const APP_VERSION = 'v2026.1.31.03';
 
 export const AppUI = {
     init: () => {
@@ -670,6 +670,12 @@ export const AppUI = {
     },
 
     initPWA: () => {
+        // Check if running in automated test mode (WebDriver)
+        if (navigator.webdriver) {
+            console.log("App running in WebDriver mode (Test). PWA Banner disabled.");
+            return;
+        }
+
         // Check if running in standalone mode (PWA)
         const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone || document.referrer.includes('android-app://');
 

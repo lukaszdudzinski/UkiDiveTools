@@ -4,10 +4,6 @@ import { openMobileMenuIfNeeded } from './test-helpers.js';
 test.describe('Scroll Behavior Regression', () => {
 
     test.beforeEach(async ({ page }) => {
-        // Prevent PWA banner from blocking interactions (Mobile Safari fix)
-        await page.addInitScript(() => {
-            localStorage.setItem('uki-pwa-banner-dismissed', 'true');
-        });
         await page.goto('/');
         await page.waitForTimeout(1000);
     });
