@@ -1,7 +1,7 @@
 # Page snapshot
 
 ```yaml
-- generic [active] [ref=e1]:
+- generic [ref=e1]:
   - generic [ref=e2]:
     - navigation [ref=e3]:
       - generic "Powrót do ekranu startowego" [ref=e4] [cursor=pointer]:
@@ -40,7 +40,7 @@
           - /url: https://suppi.pl/ukidives
           - text: ☕ Podoba Ci się to narzędzie?
           - strong [ref=e29]: Postaw mi kawę!
-        - link "🚨 WYPADEK? SOS / KOMORA" [ref=e31] [cursor=pointer]:
+        - link "🚨 WYPADEK? SOS / KOMORA" [active] [ref=e31] [cursor=pointer]:
           - /url: "#"
           - text: 🚨 WYPADEK?
           - strong [ref=e32]: SOS / KOMORA
@@ -53,4 +53,39 @@
           - paragraph [ref=e40]: Wybierz narzędzie z menu
         - text: • • • • • • • • • • • •
   - text: ✕
+  - generic [ref=e42]:
+    - button "×" [ref=e43] [cursor=pointer]
+    - generic [ref=e45]:
+      - heading "🚨 PROCEDURA AWARYJNA 🚨" [level=2] [ref=e46]
+      - generic [ref=e47]:
+        - heading "1. OCENA SYTUACJI" [level=3] [ref=e48]
+        - list [ref=e49]:
+          - listitem [ref=e50]: Zatrzymaj nurkowanie / Wyjdź z wody.
+          - listitem [ref=e51]: Podaj tlen 100% (jeśli dostępny) przy podejrzeniu DCS.
+          - listitem [ref=e52]: Nie podawaj wody nieprzytomnemu.
+      - generic [ref=e53]:
+        - heading "2. NUMERY ALARMOWE" [level=3] [ref=e54]
+        - generic [ref=e55]:
+          - paragraph [ref=e56]:
+            - strong [ref=e57]: "Europejski Numer Alarmowy:"
+            - link "112" [ref=e58] [cursor=pointer]:
+              - /url: tel:112
+          - paragraph [ref=e59]:
+            - strong [ref=e60]: "DAN International:"
+            - link "+39 06 4211 5685" [ref=e61] [cursor=pointer]:
+              - /url: tel:+390642115685
+          - paragraph [ref=e62]:
+            - strong [ref=e63]: "Krajowy Ośrodek Medycyny Hiperbarycznej (Gdynia):"
+            - link "+48 58 622 51 63" [ref=e64] [cursor=pointer]:
+              - /url: tel:+48586225163
+      - generic [ref=e65]:
+        - heading "3. PRZYGOTUJ DANE DLA RATOWNIKÓW" [level=3] [ref=e66]
+        - list [ref=e67]:
+          - listitem [ref=e68]: Profil nurkowania (Głębokość, Czas, Gazy).
+          - listitem [ref=e69]: Objawy i czas ich wystąpienia.
+          - listitem [ref=e70]: Komputer nurkowy poszkodowanego (ZABIERZ GO ze sobą dla lekarzy!).
+      - generic [ref=e71]:
+        - heading "4. LOKALIZACJA (GPS)" [level=3] [ref=e72]
+        - button "POBIERZ MOJĄ POZYCJĘ" [ref=e74] [cursor=pointer]
+      - paragraph [ref=e77]: Zachowaj spokój. Twoje działanie może uratować życie.
 ```
