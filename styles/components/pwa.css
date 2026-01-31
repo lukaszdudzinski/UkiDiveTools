@@ -1,0 +1,183 @@
+/* ============================================================
+   KOMPONENTY: PWA (Banner & Guide)
+   ============================================================ */
+
+/* 1. PWA Install Banner (Bottom fixed) */
+#pwa-install-banner {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    /* Start hidden below */
+    width: 90%;
+    max-width: 400px;
+    background-color: rgba(30, 30, 30, 0.95);
+    border: 1px solid #00d1b2;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.27);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+#pwa-install-banner.visible {
+    transform: translateX(-50%) translateY(0);
+}
+
+.pwa-banner-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.pwa-icon {
+    font-size: 2em;
+    animation: bounce 2s infinite;
+}
+
+.pwa-text h4 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1em;
+}
+
+.pwa-text p {
+    margin: 4px 0 0 0;
+    font-size: 0.85em;
+    color: #b0b0b0;
+}
+
+.pwa-banner-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.pwa-btn {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s;
+}
+
+.pwa-btn.primary {
+    background-color: #00d1b2;
+    color: #fff;
+}
+
+.pwa-btn.primary:hover {
+    background-color: #00b89c;
+}
+
+.pwa-btn.secondary {
+    background-color: transparent;
+    color: #888;
+    border: 1px solid #444;
+}
+
+.pwa-btn.secondary:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+/* 2. Settings Installation Guide */
+.install-guide-section {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.install-guide-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.install-guide-header h4 {
+    margin: 0 !important;
+    border: none !important;
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toggle-icon {
+    transition: transform 0.3s ease;
+    font-size: 0.8em;
+    color: #888;
+}
+
+.install-guide-content {
+    display: none;
+    /* Hidden by default */
+    margin-top: 15px;
+    animation: fadeIn 0.3s ease;
+}
+
+.install-guide-content.expanded {
+    display: block;
+}
+
+.install-guide-img {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #444;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.install-steps-list ol {
+    padding-left: 20px;
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+.install-steps-list li {
+    margin-bottom: 8px;
+}
+
+/* Animation */
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-6px);
+    }
+
+    60% {
+        transform: translateY(-3px);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

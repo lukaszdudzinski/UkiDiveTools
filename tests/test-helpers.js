@@ -8,3 +8,9 @@ export async function openMobileMenuIfNeeded(page, isMobile) {
         }
     }
 }
+
+export async function disablePwaBanner(page) {
+    await page.addInitScript(() => {
+        window.localStorage.setItem('uki-pwa-banner-dismissed', 'true');
+    });
+}

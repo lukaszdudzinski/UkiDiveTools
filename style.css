@@ -18,6 +18,7 @@
 @import 'styles/components/forms.css';
 @import 'styles/components/modals.css';
 @import 'styles/components/formulas.css';
+@import 'styles/components/pwa.css';
 
 /* 5. Sections */
 @import 'styles/sections/welcome.css';

@@ -40,6 +40,9 @@ export const AppUI = {
 
         // Mobile Menu
         AppUI.initMobileMenu();
+
+        // PWA Banner Logic
+        AppUI.initPWA();
     },
 
     initGlobalButtons: () => {
@@ -678,6 +681,57 @@ export const AppUI = {
                 behavior: 'smooth'
             });
         }, 150);
+    },
+
+    initPWA: () => {
+        // Check if running in standalone mode (PWA)
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone || document.referrer.includes('android-app://');
+
+        if (isStandalone) {
+            console.log("App running in PWA mode.");
+            return; // Don't show banner if already installed
+        }
+
+        // Check if user dismissed the banner previously
+        const isDismissed = localStorage.getItem('uki-pwa-banner-dismissed') === 'true';
+        if (isDismissed) return;
+
+        // Show banner after delay
+        const banner = document.getElementById('pwa-install-banner');
+        if (banner) {
+            setTimeout(() => {
+                banner.classList.add('visible');
+            }, 3000); // 3 seconds delay
+
+            // Button Logic
+            const dismissBtn = document.getElementById('pwa-limit-banner-btn');
+            const openGuideBtn = document.getElementById('pwa-open-guide-btn');
+
+            if (dismissBtn) {
+                dismissBtn.addEventListener('click', () => {
+                    banner.classList.remove('visible');
+                    localStorage.setItem('uki-pwa-banner-dismissed', 'true');
+                });
+            }
+
+            if (openGuideBtn) {
+                openGuideBtn.addEventListener('click', () => {
+                    banner.classList.remove('visible');
+                    // Navigate to Settings
+                    window.switchTab('settings-panel');
+                    // Find and expand the guide
+                    const guideSection = document.getElementById('settings-pwa-guide');
+                    const guideContent = document.getElementById('install-guide-content');
+                    const guideIcon = document.getElementById('guide-toggle-icon');
+
+                    if (guideSection && guideContent) {
+                        guideSection.scrollIntoView({ behavior: 'smooth' });
+                        guideContent.classList.add('expanded');
+                        if (guideIcon) guideIcon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            }
+        }
     }
 };
 

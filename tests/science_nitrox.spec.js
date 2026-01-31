@@ -1,9 +1,10 @@
 
 import { test, expect } from '@playwright/test';
-import { openMobileMenuIfNeeded } from './test-helpers.js';
+import { openMobileMenuIfNeeded, disablePwaBanner } from './test-helpers.js';
 
 test.describe('Science Nitrox Section', () => {
     test.beforeEach(async ({ page }) => {
+        await disablePwaBanner(page);
         await page.goto('/');
         await page.waitForSelector('.app-wrapper', { state: 'visible' });
     });
