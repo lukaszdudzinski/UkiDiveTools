@@ -1,0 +1,173 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3] [cursor=pointer]:
+      - button "Otwórz menu" [ref=e4]
+      - img "Logo" [ref=e8]
+      - heading "Uki's Dive Tools" [level=2] [ref=e9]
+    - navigation [ref=e10]:
+      - generic "Powrót do ekranu startowego" [ref=e11] [cursor=pointer]:
+        - img "Logo" [ref=e12]
+        - heading "Uki's Dive Tools" [level=1] [ref=e13]
+      - list [ref=e14]:
+        - listitem [ref=e15]:
+          - link "Strefa PRO" [ref=e16] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e17]:
+          - link "Kalkulator SAC" [ref=e18] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e19]:
+          - link "Kalkulator Nitrox" [ref=e20] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e21]:
+          - link "Planowanie Gazu (Basic)" [ref=e22] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e23]:
+          - link "Kalkulator Balastu" [ref=e24] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e25]:
+          - link "Narzędzia Divemastera" [ref=e26] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e27]:
+          - link "Wiedza Nurkowa" [ref=e28] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e29]:
+          - link "Uki's River Dive" [ref=e30] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e31]:
+          - link "Ustawienia" [ref=e32] [cursor=pointer]:
+            - /url: "#"
+      - generic [ref=e33]:
+        - link "☕ Podoba Ci się to narzędzie? Postaw mi kawę!" [ref=e35] [cursor=pointer]:
+          - /url: https://suppi.pl/ukidives
+          - text: ☕ Podoba Ci się to narzędzie?
+          - strong [ref=e36]: Postaw mi kawę!
+        - link "🚨 WYPADEK? SOS / KOMORA" [ref=e38] [cursor=pointer]:
+          - /url: "#"
+          - text: 🚨 WYPADEK?
+          - strong [ref=e39]: SOS / KOMORA
+        - generic [ref=e40]: Uki's Dive Tools v2026.1.30.01
+    - main [ref=e41]:
+      - generic [ref=e43]:
+        - heading "Wiedza Nurkowa" [level=3] [ref=e44]
+        - navigation [ref=e45]:
+          - button "Wykłady" [ref=e46] [cursor=pointer]
+          - button "SAC" [ref=e47] [cursor=pointer]
+          - button "Nitrox" [active] [ref=e48] [cursor=pointer]
+          - button "Gazy" [ref=e49] [cursor=pointer]
+          - button "Balast" [ref=e50] [cursor=pointer]
+        - generic [ref=e51]:
+          - text: • • • •
+          - generic [ref=e53]:
+            - generic [ref=e54]:
+              - paragraph [ref=e55]: "🎧 Posłuchaj wykładu:"
+              - generic [ref=e56]: Twoja przeglądarka nie obsługuje elementu audio.
+            - heading "Wstęp do Nitroksu (EANx)" [level=3] [ref=e57]
+            - heading "Czym jest Nitroks?" [level=4] [ref=e58]
+            - paragraph [ref=e59]:
+              - strong [ref=e60]: Nitroks (Enriched Air Nitrox – EANx)
+              - text: to każda mieszanina azotu i tlenu, w której zawartość tlenu jest wyższa niż w powietrzu (czyli powyżej 21%). Najpopularniejsze mieszanki to
+              - strong [ref=e61]: EAN32
+              - text: (32% tlenu) i
+              - strong [ref=e62]: EAN36
+              - text: (36% tlenu).
+            - list [ref=e63]:
+              - listitem [ref=e64]:
+                - strong [ref=e65]: "Zaleta:"
+                - text: Mniej azotu w butli = mniej azotu w Twoim organizmie. To daje dłuższy czas bezdekompresyjny i większe bezpieczeństwo.
+              - listitem [ref=e66]:
+                - strong [ref=e67]: "Wada/Ryzyko:"
+                - text: Więcej tlenu oznacza ryzyko toksyczności tlenowej. Tlen staje się toksyczny pod zbyt dużym ciśnieniem. Dlatego musimy pilnować głębokości (MOD).
+            - separator [ref=e68]
+            - heading "1. MOD – Maksymalna Głębokość Operacyjna" [level=4] [ref=e69]
+            - paragraph [ref=e70]:
+              - strong [ref=e71]: MOD (Maximum Operating Depth)
+              - text: to graniczna głębokość, na którą możesz bezpiecznie zejść z daną mieszanką, nie przekraczając bezpiecznego ciśnienia parcjalnego tlenu (ppO₂).
+            - list [ref=e72]:
+              - listitem [ref=e73]:
+                - text: "Standardowy limit bezpieczeństwa dla nurkowań rekreacyjnych (faza denna):"
+                - strong [ref=e74]: 1.4 ata
+              - listitem [ref=e75]:
+                - text: "Limit absolutny (awaryjny/dekompresyjny):"
+                - strong [ref=e76]: 1.6 ata
+            - generic [ref=e77]:
+              - paragraph [ref=e78]: MOD = ((Limit ppO₂ / FO₂) - 1) * 10
+              - list [ref=e79]:
+                - listitem [ref=e80]:
+                  - text: •
+                  - strong [ref=e81]: Limit ppO₂
+                  - text: ": Zazwyczaj 1.4"
+                - listitem [ref=e82]:
+                  - text: •
+                  - strong [ref=e83]: FO₂
+                  - text: ": Frakcja tlenu (np. dla EAN32 wpisujemy 0.32)"
+                - listitem [ref=e84]:
+                  - text: •
+                  - strong [ref=e85]: "-1"
+                  - text: ": Odjęcie ciśnienia atmosferycznego"
+                - listitem [ref=e86]:
+                  - text: •
+                  - strong [ref=e87]: "*10"
+                  - text: ": Konwersja z barów na metry"
+            - generic [ref=e88]:
+              - paragraph [ref=e89]:
+                - strong [ref=e90]: "Przykład:"
+                - text: EAN32, Limit 1.4 ata
+              - text: MOD = (1.4 / 0.32 - 1) * 10
+              - text: MOD = (4.375 - 1) * 10
+              - strong [ref=e91]: MOD = 33.7 metra
+            - separator [ref=e92]
+            - heading "2. Best Mix – Najlepsza Mieszanina" [level=4] [ref=e93]
+            - paragraph [ref=e94]: Sytuacja odwrotna do MOD. Wiesz, na jaką głębokość chcesz zanurkować, i chcesz obliczyć, jaka mieszanka da Ci najdłuższy czas na dnie.
+            - generic [ref=e95]:
+              - paragraph [ref=e96]: Best Mix = Limit ppO₂ / P_otoczenia
+              - list [ref=e97]:
+                - listitem [ref=e98]:
+                  - text: •
+                  - strong [ref=e99]: P_otoczenia
+                  - text: ": (Głębokość / 10) + 1"
+            - generic [ref=e100]:
+              - paragraph [ref=e101]:
+                - strong [ref=e102]: "Przykład:"
+                - text: Głębokość 30m (4 ata), Limit 1.4 ata
+              - text: Best Mix = 1.4 / 4 = 0.35
+              - strong [ref=e103]: "Wynik: EAN35 (35% O₂)"
+            - separator [ref=e104]
+            - heading "3. EAD – Równoważna Głębokość Powietrzna" [level=4] [ref=e105]
+            - paragraph [ref=e106]:
+              - strong [ref=e107]: EAD (Equivalent Air Depth)
+              - text: mówi nam, jaką głębokość mamy przyjąć do odczytania limitu czasu z tabel powietrznych, używając Nitroksu.
+            - generic [ref=e108]:
+              - paragraph [ref=e109]: EAD = [ ((1 - FO₂) * (D + 10)) / 0.79 ] - 10
+              - list [ref=e110]:
+                - listitem [ref=e111]:
+                  - text: •
+                  - strong [ref=e112]: 1 - FO₂
+                  - text: ": Frakcja azotu w mieszance (FN₂)"
+                - listitem [ref=e113]:
+                  - text: •
+                  - strong [ref=e114]: "0.79"
+                  - text: ": Frakcja azotu w powietrzu"
+                - listitem [ref=e115]:
+                  - text: •
+                  - strong [ref=e116]: D
+                  - text: ": Głębokość rzeczywista"
+            - generic [ref=e117]:
+              - paragraph [ref=e118]:
+                - strong [ref=e119]: "Przykład:"
+                - text: 30m na EAN32
+              - text: EAD = [ (0.68 * 40) / 0.79 ] - 10
+              - text: EAD = [ 27.2 / 0.79 ] - 10 = 34.4 - 10
+              - strong [ref=e120]: EAD = 24.4 metra
+              - text: (Zyskujesz czas, jakbyś był płycej!)
+            - separator [ref=e121]
+            - heading "4. CNS – Zegar Tlenowy" [level=4] [ref=e122]
+            - paragraph [ref=e123]:
+              - strong [ref=e124]: CNS (Central Nervous System)
+              - text: określa stopień narażenia układu nerwowego na toksyczność tlenową. Przekroczenie 100% grozi drgawkami.
+            - paragraph [ref=e125]: Bezpieczna granica dla nurkowania rekreacyjnego to zazwyczaj nieprzekraczanie 80%.
+            - button "Sprawdź Wiedzę (Quiz)" [ref=e127] [cursor=pointer]
+  - button "Wróć do menu" [ref=e128] [cursor=pointer]: ✕
+```

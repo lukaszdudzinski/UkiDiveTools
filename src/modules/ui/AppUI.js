@@ -232,6 +232,11 @@ export const AppUI = {
             navLinks.forEach(l => {
                 l.classList.toggle('active', l.getAttribute('data-tab') === tabId);
             });
+
+            // Fix: Scroll the wrapper, not the window, because layout.css defines overflow on wrapper
+            const wrapper = document.querySelector('.tab-content-wrapper');
+            if (wrapper) wrapper.scrollTo({ top: 0, behavior: 'auto' });
+
             tabContents.forEach(content => {
                 content.classList.remove('active-tab');
                 content.style.display = 'none';

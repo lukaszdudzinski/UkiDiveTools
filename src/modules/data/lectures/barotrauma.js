@@ -41,6 +41,9 @@ export const barotraumaLecture = {
         <ul>
             <li><strong>Mechanizm (zanurzanie):</strong> Rzadkie zjawisko związane z małymi komorami powietrznymi uwięzionymi pod nieprawidłowo założonymi plombami lub koronkami. Kompresja uwięzionego powietrza może prowadzić do silnego bólu zęba (barodontalgia).</li>
         </ul>
+        <div style="text-align: center; margin: 30px 0;">
+            <img src="img/barotrauma_urazy.jpg" alt="Infografika: Urazy Nurkowe (Kompresja)" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+        </div>
         <h4>B. Urazy Związane głównie z Wynurzaniem (Rozprężanie)</h4>
         <p>Urazy te są wynikiem rozprężania się gazu zgodnie z Prawem Boyle’a-Mariotte’a, gdy maleje ciśnienie otoczenia.</p>
         <h5>Uraz Ciśnieniowy Płuc (UCP):</h5>
@@ -56,6 +59,9 @@ export const barotraumaLecture = {
             </li>
             <li><strong>Objawy AGE w Mózgu:</strong> Utrata przytomności (często w ciągu 4-6 minut po wynurzeniu), ból głowy, drgawki, porażenie mięśni i paraliż, zaburzenia czuciowe (mrowienie, drętwienie) oraz zaburzenia zmysłów (mowy, słuchu, wzroku, równowagi).</li>
         </ul>
+        <div style="text-align: center; margin: 30px 0;">
+            <img src="img/barotrauma_ucp.jpg" alt="Infografika: Uraz Ciśnieniowy Płuc (UCP)" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+        </div>
         <h5>Uraz Ciśnieniowy Zatok (Rozprężny):</h5>
         <ul>
             <li><strong>Mechanizm:</strong> Uwięzione powietrze rozpręża się podczas wynurzania, powodując wzrost ciśnienia na ściany zatoki. Ból ustępuje, gdy powietrze pokonuje opór zamkniętego ujścia.</li>
@@ -104,9 +110,12 @@ export const barotraumaLecture = {
             <li><strong>Pomoc Medyczna:</strong> Wezwij pomoc medyczną i powiadom służby o konieczności transportu poszkodowanego do komory dekompresyjnej.</li>
             <li><strong>Tlenoterapia:</strong> Podaj poszkodowanemu 100% tlen w maksymalnym przepływie tak szybko, jak to możliwe. Tlen jest najważniejszym lekarstwem, ponieważ poprawia utlenowanie tkanek, redukuje możliwość powstawania nowych zatorów i zmniejsza średnicę pęcherzyków gazowych.</li>
             <li><strong>Pozycja:</strong> Ułóż poszkodowanego w pozycji poziomej.</li>
-            <li><strong>Nawadnianie:</strong> Jeśli poszkodowany jest przytomny, podaj mu do 1 litra ciepłych, słodkich, niegazowanych napojów.</li>
+            <li><strong>Nawadnianie:</strong> Jeśli poszkodowany jest przytomny, podaj mu do 1 litra płynów, najlepiej woda niegazowana.</li>
             <li><strong>Resuscytacja:</strong> Jeśli jest to konieczne, wykonaj podstawowe zabiegi resuscytacyjne (BLS).</li>
-        </ul>`,
+        </ul>
+        <div style="text-align: center; margin: 30px 0;">
+            <img src="img/barotrauma_pomoc.jpg" alt="Infografika: Pierwsza Pomoc (UCP)" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+        </div>`,
     quiz: [
         {
             question: "Co jest najczęstszą i najgroźniejszą przyczyną Urazu Ciśnieniowego Płuc (UCP)?",

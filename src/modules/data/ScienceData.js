@@ -56,6 +56,15 @@ export const scienceContent = {
         title: 'Nitrox',
         content: `
             <div class="science-content">
+                <!-- Audio Player -->
+                <div class="lecture-audio-wrapper" style="margin: 0 0 20px 0; text-align: center; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                    <p style="margin-bottom: 8px; font-weight: bold; color: var(--color-text-primary);">🎧 Posłuchaj wykładu:</p>
+                    <audio controls style="width: 100%; max-width: 400px; height: 40px;">
+                        <source src="audio/Nitroks_wydłuża_czas_i_ogranicza_głębokość.m4a" type="audio/mp4">
+                        Twoja przeglądarka nie obsługuje elementu audio.
+                    </audio>
+                </div>
+
                 <h3>Wstęp do Nitroksu (EANx)</h3>
 
                 <h4>Czym jest Nitroks?</h4>
