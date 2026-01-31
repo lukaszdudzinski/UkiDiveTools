@@ -58,6 +58,8 @@ test.describe('SOS & Emergency Features', () => {
 
         await context.setGeolocation({ latitude: 54.518, longitude: 18.539 });
 
+        const mobileTile = page.locator('.tile-sos');
+
         if (await mobileTile.isVisible()) {
             await mobileTile.click({ force: true });
         } else {
