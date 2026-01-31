@@ -139,8 +139,7 @@
                                 </h4>
                                 <p>Wsparcie projektu</p>
                             </div>
-                            <div class="dashboard-card tile-sos"
-                                onclick="document.getElementById('emergency-btn').click()">
+                            <div class="dashboard-card tile-sos" onclick="if(window.openSOS) window.openSOS()">
                                 <h4 style="color: #FF5252; text-shadow: 0 0 10px rgba(255, 82, 82, 0.6);">🚨 SOS /
                                     Awaria</h4>
                                 <p>Procedury ratunkowe</p>
@@ -1064,7 +1063,7 @@
     <div id="pwa-install-banner">
         <div class="pwa-banner-content">
             <div class="pwa-icon-container">
-                <span class="pwa-icon-inner">⬇️</span>
+                <span class="pwa-icon-inner">📱</span>
             </div>
             <div class="pwa-text">
                 <h4>Zainstaluj na iOS / Android</h4>
@@ -1072,14 +1071,17 @@
             </div>
         </div>
 
+        <!-- Buttons Row -->
+        <div class="pwa-banner-actions">
+            <!-- Instruction LEFT, Close RIGHT -->
+            <button id="pwa-open-guide-btn" class="pwa-btn primary">Instrukcja</button>
+            <button id="pwa-limit-banner-btn" class="pwa-btn secondary">Zamknij</button>
+        </div>
+
+        <!-- Checkbox Row at BOTTOM -->
         <div class="pwa-checkbox-row">
             <input type="checkbox" id="pwa-dont-show-again">
             <label for="pwa-dont-show-again">Nie pokazuj więcej</label>
-        </div>
-
-        <div class="pwa-banner-actions">
-            <button id="pwa-limit-banner-btn" class="pwa-btn secondary">Zamknij</button>
-            <button id="pwa-open-guide-btn" class="pwa-btn primary">Instrukcja</button>
         </div>
     </div>
 </body>

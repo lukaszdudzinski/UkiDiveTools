@@ -33,6 +33,11 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
+    // Only cache http/https requests
+    if (!e.request.url.startsWith('http')) {
+        return;
+    }
+
     e.respondWith(
         caches.match(e.request).then((response) => {
             if (response) {

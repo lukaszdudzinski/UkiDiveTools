@@ -7,129 +7,164 @@
     position: fixed;
     bottom: 20px;
     left: 50%;
-    transform: translateX(-50%) translateY(150px);
-    /* Start hidden below */
+    transform: translate(-50%, 200px);
+    /* Initially hidden below screen */
     width: 90%;
-    max-width: 380px;
-    background-color: rgba(30, 30, 30, 0.98);
-    border: 1px solid #444;
+    /* Reduced from 95% to allow glow visibility */
+    max-width: 400px;
+    box-sizing: border-box;
+    /* Ensure padding doesn't add to width */
+    background-color: #2a2a2a;
+    border: 1px solid rgba(0, 209, 178, 0.3);
     border-radius: 12px;
-    padding: 15px;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
-    z-index: 2000;
-    display: flex;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 209, 178, 0.2);
+    z-index: 10000;
+
+    /* Default hidden to prevent layout interaction */
+    display: none;
+
     flex-direction: column;
-    gap: 12px;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.27);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    gap: 15px;
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    animation: glow-pulse-border 3s infinite;
 }
 
 #pwa-install-banner.visible {
-    transform: translateX(-50%) translateY(0);
+    transform: translate(-50%, 0);
 }
 
+@keyframes glow-pulse-border {
+    0% {
+        box-shadow: 0 0 10px rgba(0, 209, 178, 0.1);
+        border-color: rgba(0, 209, 178, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(0, 209, 178, 0.4);
+        border-color: rgba(0, 209, 178, 0.6);
+    }
+
+    100% {
+        box-shadow: 0 0 10px rgba(0, 209, 178, 0.1);
+        border-color: rgba(0, 209, 178, 0.3);
+    }
+}
+
+/* Flex Container for Icon + Text */
 .pwa-banner-content {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
-/* Styled Icon Container (Like Settings) */
+/* Icon Container */
 .pwa-icon-container {
-    width: 42px;
-    height: 42px;
+    width: 48px;
+    height: 48px;
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     flex-shrink: 0;
 }
 
 .pwa-icon-inner {
-    font-size: 1.2em;
+    font-size: 24px;
 }
 
+/* Text Content */
 .pwa-text h4 {
-    margin: 0;
-    color: #ffffff;
-    font-size: 0.95em;
+    margin: 0 0 4px 0;
+    color: #fff;
+    font-size: 16px;
     font-weight: 600;
 }
 
 .pwa-text p {
-    margin: 3px 0 0 0;
-    font-size: 0.8em;
+    margin: 0;
+    font-size: 13px;
     color: #aeaeae;
+    line-height: 1.4;
 }
 
-/* Checkbox Row */
-.pwa-checkbox-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-left: 2px;
-}
-
-.pwa-checkbox-row input[type="checkbox"] {
-    accent-color: #00d1b2;
-    cursor: pointer;
-    width: 16px;
-    height: 16px;
-}
-
-.pwa-checkbox-row label {
-    font-size: 0.85em;
-    color: #ccc;
-    cursor: pointer;
-    user-select: none;
-}
-
-/* Actions */
+/* Action Buttons */
 .pwa-banner-actions {
     display: flex;
-    justify-content: space-between;
     gap: 10px;
     margin-top: 5px;
 }
 
 .pwa-btn {
     flex: 1;
-    padding: 10px;
+    padding: 12px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    font-size: 0.9em;
     transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .pwa-btn.primary {
-    background-color: #00d1b2;
+    background: linear-gradient(135deg, #00d1b2 0%, #00bcddd1 100%);
     color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 209, 178, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 209, 178, 0.3);
 }
 
 .pwa-btn.primary:hover {
-    background-color: #00b89c;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 209, 178, 0.4);
 }
 
 .pwa-btn.secondary {
-    background-color: transparent;
-    color: #aaa;
-    border: 1px solid #555;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ccc;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .pwa-btn.secondary:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.15);
     color: #fff;
-    border-color: #777;
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* 2. Settings Installation Guide */
+/* Checkbox Row */
+.pwa-checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 5px;
+    margin-top: 5px;
+    justify-content: center;
+}
+
+.pwa-checkbox-row input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #00d1b2;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.pwa-checkbox-row label {
+    font-size: 12px;
+    color: #888;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s;
+}
+
+.pwa-checkbox-row:hover label {
+    color: #aaa;
+}
+
+
+/* Settings Installation Guide */
 .install-guide-section {
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 8px;
@@ -162,7 +197,6 @@
 
 .install-guide-content {
     display: none;
-    /* Hidden by default */
     margin-top: 15px;
     animation: fadeIn 0.3s ease;
 }

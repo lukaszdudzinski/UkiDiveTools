@@ -2,6 +2,8 @@ export const barotraumaLecture = {
     id: 'barotrauma',
     title: 'Barotrauma',
     description: 'Urazy ciśnieniowe. Fizyka, rodzaje, profilaktyka i pierwsza pomoc.',
+    audioSrc: 'audio/barotrauma.m4a', // Corrected property name
+    presentationSrc: 'lectures/barotrauma/Barotrauma.pdf', // Added PDF presentation path
     content: `<h2>BAROTRAUMA (Uraz Ciśnieniowy): Pełny Przewodnik dla Początkujących Nurków</h2>
         <p>Barotrauma to uszkodzenie tkanek, które wynika z nadmiernej różnicy ciśnień między przestrzenią gazową w ciele a ciśnieniem otoczenia. Zrozumienie tego zjawiska jest fundamentalne, ponieważ woda nie jest naturalnym środowiskiem człowieka.</p>
         <h3>1. Fizyczne Podstawy Barotraumy: Prawo Boyle’a-Mariotte’a</h3>

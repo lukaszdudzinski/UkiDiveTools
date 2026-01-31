@@ -59,85 +59,77 @@ export const AppUI = {
             }
         };
 
-        // 1. SOS Button
+        // 1. SOS Button - Simplified Logic
+        window.openSOS = () => {
+            console.log('SOS Triggered via global function');
+            const emergencyContent = document.getElementById('emergency-content');
+            if (emergencyContent && AppUI.showModal) {
+                AppUI.showModal(emergencyContent.innerHTML, true);
+
+                // GPS Logic
+                setTimeout(() => {
+                    const tooltipBody = document.getElementById('tooltip-body');
+                    if (!tooltipBody) return;
+
+                    const gpsBtn = tooltipBody.querySelector('.gps-locate-btn');
+                    const gpsResult = tooltipBody.querySelector('.gps-result');
+
+                    if (gpsBtn && gpsResult) {
+                        // Remove old listeners to be safe (simple clone)
+                        const newGpsBtn = gpsBtn.cloneNode(true);
+                        gpsBtn.replaceWith(newGpsBtn);
+
+                        newGpsBtn.addEventListener('click', () => {
+                            gpsResult.innerHTML = '⏳ Pobieranie pozycji...';
+                            if (!navigator.geolocation) {
+                                gpsResult.innerHTML = '❌ Twój telefon nie wspiera GPS.';
+                                return;
+                            }
+                            navigator.geolocation.getCurrentPosition(
+                                (position) => {
+                                    const lat = position.coords.latitude.toFixed(5);
+                                    const lon = position.coords.longitude.toFixed(5);
+                                    const acc = Math.round(position.coords.accuracy);
+                                    const mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
+                                    gpsResult.innerHTML = `
+                                         <div style="margin-top:10px; padding:10px; background:rgba(0,0,0,0.3); border-radius:8px;">
+                                             <div style="font-size:1.4em; color:#4CAF50; letter-spacing:1px;">${lat}, ${lon}</div>
+                                             <div style="font-size:0.8em; color:#aaa; margin-bottom:8px;">(Dokładność: ${acc}m)</div>
+                                             <a href="${mapLink}" target="_blank" style="display:inline-block; margin-top:5px; color:#2196F3; text-decoration:underline; font-weight:bold;">
+                                                 🗺️ Otwórz w Google Maps
+                                             </a>
+                                         </div>`;
+                                },
+                                (error) => {
+                                    console.error("GPS Error", error);
+                                    let msg = 'Nieznany błąd';
+                                    switch (error.code) {
+                                        case 1: msg = '❌ Brak zgody na lokalizację.'; break;
+                                        case 2: msg = '❌ Brak sygnału GPS.'; break;
+                                        case 3: msg = '❌ Upłynął czas żądania.'; break;
+                                    }
+                                    gpsResult.innerHTML = msg;
+                                },
+                                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+                            );
+                        });
+                    }
+                }, 100);
+            }
+        };
+
         try {
             const emergencyBtn = document.getElementById('emergency-btn');
             if (emergencyBtn) {
-                emergencyBtn.replaceWith(emergencyBtn.cloneNode(true));
-                document.getElementById('emergency-btn').addEventListener('click', (e) => {
+                // Remove old listeners
+                const newBtn = emergencyBtn.cloneNode(true);
+                emergencyBtn.replaceWith(newBtn);
+                newBtn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    console.log('SOS Button Clicked');
-                    const emergencyContent = document.getElementById('emergency-content');
-                    if (emergencyContent && AppUI.showModal) {
-                        AppUI.showModal(emergencyContent.innerHTML, true);
-
-                        // Attach GPS Logic immediately after showing modal
-                        setTimeout(() => {
-                            const tooltipBody = document.getElementById('tooltip-body');
-                            if (!tooltipBody) return;
-
-                            const gpsBtn = tooltipBody.querySelector('.gps-locate-btn');
-                            const gpsResult = tooltipBody.querySelector('.gps-result');
-
-                            if (gpsBtn && gpsResult) {
-                                gpsBtn.addEventListener('click', () => {
-                                    gpsResult.innerHTML = '⏳ Pobieranie pozycji...';
-
-                                    if (!navigator.geolocation) {
-                                        gpsResult.innerHTML = '❌ Twój telefon nie wspiera GPS.';
-                                        return;
-                                    }
-
-                                    navigator.geolocation.getCurrentPosition(
-                                        (position) => {
-                                            const lat = position.coords.latitude.toFixed(5);
-                                            const lon = position.coords.longitude.toFixed(5);
-                                            const acc = Math.round(position.coords.accuracy);
-                                            const mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
-
-                                            gpsResult.innerHTML = `
-                                                <div style="margin-top:10px; padding:10px; background:rgba(0,0,0,0.3); border-radius:8px;">
-                                                    <div style="font-size:1.4em; color:#4CAF50; letter-spacing:1px;">${lat}, ${lon}</div>
-                                                    <div style="font-size:0.8em; color:#aaa; margin-bottom:8px;">(Dokładność: ${acc}m)</div>
-                                                    <a href="${mapLink}" target="_blank" style="display:inline-block; margin-top:5px; color:#2196F3; text-decoration:underline; font-weight:bold;">
-                                                        🗺️ Otwórz w Google Maps
-                                                    </a>
-                                                </div>
-                                            `;
-                                        },
-                                        (error) => {
-                                            console.error("GPS Error", error);
-                                            let msg = 'Nieznany błąd';
-                                            switch (error.code) {
-                                                case error.PERMISSION_DENIED: msg = '❌ Brak zgody na lokalizację.'; break;
-                                                case error.POSITION_UNAVAILABLE: msg = '❌ Brak sygnału GPS.'; break;
-                                                case error.TIMEOUT: msg = '❌ Upłynął czas żądania.'; break;
-                                            }
-                                            gpsResult.innerHTML = msg;
-                                        },
-                                        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-                                    );
-                                });
-                            }
-                        }, 100);
-                    }
+                    window.openSOS();
                 });
             }
         } catch (e) { console.error("SOS Init Error", e); }
-
-        // 2. Donation Button - DEPRECATED (Now direct link in HTML)
-        /*
-        try {
-            const donationLink = document.getElementById('donation-link');
-            if (donationLink) {
-                donationLink.replaceWith(donationLink.cloneNode(true));
-                document.getElementById('donation-link').addEventListener('click', (e) => {
-                    e.preventDefault();
-                    alert('Dziękuję za chęć wsparcia! (Link do płatności wkrótce)');
-                });
-            }
-        } catch (e) { console.error("Donation Init Error", e); }
-        */
 
         // 3. PRO Unlock - Direct Listener Attachment
         try {
@@ -573,9 +565,6 @@ export const AppUI = {
         }
     },
 
-    // MERGED: Function moved to main definition above.
-    // Replaced with empty space or removed completely.
-
     showModal: (html, isEmergency = false) => {
         const globalTooltip = document.getElementById('global-tooltip');
         const tooltipOverlay = document.getElementById('tooltip-overlay');
@@ -638,9 +627,6 @@ export const AppUI = {
 
     },
 
-
-
-
     scrollToResult: (element) => {
         if (!element) return;
 
@@ -696,51 +682,71 @@ export const AppUI = {
         const isDismissed = localStorage.getItem('uki-pwa-banner-dismissed') === 'true';
         if (isDismissed) return;
 
-        // Show banner after delay
+        // Banner elements
         const banner = document.getElementById('pwa-install-banner');
-        if (banner) {
+        if (!banner) return;
+
+        // Helpers
+        const hideBanner = () => {
+            banner.classList.remove('visible');
             setTimeout(() => {
-                banner.classList.add('visible');
-            }, 3000); // 3 seconds delay
+                banner.style.display = 'none';
+            }, 500); // 500ms transition match
+        };
 
-            // Button Logic
-            const dismissBtn = document.getElementById('pwa-limit-banner-btn');
-            const openGuideBtn = document.getElementById('pwa-open-guide-btn');
-            const dontShowCheckbox = document.getElementById('pwa-dont-show-again');
+        const showBanner = () => {
+            banner.style.display = 'flex';
+            // Force reflow to ensure transition works
+            void banner.offsetWidth;
+            banner.classList.add('visible');
+        };
 
-            if (dismissBtn) {
-                dismissBtn.addEventListener('click', () => {
-                    banner.classList.remove('visible');
-                    // Handle "Don't show again"
-                    if (dontShowCheckbox && dontShowCheckbox.checked) {
-                        localStorage.setItem('uki-pwa-banner-dismissed', 'true');
-                    }
-                });
-            }
+        // Initialize: Ensure hidden initially (CSS has it too, but safety first)
+        banner.style.display = 'none';
 
-            if (openGuideBtn) {
-                openGuideBtn.addEventListener('click', () => {
-                    banner.classList.remove('visible');
-                    // If clicked guide, we might assume they want to install, so maybe don't show banner again immediately? 
-                    // Let's stick to checkbox rule to be explicit.
-                    if (dontShowCheckbox && dontShowCheckbox.checked) {
-                        localStorage.setItem('uki-pwa-banner-dismissed', 'true');
-                    }
+        // Show banner after delay
+        setTimeout(() => {
+            showBanner();
+        }, 3000); // 3 seconds delay
 
-                    // Navigate to Settings
-                    window.switchTab('settings-panel');
-                    // Find and expand the guide
-                    const guideSection = document.getElementById('settings-pwa-guide');
-                    const guideContent = document.getElementById('install-guide-content');
-                    const guideIcon = document.getElementById('guide-toggle-icon');
+        // Button Listeners
+        const dismissBtn = document.getElementById('pwa-limit-banner-btn');
+        const openGuideBtn = document.getElementById('pwa-open-guide-btn');
+        const dontShowCheckbox = document.getElementById('pwa-dont-show-again');
 
-                    if (guideSection && guideContent) {
-                        guideSection.scrollIntoView({ behavior: 'smooth' });
-                        guideContent.classList.add('expanded');
-                        if (guideIcon) guideIcon.style.transform = 'rotate(180deg)';
-                    }
-                });
-            }
+        if (dismissBtn) {
+            dismissBtn.addEventListener('click', () => {
+                hideBanner();
+                // Handle "Don't show again"
+                if (dontShowCheckbox && dontShowCheckbox.checked) {
+                    localStorage.setItem('uki-pwa-banner-dismissed', 'true');
+                }
+            });
+        }
+
+        if (openGuideBtn) {
+            openGuideBtn.addEventListener('click', () => {
+                hideBanner(); // Hide first, then navigate
+                if (dontShowCheckbox && dontShowCheckbox.checked) {
+                    localStorage.setItem('uki-pwa-banner-dismissed', 'true');
+                }
+
+                // Navigate to Settings
+                window.switchTab('settings-panel');
+                // Find and expand the guide
+                const guideSection = document.getElementById('settings-pwa-guide');
+                const guideContent = document.getElementById('install-guide-content');
+                const guideIcon = document.getElementById('guide-toggle-icon');
+
+                if (guideSection && guideContent) {
+                    guideContent.classList.add('expanded');
+                    if (guideIcon) guideIcon.style.transform = 'rotate(180deg)';
+
+                    setTimeout(() => {
+                        AppUI.scrollToResult(guideSection);
+                    }, 150); // Small delay to allow tab switch and expansion
+                }
+            });
         }
     }
 };

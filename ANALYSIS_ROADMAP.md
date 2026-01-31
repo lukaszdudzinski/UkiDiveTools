@@ -12,6 +12,12 @@
     *   Dodanie **prezentacji**.
     *   Wdrożenie **wykładów audio** (nauka w drodze na nurkowisko).
 
+### SPRINT: Porządki i Refaktoryzacja (JUTRO)
+*   **Struktura plików lectures**:
+    *   Obecnie: Bałagan (pliki rozrzucone po `dist`, `assets`, `audio`).
+    *   Cel: Jeden folder per wykład zawierający WSZYSTKO (tekst, audio, img, pdf).
+    *   Plan: Przeniesienie plików i aktualizacja ścieżek w plikach `.js`.
+
 ---
 
 ## 2. Zasady Procesowe (KRYTYCZNE)
