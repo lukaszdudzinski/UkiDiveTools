@@ -37,7 +37,8 @@ test.describe('Navigation Lecture', () => {
         await expect(title).toContainText('Nawigacja w Nurkowaniu');
 
         // 3. Verify Audio Player
-        const audioPlayer = page.locator('audio');
+        // 3. Verify Audio Player
+        const audioPlayer = page.locator('#lecture-viewer audio');
         await expect(audioPlayer).toBeVisible();
         const audioSrc = await audioPlayer.locator('source').getAttribute('src');
         expect(audioSrc).toContain('Dlaczego_nurkowie_instynktownie');

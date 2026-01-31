@@ -39,7 +39,8 @@ test.describe('Night Diving Lecture', () => {
         await expect(title).toHaveText('Nurkowanie Nocne i w Ograniczonej Widoczności');
 
         // Verification: Audio Player
-        const audioPlayer = page.locator('audio');
+        // Verification: Audio Player
+        const audioPlayer = page.locator('#lecture-viewer audio');
         await expect(audioPlayer).toBeVisible();
 
         // 4. Verify Infographic & Lightbox
