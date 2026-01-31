@@ -706,17 +706,27 @@ export const AppUI = {
             // Button Logic
             const dismissBtn = document.getElementById('pwa-limit-banner-btn');
             const openGuideBtn = document.getElementById('pwa-open-guide-btn');
+            const dontShowCheckbox = document.getElementById('pwa-dont-show-again');
 
             if (dismissBtn) {
                 dismissBtn.addEventListener('click', () => {
                     banner.classList.remove('visible');
-                    localStorage.setItem('uki-pwa-banner-dismissed', 'true');
+                    // Handle "Don't show again"
+                    if (dontShowCheckbox && dontShowCheckbox.checked) {
+                        localStorage.setItem('uki-pwa-banner-dismissed', 'true');
+                    }
                 });
             }
 
             if (openGuideBtn) {
                 openGuideBtn.addEventListener('click', () => {
                     banner.classList.remove('visible');
+                    // If clicked guide, we might assume they want to install, so maybe don't show banner again immediately? 
+                    // Let's stick to checkbox rule to be explicit.
+                    if (dontShowCheckbox && dontShowCheckbox.checked) {
+                        localStorage.setItem('uki-pwa-banner-dismissed', 'true');
+                    }
+
                     // Navigate to Settings
                     window.switchTab('settings-panel');
                     // Find and expand the guide

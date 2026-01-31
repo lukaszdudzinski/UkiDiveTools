@@ -929,7 +929,7 @@
                     <div class="install-guide-section" id="settings-pwa-guide">
                         <div class="install-guide-header"
                             onclick="document.getElementById('install-guide-content').classList.toggle('expanded'); document.getElementById('guide-toggle-icon').style.transform = document.getElementById('install-guide-content').classList.contains('expanded') ? 'rotate(180deg)' : 'rotate(0deg)'">
-                            <h4>📱 Instrukcja Instalacji (PWA)</h4>
+                            <h4>📱 Instalacja na iOS / Android</h4>
                             <span id="guide-toggle-icon" class="toggle-icon">▼</span>
                         </div>
                         <div id="install-guide-content" class="install-guide-content">
@@ -1063,15 +1063,23 @@
     <!-- PWA Install Banner -->
     <div id="pwa-install-banner">
         <div class="pwa-banner-content">
-            <span class="pwa-icon">📱</span>
+            <div class="pwa-icon-container">
+                <span class="pwa-icon-inner">⬇️</span>
+            </div>
             <div class="pwa-text">
-                <h4>Zainstaluj Aplikację</h4>
+                <h4>Zainstaluj na iOS / Android</h4>
                 <p>Działaj offline i miej szybki dostęp!</p>
             </div>
         </div>
+
+        <div class="pwa-checkbox-row">
+            <input type="checkbox" id="pwa-dont-show-again">
+            <label for="pwa-dont-show-again">Nie pokazuj więcej</label>
+        </div>
+
         <div class="pwa-banner-actions">
-            <button id="pwa-limit-banner-btn" class="pwa-btn secondary">Nie teraz</button>
-            <button id="pwa-open-guide-btn" class="pwa-btn primary">Jak zainstalować?</button>
+            <button id="pwa-limit-banner-btn" class="pwa-btn secondary">Zamknij</button>
+            <button id="pwa-open-guide-btn" class="pwa-btn primary">Instrukcja</button>
         </div>
     </div>
 </body>
