@@ -1,0 +1,56 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - navigation [ref=e3]:
+      - generic "Powrót do ekranu startowego" [ref=e4] [cursor=pointer]:
+        - img "Logo" [ref=e5]
+        - heading "Uki's Dive Tools" [level=1] [ref=e6]
+      - list [ref=e7]:
+        - listitem [ref=e8]:
+          - link "Strefa PRO" [ref=e9] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e10]:
+          - link "Kalkulator SAC" [ref=e11] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e12]:
+          - link "Kalkulator Nitrox" [ref=e13] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e14]:
+          - link "Planowanie Gazu (Basic)" [ref=e15] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e16]:
+          - link "Kalkulator Balastu" [ref=e17] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e18]:
+          - link "Narzędzia Divemastera" [ref=e19] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e20]:
+          - link "Wiedza Nurkowa" [ref=e21] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e22]:
+          - link "Uki's River Dive" [ref=e23] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e24]:
+          - link "Ustawienia" [ref=e25] [cursor=pointer]:
+            - /url: "#"
+      - generic [ref=e26]:
+        - link "☕ Podoba Ci się to narzędzie? Postaw mi kawę!" [ref=e28] [cursor=pointer]:
+          - /url: https://suppi.pl/ukidives
+          - text: ☕ Podoba Ci się to narzędzie?
+          - strong [ref=e29]: Postaw mi kawę!
+        - link "🚨 WYPADEK? SOS / KOMORA" [ref=e31] [cursor=pointer]:
+          - /url: "#"
+          - text: 🚨 WYPADEK?
+          - strong [ref=e32]: SOS / KOMORA
+        - generic [ref=e33]: Uki's Dive Tools v2026.1.31.02
+    - main [ref=e34]:
+      - generic [ref=e35]:
+        - generic [ref=e37] [cursor=pointer]:
+          - img "Logo" [ref=e38]
+          - heading "Uki's Dive Tools" [level=2] [ref=e39]
+          - paragraph [ref=e40]: Wybierz narzędzie z menu
+        - text: • • • • • • • • • • • •
+  - text: ✕
+```

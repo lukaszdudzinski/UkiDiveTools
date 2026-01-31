@@ -1,0 +1,167 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3] [cursor=pointer]:
+      - button "Otwórz menu" [ref=e4]
+      - img "Logo" [ref=e8]
+      - heading "Uki's Dive Tools" [level=2] [ref=e9]
+    - navigation [ref=e10]:
+      - generic "Powrót do ekranu startowego" [ref=e11] [cursor=pointer]:
+        - img "Logo" [ref=e12]
+        - heading "Uki's Dive Tools" [level=1] [ref=e13]
+      - list [ref=e14]:
+        - listitem [ref=e15]:
+          - link "Strefa PRO" [ref=e16] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e17]:
+          - link "Kalkulator SAC" [ref=e18] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e19]:
+          - link "Kalkulator Nitrox" [ref=e20] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e21]:
+          - link "Planowanie Gazu (Basic)" [ref=e22] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e23]:
+          - link "Kalkulator Balastu" [ref=e24] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e25]:
+          - link "Narzędzia Divemastera" [ref=e26] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e27]:
+          - link "Wiedza Nurkowa" [ref=e28] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e29]:
+          - link "Uki's River Dive" [ref=e30] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e31]:
+          - link "Ustawienia" [ref=e32] [cursor=pointer]:
+            - /url: "#"
+      - generic [ref=e33]:
+        - link "☕ Podoba Ci się to narzędzie? Postaw mi kawę!" [ref=e35] [cursor=pointer]:
+          - /url: https://suppi.pl/ukidives
+          - text: ☕ Podoba Ci się to narzędzie?
+          - strong [ref=e36]: Postaw mi kawę!
+        - link "🚨 WYPADEK? SOS / KOMORA" [ref=e38] [cursor=pointer]:
+          - /url: "#"
+          - text: 🚨 WYPADEK?
+          - strong [ref=e39]: SOS / KOMORA
+        - generic [ref=e40]: Uki's Dive Tools v2026.1.31.02
+    - main [ref=e41]:
+      - generic [ref=e43]:
+        - heading "Wiedza Nurkowa" [level=3] [ref=e44]
+        - navigation [ref=e45]:
+          - button "Wykłady" [ref=e46] [cursor=pointer]
+          - button "SAC" [ref=e47] [cursor=pointer]
+          - button "Nitrox" [ref=e48] [cursor=pointer]
+          - button "Gazy" [ref=e49] [cursor=pointer]
+          - button "Balast" [ref=e50] [cursor=pointer]
+        - generic [ref=e51]:
+          - text: • • • • • • • • • • • •
+          - main [ref=e54]:
+            - generic [ref=e55]:
+              - heading [level=2] [ref=e56]: Nurkowanie Nocne i w Ograniczonej Widoczności
+              - button [ref=e58] [cursor=pointer]: Powrót
+            - navigation [ref=e59]:
+              - list [ref=e60]:
+                - listitem [ref=e61]:
+                  - link [ref=e62] [cursor=pointer]:
+                    - /url: "#toc-0"
+                    - text: "1. Wstęp: Dlaczego warto zanurzyć się w mrok?"
+                - listitem [ref=e63]:
+                  - link [ref=e64] [cursor=pointer]:
+                    - /url: "#toc-1"
+                    - text: "2. Specyfika Polska: \"Noc w środku dnia\""
+                - listitem [ref=e65]:
+                  - link [ref=e66] [cursor=pointer]:
+                    - /url: "#toc-2"
+                    - text: 3. Przygotowanie i Procedury (Standardy SSI/CMAS)
+                - listitem [ref=e67]:
+                  - link [ref=e68] [cursor=pointer]:
+                    - /url: "#toc-3"
+                    - text: "4. Sprzęt: Ewolucja i Współczesność"
+                - listitem [ref=e69]:
+                  - link [ref=e70] [cursor=pointer]:
+                    - /url: "#toc-4"
+                    - text: 5. Komunikacja Świetlna
+            - article [ref=e71]:
+              - generic [ref=e72]:
+                - paragraph [ref=e73]: "🎧 Posłuchaj wykładu:"
+                - generic [ref=e74]: Twoja przeglądarka nie obsługuje elementu audio.
+              - paragraph [ref=e75]: Nurkowanie po zachodzie słońca to jedno z najbardziej ekscytujących doświadczeń w karierze płetwonurka. Znane Ci miejsca zmieniają się nie do poznania, a zmysły wyostrzają się, reagując na każdy ruch w snopie światła. W tym przewodniku dowiesz się, jak bezpiecznie wejść w świat mroku – niezależnie od tego, czy jest to noc na rafie, czy głębokie nurkowanie w polskim jeziorze.
+              - heading [level=3] [ref=e76]: "1. Wstęp: Dlaczego warto zanurzyć się w mrok?"
+              - paragraph [ref=e77]: "Kiedy słońce znika pod horyzontem, pod wodą następuje „zmiana warty”. Ryby dzienne zapadają w letarg, chowając się w szczelinach, a na żer wychodzą drapieżniki: mureny, ośmiornice, skorupiaki i homary, które za dnia są nieuchwytne."
+              - paragraph [ref=e78]: Magia nurkowania nocnego polega również na przywracaniu kolorów. Woda działa jak filtr, pochłaniając barwy (czerwony znika już na kilku metrach). W nocy Twoja latarka przywraca pełne spektrum barw na dystansie oświetlenia – rafa, która w dzień wydaje się niebiesko-szara, w nocy eksploduje żywymi kolorami. Dodatkowo, ograniczone pole widzenia (tylko to, co oświetlasz) wywołuje tzw. "efekt tunelowy", który pozwala skupić się na makro-życiu i detalach, które w dzień często umykają naszej uwadze.
+              - heading [level=3] [ref=e79]: "2. Specyfika Polska: \"Noc w środku dnia\""
+              - paragraph [ref=e80]: Dla nurków w Polsce umiejętność posługiwania się światłem jest kluczowa nie tylko w nocy. Nasze wody (jeziora, Bałtyk) charakteryzują się specyficzną stratyfikacją i zmąceniem. Często już na głębokości 20-30 metrów (a w mniej przejrzystych akwenach znacznie płycej) panują całkowite ciemności, nawet w słoneczny letni dzień.
+              - paragraph [ref=e81]: "Wniosek jest prosty: W polskich warunkach latarka nie jest wyposażeniem \"opcjonalnym\" czy \"nocnym\". Jest to standardowy element ekwipunku każdego nurka schodzącego poniżej strefy światła. Traktuj każde głębsze nurkowanie w polskich wodach jak nurkowanie nocne pod względem procedur bezpieczeństwa i dublowania sprzętu oświetleniowego."
+              - heading [level=3] [ref=e82]: 3. Przygotowanie i Procedury (Standardy SSI/CMAS)
+              - paragraph [ref=e83]: Bezpieczeństwo w nocy opiera się na planowaniu i redundancji (dublowaniu).
+              - paragraph [ref=e84]:
+                - strong [ref=e85]: "Przygotowanie miejsca:"
+                - text: Jeśli nurkujesz z brzegu, kluczowe jest ustawienie świateł orientacyjnych. Najlepszą praktyką jest ustawienie dwóch świateł w linii (jedno wyżej, drugie niżej), co pozwala precyzyjnie namierzyć punkt wyjścia z wody. W przypadku nurkowania z łodzi, jednostka powinna być oznaczona światłem pozycyjnym, a lina opustowa światłem chemicznym lub stroboskopowym (błyskaczem).
+              - paragraph [ref=e86]:
+                - strong [ref=e87]: "Kluczowa zasada Redundancji:"
+                - text: "W nurkowaniu nocnym i w ograniczonej widoczności jeden nurek musi posiadać MINIMUM dwa niezależne źródła światła:"
+              - list [ref=e88]:
+                - listitem [ref=e89]: "Latarka Główna: Mocna, służąca do nawigacji i komunikacji."
+                - listitem [ref=e90]: "Latarka Zapasowa (Backup): Mniejsza, łatwo dostępna, niezawodna."
+              - paragraph [ref=e91]:
+                - strong [ref=e92]: "Złota zasada bezpieczeństwa:"
+                - text: Jeśli Twoja latarka główna ulegnie awarii, natychmiast włączasz latarkę zapasową, sygnalizujesz problem partnerowi i kończysz nurkowanie, rozpoczynając bezpieczne wynurzanie. Nie kontynuuj nurkowania na latarce zapasowej!
+              - heading [level=3] [ref=e93]: "4. Sprzęt: Ewolucja i Współczesność"
+              - paragraph [ref=e94]: "Technologia oświetlenia nurkowego przeszła długą drogę, co bezpośrednio przekłada się na nasz komfort i bezpieczeństwo:"
+              - list [ref=e95]:
+                - listitem [ref=e96]:
+                  - strong [ref=e97]: "Era Halogenów:"
+                  - text: Dawniej standard. Dawały ciepłe, żółte światło, które dobrze oddawało barwy, ale zużywały ogromne ilości energii (krótki czas pracy) i były wrażliwe na wstrząsy.
+                - listitem [ref=e98]:
+                  - strong [ref=e99]: "Era HID:"
+                  - text: Krok milowy w nurkowaniu technicznym. Oferowały potężny, skupiony strumień światła (miecz świetlny), idealny do komunikacji w mętnej wodzie. Ich wadą była delikatność żarnika i wysoka cena.
+                - listitem [ref=e100]:
+                  - strong [ref=e101]: "Era LED:"
+                  - text: Obecnie dominująca technologia. Diody LED są niezwykle odporne na wstrząsy, energooszczędne i oferują potężną moc przy małych gabarytach. Niemal całkowicie wyparły inne rozwiązania.
+              - generic [ref=e102]:
+                - img [ref=e103] [cursor=pointer]
+                - paragraph [ref=e104]: "Kliknij, aby powiększyć: Porównanie technologii oświetlenia."
+              - paragraph [ref=e105]: "Konstrukcje latarek:"
+              - list [ref=e106]:
+                - listitem [ref=e107]:
+                  - strong [ref=e108]: "Ręczne (Handheld):"
+                  - text: Kompaktowe, źródło zasilania zintegrowane z głowicą. Idealne do nurkowania rekreacyjnego i jako światła zapasowe.
+                - listitem [ref=e109]:
+                  - strong [ref=e110]: "Z zasobnikiem (Canister):"
+                  - text: Głowica połączona kablem z zasobnikiem na baterie mocowanym na pasie. Preferowane w nurkowaniu technicznym i trudnym (polskie wody). Dlaczego? Oferują bardzo długi czas pracy, a lekka głowica (często z uchwytem Goodmana) nie obciąża dłoni, co pozwala na swobodną obsługę innego sprzętu.
+              - heading [level=3] [ref=e111]: 5. Komunikacja Świetlna
+              - paragraph [ref=e112]:
+                - text: "W nocy nie widzimy gestów rąk, chyba że je oświetlimy. Dlatego latarka staje się Twoim głosem. Pamiętaj o nadrzędnej zasadzie:"
+                - strong [ref=e113]: Nigdy nie świeć partnerowi w oczy!
+                - text: To niszczy jego adaptację wzroku do ciemności i oślepia.
+              - generic [ref=e114]:
+                - img [ref=e115] [cursor=pointer]
+                - paragraph [ref=e116]: "Kliknij, aby powiększyć: Kluczowe sygnały komunikacji świetlnej."
+              - paragraph [ref=e117]: "Podstawowe sygnały świetlne:"
+              - list [ref=e118]:
+                - listitem [ref=e119]:
+                  - strong [ref=e120]: "OK:"
+                  - text: Rysowanie latarką powolnego koła na dnie lub przed partnerem.
+                - listitem [ref=e121]:
+                  - strong [ref=e122]: "UWAGA / PROBLEM:"
+                  - text: Szybki, poziomy ruch latarką (lewo-prawo) lub gwałtowne ruchy.
+                - listitem [ref=e123]:
+                  - strong [ref=e124]: "Sygnalizacja awaryjna:"
+                  - text: Bardzo szybkie, chaotyczne ruchy światłem lub użycie stroboskopu.
+              - paragraph [ref=e125]:
+                - strong [ref=e126]: "Komunikacja pasywna:"
+                - text: Aby pokazać standardowy znak (np. „ile masz powietrza” lub „rezerwa”), oświetlasz własną dłoń trzymaną na wysokości klatki piersiowej, a nie świecisz na dłoń partnera. Dzięki temu Twój partner wyraźnie widzi Twój komunikat.
+              - generic [ref=e127]:
+                - heading [level=4] [ref=e128]: Strefa Instruktora
+                - button [ref=e129] [cursor=pointer]:
+                  - img [ref=e131]
+                  - generic [ref=e134]: Otwórz Prezentację (PDF)
+                - paragraph [ref=e135]: Dostępne dla instruktorów i divemasterów.
+              - button [ref=e137] [cursor=pointer]: Sprawdź Wiedzę (Quiz)
+  - button "Wróć do menu" [ref=e138] [cursor=pointer]: ✕
+```

@@ -42,7 +42,7 @@ export const barotraumaLecture = {
             <li><strong>Mechanizm (zanurzanie):</strong> Rzadkie zjawisko związane z małymi komorami powietrznymi uwięzionymi pod nieprawidłowo założonymi plombami lub koronkami. Kompresja uwięzionego powietrza może prowadzić do silnego bólu zęba (barodontalgia).</li>
         </ul>
         <div style="text-align: center; margin: 30px 0;">
-            <img src="img/barotrauma_urazy.jpg" alt="Infografika: Urazy Nurkowe (Kompresja)" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+            <img src="img/lectures/barotrauma/barotrauma_urazy.jpg" alt="Infografika: Urazy Nurkowe (Kompresja)" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
         </div>
         <h4>B. Urazy Związane głównie z Wynurzaniem (Rozprężanie)</h4>
         <p>Urazy te są wynikiem rozprężania się gazu zgodnie z Prawem Boyle’a-Mariotte’a, gdy maleje ciśnienie otoczenia.</p>
@@ -60,7 +60,7 @@ export const barotraumaLecture = {
             <li><strong>Objawy AGE w Mózgu:</strong> Utrata przytomności (często w ciągu 4-6 minut po wynurzeniu), ból głowy, drgawki, porażenie mięśni i paraliż, zaburzenia czuciowe (mrowienie, drętwienie) oraz zaburzenia zmysłów (mowy, słuchu, wzroku, równowagi).</li>
         </ul>
         <div style="text-align: center; margin: 30px 0;">
-            <img src="img/barotrauma_ucp.jpg" alt="Infografika: Uraz Ciśnieniowy Płuc (UCP)" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+            <img src="img/lectures/barotrauma/barotrauma_ucp.jpg" alt="Infografika: Uraz Ciśnieniowy Płuc (UCP)" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
         </div>
         <h5>Uraz Ciśnieniowy Zatok (Rozprężny):</h5>
         <ul>
@@ -114,7 +114,7 @@ export const barotraumaLecture = {
             <li><strong>Resuscytacja:</strong> Jeśli jest to konieczne, wykonaj podstawowe zabiegi resuscytacyjne (BLS).</li>
         </ul>
         <div style="text-align: center; margin: 30px 0;">
-            <img src="img/barotrauma_pomoc.jpg" alt="Infografika: Pierwsza Pomoc (UCP)" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+            <img src="img/lectures/barotrauma/barotrauma_pomoc.png" alt="Infografika: Pierwsza Pomoc (UCP)" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
         </div>`,
     quiz: [
         {

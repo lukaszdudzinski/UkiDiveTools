@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('PRO Access & Unlock Flow', () => {
 
     test('PRO Dashboard should be locked by default', async ({ page }) => {
-        await page.goto('http://localhost:8080'); // Assuming local dev
+        await page.goto('/'); // Assuming local dev
 
         // Navigate to PRO tab
         // Handle Mobile Menu

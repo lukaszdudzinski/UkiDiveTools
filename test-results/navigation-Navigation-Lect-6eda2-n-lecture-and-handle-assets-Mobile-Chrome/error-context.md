@@ -1,0 +1,220 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3] [cursor=pointer]:
+      - button "Otwórz menu" [ref=e4]
+      - img "Logo" [ref=e8]
+      - heading "Uki's Dive Tools" [level=2] [ref=e9]
+    - navigation [ref=e10]:
+      - generic "Powrót do ekranu startowego" [ref=e11] [cursor=pointer]:
+        - img "Logo" [ref=e12]
+        - heading "Uki's Dive Tools" [level=1] [ref=e13]
+      - list [ref=e14]:
+        - listitem [ref=e15]:
+          - link "Strefa PRO" [ref=e16] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e17]:
+          - link "Kalkulator SAC" [ref=e18] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e19]:
+          - link "Kalkulator Nitrox" [ref=e20] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e21]:
+          - link "Planowanie Gazu (Basic)" [ref=e22] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e23]:
+          - link "Kalkulator Balastu" [ref=e24] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e25]:
+          - link "Narzędzia Divemastera" [ref=e26] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e27]:
+          - link "Wiedza Nurkowa" [ref=e28] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e29]:
+          - link "Uki's River Dive" [ref=e30] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e31]:
+          - link "Ustawienia" [ref=e32] [cursor=pointer]:
+            - /url: "#"
+      - generic [ref=e33]:
+        - link "☕ Podoba Ci się to narzędzie? Postaw mi kawę!" [ref=e35] [cursor=pointer]:
+          - /url: https://suppi.pl/ukidives
+          - text: ☕ Podoba Ci się to narzędzie?
+          - strong [ref=e36]: Postaw mi kawę!
+        - link "🚨 WYPADEK? SOS / KOMORA" [ref=e38] [cursor=pointer]:
+          - /url: "#"
+          - text: 🚨 WYPADEK?
+          - strong [ref=e39]: SOS / KOMORA
+        - generic [ref=e40]: Uki's Dive Tools v2026.1.31.02
+    - main [ref=e41]:
+      - generic [ref=e43]:
+        - heading "Wiedza Nurkowa" [level=3] [ref=e44]
+        - navigation [ref=e45]:
+          - button "Wykłady" [ref=e46] [cursor=pointer]
+          - button "SAC" [ref=e47] [cursor=pointer]
+          - button "Nitrox" [ref=e48] [cursor=pointer]
+          - button "Gazy" [ref=e49] [cursor=pointer]
+          - button "Balast" [ref=e50] [cursor=pointer]
+        - generic [ref=e51]:
+          - text: • • • • • • • • • • • •
+          - main [ref=e54]:
+            - generic [ref=e55]:
+              - heading [level=2] [ref=e56]: Nawigacja w Nurkowaniu – Sztuka Orientacji Podwodnej
+              - button [ref=e58] [cursor=pointer]: Powrót
+            - navigation [ref=e59]:
+              - list [ref=e60]:
+                - listitem [ref=e61]:
+                  - link [ref=e62] [cursor=pointer]:
+                    - /url: "#toc-0"
+                    - text: "1. Wstęp: Dlaczego w ogóle nawigujemy?"
+                - listitem [ref=e63]:
+                  - link [ref=e64] [cursor=pointer]:
+                    - /url: "#toc-1"
+                    - text: "2. Wyzwanie: Powierzchnia a Podwodny Świat"
+                - listitem [ref=e65]:
+                  - link [ref=e66] [cursor=pointer]:
+                    - /url: "#toc-2"
+                    - text: 3. Rodzaje Nawigacji Podwodnej
+                - listitem [ref=e67]:
+                  - link [ref=e68] [cursor=pointer]:
+                    - /url: "#toc-3"
+                    - text: "4. Kompas: Twoje Główne Narzędzie"
+                - listitem [ref=e69]:
+                  - link [ref=e70] [cursor=pointer]:
+                    - /url: "#toc-4"
+                    - text: 5. Zasada Działania i Technika – Jak nie zbłądzić?
+                - listitem [ref=e71]:
+                  - link [ref=e72] [cursor=pointer]:
+                    - /url: "#toc-5"
+                    - text: 6. Szacowanie Odległości (Brakujące Ogniwo)
+                - listitem [ref=e73]:
+                  - link [ref=e74] [cursor=pointer]:
+                    - /url: "#toc-6"
+                    - text: 7. Podsumowanie
+            - article [ref=e75]:
+              - generic [ref=e76]:
+                - paragraph [ref=e77]: "🎧 Posłuchaj wykładu:"
+                - generic [ref=e78]: Twoja przeglądarka nie obsługuje elementu audio.
+              - heading [level=3] [ref=e79]: "1. Wstęp: Dlaczego w ogóle nawigujemy?"
+              - paragraph [ref=e80]: "Główna myśl: Nawigacja to różnica między byciem „prowadzonym” a byciem „odkrywcą”."
+              - paragraph [ref=e81]: Nawigacja podwodna to jedna z tych umiejętności, która najszybciej buduje pewność siebie nurka. Wielu początkujących nurków (OWD) polega w 100% na przewodniku (Dive Guide), co nazywamy syndromem „podążania za płetwami”. Nauka nawigacji zmienia ten układ.
+              - heading [level=4] [ref=e82]: "Kluczowe korzyści (Dlaczego warto?):"
+              - list [ref=e83]:
+                - listitem [ref=e84]:
+                  - strong [ref=e85]: "Redukcja stresu:"
+                  - text: Wiedza o tym, gdzie jesteś i w którą stronę płynąć do wyjścia, eliminuje lęk przed zgubieniem się w toni.
+                - listitem [ref=e86]:
+                  - strong [ref=e87]: "Oszczędność gazu:"
+                  - text: Mniej błądzenia to mniej zbędnych ruchów, spokojniejszy oddech i krótsze przebywanie pod wodą w poszukiwaniu liny opustowej.
+                - listitem [ref=e88]:
+                  - strong [ref=e89]: "Efektywność planu:"
+                  - text: Możesz precyzyjnie dotrzeć do celu (np. wraku) i wrócić, maksymalizując czas denny w najciekawszym miejscu.
+                - listitem [ref=e90]:
+                  - strong [ref=e91]: "Bezpieczeństwo partnerskie:"
+                  - text: W razie separacji z grupą wiesz, jak bezpiecznie wrócić do punktu wyjścia.
+              - heading [level=3] [ref=e92]: "2. Wyzwanie: Powierzchnia a Podwodny Świat"
+              - paragraph [ref=e93]: Na powierzchni nawigacja jest intuicyjna – mamy słońce, budynki, wyraźny horyzont. Pod wodą środowisko działa przeciwko naszym zmysłom.
+              - heading [level=4] [ref=e94]: "Dlaczego jest to trudne? (Czynniki środowiskowe):"
+              - list [ref=e95]:
+                - listitem [ref=e96]:
+                  - strong [ref=e97]: "Ograniczona widoczność:"
+                  - text: Często widzimy tylko wycinek rzeczywistości. To tak, jakbyś chodził po lesie we mgle – widzisz pojedyncze drzewa, ale nie widzisz lasu. Trudno obrać daleki cel.
+                - listitem [ref=e98]:
+                  - strong [ref=e99]: "Brak punktów odniesienia (Blue Water):"
+                  - text: W toni wodnej lub nad jednolitym piaszczystym dnem mózg traci punkty zaczepienia. Może to prowadzić do dezorientacji przestrzennej (vertigo).
+                - listitem [ref=e100]:
+                  - strong [ref=e101]: "Trójwymiarowość:"
+                  - text: Poruszamy się w osi X, Y oraz Z (głębokość). Musisz kontrolować kierunek ORAZ pływalność jednocześnie. Zmiana głębokości często zmienia też warunki (np. prąd).
+                - listitem [ref=e102]:
+                  - strong [ref=e103]: "Złudzenia zmysłów i refrakcja:"
+                  - text: Woda powiększa obraz (o ok. 33%) i go przybliża (o 25%). To sprawia, że ocena odległości "na oko" jest bardzo myląca. Dodatkowo nasz błędnik w warunkach braku wizualnych bodźców szybko "głupieje".
+              - paragraph [ref=e104]:
+                - strong [ref=e105]: "Wskazówka Instruktorska:"
+                - text: „Wasz wewnętrzny kompas pod wodą nie działa. Jeśli czujesz, że powinieneś płynąć w lewo, a kompas pokazuje prosto – zaufaj kompasowi. Zawsze.”
+              - heading [level=3] [ref=e106]: 3. Rodzaje Nawigacji Podwodnej
+              - paragraph [ref=e107]: Wyróżniamy trzy główne metody orientacji, które wzajemnie się uzupełniają.
+              - heading [level=4] [ref=e108]: A. Nawigacja Naturalna (Obserwacyjna)
+              - paragraph [ref=e109]: To sztuka czytania środowiska. Jest to najbardziej podstawowa, ale często niedoceniana forma.
+              - list [ref=e110]:
+                - listitem [ref=e111]:
+                  - strong [ref=e112]: "Ukształtowanie dna:"
+                  - text: Zazwyczaj dno opada w kierunku głębszej wody (oddalanie się od brzegu) i wznosi się ku brzegowi.
+                - listitem [ref=e113]:
+                  - strong [ref=e114]: "Formacje piaskowe (Ripples):"
+                  - text: Fale na powierzchni tworzą na dnie piaszczystym charakterystyczne zmarszczki. Układają się one zazwyczaj równolegle do brzegu. Płynąc w poprzek nich, płyniesz do lub od brzegu.
+                - listitem [ref=e115]:
+                  - strong [ref=e116]: "Światło i Cienie:"
+                  - text: W słoneczny dzień woda jest jaśniejsza w kierunku słońca/powierzchni. Cienie rzucane przez skały są stałe w czasie jednego nurkowania – działają jak drogowskazy.
+                - listitem [ref=e117]:
+                  - strong [ref=e118]: "Ruch wody (Prąd/Falowanie):"
+                  - text: "Rośliny i gorgonie wyginają się zgodnie z prądem. Pamiętaj o zasadzie: nurkowanie zaczynamy pod prąd, aby powrót był łatwiejszy."
+              - heading [level=4] [ref=e119]: B. Nawigacja Przyrządowa (Kompas)
+              - paragraph [ref=e120]: Niezbędna, gdy nawigacja naturalna zawodzi (noc, słaba widoczność, toń) lub gdy wymagana jest precyzja (np. poszukiwanie i wydobywanie). Daje nam obiektywny kurs magnetyczny.
+              - img [ref=e122] [cursor=pointer]
+              - heading [level=4] [ref=e123]: C. Nawigacja Mieszana (Hybrydowa)
+              - paragraph [ref=e124]: To „Złoty Standard” SSI. Polega na łączeniu wskazań kompasu z obserwacją naturalnych punktów.
+              - paragraph [ref=e125]:
+                - emphasis [ref=e126]: "Przykład: Ustawiasz kompas na cel, ale zapamiętujesz, że płyniesz wzdłuż ściany rafy, którą masz po prawej stronie. To podwójna weryfikacja."
+              - img [ref=e128] [cursor=pointer]
+              - heading [level=3] [ref=e129]: "4. Kompas: Twoje Główne Narzędzie"
+              - paragraph [ref=e130]: Kompas to prosty, ale precyzyjny instrument. Musimy znać jego budowę, by unikać błędów.
+              - heading [level=4] [ref=e131]: "Budowa Kompasu Klasycznego (Analogowego):"
+              - list [ref=e132]:
+                - listitem [ref=e133]:
+                  - strong [ref=e134]: "Igła magnetyczna (Róża wiatrów):"
+                  - text: Zanurzona w oleju (dla stabilizacji i odporności na ciśnienie). Zawsze wskazuje Północ Magnetyczną.
+                - listitem [ref=e135]:
+                  - strong [ref=e136]: "Obrotowy pierścień (Bezel):"
+                  - text: Ruchomy element z indeksami (szczerbinką/widełkami). Służy do „zapamiętania” naszego kursu.
+                - listitem [ref=e137]:
+                  - strong [ref=e138]: "Linia kierunkowa (Lubber Line):"
+                  - text: Czerwona lub czarna linia biegnąca przez środek kompasu. To najważniejszy element – wskazuje kierunek Twojego płynięcia. Musi być przedłużeniem osi Twojego ciała.
+                - listitem [ref=e139]:
+                  - strong [ref=e140]: "Okienko boczne:"
+                  - text: Pozwala na precyzyjny odczyt numeryczny azymutu, gdy trzymamy kompas w pozycji "celowania".
+              - heading [level=3] [ref=e141]: 5. Zasada Działania i Technika – Jak nie zbłądzić?
+              - paragraph [ref=e142]: Posiadanie kompasu to nie wszystko. Trzeba go umieć użyć. Większość błędów nawigacyjnych wynika ze złej techniki, a nie awarii sprzętu.
+              - heading [level=4] [ref=e143]: "Kluczowe zasady poprawnej nawigacji:"
+              - paragraph [ref=e144]:
+                - strong [ref=e145]: "Poziomowanie:"
+                - text: Klasyczny kompas musi być trzymany idealnie poziomo. Przechylenie go spowoduje zablokowanie igły o obudowę.
+              - paragraph [ref=e146]:
+                - strong [ref=e147]: "Pozycja Ciała i Linia Centralna:"
+              - list [ref=e148]:
+                - listitem [ref=e149]: Linia kierunkowa kompasu musi być idealnie na środku Twojego ciała.
+                - listitem [ref=e150]: Łokcie przy ciele, obie ręce trzymają kompas (lub konsolę).
+                - listitem [ref=e151]: "UWAGA: Nie skręcaj nadgarstkiem! Jeśli chcesz zmienić kierunek, obróć całe ciało. Kompas jest \"przyspawany\" do Twojej klatki piersiowej."
+              - heading [level=4] [ref=e152]: "Ustalanie Kursu (Setting the Heading):"
+              - list [ref=e153]:
+                - listitem [ref=e154]: Wyceluj linią kierunkową w cel.
+                - listitem [ref=e155]: Obróć pierścień (bezel) tak, aby „widełki” (indeksy) objęły igłę północy.
+                - listitem [ref=e156]: Płyń tak, aby igła cały czas była w widełkach.
+              - heading [level=4] [ref=e157]: "Kurs Powrotny (Reciprocal Heading):"
+              - paragraph [ref=e158]: Aby wrócić po tej samej linii (o 180 stopni), obróć się tak, aby igła północy znalazła się dokładnie naprzeciwko widełek (lub na dolnym znaczniku).
+              - heading [level=3] [ref=e159]: 6. Szacowanie Odległości (Brakujące Ogniwo)
+              - paragraph [ref=e160]: Nawigacja to Kierunek + Odległość. Sam kierunek to za mało. Jak mierzymy dystans pod wodą?
+              - list [ref=e161]:
+                - listitem [ref=e162]:
+                  - strong [ref=e163]: "Cykle kopnięć (Kick Cycles):"
+                  - text: Najpopularniejsza metoda. Jeden cykl to ruch lewej i prawej nogi (liczymy za każdym razem, gdy np. prawa noga idzie w dół). Wymaga kalibracji (np. ile cykli zajmuje Ci przepłynięcie 10 metrów).
+                - listitem [ref=e164]:
+                  - strong [ref=e165]: "Czas:"
+                  - text: Mierzymy czas płynięcia w jedną stronę. Metoda łatwa, ale niedokładna przy zmiennym prądzie (pod prąd płyniesz wolniej, z prądem szybciej).
+                - listitem [ref=e166]:
+                  - strong [ref=e167]: "Ciśnienie w butli (Zużycie gazu):"
+                  - text: Np. płyniemy do zużycia 50 barów, potem wracamy. Metoda bezpieczna dla zapasu gazu, ale mało precyzyjna nawigacyjnie (zużycie zależy od głębokości i wysiłku).
+              - heading [level=3] [ref=e168]: 7. Podsumowanie
+              - paragraph [ref=e169]: "Pamiętaj o dewiacji magnetycznej – wraki, metalowe elementy czy włączone latarki zbyt blisko kompasu mogą zakłócić odczyt. Nawigacja to proces ciągły. Wymaga podzielności uwagi: kontrolujesz pływalność, partnera, głębokość i kompas."
+              - paragraph [ref=e170]: Dobra nawigacja to spokój ducha. Kiedy wiesz, gdzie jesteś, nurkowanie staje się czystą przyjemnością.
+              - generic [ref=e171]:
+                - heading [level=4] [ref=e172]: Strefa Instruktora
+                - button [ref=e173] [cursor=pointer]:
+                  - img [ref=e175]
+                  - generic [ref=e178]: Otwórz Prezentację (PDF)
+                - paragraph [ref=e179]: Dostępne dla instruktorów i divemasterów.
+              - button [ref=e181] [cursor=pointer]: Sprawdź Wiedzę (Quiz)
+  - button "Wróć do menu" [ref=e182] [cursor=pointer]: ✕
+```

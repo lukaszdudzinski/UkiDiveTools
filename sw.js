@@ -1,4 +1,4 @@
-const CACHE_NAME = 'uki-dive-tools-v2026-1-30-01'; // Release v2026.1.30.01
+const CACHE_NAME = 'uki-dive-tools-v2026.1.31.02'; // Release v2026.1.30.01
 // Core assets that MUST be cached immediately
 const CORE_ASSETS = [
     './',

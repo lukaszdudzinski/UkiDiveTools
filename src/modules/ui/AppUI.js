@@ -8,7 +8,7 @@ import { ScienceUI } from './ScienceUI.js'; // New Import
 import { UkiRiverGameUI } from '../games/uki-river-dive/UkiRiverGameUI.js';
 import { ProAccess } from '../auth/ProAccess.js';
 
-export const APP_VERSION = 'v2026.1.30.01';
+export const APP_VERSION = 'v2026.1.31.02';
 
 export const AppUI = {
     init: () => {
@@ -67,6 +67,53 @@ export const AppUI = {
                     const emergencyContent = document.getElementById('emergency-content');
                     if (emergencyContent && AppUI.showModal) {
                         AppUI.showModal(emergencyContent.innerHTML, true);
+
+                        // Attach GPS Logic immediately after showing modal
+                        setTimeout(() => {
+                            const gpsBtn = document.getElementById('gps-locate-btn');
+                            const gpsResult = document.getElementById('gps-result');
+
+                            if (gpsBtn && gpsResult) {
+                                gpsBtn.addEventListener('click', () => {
+                                    gpsResult.innerHTML = '⏳ Pobieranie pozycji...';
+
+                                    if (!navigator.geolocation) {
+                                        gpsResult.innerHTML = '❌ Twój telefon nie wspiera GPS.';
+                                        return;
+                                    }
+
+                                    navigator.geolocation.getCurrentPosition(
+                                        (position) => {
+                                            const lat = position.coords.latitude.toFixed(5);
+                                            const lon = position.coords.longitude.toFixed(5);
+                                            const acc = Math.round(position.coords.accuracy);
+                                            const mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
+
+                                            gpsResult.innerHTML = `
+                                                <div style="margin-top:10px; padding:10px; background:rgba(0,0,0,0.3); border-radius:8px;">
+                                                    <div style="font-size:1.4em; color:#4CAF50; letter-spacing:1px;">${lat}, ${lon}</div>
+                                                    <div style="font-size:0.8em; color:#aaa; margin-bottom:8px;">(Dokładność: ${acc}m)</div>
+                                                    <a href="${mapLink}" target="_blank" style="display:inline-block; margin-top:5px; color:#2196F3; text-decoration:underline; font-weight:bold;">
+                                                        🗺️ Otwórz w Google Maps
+                                                    </a>
+                                                </div>
+                                            `;
+                                        },
+                                        (error) => {
+                                            console.error("GPS Error", error);
+                                            let msg = 'Nieznany błąd';
+                                            switch (error.code) {
+                                                case error.PERMISSION_DENIED: msg = '❌ Brak zgody na lokalizację.'; break;
+                                                case error.POSITION_UNAVAILABLE: msg = '❌ Brak sygnału GPS.'; break;
+                                                case error.TIMEOUT: msg = '❌ Upłynął czas żądania.'; break;
+                                            }
+                                            gpsResult.innerHTML = msg;
+                                        },
+                                        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+                                    );
+                                });
+                            }
+                        }, 100);
                     }
                 });
             }
