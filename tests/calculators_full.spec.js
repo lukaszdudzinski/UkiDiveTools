@@ -9,13 +9,17 @@ async function navigateTo(page, isMobile, tabName, tabId) {
             await page.waitForTimeout(300);
         }
     }
-    await page.getByRole('link', { name: tabName }).click();
+    // Use data-tab selector which matches strict ID-based navigation
+    await page.locator(`a[data-tab="${tabId}"]`).click();
     await expect(page.locator(`#${tabId}`)).toBeVisible();
 }
 
 test.describe('Full Calculator Suite', () => {
 
     test.beforeEach(async ({ page }) => {
+        await page.addInitScript(() => {
+            localStorage.setItem('uki-pwa-banner-dismissed', 'true');
+        });
         await page.goto('/');
     });
 
@@ -77,7 +81,7 @@ test.describe('Full Calculator Suite', () => {
         await page.fill('#cnsDepth', '30'); // PPO2 = 1.28
         await page.fill('#cnsTime', '20');
 
-        await page.click('#cnsForm button[type="submit"]');
+        await page.click('#cnsForm button[type="submit"]', { force: true });
         const result = page.locator('#cnsResult');
         await expect(result).toBeVisible();
         await expect(result).toContainText('%');

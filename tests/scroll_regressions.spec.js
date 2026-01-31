@@ -4,6 +4,10 @@ import { openMobileMenuIfNeeded } from './test-helpers.js';
 test.describe('Scroll Behavior Regression', () => {
 
     test.beforeEach(async ({ page }) => {
+        // Prevent PWA banner from blocking interactions (Mobile Safari fix)
+        await page.addInitScript(() => {
+            localStorage.setItem('uki-pwa-banner-dismissed', 'true');
+        });
         await page.goto('/');
         await page.waitForTimeout(1000);
     });
@@ -11,12 +15,11 @@ test.describe('Scroll Behavior Regression', () => {
     test('Gas Consumption should scroll to result after calculation', async ({ page, isMobile }) => {
         // Navigate to Gas Planning
         await openMobileMenuIfNeeded(page, isMobile);
-        await page.getByRole('link', { name: 'Planowanie Gazu (Basic)' }).click();
+        // Use data-tab selector for better stability on Mobile Safari
+        await page.locator('a[data-tab="gas-planning-calculator"]').click();
 
         // Wait for potential sub-tab or form
         const form = page.locator('#gasConsumptionForm');
-        // If hidden, maybe we need to click a sub-tab?
-        // Let's try to find a sub-tab button for "Zużycie Gazu" or similar if present.
         // Or if it's just scrolling.
         // Assuming it is initially visible or we need to click.
         // If it failed being visible, maybe it is under a sub-tab.
@@ -47,7 +50,7 @@ test.describe('Scroll Behavior Regression', () => {
     test('Rock Bottom should scroll maximally down', async ({ page, isMobile }) => {
         // Navigate to Gas Planning
         await openMobileMenuIfNeeded(page, isMobile);
-        await page.getByRole('link', { name: 'Planowanie Gazu (Basic)' }).click();
+        await page.locator('a[data-tab="gas-planning-calculator"]').click();
 
         // Scroll to Rock Bottom section (it's lower down usually)
         // Or click sub-tab if it exists? Rock Bottom is usually inline or separate?
