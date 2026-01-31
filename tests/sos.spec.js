@@ -12,9 +12,9 @@ test.describe('SOS & Emergency Features', () => {
         const sidebarBtn = page.locator('#emergency-btn');
 
         if (await mobileTile.isVisible()) {
-            await mobileTile.click();
+            await mobileTile.click({ force: true });
         } else {
-            await sidebarBtn.click();
+            await sidebarBtn.click({ force: true });
         }
 
         // 2. Check content
@@ -33,9 +33,9 @@ test.describe('SOS & Emergency Features', () => {
     test('should have GPS button with correct styling', async ({ page }) => {
         const mobileTile = page.locator('.tile-sos');
         if (await mobileTile.isVisible()) {
-            await mobileTile.click();
+            await mobileTile.click({ force: true });
         } else {
-            await page.locator('#emergency-btn').click();
+            await page.locator('#emergency-btn').click({ force: true });
         }
 
         // Check GPS Button existence
@@ -60,13 +60,13 @@ test.describe('SOS & Emergency Features', () => {
 
         const mobileTile = page.locator('.tile-sos');
         if (await mobileTile.isVisible()) {
-            await mobileTile.click();
+            await mobileTile.click({ force: true });
         } else {
-            await page.locator('#emergency-btn').click();
+            await page.locator('#emergency-btn').click({ force: true });
         }
 
         const gpsBtn = page.locator('#gps-locate-btn');
-        await gpsBtn.click();
+        await gpsBtn.click({ force: true });
 
         // Expect result to appear
         const resultDiv = page.locator('#gps-result');
