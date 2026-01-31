@@ -1,7 +1,7 @@
 # Page snapshot
 
 ```yaml
-- generic [active] [ref=e1]:
+- generic [ref=e1]:
   - generic [ref=e2]:
     - generic [ref=e3] [cursor=pointer]:
       - button "Otwórz menu" [ref=e4]
@@ -122,6 +122,6 @@
           - listitem [ref=e108]: Komputer nurkowy poszkodowanego (ZABIERZ GO ze sobą dla lekarzy!).
       - generic [ref=e109]:
         - heading "4. LOKALIZACJA (GPS)" [level=3] [ref=e110]
-        - button "POBIERZ MOJĄ POZYCJĘ" [ref=e112] [cursor=pointer]
+        - button "POBIERZ MOJĄ POZYCJĘ" [active] [ref=e112] [cursor=pointer]
       - paragraph [ref=e115]: Zachowaj spokój. Twoje działanie może uratować życie.
 ```

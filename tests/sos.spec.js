@@ -38,8 +38,8 @@ test.describe('SOS & Emergency Features', () => {
             await page.locator('#emergency-btn').click({ force: true });
         }
 
-        // Check GPS Button existence
-        const gpsBtn = page.locator('#gps-locate-btn');
+        // Check GPS Button existence (INSIDE MODAL)
+        const gpsBtn = page.locator('#global-tooltip .gps-locate-btn');
         await expect(gpsBtn).toBeVisible();
         await expect(gpsBtn).toHaveText('POBIERZ MOJĄ POZYCJĘ');
 
@@ -58,18 +58,20 @@ test.describe('SOS & Emergency Features', () => {
 
         await context.setGeolocation({ latitude: 54.518, longitude: 18.539 });
 
-        const mobileTile = page.locator('.tile-sos');
         if (await mobileTile.isVisible()) {
             await mobileTile.click({ force: true });
         } else {
             await page.locator('#emergency-btn').click({ force: true });
         }
 
-        const gpsBtn = page.locator('#gps-locate-btn');
+        // Wait for listener attachment (setTimeout in AppUI.js)
+        await page.waitForTimeout(500);
+
+        const gpsBtn = page.locator('#global-tooltip .gps-locate-btn');
         await gpsBtn.click({ force: true });
 
         // Expect result to appear
-        const resultDiv = page.locator('#gps-result');
+        const resultDiv = page.locator('#global-tooltip .gps-result');
         await expect(resultDiv).toContainText('54.51800, 18.53900');
         await expect(resultDiv).toContainText('Otwórz w Google Maps');
     });

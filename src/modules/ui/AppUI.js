@@ -70,8 +70,11 @@ export const AppUI = {
 
                         // Attach GPS Logic immediately after showing modal
                         setTimeout(() => {
-                            const gpsBtn = document.getElementById('gps-locate-btn');
-                            const gpsResult = document.getElementById('gps-result');
+                            const tooltipBody = document.getElementById('tooltip-body');
+                            if (!tooltipBody) return;
+
+                            const gpsBtn = tooltipBody.querySelector('.gps-locate-btn');
+                            const gpsResult = tooltipBody.querySelector('.gps-result');
 
                             if (gpsBtn && gpsResult) {
                                 gpsBtn.addEventListener('click', () => {
