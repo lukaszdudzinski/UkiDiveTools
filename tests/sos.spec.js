@@ -8,9 +8,14 @@ test.describe('SOS & Emergency Features', () => {
 
     test('should open SOS modal and have clickable phone links', async ({ page }) => {
         // 1. Open SOS
-        const sosBtn = page.locator('#emergency-btn');
-        await expect(sosBtn).toBeVisible();
-        await sosBtn.click({ force: true });
+        const mobileTile = page.locator('.tile-sos');
+        const sidebarBtn = page.locator('#emergency-btn');
+
+        if (await mobileTile.isVisible()) {
+            await mobileTile.click();
+        } else {
+            await sidebarBtn.click();
+        }
 
         // 2. Check content
         const modal = page.locator('#global-tooltip.emergency-modal');
@@ -26,7 +31,12 @@ test.describe('SOS & Emergency Features', () => {
     });
 
     test('should have GPS button with correct styling', async ({ page }) => {
-        await page.locator('#emergency-btn').click({ force: true });
+        const mobileTile = page.locator('.tile-sos');
+        if (await mobileTile.isVisible()) {
+            await mobileTile.click();
+        } else {
+            await page.locator('#emergency-btn').click();
+        }
 
         // Check GPS Button existence
         const gpsBtn = page.locator('#gps-locate-btn');
@@ -46,7 +56,14 @@ test.describe('SOS & Emergency Features', () => {
         await context.grantPermissions(['geolocation']);
         await context.setGeolocation({ latitude: 54.518, longitude: 18.539 });
 
-        await page.locator('#emergency-btn').click({ force: true });
+        await context.setGeolocation({ latitude: 54.518, longitude: 18.539 });
+
+        const mobileTile = page.locator('.tile-sos');
+        if (await mobileTile.isVisible()) {
+            await mobileTile.click();
+        } else {
+            await page.locator('#emergency-btn').click();
+        }
 
         const gpsBtn = page.locator('#gps-locate-btn');
         await gpsBtn.click();

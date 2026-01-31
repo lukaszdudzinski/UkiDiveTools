@@ -89,4 +89,39 @@
                 - paragraph [ref=e78]: Procedury ratunkowe
         - text: • • • • • • • • • • • •
   - text: ✕
+  - generic [ref=e80]:
+    - button "×" [ref=e81] [cursor=pointer]
+    - generic [ref=e83]:
+      - heading "🚨 PROCEDURA AWARYJNA 🚨" [level=2] [ref=e84]
+      - generic [ref=e85]:
+        - heading "1. OCENA SYTUACJI" [level=3] [ref=e86]
+        - list [ref=e87]:
+          - listitem [ref=e88]: Zatrzymaj nurkowanie / Wyjdź z wody.
+          - listitem [ref=e89]: Podaj tlen 100% (jeśli dostępny) przy podejrzeniu DCS.
+          - listitem [ref=e90]: Nie podawaj wody nieprzytomnemu.
+      - generic [ref=e91]:
+        - heading "2. NUMERY ALARMOWE" [level=3] [ref=e92]
+        - generic [ref=e93]:
+          - paragraph [ref=e94]:
+            - strong [ref=e95]: "Europejski Numer Alarmowy:"
+            - link "112" [ref=e96] [cursor=pointer]:
+              - /url: tel:112
+          - paragraph [ref=e97]:
+            - strong [ref=e98]: "DAN International:"
+            - link "+39 06 4211 5685" [ref=e99] [cursor=pointer]:
+              - /url: tel:+390642115685
+          - paragraph [ref=e100]:
+            - strong [ref=e101]: "Krajowy Ośrodek Medycyny Hiperbarycznej (Gdynia):"
+            - link "+48 58 622 51 63" [ref=e102] [cursor=pointer]:
+              - /url: tel:+48586225163
+      - generic [ref=e103]:
+        - heading "3. PRZYGOTUJ DANE DLA RATOWNIKÓW" [level=3] [ref=e104]
+        - list [ref=e105]:
+          - listitem [ref=e106]: Profil nurkowania (Głębokość, Czas, Gazy).
+          - listitem [ref=e107]: Objawy i czas ich wystąpienia.
+          - listitem [ref=e108]: Komputer nurkowy poszkodowanego (ZABIERZ GO ze sobą dla lekarzy!).
+      - generic [ref=e109]:
+        - heading "4. LOKALIZACJA (GPS)" [level=3] [ref=e110]
+        - button "POBIERZ MOJĄ POZYCJĘ" [ref=e112] [cursor=pointer]
+      - paragraph [ref=e115]: Zachowaj spokój. Twoje działanie może uratować życie.
 ```
