@@ -110,16 +110,7 @@
     }
 }
 
-/* Lightbox Close Button */
-.lightbox-close-btn {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    color: #fff;
-    font-size: 40px;
-    cursor: pointer;
-    z-index: 1001;
-}
+
 
 /* Formula Box (Technical/Scifi Style) */
 .formula-box {

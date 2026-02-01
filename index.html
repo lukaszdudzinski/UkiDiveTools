@@ -927,12 +927,16 @@
                     <!-- PWA Installation Guide Section -->
                     <div class="install-guide-section" id="settings-pwa-guide">
                         <div class="install-guide-header"
-                            onclick="document.getElementById('install-guide-content').classList.toggle('expanded'); document.getElementById('guide-toggle-icon').style.transform = document.getElementById('install-guide-content').classList.contains('expanded') ? 'rotate(180deg)' : 'rotate(0deg)'">
+                            onclick="this.classList.toggle('active-header'); document.getElementById('install-guide-content').classList.toggle('expanded'); document.getElementById('guide-toggle-icon').style.transform = document.getElementById('install-guide-content').classList.contains('expanded') ? 'rotate(180deg)' : 'rotate(0deg)'">
                             <h4>📱 Instalacja na iOS / Android</h4>
                             <span id="guide-toggle-icon" class="toggle-icon">▼</span>
                         </div>
                         <div id="install-guide-content" class="install-guide-content">
-                            <img src="img/pwa_install_guide.jpg" alt="Instrukcja instalacji" class="install-guide-img">
+                            <!-- Standardized Infographic Container -->
+                            <img src="img/pwa_install_guide.png" alt="Instrukcja instalacji" class="install-guide-img"
+                                style="border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                            <p style="font-size: 0.8em; color: #aaa; margin-top: 8px;"><i>Kliknij, aby
+                                    powiększyć</i></p>
 
                             <div class="install-steps-list">
                                 <p style="font-weight: bold; color: #fff; margin-bottom: 10px;">iOS (iPhone / iPad) -
@@ -951,12 +955,13 @@
                                 </ol>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="settings-info-row" style="margin-top: 25px;">
-                        <span>Wersja Aplikacji</span>
-                        <span class="app-version-display"
-                            style="font-weight: bold; color: var(--primary-color);">Loading...</span>
+
+                        <div class="settings-info-row" style="margin-top: 25px;">
+                            <span>Wersja Aplikacji</span>
+                            <span class="app-version-display"
+                                style="font-weight: bold; color: var(--primary-color);">Loading...</span>
+                        </div>
                     </div>
                 </div>
 

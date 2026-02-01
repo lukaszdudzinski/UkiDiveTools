@@ -2,90 +2,99 @@ export const dcsLecture = {
     id: 'dcs',
     title: 'Choroba Dekompresyjna',
     description: 'Mechanizm DCS, objawy, czynniki ryzyka i pierwsza pomoc w wypadku.',
-    content: `<h2>Choroba Dekompresyjna (DCS): Cicha Pułapka Azotu</h2>
-        <p>Choroba dekompresyjna (ang. Decompression Sickness – DCS), potocznie zwana chorobą kesonową, jest zespołem schorzeń i objawów wywołanych przez azot wydzielający się z tkanek do krwi nurka w sposób niekontrolowany, głównie w formie pęcherzyków gazowych. Jest to jedno z najpoważniejszych schorzeń, zagrażających zdrowiu i życiu płetwonurków.</p>
-        <h3>1. Fizyczne Podstawy DCS: Prawo Henry’ego</h3>
-        <p>DCS jest bezpośrednim wynikiem procesów absorpcji i eliminacji azotu, które są opisywane przez Prawo Henry’ego.</p>
-        <h4>Prawo Henry’ego:</h4>
-        <ul>
-            <li>Mówi, że ilość gazu, która rozpuści się w cieczy (w tym w płynach ustrojowych i tkankach ciała), jest wprost proporcjonalna do ciśnienia parcjalnego tego gazu.</li>
-            <li>Objętość gazu rozpuszczonego w cieczy rośnie wraz ze wzrostem ciśnienia.</li>
-        </ul>
-        <h4>Jak Prawo Henry’ego działa podczas nurkowania?</h4>
-        <ol>
-            <li><strong>Zanurzanie (Saturacja):</strong> Powietrze, którym oddychamy, składa się głównie z azotu (ponad 78%). Podczas zanurzania, ciśnienie absolutne wzrasta, a automat podaje powietrze pod ciśnieniem równym ciśnieniu na danej głębokości. Zgodnie z Prawem Henry'ego, azot z powietrza oddechowego zaczyna dyfundować (przenikać) do krwi i tkanek, nasycając je. Ilość rozpuszczonego azotu zależy od czasu i głębokości nurkowania (czyli od wyższego ciśnienia powietrza oddechowego).</li>
-            <li><strong>Wynurzanie (Desaturacja):</strong> W miarę wynurzania ciśnienie zewnętrzne spada. Następuje proces odwrotny – odsycanie tkanek z azotu. Azot dyfunduje z tkanek do krwi, a następnie jest usuwany w płucach z każdym wydechem.</li>
-            <li><strong>Ryzyko DCS (Tworzenie Pęcherzyków):</strong> Ciało nurka toleruje określony poziom przesycenia, ale jeśli różnica prężności (gradient) staje się zbyt duża (np. z powodu zbyt szybkiego wynurzania), azot może się uwolnić z roztworu i przejść w formę gazową (pęcherzyków) w tkankach i krwioobiegu. To właśnie te zatory gazowe, powstałe pierwotnie z pęcherzyków azotu, są bezpośrednią przyczyną choroby ciśnieniowej (DCS).</li>
-        </ol>
-        <h3>2. Klasyfikacja i Objawy Choroby Dekompresyjnej</h3>
-        <p>Najprostsza klasyfikacja dzieli DCS na dwa główne typy:</p>
-        <h4>Typ I – Postać Lekka (DCS I)</h4>
-        <p>Związana z pęcherzykami azotu w tkankach obwodowych (pozanaczyniowo).</p>
-        <ul>
-            <li><strong>Bóle stawowo-mięśniowe (ang. Bends):</strong> Bóle mięśniowe w okolicach dużych stawów (barkowego, kolanowego, skokowego) – początkowo słabe, a następnie ostre i pulsujące. Nazwa Bends pochodzi od obserwacji poruszania się (tzw. "krzywika") osób dotkniętych silnymi bólami stawowo-kostnymi.</li>
-            <li><strong>Objawy skórne:</strong> Swędzenie skóry kończyn, często połączone z jej zaczerwienieniem lub marmurkowatością (białe, sine i czerwone plamy połączone z opuchlizną). Postać skórna jest szczególnie niebezpieczna.</li>
-            <li><strong>Ogólne:</strong> Ogólne zmęczenie i senność, osłabienie (jak przy grypie).</li>
-        </ul>
-        <h4>Typ II – Postać Ciężka (DCS II)</h4>
-        <p>Związana z pęcherzykami azotu we krwi (w naczyniach). Objawy neurologiczne są identyczne jak w przypadku tętniczych zatorów gazowych (AGE) w przebiegu urazu ciśnieniowego płuc (UCP).</p>
-        <ul>
-            <li><strong>Objawy neurologiczne:</strong>
-                <ul>
-                    <li>Utrata przytomności.</li>
-                    <li>Ból głowy, drgawki.</li>
-                    <li>Porażenie mięśni i paraliż (np. od pasa w dół).</li>
-                    <li>Zaburzenia czuciowe (mrowienie lub drętwienie).</li>
-                    <li>Zaburzenia zmysłów mowy, słuchu, wzroku, równowagi (np. zawroty głowy, dzwonienie w uszach).</li>
-                    <li>Zmiany stanu psychicznego (splątanie, dezorientacja).</li>
-                </ul>
-            </li>
-            <li><strong>Objawy płucno-krążeniowe:</strong>
-                <ul>
-                    <li>Duszność, spłycony i przyspieszony oddech, suchy kaszel, ból w klatce piersiowej (objawy zawału płuc/zablokowania filtra płucnego).</li>
-                    <li>Objawy zawału serca (promieniujący ból za mostkiem, zaburzenia rytmu serca, szybkie i słabe tętno, niepokój, panika, zatrzymanie pracy serca).</li>
-                </ul>
-            </li>
-        </ul>
-        <p><strong>Występowanie Objawów:</strong> Objawy DCS najczęściej pojawiają się między 15 minutą a 12 godziną po wynurzeniu, ale w ciężkich przypadkach mogą wystąpić szybciej lub, rzadko, nawet do 24–36 godzin po nurkowaniu, szczególnie jeśli po nurkowaniu nastąpił lot samolotem.</p>
-        <h3>3. Profilaktyka i Czynniki Ryzyka</h3>
-        <p>Ryzyko wystąpienia DCS istnieje, nawet pomimo przestrzegania wszystkich zasad. Profilaktyka polega na minimalizowaniu czynników ryzyka:</p>
-        <h4>A. Technika i Planowanie Nurkowania:</h4>
-        <ul>
-            <li><strong>Prędkość Wynurzania:</strong> Stosuj prawidłową prędkość wynurzania (nie większą niż 10 m/min). Zbyt duża prędkość jest główną przyczyną DCS.</li>
-            <li><strong>Czas Nurkowania:</strong> Nurkuj w granicach limitów bezdekompresyjnych (tzw. no-deco limits).</li>
-            <li><strong>Przystanki Bezpieczeństwa:</strong> Zawsze wykonuj przystanek bezpieczeństwa (3–5 min na głębokości 3–5 m). Około 40% wypadków DCS to nurkowania bez przystanku bezpieczeństwa.</li>
-            <li><strong>Unikaj Profili Ryzykownych:</strong> Unikaj nurkowań o profilu „piłokształtnym” (jo-jo) lub chaotycznym. Nurkowanie rozpoczynaj od zanurzenia na największą planowaną głębokość.</li>
-            <li><strong>Nurkowania Powtórzeniowe:</strong> Zachowaj szczególną ostrożność podczas nurkowań wielokrotnych w ciągu dnia lub wielodniowych, ponieważ zwiększają one ryzyko DCS.</li>
-            <li><strong>Lot po Nurkowaniu:</strong> Po nurkowaniu należy odczekać co najmniej 24 godziny przed lotem samolotem lub podróżą na wysokość powyżej 500 metrów n.p.m., aby uniknąć zwiększonego ryzyka.</li>
-        </ul>
-        <h4>B. Czynniki Fizjologiczne Zwiększające Ryzyko:</h4>
-        <ul>
-            <li>Odwodnienie (niewłaściwy bilans wodny).</li>
-            <li>Niska temperatura wody (przechłodzenie).</li>
-            <li>Duży wysiłek fizyczny (podczas i po nurkowaniu).</li>
-            <li>Otyłość.</li>
-            <li>Zła kondycja fizyczna i psychiczna, zmęczenie.</li>
-            <li>Alkohol lub tzw. kac.</li>
-            <li>Wady serca, np. przetrwały otwór owalny (PFO).</li>
-            <li>Gorąca kąpiel/sauna po nurkowaniu.</li>
-        </ul>
-        <h3>4. Pierwsza Pomoc w Przypadku Podejrzenia DCS</h3>
-        <p>Skuteczność leczenia ciężkiej postaci DCS zależy głównie od szybkości podjęcia leczenia w komorze dekompresyjnej.</p>
-        <h4>Kroki Pierwszej Pomocy:</h4>
-        <ol>
-            <li><strong>Ocena i Wezwanie Pomocy:</strong> W przypadku podejrzenia DCS natychmiast wezwij pomoc medyczną (tel. 112 lub 999). Poinformuj, że podejrzewasz wypadek nurkowy i skontaktuj się z zespołem komór dekompresyjnych, np. Krajowy Ośrodek Medycyny Hiperbarycznej w Gdyni (tel. 58 699 86 54 lub 58 622 51 63).</li>
-            <li><strong>Tlenoterapia:</strong> Podaj poszkodowanemu 100% tlen w maksymalnym przepływie tak szybko, jak to możliwe.
-                <ul>
-                    <li>Tlen poprawia utlenowanie tkanek, redukuje możliwość powstawania nowych zatorów oraz zmniejsza średnicę pęcherzyków gazowych (zarówno azotowych, jak i powietrznych).</li>
-                    <li>Poszkodowanego należy zabezpieczyć w tlen podczas transportu.</li>
-                </ul>
-            </li>
-            <li><strong>Pozycja i Nawadnianie:</strong> Ułóż poszkodowanego w pozycji poziomej. Podaj poszkodowanemu do picia ciepłe, słodkie, niegazowane napoje (jeśli jest przytomny), do 1 litra.</li>
-            <li><strong>Resuscytacja:</strong> Jeśli poszkodowany nie oddycha, wykonaj podstawowe zabiegi resuscytacyjne (BLS).</li>
-            <li><strong>Transport:</strong> W ciężkim przypadku DCS, transport śmigłowcem jest najszybszym sposobem na dostarczenie nurka do komory dekompresyjnej.</li>
-        </ol>
-        <hr>
-        <p><strong>Podsumowanie:</strong> Choroba dekompresyjna, choć rzadka przy prawidłowym nurkowaniu rekreacyjnym, jest stanem, w którym niekontrolowana eliminacja azotu (zgodnie z Prawem Henry'ego) prowadzi do powstawania pęcherzyków uszkadzających tkanki. Kluczem jest przestrzeganie limitów, kontrola wynurzania i szybka reakcja w przypadku wystąpienia objawów.</p>`,
+    content: [
+        { type: 'header', level: 2, value: 'Choroba Dekompresyjna (DCS): Cicha Pułapka Azotu' },
+        { type: 'paragraph', value: 'Choroba dekompresyjna (ang. Decompression Sickness – DCS), potocznie zwana chorobą kesonową, jest zespołem schorzeń i objawów wywołanych przez azot wydzielający się z tkanek do krwi nurka w sposób niekontrolowany, głównie w formie pęcherzyków gazowych. Jest to jedno z najpoważniejszych schorzeń, zagrażających zdrowiu i życiu płetwonurków.' },
+
+        { type: 'header', level: 3, value: '1. Fizyczne Podstawy DCS: Prawo Henry’ego' },
+        { type: 'paragraph', value: 'DCS jest bezpośrednim wynikiem procesów absorpcji i eliminacji azotu, które są opisywane przez Prawo Henry’ego.' },
+
+        { type: 'header', level: 4, value: 'Prawo Henry’ego:' },
+        {
+            type: 'list', items: [
+                'Mówi, że ilość gazu, która rozpuści się w cieczy (w tym w płynach ustrojowych i tkankach ciała), jest wprost proporcjonalna do ciśnienia parcjalnego tego gazu.',
+                'Objętość gazu rozpuszczonego w cieczy rośnie wraz ze wzrostem ciśnienia.'
+            ]
+        },
+
+        { type: 'header', level: 4, value: 'Jak Prawo Henry’ego działa podczas nurkowania?' },
+        {
+            type: 'list', ordered: true, items: [
+                '<strong>Zanurzanie (Saturacja):</strong> Powietrze, którym oddychamy, składa się głównie z azotu (ponad 78%). Podczas zanurzania, ciśnienie absolutne wzrasta, a automat podaje powietrze pod ciśnieniem równym ciśnieniu na danej głębokości. Zgodnie z Prawem Henry\'ego, azot z powietrza oddechowego zaczyna dyfundować (przenikać) do krwi i tkanek, nasycając je. Ilość rozpuszczonego azotu zależy od czasu i głębokości nurkowania (czyli od wyższego ciśnienia powietrza oddechowego).',
+                '<strong>Wynurzanie (Desaturacja):</strong> W miarę wynurzania ciśnienie zewnętrzne spada. Następuje proces odwrotny – odsycanie tkanek z azotu. Azot dyfunduje z tkanek do krwi, a następnie jest usuwany w płucach z każdym wydechem.',
+                '<strong>Ryzyko DCS (Tworzenie Pęcherzyków):</strong> Ciało nurka toleruje określony poziom przesycenia, ale jeśli różnica prężności (gradient) staje się zbyt duża (np. z powodu zbyt szybkiego wynurzania), azot może się uwolnić z roztworu i przejść w formę gazową (pęcherzyków) w tkankach i krwioobiegu. To właśnie te zatory gazowe, powstałe pierwotnie z pęcherzyków azotu, są bezpośrednią przyczyną choroby ciśnieniowej (DCS).'
+            ]
+        },
+
+        { type: 'header', level: 3, value: '2. Klasyfikacja i Objawy Choroby Dekompresyjnej' },
+        { type: 'paragraph', value: 'Najprostsza klasyfikacja dzieli DCS na dwa główne typy:' },
+
+        { type: 'header', level: 4, value: 'Typ I – Postać Lekka (DCS I)' },
+        { type: 'paragraph', value: 'Związana z pęcherzykami azotu w tkankach obwodowych (pozanaczyniowo).' },
+        {
+            type: 'list', items: [
+                '<strong>Bóle stawowo-mięśniowe (ang. Bends):</strong> Bóle mięśniowe w okolicach dużych stawów (barkowego, kolanowego, skokowego) – początkowo słabe, a następnie ostre i pulsujące. Nazwa Bends pochodzi od obserwacji poruszania się (tzw. "krzywika") osób dotkniętych silnymi bólami stawowo-kostnymi.',
+                '<strong>Objawy skórne:</strong> Swędzenie skóry kończyn, często połączone z jej zaczerwienieniem lub marmurkowatością (białe, sine i czerwone plamy połączone z opuchlizną). Postać skórna jest szczególnie niebezpieczna.',
+                '<strong>Ogólne:</strong> Ogólne zmęczenie i senność, osłabienie (jak przy grypie).'
+            ]
+        },
+
+        { type: 'header', level: 4, value: 'Typ II – Postać Ciężka (DCS II)' },
+        { type: 'paragraph', value: 'Związana z pęcherzykami azotu we krwi (w naczyniach). Objawy neurologiczne są identyczne jak w przypadku tętniczych zatorów gazowych (AGE) w przebiegu urazu ciśnieniowego płuc (UCP).' },
+        {
+            type: 'list', items: [
+                '<strong>Objawy neurologiczne:</strong><ul><li>Utrata przytomności.</li><li>Ból głowy, drgawki.</li><li>Porażenie mięśni i paraliż (np. od pasa w dół).</li><li>Zaburzenia czuciowe (mrowienie lub drętwienie).</li><li>Zaburzenia zmysłów mowy, słuchu, wzroku, równowagi (np. zawroty głowy, dzwonienie w uszach).</li><li>Zmiany stanu psychicznego (splątanie, dezorientacja).</li></ul>',
+                '<strong>Objawy płucno-krążeniowe:</strong><ul><li>Duszność, spłycony i przyspieszony oddech, suchy kaszel, ból w klatce piersiowej (objawy zawału płuc/zablokowania filtra płucnego).</li><li>Objawy zawału serca (promieniujący ból za mostkiem, zaburzenia rytmu serca, szybkie i słabe tętno, niepokój, panika, zatrzymanie pracy serca).</li></ul>'
+            ]
+        },
+
+        { type: 'paragraph', value: '<strong>Występowanie Objawów:</strong> Objawy DCS najczęściej pojawiają się między 15 minutą a 12 godziną po wynurzeniu, ale w ciężkich przypadkach mogą wystąpić szybciej lub, rzadko, nawet do 24–36 godzin po nurkowaniu, szczególnie jeśli po nurkowaniu nastąpił lot samolotem.' },
+
+        { type: 'header', level: 3, value: '3. Profilaktyka i Czynniki Ryzyka' },
+        { type: 'paragraph', value: 'Ryzyko wystąpienia DCS istnieje, nawet pomimo przestrzegania wszystkich zasad. Profilaktyka polega na minimalizowaniu czynników ryzyka:' },
+
+        { type: 'header', level: 4, value: 'A. Technika i Planowanie Nurkowania:' },
+        {
+            type: 'list', items: [
+                '<strong>Prędkość Wynurzania:</strong> Stosuj prawidłową prędkość wynurzania (nie większą niż 10 m/min). Zbyt duża prędkość jest główną przyczyną DCS.',
+                '<strong>Czas Nurkowania:</strong> Nurkuj w granicach limitów bezdekompresyjnych (tzw. no-deco limits).',
+                '<strong>Przystanki Bezpieczeństwa:</strong> Zawsze wykonuj przystanek bezpieczeństwa (3–5 min na głębokości 3–5 m). Około 40% wypadków DCS to nurkowania bez przystanku bezpieczeństwa.',
+                '<strong>Unikaj Profili Ryzykownych:</strong> Unikaj nurkowań o profilu „piłokształtnym” (jo-jo) lub chaotycznym. Nurkowanie rozpoczynaj od zanurzenia na największą planowaną głębokość.',
+                '<strong>Nurkowania Powtórzeniowe:</strong> Zachowaj szczególną ostrożność podczas nurkowań wielokrotnych w ciągu dnia lub wielodniowych, ponieważ zwiększają one ryzyko DCS.',
+                '<strong>Lot po Nurkowaniu:</strong> Po nurkowaniu należy odczekać co najmniej 24 godziny przed lotem samolotem lub podróżą na wysokość powyżej 500 metrów n.p.m., aby uniknąć zwiększonego ryzyka.'
+            ]
+        },
+
+        { type: 'header', level: 4, value: 'B. Czynniki Fizjologiczne Zwiększające Ryzyko:' },
+        {
+            type: 'list', items: [
+                'Odwodnienie (niewłaściwy bilans wodny).',
+                'Niska temperatura wody (przechłodzenie).',
+                'Duży wysiłek fizyczny (podczas i po nurkowaniu).',
+                'Otyłość.',
+                'Zła kondycja fizyczna i psychiczna, zmęczenie.',
+                'Alkohol lub tzw. kac.',
+                'Wady serca, np. przetrwały otwór owalny (PFO).',
+                'Gorąca kąpiel/sauna po nurkowaniu.'
+            ]
+        },
+
+        { type: 'header', level: 3, value: '4. Pierwsza Pomoc w Przypadku Podejrzenia DCS' },
+        { type: 'paragraph', value: 'Skuteczność leczenia ciężkiej postaci DCS zależy głównie od szybkości podjęcia leczenia w komorze dekompresyjnej.' },
+
+        { type: 'header', level: 4, value: 'Kroki Pierwszej Pomocy:' },
+        {
+            type: 'list', ordered: true, items: [
+                '<strong>Ocena i Wezwanie Pomocy:</strong> W przypadku podejrzenia DCS natychmiast wezwij pomoc medyczną (tel. 112 lub 999). Poinformuj, że podejrzewasz wypadek nurkowy i skontaktuj się z zespołem komór dekompresyjnych, np. Krajowy Ośrodek Medycyny Hiperbarycznej w Gdyni (tel. 58 699 86 54 lub 58 622 51 63).',
+                '<strong>Tlenoterapia:</strong> Podaj poszkodowanemu 100% tlen w maksymalnym przepływie tak szybko, jak to możliwe.<ul><li>Tlen poprawia utlenowanie tkanek, redukuje możliwość powstawania nowych zatorów oraz zmniejsza średnicę pęcherzyków gazowych (zarówno azotowych, jak i powietrznych).</li><li>Poszkodowanego należy zabezpieczyć w tlen podczas transportu.</li></ul>',
+                '<strong>Pozycja i Nawadnianie:</strong> Ułóż poszkodowanego w pozycji poziomej. Podaj poszkodowanemu do picia ciepłe, słodkie, niegazowane napoje (jeśli jest przytomny), do 1 litra.',
+                '<strong>Resuscytacja:</strong> Jeśli poszkodowany nie oddycha, wykonaj podstawowe zabiegi resuscytacyjne (BLS).',
+                '<strong>Transport:</strong> W ciężkim przypadku DCS, transport śmigłowcem jest najszybszym sposobem na dostarczenie nurka do komory dekompresyjnej.'
+            ]
+        },
+
+        { type: 'info-box', style: 'info', content: '<strong>Podsumowanie:</strong> Choroba dekompresyjna, choć rzadka przy prawidłowym nurkowaniu rekreacyjnym, jest stanem, w którym niekontrolowana eliminacja azotu (zgodnie z Prawem Henry\'ego) prowadzi do powstawania pęcherzyków uszkadzających tkanki. Kluczem jest przestrzeganie limitów, kontrola wynurzania i szybka reakcja w przypadku wystąpienia objawów.' }
+    ],
     quiz: [
         {
             question: "Jakie prawo fizyczne opisuje mechanizm powstawania Choroby Dekompresyjnej (DCS)?",

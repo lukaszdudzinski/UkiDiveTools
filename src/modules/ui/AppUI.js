@@ -8,7 +8,7 @@ import { ScienceUI } from './ScienceUI.js'; // New Import
 import { UkiRiverGameUI } from '../games/uki-river-dive/UkiRiverGameUI.js';
 import { ProAccess } from '../auth/ProAccess.js';
 
-export const APP_VERSION = 'v2026.1.31.03';
+export const APP_VERSION = 'v2026.2.1.01';
 
 export const AppUI = {
     init: () => {
@@ -62,6 +62,15 @@ export const AppUI = {
         // 1. SOS Button - Simplified Logic
         window.openSOS = () => {
             console.log('SOS Triggered via global function');
+
+            // 1. Force Close Mobile Menu if open (Fixing Alignment Issue)
+            const sidebar = document.querySelector('.sidebar-nav');
+            const overlay = document.querySelector('.overlay');
+            if (sidebar && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                if (overlay) overlay.classList.remove('active');
+            }
+
             const emergencyContent = document.getElementById('emergency-content');
             if (emergencyContent && AppUI.showModal) {
                 AppUI.showModal(emergencyContent.innerHTML, true);
@@ -91,14 +100,37 @@ export const AppUI = {
                                     const lon = position.coords.longitude.toFixed(5);
                                     const acc = Math.round(position.coords.accuracy);
                                     const mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
+                                    const shareText = `SOS! Moja pozycja: ${lat}, ${lon} (dokładność: ${acc}m). Mapa: ${mapLink}`;
+
+                                    let shareHtml = '';
+                                    if (navigator.share) {
+                                        shareHtml = `<button class="share-gps-btn pulse-button" style="margin-top:10px; width:100%; background:#D32F2F; font-weight:bold; padding:10px; border:none; border-radius:5px; color:white; box-shadow: 0 0 10px rgba(211, 47, 47, 0.4);">📤 Udostępnij Pozycję</button>`;
+                                    } else {
+                                        shareHtml = `<a href="sms:?body=${encodeURIComponent(shareText)}" class="pulse-button" style="display:block; margin-top:10px; background:#D32F2F; padding:10px; border-radius:5px; color:white; text-decoration:none; text-align:center; box-shadow: 0 0 10px rgba(211, 47, 47, 0.4);">💬 Wyślij SMS</a>`;
+                                    }
+
                                     gpsResult.innerHTML = `
                                          <div style="margin-top:10px; padding:10px; background:rgba(0,0,0,0.3); border-radius:8px;">
-                                             <div style="font-size:1.4em; color:#4CAF50; letter-spacing:1px;">${lat}, ${lon}</div>
+                                             <div style="font-size:1.4em; color:#4CAF50; letter-spacing:1px; margin-bottom:5px;">${lat}, ${lon}</div>
                                              <div style="font-size:0.8em; color:#aaa; margin-bottom:8px;">(Dokładność: ${acc}m)</div>
-                                             <a href="${mapLink}" target="_blank" style="display:inline-block; margin-top:5px; color:#2196F3; text-decoration:underline; font-weight:bold;">
+                                             
+                                             <a href="${mapLink}" target="_blank" style="display:inline-block; margin-bottom:10px; color:#ddd; text-decoration:underline;">
                                                  🗺️ Otwórz w Google Maps
                                              </a>
+                                             ${shareHtml}
                                          </div>`;
+
+                                    // Add Listener to Dynamic Button
+                                    const shareBtn = gpsResult.querySelector('.share-gps-btn');
+                                    if (shareBtn) {
+                                        shareBtn.addEventListener('click', () => {
+                                            navigator.share({
+                                                title: 'SOS - Moja Lokalizacja',
+                                                text: shareText,
+                                                url: mapLink
+                                            }).catch(console.error);
+                                        });
+                                    }
                                 },
                                 (error) => {
                                     console.error("GPS Error", error);
@@ -233,6 +265,19 @@ export const AppUI = {
                 });
             }
         } catch (e) { console.error("Settings Info Icon Error", e); }
+
+
+        // 6. PWA Guide Image Lightbox
+        try {
+            const pwaGuideImg = document.querySelector('.install-guide-img');
+            if (pwaGuideImg) {
+                pwaGuideImg.style.cursor = 'pointer';
+                pwaGuideImg.title = 'Kliknij, aby powiększyć';
+                pwaGuideImg.addEventListener('click', () => {
+                    LecturesUI.openLightbox(pwaGuideImg.src);
+                });
+            }
+        } catch (e) { console.error("PWA Guide Lightbox Error", e); }
     },
 
     initMobileMenu: () => {

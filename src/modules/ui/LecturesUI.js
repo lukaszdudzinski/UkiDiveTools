@@ -79,23 +79,34 @@ export const LecturesUI = {
             `;
         }
 
-        // Generate TOC
-        const tocHtml = LecturesUI.generateToc(lecture.content);
-        if (lectureToc) {
-            lectureToc.innerHTML = tocHtml;
-            lectureToc.hidden = !tocHtml;
-        }
+        // Render Content (Supports both HTML string and Structured Data)
+        const contentHtml = LecturesUI.renderLectureContent(lecture.content);
 
-        // Render Content
+        // Use a temp div to analyze headers for TOC
         const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = lecture.content;
+        tempDiv.innerHTML = contentHtml;
         const headings = tempDiv.querySelectorAll('h3');
         headings.forEach((h, index) => {
             h.id = `toc-${index}`;
         });
 
+        // Generate TOC from analyzed headers
+        const tocHtml = LecturesUI.generateToc(tempDiv.innerHTML); // generateToc expects HTML string
+        if (lectureToc) {
+            lectureToc.innerHTML = tocHtml;
+            lectureToc.hidden = !tocHtml;
+        }
+
         if (lectureBody) {
             lectureBody.innerHTML = audioHtml + tempDiv.innerHTML;
+
+            // Attach Lightbox listeners to NEWLY rendered infographics (from structured data)
+            const newInfographics = lectureBody.querySelectorAll('.lecture-infographic.new-standard');
+            newInfographics.forEach(img => {
+                img.addEventListener('click', () => {
+                    LecturesUI.openLightbox(img.src);
+                });
+            });
 
             // Presentation Button (Instructor Materials)
             if (lecture.presentationSrc) {
@@ -174,47 +185,119 @@ export const LecturesUI = {
                 lectureBody.appendChild(quizBtnContainer);
             }
 
-            // Lightbox Logic for Infographics
+            // Lightbox Logic for Infographics (Legacy HTML)
             const infographics = lectureBody.querySelectorAll('.lecture-infographic');
             infographics.forEach(img => {
                 img.addEventListener('click', () => {
-                    // Create or get lightbox modal
-                    let lightbox = document.getElementById('lightbox-modal');
-                    if (!lightbox) {
-                        lightbox = document.createElement('div');
-                        lightbox.id = 'lightbox-modal';
-                        lightbox.className = 'lightbox-modal';
-                        lightbox.innerHTML = `
-                            <div class="lightbox-close-btn">&times;</div>
-                            <img class="lightbox-content" src="" alt="Full Screen Image">
-                        `;
-                        document.body.appendChild(lightbox);
-
-                        // Close events
-                        const closeBtn = lightbox.querySelector('.lightbox-close-btn');
-                        closeBtn.addEventListener('click', () => {
-                            lightbox.classList.remove('active');
-                        });
-                        lightbox.addEventListener('click', (e) => {
-                            if (e.target === lightbox) {
-                                lightbox.classList.remove('active');
-                            }
-                        });
-                    }
-
-                    const contentImg = lightbox.querySelector('.lightbox-content');
-                    contentImg.src = img.src;
-                    lightbox.classList.add('active');
+                    LecturesUI.openLightbox(img.src);
                 });
             });
         }
 
-        // Switch View
+        // Switch View - Visible only when lecture is active
         if (lecturesGridWrapper) lecturesGridWrapper.hidden = true;
         if (lectureViewer) {
             lectureViewer.hidden = false;
+            // Scroll to top
+            window.scrollTo(0, 0);
             lectureViewer.focus();
         }
+    },
+
+    // Helper: Render Content (Array or String)
+    renderLectureContent: (content) => {
+        // Legacy Support: If string, return as is
+        if (typeof content === 'string') {
+            return content;
+        }
+
+        // New Structured Content: Array of Blocks
+        if (Array.isArray(content)) {
+            let html = '';
+            content.forEach(block => {
+                switch (block.type) {
+                    case 'header':
+                        html += `<h${block.level || 3} id="${block.id || ''}">${block.value}</h${block.level || 3}>`;
+                        break;
+                    case 'paragraph':
+                    case 'text':
+                        html += `<p>${block.value}</p>`;
+                        break;
+                    case 'list':
+                        const listTag = block.ordered ? 'ol' : 'ul';
+                        const listItems = block.items.map(item => `<li>${item}</li>`).join('');
+                        html += `<${listTag}>${listItems}</${listTag}>`;
+                        break;
+                    case 'image':
+                        // Standardized Infographic Structure
+                        html += `
+                            <div class="infographic-container" style="margin: 30px 0; text-align: center;">
+                                <img src="${block.src}" 
+                                     alt="${block.alt || 'Infografika'}" 
+                                     class="lecture-infographic new-standard" 
+                                     style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); cursor: pointer;"
+                                     title="Kliknij, aby powiększyć">
+                                ${block.caption ? `<p style="font-size: 0.8em; color: #aaa; margin-top: 8px;"><i>${block.caption}</i></p>` : ''}
+                            </div>
+                        `;
+                        break;
+                    case 'info-box':
+                        // Highlight/Warning Boxes
+                        const colors = {
+                            warning: { bg: 'rgba(255, 99, 71, 0.1)', border: '#ff4500' },
+                            info: { bg: 'rgba(33, 150, 243, 0.1)', border: '#2196F3' }
+                        };
+                        const style = colors[block.style] || colors.info;
+                        html += `
+                            <div class="highlight-box" style="background: ${style.bg}; padding: 15px; border-left: 4px solid ${style.border}; margin: 20px 0; border-radius: 0 8px 8px 0;">
+                                ${block.title ? `<strong>${block.title}</strong><br>` : ''}
+                                ${block.content}
+                            </div>
+                        `;
+                        break;
+                    case 'html':
+                        // Escape hatch for complex custom HTML if needed
+                        html += block.value;
+                        break;
+                }
+            });
+            return html;
+        }
+        return '';
+    },
+
+    openLightbox: (src) => {
+        let lightbox = document.getElementById('lightbox-modal');
+        if (!lightbox) {
+            lightbox = document.createElement('div');
+            lightbox.id = 'lightbox-modal';
+            lightbox.className = 'lightbox';
+            lightbox.innerHTML = `
+                <div class="lightbox-close-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </div>
+                <img class="lightbox-content" src="" alt="Full Screen Image">
+            `;
+            document.body.appendChild(lightbox);
+
+            // Close events
+            const closeBtn = lightbox.querySelector('.lightbox-close-btn');
+            closeBtn.addEventListener('click', () => {
+                lightbox.classList.remove('active');
+            });
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    lightbox.classList.remove('active');
+                }
+            });
+        }
+
+        const contentImg = lightbox.querySelector('.lightbox-content');
+        contentImg.src = src;
+        lightbox.classList.add('active');
     },
 
     openPdfModal: (src, title) => {

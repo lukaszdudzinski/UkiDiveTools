@@ -2,67 +2,67 @@ export const rockBottomLecture = {
     id: 'rock-bottom',
     title: 'Planowanie Gazu (Rock Bottom)',
     description: 'Dlaczego "50 bar" to za mało? Metoda Rock Bottom / Minimum Gas.',
-    content: `<h2>Planowanie Gazu – Dlaczego "50 bar" to mit? (Wstęp do Rock Bottom)</h2>
-        <h3>1. Przegląd standardowych metod planowania</h3>
-        <p>Zanim przejdziemy do zaawansowanego planowania, omówmy to, co każdy nurek zna z kursu podstawowego:</p>
-        <ul>
-            <li><strong>Reguła stałej rezerwy (50 bar):</strong> Najpopularniejsza zasada w nurkowaniu rekreacyjnym. Mówi ona: "Bądź na powierzchni, mając w butli 50 bar". Jest to bezpieczny margines na płytkich wodach, ale ma jedną wadę: 50 bar to stała ilość ciśnienia, a nie objętość gazu. Na 10 metrach 50 bar starczy na długo, ale na 30 metrach, w stresie, znika błyskawicznie.</li>
-            <li><strong>Reguła 1/3 (Rule of Thirds):</strong> Stosowana często w nurkowaniu jaskiniowym i wrakowym. Dzielisz gaz na trzy części: 1/3 na dopłynięcie, 1/3 na powrót, 1/3 na rezerwę awaryjną. Jest to bardzo bezpieczna metoda, ale w prostych nurkowaniach rekreacyjnych na wodach otwartych często daje zbyt restrykcyjne limity czasu dennego.</li>
-        </ul>
-        
-        <h3>2. Dlaczego standardowe metody mogą zawieść?</h3>
-        <p>Wyobraź sobie sytuację awaryjną na głębokości 30 metrów. Twój partner nie ma powietrza ("Out of Gas"). Podajesz mu swój automat. Od teraz:</p>
-        <ol>
-            <li>Dwie osoby oddychają z jednej butli.</li>
-            <li>Obaj jesteście w stresie, co oznacza, że zużywacie gaz 2-3 razy szybciej niż zwykle.</li>
-            <li>Musicie pokonać 30 metrów w górę, zachowując bezpieczną prędkość.</li>
-        </ol>
-        <p>W takim scenariuszu "sztywne" 50 bar może skończyć się w połowie drogi do powierzchni. Standardowe metody często nie uwzględniają faktu, że im głębiej jesteś, tym większej rezerwy potrzebujesz, aby bezpiecznie wrócić.</p>
-        
-        <div style="margin: 20px 0; text-align: center;">
-             <img src="img/lectures/rock_bottom.jpg" alt="Infografika Rock Bottom" class="lecture-infographic" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer;" title="Kliknij, aby powiększyć">
-             <p style="font-size: 0.8em; color: #666; margin-top: 5px;"><i>Kliknij infografikę, aby powiększyć</i></p>
-        </div>
+    content: [
+        { type: 'header', level: 2, value: 'Planowanie Gazu – Dlaczego "50 bar" to mit? (Wstęp do Rock Bottom)' },
 
-        <h3>3. Czym jest Rock Bottom (Minimum Gas)?</h3>
-        <p>Rock Bottom (nazywane też Minimum Gas) to nie jest "sugestia". To matematycznie wyliczona ilość gazu, której NIE WOLNO Ci zużyć podczas fazy dennej. To Twoja "żelazna rezerwa".</p>
-        <p><strong>Definicja:</strong> Rock Bottom to ciśnienie w butli, przy którym musisz rozpocząć wynurzanie, aby w razie awarii partnera (OOA) obydwoje bezpiecznie dotrzeć na powierzchnię, nawet przy zwiększonym zużyciu gazu (stres).</p>
-        
-        <h4>Co daje Rock Bottom?</h4>
-        <ul>
-            <li><strong>Gwarancję bezpieczeństwa:</strong> Obliczasz dokładnie tyle gazu, ile potrzeba, aby dwóch nurków w silnym stresie mogło bezpiecznie wynurzyć się z najgłębszego punktu nurkowania do powierzchni.</li>
-            <li><strong>Dostosowanie do głębokości:</strong> Rezerwa Rock Bottom dla nurkowania na 10 m będzie inna (mniejsza) niż dla nurkowania na 30 m (większa).</li>
-            <li><strong>Jasny punkt odwrotu:</strong> Wiesz dokładnie, przy jakim ciśnieniu na manometrze musisz bezdyskusyjnie rozpocząć wynurzanie.</li>
-        </ul>
+        { type: 'header', level: 3, value: '1. Przegląd standardowych metod planowania' },
+        { type: 'paragraph', value: 'Zanim przejdziemy do zaawansowanego planowania, omówmy to, co każdy nurek zna z kursu podstawowego:' },
+        {
+            type: 'list', items: [
+                '<strong>Reguła stałej rezerwy (50 bar):</strong> Najpopularniejsza zasada w nurkowaniu rekreacyjnym. Mówi ona: "Bądź na powierzchni, mając w butli 50 bar". Jest to bezpieczny margines na płytkich wodach, ale ma jedną wadę: 50 bar to stała ilość ciśnienia, a nie objętość gazu. Na 10 metrach 50 bar starczy na długo, ale na 30 metrach, w stresie, znika błyskawicznie.',
+                '<strong>Reguła 1/3 (Rule of Thirds):</strong> Stosowana często w nurkowaniu jaskiniowym i wrakowym. Dzielisz gaz na trzy części: 1/3 na dopłynięcie, 1/3 na powrót, 1/3 na rezerwę awaryjną. Jest to bardzo bezpieczna metoda, ale w prostych nurkowaniach rekreacyjnych na wodach otwartych często daje zbyt restrykcyjne limity czasu dennego.'
+            ]
+        },
 
-        <h3>Planowanie Gazu Metodą Rock Bottom</h3>
-        <h4>1. Założenia metody</h4>
-        <p>Aby obliczyć tę rezerwę, musimy przyjąć „czarny scenariusz”:</p>
-        <ol>
-            <li><strong>Awaria:</strong> Coś się stało na dnie. Rozwiązanie problemu zajmuje nam np. 1-2 minuty.</li>
-            <li><strong>Zespół:</strong> Oddycha dwóch nurków z jednej butli.</li>
-            <li><strong>Stres:</strong> W stresie zużywamy powietrze znacznie szybciej. Przyjmujemy 2x SAC (lub np. 30 l/min na osobę).</li>
-            <li><strong>Wynurzenie:</strong> Spokojny powrót na powierzchnię (z prędkością 9-10 m/min).</li>
-        </ol>
+        { type: 'header', level: 3, value: '2. Dlaczego standardowe metody mogą zawieść?' },
+        { type: 'paragraph', value: 'Wyobraź sobie sytuację awaryjną na głębokości 30 metrów. Twój partner nie ma powietrza ("Out of Gas"). Podajesz mu swój automat. Od teraz:' },
+        {
+            type: 'list', ordered: true, items: [
+                'Dwie osoby oddychają z jednej butli.',
+                'Obaj jesteście w stresie, co oznacza, że zużywacie gaz 2-3 razy szybciej niż zwykle.',
+                'Musicie pokonać 30 metrów w górę, zachowując bezpieczną prędkość.'
+            ]
+        },
+        { type: 'paragraph', value: 'W takim scenariuszu "sztywne" 50 bar może skończyć się w połowie drogi do powierzchni. Standardowe metody często nie uwzględniają faktu, że im głębiej jesteś, tym większej rezerwy potrzebujesz, aby bezpiecznie wrócić.' },
 
-        <h4>2. Przykład Obliczeniowy: Krok po Kroku (z infografiki)</h4>
-        <p><strong>Scenariusz:</strong> Głębokość 27m (3,7 bar), Butla 15L, SAC standardowy 20 l/min (w stresie 40 l/min). Dwóch nurków = 80 l/min łącznego zużycia.</p>
-        
-        <p><strong>Krok 1: Faza na dnie (2 minuty)</strong><br>
-        2 min * 80 l/min * 3,7 bar = 592 litry</p>
-        
-        <p><strong>Krok 2: Faza wynurzania (3 minuty)</strong><br>
-        Czas wynurzania: 27m / 9 m/min = 3 min.<br>
-        Średnie ciśnienie (~13,5m) = 2,35 bar.<br>
-        3 min * 80 l/min * 2,35 bar = 564 litry</p>
-        
-        <p><strong>Krok 3: Suma i przeliczenie</strong><br>
-        Razem: 592 + 564 = 1156 litrów.<br>
-        W butli 15L: 1156 / 15 = 77 bar (zaokrąglamy do 80 bar).</p>
-        
-        <p class="highlight-box" style="background: rgba(255, 235, 59, 0.1); padding: 10px; border-left: 4px solid #ffd700; margin-top: 10px;">
-        <strong>Wniosek:</strong> Twoje „Rock Bottom” wynosi ok. 80 bar. Oznacza to, że przy ciśnieniu 80 bar musisz bezwzględnie rozpocząć wynurzanie. Czekanie do 50 bar na tej głębokości jest niebezpieczne!
-        </p>`,
+        { type: 'image', src: 'img/lectures/rock_bottom.jpg', alt: 'Infografika Rock Bottom' },
+
+        { type: 'header', level: 3, value: '3. Czym jest Rock Bottom (Minimum Gas)?' },
+        { type: 'paragraph', value: 'Rock Bottom (nazywane też Minimum Gas) to nie jest "sugestia". To matematycznie wyliczona ilość gazu, której NIE WOLNO Ci zużyć podczas fazy dennej. To Twoja "żelazna rezerwa".' },
+        { type: 'paragraph', value: '<strong>Definicja:</strong> Rock Bottom to ciśnienie w butli, przy którym musisz rozpocząć wynurzanie, aby w razie awarii partnera (OOA) obydwoje bezpiecznie dotrzeć na powierzchnię, nawet przy zwiększonym zużyciu gazu (stres).' },
+
+        { type: 'header', level: 4, value: 'Co daje Rock Bottom?' },
+        {
+            type: 'list', items: [
+                '<strong>Gwarancję bezpieczeństwa:</strong> Obliczasz dokładnie tyle gazu, ile potrzeba, aby dwóch nurków w silnym stresie mogło bezpiecznie wynurzyć się z najgłębszego punktu nurkowania do powierzchni.',
+                '<strong>Dostosowanie do głębokości:</strong> Rezerwa Rock Bottom dla nurkowania na 10 m będzie inna (mniejsza) niż dla nurkowania na 30 m (większa).',
+                '<strong>Jasny punkt odwrotu:</strong> Wiesz dokładnie, przy jakim ciśnieniu na manometrze musisz bezdyskusyjnie rozpocząć wynurzanie.'
+            ]
+        },
+
+        { type: 'header', level: 3, value: 'Planowanie Gazu Metodą Rock Bottom' },
+        { type: 'header', level: 4, value: '1. Założenia metody' },
+        { type: 'paragraph', value: 'Aby obliczyć tę rezerwę, musimy przyjąć „czarny scenariusz”:' },
+        {
+            type: 'list', ordered: true, items: [
+                '<strong>Awaria:</strong> Coś się stało na dnie. Rozwiązanie problemu zajmuje nam np. 1-2 minuty.',
+                '<strong>Zespół:</strong> Oddycha dwóch nurków z jednej butli.',
+                '<strong>Stres:</strong> W stresie zużywamy powietrze znacznie szybciej. Przyjmujemy 2x SAC (lub np. 30 l/min na osobę).',
+                '<strong>Wynurzenie:</strong> Spokojny powrót na powierzchnię (z prędkością 9-10 m/min).'
+            ]
+        },
+
+        { type: 'header', level: 4, value: '2. Przykład Obliczeniowy: Krok po Kroku (z infografiki)' },
+        { type: 'paragraph', value: '<strong>Scenariusz:</strong> Głębokość 27m (3,7 bar), Butla 15L, SAC standardowy 20 l/min (w stresie 40 l/min). Dwóch nurków = 80 l/min łącznego zużycia.' },
+
+        { type: 'paragraph', value: '<strong>Krok 1: Faza na dnie (2 minuty)</strong><br>2 min * 80 l/min * 3,7 bar = 592 litry' },
+
+        { type: 'paragraph', value: '<strong>Krok 2: Faza wynurzania (3 minuty)</strong><br>Czas wynurzania: 27m / 9 m/min = 3 min.<br>Średnie ciśnienie (~13,5m) = 2,35 bar.<br>3 min * 80 l/min * 2,35 bar = 564 litry' },
+
+        { type: 'paragraph', value: '<strong>Krok 3: Suma i przeliczenie</strong><br>Razem: 592 + 564 = 1156 litrów.<br>W butli 15L: 1156 / 15 = 77 bar (zaokrąglamy do 80 bar).' },
+
+        { type: 'info-box', style: 'warning', content: '<strong>Wniosek:</strong> Twoje „Rock Bottom” wynosi ok. 80 bar. Oznacza to, że przy ciśnieniu 80 bar musisz bezwzględnie rozpocząć wynurzanie. Czekanie do 50 bar na tej głębokości jest niebezpieczne!' }
+    ],
     quiz: [
         {
             question: "Jaka jest podstawowa definicja 'Rock Bottom' (Minimum Gas)?",
