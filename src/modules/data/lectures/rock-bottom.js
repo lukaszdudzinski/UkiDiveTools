@@ -29,7 +29,7 @@ export const rockBottomLecture = {
 
         { type: 'header', level: 3, value: '3. Czym jest Rock Bottom (Minimum Gas)?' },
         { type: 'paragraph', value: 'Rock Bottom (nazywane też Minimum Gas) to nie jest "sugestia". To matematycznie wyliczona ilość gazu, której NIE WOLNO Ci zużyć podczas fazy dennej. To Twoja "żelazna rezerwa".' },
-        { type: 'paragraph', value: '<strong>Definicja:</strong> Rock Bottom to ciśnienie w butli, przy którym musisz rozpocząć wynurzanie, aby w razie awarii partnera (OOA) obydwoje bezpiecznie dotrzeć na powierzchnię, nawet przy zwiększonym zużyciu gazu (stres).' },
+        { type: 'paragraph', value: '<strong>Definicja:</strong> Rock Bottom to ciśnienie w butli, przy którym musisz rozpocząć wynurzanie, aby w razie awarii partnera, para nurków mogła bezpiecznie dotrzeć na powierzchnię, nawet przy zwiększonym zużyciu gazu (stres).' },
 
         { type: 'header', level: 4, value: 'Co daje Rock Bottom?' },
         {

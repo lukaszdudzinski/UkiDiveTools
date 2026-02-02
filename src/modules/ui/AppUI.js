@@ -8,7 +8,7 @@ import { ScienceUI } from './ScienceUI.js'; // New Import
 import { UkiRiverGameUI } from '../games/uki-river-dive/UkiRiverGameUI.js';
 import { ProAccess } from '../auth/ProAccess.js';
 
-export const APP_VERSION = 'v2026.2.1.01';
+export const APP_VERSION = 'v2026.2.2.01';
 
 export const AppUI = {
     init: () => {
@@ -100,13 +100,13 @@ export const AppUI = {
                                     const lon = position.coords.longitude.toFixed(5);
                                     const acc = Math.round(position.coords.accuracy);
                                     const mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
-                                    const shareText = `SOS! Moja pozycja: ${lat}, ${lon} (dokładność: ${acc}m). Mapa: ${mapLink}`;
+                                    const shareText = `SOS! Moja pozycja: ${lat}, ${lon} (dokładność: ${acc}m).`;
 
                                     let shareHtml = '';
                                     if (navigator.share) {
                                         shareHtml = `<button class="share-gps-btn pulse-button" style="margin-top:10px; width:100%; background:#D32F2F; font-weight:bold; padding:10px; border:none; border-radius:5px; color:white; box-shadow: 0 0 10px rgba(211, 47, 47, 0.4);">📤 Udostępnij Pozycję</button>`;
                                     } else {
-                                        shareHtml = `<a href="sms:?body=${encodeURIComponent(shareText)}" class="pulse-button" style="display:block; margin-top:10px; background:#D32F2F; padding:10px; border-radius:5px; color:white; text-decoration:none; text-align:center; box-shadow: 0 0 10px rgba(211, 47, 47, 0.4);">💬 Wyślij SMS</a>`;
+                                        shareHtml = `<a href="sms:?body=${encodeURIComponent(shareText + ' Mapa: ' + mapLink)}" class="pulse-button" style="display:block; margin-top:10px; background:#D32F2F; padding:10px; border-radius:5px; color:white; text-decoration:none; text-align:center; box-shadow: 0 0 10px rgba(211, 47, 47, 0.4);">💬 Wyślij SMS</a>`;
                                     }
 
                                     gpsResult.innerHTML = `
@@ -397,6 +397,14 @@ export const AppUI = {
         // 4. Tiles Mode Home Button (Floating X)
         if (tilesHomeBtn) {
             tilesHomeBtn.addEventListener('click', () => {
+                // Feature: If Lecture Viewer is open, treat X as "Back to List"
+                const lectureViewer = document.getElementById('lecture-viewer');
+                if (lectureViewer && !lectureViewer.hidden) {
+                    const backBtn = document.getElementById('lecture-back-btn');
+                    if (backBtn) backBtn.click();
+                    return;
+                }
+
                 switchTab('welcome-screen');
             });
         }
@@ -802,4 +810,4 @@ export const AppUI = {
     }
 };
 
-window.AppUI = AppUI;
+window.AppUI = AppUI

@@ -1,0 +1,89 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - navigation [ref=e3]:
+      - generic "Powrót do ekranu startowego" [ref=e4] [cursor=pointer]:
+        - img "Logo" [ref=e5]
+        - heading "Uki's Dive Tools" [level=1] [ref=e6]
+      - list [ref=e7]:
+        - listitem [ref=e8]:
+          - link "Strefa PRO" [ref=e9] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e10]:
+          - link "Kalkulator SAC" [ref=e11] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e12]:
+          - link "Kalkulator Nitrox" [ref=e13] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e14]:
+          - link "Planowanie Gazu (Basic)" [ref=e15] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e16]:
+          - link "Kalkulator Balastu" [ref=e17] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e18]:
+          - link "Narzędzia Divemastera" [ref=e19] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e20]:
+          - link "Wiedza Nurkowa" [active] [ref=e21] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e22]:
+          - link "Uki's River Dive" [ref=e23] [cursor=pointer]:
+            - /url: "#"
+        - listitem [ref=e24]:
+          - link "Ustawienia" [ref=e25] [cursor=pointer]:
+            - /url: "#"
+      - generic [ref=e26]:
+        - link "☕ Podoba Ci się to narzędzie? Postaw mi kawę!" [ref=e28] [cursor=pointer]:
+          - /url: https://suppi.pl/ukidives
+          - text: ☕ Podoba Ci się to narzędzie?
+          - strong [ref=e29]: Postaw mi kawę!
+        - link "🚨 WYPADEK? SOS / KOMORA" [ref=e31] [cursor=pointer]:
+          - /url: "#"
+          - text: 🚨 WYPADEK?
+          - strong [ref=e32]: SOS / KOMORA
+        - generic [ref=e33]: Uki's Dive Tools v2026.2.2.01
+    - main [ref=e34]:
+      - generic [ref=e36]:
+        - heading "Wiedza Nurkowa" [level=3] [ref=e37]
+        - navigation [ref=e38]:
+          - button "Wykłady" [ref=e39] [cursor=pointer]
+          - button "SAC" [ref=e40] [cursor=pointer]
+          - button "Nitrox" [ref=e41] [cursor=pointer]
+          - button "Gazy" [ref=e42] [cursor=pointer]
+          - button "Balast" [ref=e43] [cursor=pointer]
+        - generic [ref=e44]:
+          - text: • • • • • • • • • • • •
+          - list [ref=e48]:
+            - button "Barotrauma Urazy ciśnieniowe. Fizyka, rodzaje, profilaktyka i pierwsza pomoc." [ref=e49] [cursor=pointer]:
+              - generic [ref=e50]:
+                - heading "Barotrauma" [level=4] [ref=e51]
+                - paragraph [ref=e52]: Urazy ciśnieniowe. Fizyka, rodzaje, profilaktyka i pierwsza pomoc.
+            - button "Choroba Dekompresyjna Mechanizm DCS, objawy, czynniki ryzyka i pierwsza pomoc w wypadku." [ref=e53] [cursor=pointer]:
+              - generic [ref=e54]:
+                - heading "Choroba Dekompresyjna" [level=4] [ref=e55]
+                - paragraph [ref=e56]: Mechanizm DCS, objawy, czynniki ryzyka i pierwsza pomoc w wypadku.
+            - button "Prawo Daltona Fundament nurkowania Nitroxowego. Definicja, wzory, MOD, EAD i bezpieczeństwo." [ref=e57] [cursor=pointer]:
+              - generic [ref=e58]:
+                - heading "Prawo Daltona" [level=4] [ref=e59]
+                - paragraph [ref=e60]: Fundament nurkowania Nitroxowego. Definicja, wzory, MOD, EAD i bezpieczeństwo.
+            - button "Barotrauma vs DCS Pełne porównanie urazów ciśnieniowych i choroby dekompresyjnej wraz z pierwszą pomocą." [ref=e61] [cursor=pointer]:
+              - generic [ref=e62]:
+                - heading "Barotrauma vs DCS" [level=4] [ref=e63]
+                - paragraph [ref=e64]: Pełne porównanie urazów ciśnieniowych i choroby dekompresyjnej wraz z pierwszą pomocą.
+            - button "Planowanie Gazu (Rock Bottom) Dlaczego \"50 bar\" to za mało? Metoda Rock Bottom / Minimum Gas." [ref=e65] [cursor=pointer]:
+              - generic [ref=e66]:
+                - heading "Planowanie Gazu (Rock Bottom)" [level=4] [ref=e67]
+                - paragraph [ref=e68]: Dlaczego "50 bar" to za mało? Metoda Rock Bottom / Minimum Gas.
+            - button "Nurkowanie Nocne i w Ograniczonej Widoczności Noc w samo południe. Dlaczego w polskich wodach latarka jest Twoim najważniejszym partnerem?" [ref=e69] [cursor=pointer]:
+              - generic [ref=e70]:
+                - heading "Nurkowanie Nocne i w Ograniczonej Widoczności" [level=4] [ref=e71]
+                - paragraph [ref=e72]: Noc w samo południe. Dlaczego w polskich wodach latarka jest Twoim najważniejszym partnerem?
+            - button "Nawigacja w Nurkowaniu – Sztuka Orientacji Podwodnej Jak ufać przyrządom, gdy zmysły zawodzą – kompas vs. intuicja." [ref=e73] [cursor=pointer]:
+              - generic [ref=e74]:
+                - heading "Nawigacja w Nurkowaniu – Sztuka Orientacji Podwodnej" [level=4] [ref=e75]
+                - paragraph [ref=e76]: Jak ufać przyrządom, gdy zmysły zawodzą – kompas vs. intuicja.
+  - text: ✕
+```

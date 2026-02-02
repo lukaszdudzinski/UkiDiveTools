@@ -19,69 +19,10 @@ export const barotraumaVsDcsLecture = {
         { type: 'header', level: 4, value: 'A. Barotrauma podczas Wynurzania (UCP - Urazy Ciśnieniowe Płuc)' },
         { type: 'paragraph', value: 'Są to <strong>najpoważniejsze urazy nurkowe</strong>. Występują, gdy rozszerzający się gaz jest uwięziony w płucach, co prowadzi do rozerwania pęcherzyków płucnych, gdy nadciśnienie przekroczy 0,12 bara (50 do 90 mm Hg wyższe od ciśnienia otoczenia).' },
 
-        {
-            type: 'html', value: `
-        <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-            <thead>
-                <tr style="background-color: rgba(0,209,178,0.2);">
-                    <th style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Typ Urazu</th>
-                    <th style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Kluczowa Przyczyna</th>
-                    <th style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Objawy</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);"><strong>Tętniczy Zator Gazowy (AGE)</strong></td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Wstrzymanie oddechu podczas wynurzania</td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Utrata przytomności (natychmiast lub do 4-6 min), śpiączka, drgawki, paraliż, ból głowy, zaburzenia mowy/wzroku/równowagi, zatrzymanie krążenia i oddychania</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);"><strong>Odma Śródpiersia</strong></td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Wstrzymanie oddechu podczas wynurzania</td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Ból za mostkiem, zaburzenia oddychania, osłabienie, zmiana głosu</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);"><strong>Odma Podskórna</strong></td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Wstrzymanie oddechu podczas wynurzania</td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Opuchlizna szyi/obojczyków, trzaski przy ucisku skóry</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);"><strong>Odma Opłucnowa</strong></td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Wstrzymanie oddechu podczas wynurzania</td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Ostry ból w klatce piersiowej, płytki/szybki oddech, duszność, zasinienie skóry/ust/paznokci</td>
-                </tr>
-            </tbody>
-        </table>` },
+        { type: 'image', src: 'img/lectures/UCP_wynurzanie.jpg', alt: 'Infografika: Urazy Ciśnieniowe Płuc - Wynurzanie', caption: 'Kliknij, aby powiększyć: Typy urazów płuc przy wstrzymaniu oddechu.' },
 
         { type: 'header', level: 4, value: 'B. Inne Barotraumy' },
-        {
-            type: 'html', value: `
-        <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-            <thead>
-                <tr style="background-color: rgba(0,209,178,0.2);">
-                    <th style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Typ Urazu</th>
-                    <th style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Przyczyna</th>
-                    <th style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Objawy</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);"><strong>Barotrauma Ucha (Aerotitis)</strong></td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Brak wyrównania ciśnienia podczas zanurzania</td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Narastający ucisk → ból. Przy pęknięciu błony: nagłe ustąpienie bólu, zimno w uchu, zawroty głowy, nudności, wymioty, utrata orientacji</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);"><strong>Barotrauma Zatoki</strong></td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Niedrożność ujścia zatok (katar, infekcja, polipy)</td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Silny ból w okolicy zatoki lub górnych zębów, krwawienie z nosa</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);"><strong>Barotrauma Zęba</strong></td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Powietrze pod plombą/koroną</td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Silny ból zęba, możliwe pęknięcie zęba podczas wynurzania</td>
-                </tr>
-            </tbody>
-        </table>` },
+        { type: 'image', src: 'img/lectures/UCP_barotrauma.jpg', alt: 'Infografika: Inne Barotraumy (Ucho, Zatoki, Zęby)', caption: 'Kliknij, aby powiększyć: Mechanizmy i objawy barotraumy ucha, zatok i zębów.' },
 
         { type: 'info-box', style: 'warning', content: '⚠️ <strong>KLUCZOWA ZASADA (Barotrauma):</strong> <u>CIĄGŁE ODDYCHANIE!</u> NIGDY NIE WSTRZYMUJ ODDECHU podczas wynurzania!' },
 
@@ -118,36 +59,7 @@ export const barotraumaVsDcsLecture = {
         { type: 'header', level: 4, value: 'Objawy i Typy DCS' },
         { type: 'paragraph', value: 'Objawy DCS zwykle pojawiają się między <strong>15 minutą a 12 godziną po wynurzeniu</strong>, przy czym 98% objawów występuje w ciągu pierwszych 24 godzin.' },
 
-        {
-            type: 'html', value: `
-        <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-            <thead>
-                <tr style="background-color: rgba(255,56,96,0.2);">
-                    <th style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Typ DCS</th>
-                    <th style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Kluczowe Objawy</th>
-                    <th style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Mechanizm</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);"><strong>Typ I (Postać Lekka)</strong></td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">
-                        • Bóle stawowo-mięśniowe (głęboki, uporczywy ból w okolicach dużych stawów)<br>
-                        • Swędzenie skóry, marmurkowatość (plamy białe, sine, czerwone)<br>
-                        • Zmęczenie jak przy grypie
-                    </td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Pęcherzyki azotu pozanaczyniowo w tkankach obwodowych</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);"><strong>Typ II (Postać Ciężka)</strong></td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">
-                        <strong>Objawy neurologiczne:</strong> Utrata przytomności, ból głowy, drgawki, paraliż, mrowienie/drętwienie, zaburzenia mowy/wzroku/równowagi<br>
-                        <strong>Objawy płucno-krążeniowe:</strong> Duszność, spłycony oddech, suchy kaszel, ból w klatce piersiowej, objawy zawału
-                    </td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Pęcherzyki azotu w naczyniach krwionośnych. Może zablokować filtr płucny lub spowodować tętniczy zator gazowy</td>
-                </tr>
-            </tbody>
-        </table>` },
+        { type: 'image', src: 'img/lectures/DCS_typy.jpg', alt: 'Infografika: Typy i Objawy Choroby Dekompresyjnej (DCS)', caption: 'Kliknij, aby powiększyć: Podział na typy DCS i ich charakterystyczne objawy.' },
 
         { type: 'paragraph', value: '<strong>Uwaga:</strong> Niemożliwym jest odróżnienie neurologicznej postaci DCS od AGE bez znajomości przebiegu nurkowania. Nie należy sztywno dzielić DCS na typ I i II, ponieważ u nurka mogą występować objawy charakterystyczne dla obu typów.' },
 
@@ -196,44 +108,7 @@ export const barotraumaVsDcsLecture = {
         { type: 'html', value: '<hr>' },
 
         { type: 'header', level: 3, value: 'Podsumowanie Kluczowych Różnic' },
-        {
-            type: 'html', value: `
-        <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-            <thead>
-                <tr style="background-color: rgba(0,209,178,0.3);">
-                    <th style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Kwestia</th>
-                    <th style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Barotrauma (UCP)</th>
-                    <th style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Choroba Dekompresyjna (DCS)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);"><strong>Główne Prawo Fizyki</strong></td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Prawo Boyle'a (zależność V/P)</td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Prawo Henry'ego (rozpuszczalność gazu)</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);"><strong>Główna Przyczyna</strong></td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Wstrzymanie oddechu podczas wynurzania</td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Zbyt szybkie wynurzanie / zbyt długi czas na głębokości</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);"><strong>Mechanizm Urazu</strong></td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Mechaniczne rozerwanie tkanek przez rozprężający się gaz</td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Tworzenie pęcherzyków gazu obojętnego w tkankach i krwi</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);"><strong>Kiedy Objawy?</strong></td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Natychmiast lub do 30 minut po wynurzeniu</td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Zazwyczaj 15 min do 12 godz. po nurkowaniu</td>
-                </tr>
-                <tr>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);"><strong>Kluczowa Profilaktyka</strong></td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">CIĄGŁE ODDYCHANIE podczas wynurzenia</td>
-                    <td style="padding: 10px; border: 1px solid rgba(255,255,255,0.2);">Nurkowanie w granicach limitów + wolne wynurzanie + przystanek bezpieczeństwa</td>
-                </tr>
-            </tbody>
-        </table>` },
+        { type: 'image', src: 'img/lectures/Barotrauma_vs_DCS.jpg', alt: 'Infografika: Porównanie Barotrauma (UCP) vs DCS', caption: 'Kliknij, aby powiększyć: Kluczowe różnice między Urazami Ciśnieniowymi a DCS.' },
 
         { type: 'info-box', style: 'warning', content: '🚨 <strong>PAMIĘTAJ:</strong> W obu przypadkach najważniejsze to:<br>1. Natychmiastowe wezwanie pomocy medycznej<br>2. Podanie 100% tlenu<br>3. Rekompresja w komorze dekompresyjnej<br>4. <em>Nie próbuj rekompresji w wodzie!</em>' }
     ],

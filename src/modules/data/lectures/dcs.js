@@ -87,7 +87,7 @@ export const dcsLecture = {
             type: 'list', ordered: true, items: [
                 '<strong>Ocena i Wezwanie Pomocy:</strong> W przypadku podejrzenia DCS natychmiast wezwij pomoc medyczną (tel. 112 lub 999). Poinformuj, że podejrzewasz wypadek nurkowy i skontaktuj się z zespołem komór dekompresyjnych, np. Krajowy Ośrodek Medycyny Hiperbarycznej w Gdyni (tel. 58 699 86 54 lub 58 622 51 63).',
                 '<strong>Tlenoterapia:</strong> Podaj poszkodowanemu 100% tlen w maksymalnym przepływie tak szybko, jak to możliwe.<ul><li>Tlen poprawia utlenowanie tkanek, redukuje możliwość powstawania nowych zatorów oraz zmniejsza średnicę pęcherzyków gazowych (zarówno azotowych, jak i powietrznych).</li><li>Poszkodowanego należy zabezpieczyć w tlen podczas transportu.</li></ul>',
-                '<strong>Pozycja i Nawadnianie:</strong> Ułóż poszkodowanego w pozycji poziomej. Podaj poszkodowanemu do picia ciepłe, słodkie, niegazowane napoje (jeśli jest przytomny), do 1 litra.',
+                '<strong>Pozycja i Nawadnianie:</strong> Ułóż poszkodowanego w pozycji poziomej. Podaj poszkodowanemu do picia najlepiej wodę niegazowaną (jeśli jest przytomny) do 1 litra.',
                 '<strong>Resuscytacja:</strong> Jeśli poszkodowany nie oddycha, wykonaj podstawowe zabiegi resuscytacyjne (BLS).',
                 '<strong>Transport:</strong> W ciężkim przypadku DCS, transport śmigłowcem jest najszybszym sposobem na dostarczenie nurka do komory dekompresyjnej.'
             ]

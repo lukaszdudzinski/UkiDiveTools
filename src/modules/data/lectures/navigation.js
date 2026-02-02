@@ -8,8 +8,9 @@ export const navigationLecture = {
     description: 'Jak ufać przyrządom, gdy zmysły zawodzą – kompas vs. intuicja.',
     content: [
         { type: 'header', level: 3, value: '1. Wstęp: Dlaczego w ogóle nawigujemy?' },
-        { type: 'paragraph', value: 'Główna myśl: Nawigacja to różnica między byciem „prowadzonym” a byciem „odkrywcą”.' },
-        { type: 'paragraph', value: 'Nawigacja podwodna to jedna z tych umiejętności, która najszybciej buduje pewność siebie nurka. Wielu początkujących nurków (OWD) polega w 100% na przewodniku (Dive Guide), co nazywamy syndromem „podążania za płetwami”. Nauka nawigacji zmienia ten układ.' },
+        { type: 'paragraph', value: 'Główna myśl: Nawigacja to różnica między byciem „prowadzonym” a byciem „odkrywcą” oraz sposób na pokonanie ograniczeń własnego ciała.' },
+        { type: 'paragraph', value: 'Nawigacja podwodna to jedna z tych umiejętności, która najszybciej buduje pewność siebie nurka. Wielu początkujących nurków (OWD) polega w 100% na przewodniku (Dive Guide), co nazywamy syndromem „podążania za płetwami”. Nauka nawigacji zmienia ten układ, dając niezależność.' },
+        { type: 'paragraph', value: 'Jest ona również fizjologiczną koniecznością. W warunkach ograniczonej widoczności, w toni lub nad jednolitym dnem, gdzie brakuje wizualnych punktów odniesienia, ludzki błędnik traci orientację przestrzenną. Co więcej, z powodu naturalnej asymetrii ciała (jedna noga lub ręka jest zawsze silniejsza, dominująca), bez pomocy przyrządów nurek nieświadomie zaczyna skręcać w jedną stronę. To zjawisko sprawia, że bez nawigacji i punktów odniesienia zawsze kończymy, pływając w kółko.' },
 
         { type: 'header', level: 4, value: 'Kluczowe korzyści (Dlaczego warto?):' },
         {
