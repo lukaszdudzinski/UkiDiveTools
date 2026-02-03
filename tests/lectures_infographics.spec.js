@@ -1,27 +1,35 @@
 import { test, expect } from '@playwright/test';
+import { openMobileMenuIfNeeded, disablePwaBanner } from './test-helpers.js';
 
 test.describe('Lecture Infographics', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async ({ page, isMobile }) => {
+        await disablePwaBanner(page);
         await page.goto('/');
         await page.waitForLoadState('domcontentloaded');
 
-        // Open Navigation if mobile
-        const viewportSize = page.viewportSize();
-        if (viewportSize && viewportSize.width < 1024) { // Assuming mobile/tablet breakpoint
-            await page.click('#menu-toggle-btn');
-            await page.waitForSelector('.sidebar-nav.active', { timeout: 5000 }).catch(() => { }); // Wait for sidebar animation
-        }
+        // Open Navigation if mobile using helper
+        await openMobileMenuIfNeeded(page, isMobile);
 
         // Go to Lectures
         await page.click('[data-tab="science-of-diving"]');
+
+        // Ensure Wykłady subtab is active
+        const lecturesSubTab = page.locator('button[data-subtab="sod-lectures"]');
+        if (await lecturesSubTab.isVisible()) {
+            await lecturesSubTab.click();
+        }
+
+        // Wait for grid
+        const gridWrapper = page.locator('.lectures-grid-wrapper');
+        await gridWrapper.waitFor({ state: 'visible', timeout: 5000 });
     });
 
     test('Barotrauma vs DCS lecture should display infographics instead of tables', async ({ page }) => {
         // Open Barotrauma vs DCS lecture
-        await page.click('button[data-lecture-id="barotrauma-vs-dcs"]');
+        await page.click('.lecture-card[data-lecture-id="barotrauma-vs-dcs"]');
 
         // Wait for lecture content
-        await expect(page.locator('#lecture-content-area')).toBeVisible();
+        await expect(page.locator('#lecture-body')).toBeVisible();
         await expect(page.locator('#lecture-title')).toContainText('Barotrauma vs DCS');
 
         // Check for specific infographics that replaced tables

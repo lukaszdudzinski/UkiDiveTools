@@ -4,7 +4,7 @@
     "description": "Profesjonalne narzędzia do planowania nurkowań.",
     "start_url": "./index.html",
     "display": "standalone",
-    "version": "v2026.2.3.01",
+    "version": "v2026.2.3.02",
     "background_color": "#121212",
     "theme_color": "#00d1b2",
     "orientation": "any",

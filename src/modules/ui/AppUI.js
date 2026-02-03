@@ -8,7 +8,7 @@ import { ScienceUI } from './ScienceUI.js'; // New Import
 import { UkiRiverGameUI } from '../games/uki-river-dive/UkiRiverGameUI.js';
 import { ProAccess } from '../auth/ProAccess.js';
 
-export const APP_VERSION = 'v2026.2.3.01';
+export const APP_VERSION = 'v2026.2.3.02';
 
 export const AppUI = {
     init: () => {
