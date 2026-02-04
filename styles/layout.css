@@ -4,7 +4,7 @@
     max-width: 1200px;
     margin: 5vh auto;
     border-radius: 12px;
-    overflow: hidden;
+    /* overflow: hidden;  <-- REMOVED TO ALLOW DROPDOWNS TO OVERFLOW */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-top: 1px solid rgba(255, 255, 255, 0.3);
@@ -26,6 +26,25 @@
     flex-direction: column;
     overflow-y: auto;
     transition: background-color 0.3s, backdrop-filter 0.3s;
+    /* Border Radius for Left Side */
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+/* ... skipped unmodified lines ... */
+
+.app-content {
+    flex: 1;
+    background-color: rgba(30, 30, 30, 0.5);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    transition: background-color 0.3s, backdrop-filter 0.3s;
+    /* Border Radius for Right Side */
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
 
 .sidebar-header {
@@ -236,6 +255,9 @@
     height: 100%;
     overflow: hidden;
     transition: background-color 0.3s, backdrop-filter 0.3s;
+    /* Border Radius for Right Side */
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
 
 .app-content>h1 {

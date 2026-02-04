@@ -71,7 +71,7 @@ export const LecturesUI = {
             audioHtml = `
                 <div class="lecture-audio-wrapper" style="margin: 0 0 20px 0; text-align: center; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
                     <p style="margin-bottom: 8px; font-weight: bold; color: var(--color-text-primary);">🎧 Posłuchaj wykładu:</p>
-                    <audio controls style="width: 100%; max-width: 400px; height: 40px;">
+                    <audio controls style="width: 100%; max-width: 400px; height: 40px;" onerror="alert('Nie można załadować pliku audio: ' + this.children[0].src + '. Sprawdź czy plik istnieje w katalogu public/assets/lectures/.')">
                         <source src="${lecture.audioSrc}" type="audio/mp4">
                         Twoja przeglądarka nie obsługuje elementu audio.
                     </audio>

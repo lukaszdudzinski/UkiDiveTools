@@ -335,8 +335,8 @@
                             <div class="input-group"><label for="bailoutAscentRate">Prędkość Wynurzania
                                     (m/min)</label><input type="number" id="bailoutAscentRate" value="10" min="1"
                                     required></div>
-                            <div class="input-group"><label for="bailoutTank">Pojemność Butli (l)</label><input
-                                    type="number" id="bailoutTank" value="11" min="1" required></div>
+                            <div class="input-group"><label for="bailoutTank">Pojemność Butli (l)</label><select
+                                    id="bailoutTank" required></select></div>
                         </div>
                         <div class="form-full-width">
                             <div class="button-with-tooltip"><span class="tooltip-trigger tooltip-button">?<div
@@ -378,8 +378,8 @@
                         <div class="form-column">
                             <div class="input-group"><label>Czas Przystanku (min)</label><input type="number"
                                     id="gcStopTime_pro" value="3" required></div>
-                            <div class="input-group"><label>Pojemność Butli (l)</label><input type="number"
-                                    id="gcTankSize_pro" value="15" step="0.1" required></div>
+                            <div class="input-group"><label>Pojemność Butli (l)</label><select id="gcTankSize_pro"
+                                    required></select></div>
                             <div class="input-group"><label>Ciśnienie start. (bar)</label><input type="number"
                                     id="gcStartPressure_pro" value="200" required></div>
                             <div class="input-group"><label>Mnożnik SAC (Stres)</label><input type="number"
@@ -410,8 +410,8 @@
                                     type="number" id="p1" required></div>
                             <div class="input-group"><label for="p2">Ciśnienie końcowe (bar)</label><input type="number"
                                     id="p2" required></div>
-                            <div class="input-group"><label for="vb">Pojemność butli (l)</label><input type="number"
-                                    id="vb" value="15" required></div>
+                            <div class="input-group"><label for="vb">Pojemność butli (l)</label><select id="vb"
+                                    required></select></div>
                         </div>
                         <div class="form-column">
                             <div class="input-group"><label for="depth">Średnia głębokość (m)</label><input
@@ -532,8 +532,8 @@
                                             type="number" id="rbSAC" value="20" step="0.1" min="5" required></div>
                                     <div class="input-group"><label for="rbDepth">Maks. Głębokość (m)</label><input
                                             type="number" id="rbDepth" value="40" step="0.1" min="1" required></div>
-                                    <div class="input-group"><label>Pojemność Butli (l)</label><input type="number"
-                                            id="rbVolume" value="24" step="0.1" min="1" required></div>
+                                    <div class="input-group"><label>Pojemność Butli (l)</label><select id="rbVolume"
+                                            required></select></div>
                                     <div class="input-group"><label>Głęb. Przystanku (m)</label><input type="number"
                                             id="rbStopDepth" value="6" step="0.1" min="0" required></div>
                                     <div class="input-group"><label>Prędkość Wynurzania (m/min)</label><input
@@ -582,8 +582,8 @@
                                             id="gcStopDepth" value="5" step="0.1" required></div>
                                     <div class="input-group"><label>Czas Przystanku (min)</label><input type="number"
                                             id="gcStopTime" value="3" required></div>
-                                    <div class="input-group"><label>Pojemność Butli (l)</label><input type="number"
-                                            id="gcTankSize" value="15" step="0.1" required></div>
+                                    <div class="input-group"><label>Pojemność Butli (l)</label><select id="gcTankSize"
+                                            required></select></div>
                                     <div class="input-group"><label>Ciśnienie start. (bar)</label><input type="number"
                                             id="gcStartPressure" value="200" required></div>
                                     <div class="input-group"><label>Rezerwa (bar)</label><input type="number"
@@ -637,28 +637,7 @@
                         </div>
                         <div class="form-column">
                             <div class="input-group"><label>Butla</label><select id="ballastTank" required>
-                                    <optgroup label="Pojedyncze (Single)">
-                                        <option value="alu11">Alu 11L (S80)</option>
-                                        <option value="alu7">Alu 7L</option>
-                                        <option value="steel7">Stal 7L (232b)</option>
-                                        <option value="steel10">Stal 10L (232b)</option>
-                                        <option value="steel10_300">Stal 10L (300b)</option>
-                                        <option value="steel12">Stal 12L (232b)</option>
-                                        <option value="steel12_300">Stal 12L (300b)</option>
-                                        <option value="steel15">Stal 15L (232b)</option>
-                                    </optgroup>
-                                    <optgroup label="Zestawy (Twin)">
-                                        <option value="twin7_232">Twin 2x7L (232b)</option>
-                                        <option value="twin7_300">Twin 2x7L (300b)</option>
-                                        <option value="twin85_232">Twin 2x8.5L (232b)</option>
-                                        <option value="twin85_300">Twin 2x8.5L (300b)</option>
-                                        <option value="twin10_232">Twin 2x10L (232b)</option>
-                                        <option value="twin10_300">Twin 2x10L (300b)</option>
-                                        <option value="twin12_232">Twin 2x12L (232b)</option>
-                                        <option value="twin12_300">Twin 2x12L (300b)</option>
-                                        <option value="twin15_232">Twin 2x15L (232b)</option>
-                                        <option value="twin15_300">Twin 2x15L (300b)</option>
-                                    </optgroup>
+                                    <!-- Populated by JS -->
                                 </select></div>
                             <div class="input-group" id="ballast-plate-group" style="display: none;">
                                 <label>Płyta</label><select id="ballastPlate">
@@ -909,6 +888,13 @@
                                 style="font-weight: bold; color: var(--primary-color);">Brak</span>
                             <button id="reset-sac-btn" class="icon-btn danger" title="Wyczyść zapisany SAC">×</button>
                         </div>
+                    </div>
+
+                    <div class="settings-toggle-row" style="margin-top: 5px; flex-wrap: wrap;">
+                        <label for="default-tank-select" style="flex: 1; min-width: 120px;">Domyślna Butla</label>
+                        <select id="default-tank-select" class="settings-select" style="flex: 1; min-width: 180px;">
+                            <!-- Populated by JS -->
+                        </select>
                     </div>
                     <div class="settings-info-row" style="margin-top: 5px;">
                         <span>Status Strefy PRO

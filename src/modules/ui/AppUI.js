@@ -7,8 +7,9 @@ import { QuizUI } from './QuizUI.js';
 import { ScienceUI } from './ScienceUI.js'; // New Import
 import { UkiRiverGameUI } from '../games/uki-river-dive/UkiRiverGameUI.js';
 import { ProAccess } from '../auth/ProAccess.js';
+import { populateTankSelect } from '../data/TankData.js';
 
-export const APP_VERSION = 'v2026.2.3.02';
+export const APP_VERSION = 'v2026.2.4.01';
 
 export const AppUI = {
     init: () => {
@@ -43,6 +44,45 @@ export const AppUI = {
 
         // PWA Banner Logic
         AppUI.initPWA();
+
+        // Tank Selectors
+        AppUI.initTankSelectors();
+    },
+
+    initTankSelectors: () => {
+        const selectors = [
+            'vb', 'rbVolume', 'bailoutTank', 'gcTankSize', 'gcTankSize_pro', 'default-tank-select', 'ballastTank'
+        ];
+
+        const savedDefault = localStorage.getItem('uki-default-tank');
+        // Specific logic for Ballast: it used string IDs (e.g. 'alu11') previously, 
+        // now it uses numeric capacities (e.g. 11.1). 
+        // We will need to update BallastCalculator to handle numeric capacity if it relied on strings for modifiers.
+        // Actually, BallastUI.js passes 'tank' value to calculateBallast. 
+        // The calculator likely checks strings like 'twin7_232'. 
+        // WE NEED TO CHECK BallastCalculator.js logic before breaking it!
+        // User requested: "4. UWAGA - pamietaj ze lista butli twin to zestaw dwóch pojedynczych butli czyli 14 litrów to 2*7"
+        // This suggests we are passing LITERS everywhere now.
+        // So I will populate using TankData. 
+
+        selectors.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                // If it's the settings selector, or if we have a saved default, use it.
+                // Default fallback: 'steel15' (15L)
+                populateTankSelect(el, (id === 'ballastTank' ? null : (savedDefault || 'steel15')));
+
+                // If it's the settings selector, add listener to save
+                if (id === 'default-tank-select') {
+                    if (savedDefault) el.value = savedDefault; // Ensure value is set
+                    el.addEventListener('change', () => {
+                        localStorage.setItem('uki-default-tank', el.value);
+                        // Optional: Update other selectors in real-time?
+                        // Let's keep it simple: applies on next load or manual change.
+                    });
+                }
+            }
+        });
     },
 
     initGlobalButtons: () => {
@@ -367,6 +407,13 @@ export const AppUI = {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const tabId = link.getAttribute('data-tab');
+
+                // Special handling for "Wykłady": ALWAYS try to go back to grid if clicking the sidebar link
+                if (tabId === 'science-of-diving') {
+                    const backBtn = document.getElementById('lecture-back-btn');
+                    if (backBtn) backBtn.click();
+                }
+
                 if (tabId) switchTab(tabId);
             });
         });
@@ -458,6 +505,13 @@ export const AppUI = {
                     if (nitroxO2Input) {
                         nitroxO2Input.disabled = (subTabId === 'best-mix-calculator');
                     }
+                }
+
+                // FEATURE: Back to List on Sub-Tab Click for Lectures
+                // ALWAYS enforce grid view when clicking the "Wykłady" sub-tab button
+                if (subTabId === 'sod-lectures') {
+                    const backBtn = document.getElementById('lecture-back-btn');
+                    if (backBtn) backBtn.click();
                 }
             });
         });

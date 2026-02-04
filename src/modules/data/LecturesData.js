@@ -15,3 +15,4 @@ export const lecturesData = [
     nightDivingLecture,
     navigationLecture
 ];
+// Updated for v2026.2.4.01

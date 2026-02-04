@@ -112,6 +112,8 @@ export const barotraumaVsDcsLecture = {
 
         { type: 'info-box', style: 'warning', content: '🚨 <strong>PAMIĘTAJ:</strong> W obu przypadkach najważniejsze to:<br>1. Natychmiastowe wezwanie pomocy medycznej<br>2. Podanie 100% tlenu<br>3. Rekompresja w komorze dekompresyjnej<br>4. <em>Nie próbuj rekompresji w wodzie!</em>' }
     ],
+    audioSrc: 'public/assets/lectures/Barotrauma_i_DCS_czyli_mechanika_kontra_fizjologia.m4a',
+    presentationSrc: 'public/assets/lectures/Diving_Illness_Barotrauma_and_DCS.pdf',
     quiz: [
         {
             question: "Jaka jest kluczowa różnica w przyczynie między Barotraumą Płuc a DCS?",

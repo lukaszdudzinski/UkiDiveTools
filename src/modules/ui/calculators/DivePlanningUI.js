@@ -1,5 +1,6 @@
 import { DivePlanningCalculator } from '../../calculators/DivePlanningCalculator.js';
 import { AppUI } from '../AppUI.js';
+import { getTankVolume } from '../../data/TankData.js';
 
 export function initDivePlanningUI() {
     try { initSacUI(); } catch (e) { console.error("SAC UI Init Error", e); }
@@ -24,7 +25,11 @@ function initSacUI() {
             try {
                 const p1 = parseFloat(document.getElementById('p1').value);
                 const p2 = parseFloat(document.getElementById('p2').value);
-                const vb = parseFloat(document.getElementById('vb').value);
+
+                // Fix for Select Element returning ID string (e.g. "steel12") instead of volume number
+                const vbId = document.getElementById('vb').value;
+                const vb = getTankVolume(vbId);
+
                 const time = parseFloat(document.getElementById('time').value);
                 const depth = parseFloat(document.getElementById('depth').value); // ID mismatch fix: HTML has 'depth', not 'avgDepth' in some versions?
                 // Checking HTML (Step 18, L329): id="depth". 
@@ -111,7 +116,11 @@ function initGasConsumptionUI() {
                 const sac = parseFloat(document.getElementById('gcSAC').value);
                 const depth = parseFloat(document.getElementById('gcDepth').value);
                 const bottomTime = parseFloat(document.getElementById('gcBottomTime').value);
-                const tankSize = parseFloat(document.getElementById('gcTankSize').value);
+
+                // Tank Size via getTankVolume
+                const tankId = document.getElementById('gcTankSize').value;
+                const tankSize = getTankVolume(tankId);
+
                 const reservePressure = parseFloat(document.getElementById('gcReserve').value);
 
                 // Extra params from form or defaults
@@ -209,7 +218,9 @@ function initRockBottomUI() {
             try {
                 const sac = parseFloat(document.getElementById('rbSAC').value);
                 const depth = parseFloat(document.getElementById('rbDepth').value);
-                const tankSize = parseFloat(document.getElementById('rbVolume').value);
+
+                const tankId = document.getElementById('rbVolume').value;
+                const tankSize = getTankVolume(tankId);
 
                 // IDs check
                 // L433: rbSAC, L436: rbDepth, L438: rbVolume
@@ -281,7 +292,9 @@ function initBailoutUI() {
                 const targetDepth = parseFloat(document.getElementById('bailoutTargetDepth').value);
                 const reactionTime = parseFloat(document.getElementById('bailoutTime').value);
                 const ascentRate = parseFloat(document.getElementById('bailoutAscentRate').value);
-                const tankSize = parseFloat(document.getElementById('bailoutTank').value);
+
+                const tankId = document.getElementById('bailoutTank').value;
+                const tankSize = getTankVolume(tankId);
 
                 const pressureAtDepth = (depth / 10) + 1;
                 const gasReaction = sac * pressureAtDepth * reactionTime;
@@ -364,7 +377,10 @@ function initProGasUI() {
                 const ascentRate = getVal('gcAscentRate_pro');
                 const stopDepth = getVal('gcStopDepth_pro');
                 const stopTime = getVal('gcStopTime_pro');
-                const tankSize = getVal('gcTankSize_pro');
+
+                const tankId = document.getElementById('gcTankSize_pro').value;
+                const tankSize = getTankVolume(tankId);
+
                 const startPressure = getVal('gcStartPressure_pro');
 
                 // RB Stuff
