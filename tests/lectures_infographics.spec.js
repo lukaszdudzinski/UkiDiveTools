@@ -11,7 +11,9 @@ test.describe('Lecture Infographics', () => {
         await openMobileMenuIfNeeded(page, isMobile);
 
         // Go to Lectures
-        await page.click('[data-tab="science-of-diving"]');
+        const scienceTab = page.locator('[data-tab="science-of-diving"]');
+        await scienceTab.waitFor({ state: 'visible', timeout: 10000 });
+        await scienceTab.click();
 
         // Ensure Wykłady subtab is active
         const lecturesSubTab = page.locator('button[data-subtab="sod-lectures"]');
@@ -70,6 +72,51 @@ test.describe('Lecture Infographics', () => {
         await expect(lightbox).toHaveClass(/active/);
 
         // Close lightbox
+        await page.locator('.lightbox-close-btn').click();
+        await expect(lightbox).not.toHaveClass(/active/);
+    });
+
+    test('DCS Lecture Multimedia (Audio, PDF, Infographics)', async ({ page }) => {
+        // Open DCS lecture (id: 'dcs')
+        const dcsCard = page.locator('.lecture-card[data-lecture-id="dcs"]');
+        await expect(dcsCard).toBeVisible();
+        await dcsCard.click();
+
+        // Wait for lecture content
+        await expect(page.locator('#lecture-body')).toBeVisible();
+
+        // 1. Check Audio
+        const audioWrapper = page.locator('.lecture-audio-wrapper');
+        await expect(audioWrapper).toBeVisible();
+        const audio = audioWrapper.locator('audio');
+        await expect(audio).toBeVisible();
+        await expect(audio).toHaveAttribute('src', /Dlaczego_komputer_nie_uchroni_ci/);
+
+        // 2. Check PDF Button
+        const pdfBtn = page.locator('#open-presentation-btn');
+        await expect(pdfBtn).toBeVisible();
+        await expect(pdfBtn).toHaveAttribute('onclick', /DCS_Mechanizm_Profilaktyka_Pomoc/);
+
+        // 3. Check Infographics
+        // Typy
+        const imgTypes = page.locator('img[src*="DCS_typy.png"]');
+        await expect(imgTypes).toBeVisible();
+
+        // Profilaktyka
+        const imgPrevention = page.locator('img[src*="DCS_profilaktyka.png"]');
+        await expect(imgPrevention).toBeVisible();
+
+        // Pierwsza Pomoc
+        const imgFirstAid = page.locator('img[src*="DCS_pierwsza_pomoc.png"]');
+        await expect(imgFirstAid).toBeVisible();
+
+        // Verify Lightbox on one image
+        await imgFirstAid.click();
+        const lightbox = page.locator('#lightbox-modal');
+        await expect(lightbox).toBeVisible();
+        await expect(lightbox).toHaveClass(/active/);
+
+        // Close
         await page.locator('.lightbox-close-btn').click();
         await expect(lightbox).not.toHaveClass(/active/);
     });

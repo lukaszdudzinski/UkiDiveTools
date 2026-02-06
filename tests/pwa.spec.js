@@ -53,6 +53,7 @@ test.describe('PWA & App Meta', () => {
         const msgPromise = page.waitForEvent('console', msg => msg.text().includes('App Version Check'));
         await page.reload(); // Trigger init logs
         const msg = await msgPromise;
-        expect(msg.text()).toContain('v2026.2.4.01'); // Ensure it matches the newly released version
+        const EXPECTED_VERSION = 'v2026.2.6.01';
+        expect(msg.text()).toContain(EXPECTED_VERSION); // Ensure it matches the newly released version
     });
 });
