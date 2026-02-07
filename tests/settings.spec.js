@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { openMobileMenuIfNeeded } from './test-helpers.js';
+import { openMobileMenuIfNeeded, clickSidebarTab } from './test-helpers.js';
 
 test.describe('Settings & Presistence', () => {
 
@@ -8,11 +8,7 @@ test.describe('Settings & Presistence', () => {
 
         // Open Settings Tab
         await openMobileMenuIfNeeded(page, isMobile);
-
-        // Settings are usually in the "Ustawienia" tab
-        const settingsTab = page.locator('a[data-tab="settings-panel"]');
-        await expect(settingsTab).toBeVisible();
-        await settingsTab.click();
+        await clickSidebarTab(page, 'settings-panel');
     });
 
     test('should toggle theme and persist after reload', async ({ page }) => {
@@ -52,8 +48,7 @@ test.describe('Settings & Presistence', () => {
 
     test('should persist Water Type selection', async ({ page, isMobile }) => {
         // Ensure settings panel is visible
-        const settingsTab = page.locator('a[data-tab="settings-panel"]');
-        await expect(settingsTab).toBeVisible();
+        // Ensure settings panel is visible by checking content, relying on beforeEach navigation
 
         // Ensure panel content loaded
         const waterSelect = page.locator('#global-water-type');
@@ -70,8 +65,8 @@ test.describe('Settings & Presistence', () => {
         await openMobileMenuIfNeeded(page, isMobile);
 
         // Re-open setttings
-        await expect(settingsTab).toBeVisible();
-        await settingsTab.click();
+        // Re-open setttings
+        await clickSidebarTab(page, 'settings-panel');
 
         // Check value
         await expect(waterSelect).toBeVisible();

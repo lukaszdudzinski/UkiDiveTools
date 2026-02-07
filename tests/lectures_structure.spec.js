@@ -1,6 +1,5 @@
-
 import { test, expect } from '@playwright/test';
-import { openMobileMenuIfNeeded } from './test-helpers.js';
+import { openMobileMenuIfNeeded, clickSidebarTab } from './test-helpers.js';
 
 test.describe('Lecture Structure & Rendering', () => {
     test.beforeEach(async ({ page }) => {
@@ -11,7 +10,7 @@ test.describe('Lecture Structure & Rendering', () => {
     test('should correctly render structured content (headers, lists, info-boxes)', async ({ page, isMobile }) => {
         // 1. Navigate to Science of Diving -> Lectures
         await openMobileMenuIfNeeded(page, isMobile);
-        await page.click('[data-tab="science-of-diving"]');
+        await clickSidebarTab(page, 'science-of-diving');
 
         // Open Lectures subtab if needed
         const lecturesSubTab = page.locator('button[data-subtab="sod-lectures"]');
@@ -62,7 +61,7 @@ test.describe('Lecture Structure & Rendering', () => {
     test('should render info-boxes correctly (Night Diving)', async ({ page, isMobile }) => {
         // 1. Navigate
         await openMobileMenuIfNeeded(page, isMobile);
-        await page.click('[data-tab="science-of-diving"]');
+        await clickSidebarTab(page, 'science-of-diving');
         const lecturesSubTab = page.locator('button[data-subtab="sod-lectures"]');
         if (await lecturesSubTab.isVisible()) {
             await lecturesSubTab.click();

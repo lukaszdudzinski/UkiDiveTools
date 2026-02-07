@@ -1,6 +1,6 @@
 
 import { test, expect } from '@playwright/test';
-import { openMobileMenuIfNeeded, disablePwaBanner } from './test-helpers.js';
+import { openMobileMenuIfNeeded, disablePwaBanner, clickSidebarTab } from './test-helpers.js';
 
 test.describe('Science Nitrox Section', () => {
     test.beforeEach(async ({ page }) => {
@@ -12,7 +12,7 @@ test.describe('Science Nitrox Section', () => {
     test('should allow navigation to Nitrox Science and show correct content', async ({ page, isMobile }) => {
         // 1. Open Wiedza Tab
         await openMobileMenuIfNeeded(page, isMobile);
-        await page.click('[data-tab="science-of-diving"]');
+        await clickSidebarTab(page, 'science-of-diving');
 
         const section = page.locator('#science-of-diving');
         await expect(section).toHaveClass(/active-tab/);

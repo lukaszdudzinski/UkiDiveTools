@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { openMobileMenuIfNeeded, disablePwaBanner } from './test-helpers.js';
+import { openMobileMenuIfNeeded, disablePwaBanner, clickSidebarTab } from './test-helpers.js';
 
 test.describe('UX Features & Tank Selector', () => {
     test.beforeEach(async ({ page }) => {
@@ -17,7 +17,7 @@ test.describe('UX Features & Tank Selector', () => {
         // Try accessing via Dashboard (Welcome Screen) for reliability?
         // Or direct link if it exists. Sidebar has 'gas-planning-calculator'.
         // Let's use 'gas-planning-calculator' and check Bailout Tank selector which definitely exists there.
-        await page.locator('a[data-tab="ballast-calculator"]').click({ force: true });
+        await clickSidebarTab(page, 'ballast-calculator');
 
         // Check Ballast tank selector
         const ballastSelect = page.locator('#ballastTank');
@@ -37,7 +37,7 @@ test.describe('UX Features & Tank Selector', () => {
     test('Should respect Default Tank setting', async ({ page, isMobile }) => {
         // 1. Go to Settings
         await openMobileMenuIfNeeded(page, isMobile);
-        await page.locator('a[data-tab="settings-panel"]').click({ force: true });
+        await clickSidebarTab(page, 'settings-panel');
 
         // 2. Set Default Tank to "Twin 2x12L (232b)" -> id: twin12_232
         const defaultSelect = page.locator('#default-tank-select');
@@ -54,7 +54,7 @@ test.describe('UX Features & Tank Selector', () => {
         // Logic says ballastTank DOES NOT load default?
         // Let's check Gas Planning Calculator (Bailout)
         await openMobileMenuIfNeeded(page, isMobile);
-        await page.locator('a[data-tab="gas-planning-calculator"]').click({ force: true });
+        await clickSidebarTab(page, 'gas-planning-calculator');
 
         const bailoutSelect = page.locator('#bailoutTank');
         // Wait for it to be visible/loaded
@@ -69,7 +69,7 @@ test.describe('UX Features & Tank Selector', () => {
 
     test('Calculation should strictly use Tank Capacity (Liters) in Ballast Calc', async ({ page, isMobile }) => {
         await openMobileMenuIfNeeded(page, isMobile);
-        await page.locator('a[data-tab="ballast-calculator"]').click({ force: true });
+        await clickSidebarTab(page, 'ballast-calculator');
 
         // Ballast calculator uses IDs directly, so this confirms ID logic works.
         // We can check if selecting option works without error.
@@ -92,7 +92,7 @@ test.describe('UX Features & Tank Selector', () => {
 
     test('Should close Lecture Viewer when clicking "Wykłady" tab', async ({ page, isMobile }) => {
         await openMobileMenuIfNeeded(page, isMobile);
-        await page.click('a[data-tab="science-of-diving"]');
+        await clickSidebarTab(page, 'science-of-diving');
 
         // Ensure we are in Lectures sub-tab
         const lecturesSubTab = page.locator('button[data-subtab="sod-lectures"]');
@@ -111,7 +111,7 @@ test.describe('UX Features & Tank Selector', () => {
 
         // Click "Wykłady" tab (sidebar link)
         await openMobileMenuIfNeeded(page, isMobile);
-        await page.click('a[data-tab="science-of-diving"]');
+        await clickSidebarTab(page, 'science-of-diving');
 
         // Verify Viewer is HIDDEN
         await expect(viewer).not.toBeVisible();

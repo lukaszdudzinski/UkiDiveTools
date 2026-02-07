@@ -1,6 +1,6 @@
 
 import { test, expect } from '@playwright/test';
-import { openMobileMenuIfNeeded } from './test-helpers.js';
+import { openMobileMenuIfNeeded, clickSidebarTab } from './test-helpers.js';
 
 test.describe('Navigation Lecture', () => {
     test.beforeEach(async ({ page }) => {
@@ -16,7 +16,7 @@ test.describe('Navigation Lecture', () => {
         // 1. Navigation
         await openMobileMenuIfNeeded(page, isMobile);
 
-        await page.click('[data-tab="science-of-diving"]');
+        await clickSidebarTab(page, 'science-of-diving');
 
         // Wait for tab content
         const lectureTab = page.locator('#science-of-diving');

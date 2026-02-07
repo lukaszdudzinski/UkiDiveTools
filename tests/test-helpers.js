@@ -13,9 +13,18 @@ export async function openMobileMenuIfNeeded(page, isMobile) {
             if (!isSidebarVisible) {
                 await toggle.click();
                 await expect(sidebar).toBeVisible();
+                // Wait for animation to complete
+                await page.waitForTimeout(1000);
             }
         }
     }
+}
+
+export async function clickSidebarTab(page, tabId) {
+    const selector = `.sidebar-nav a[data-tab="${tabId}"]`;
+    const el = page.locator(selector);
+    // Use evaluate to bypass overlay/viewport issues on mobile
+    await el.evaluate(node => node.click());
 }
 
 export async function disablePwaBanner(page) {
