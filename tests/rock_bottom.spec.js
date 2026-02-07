@@ -10,6 +10,14 @@ test.describe('Rock Bottom Lecture & Quiz Flow', () => {
         page.on('pageerror', err => {
             console.log(`PAGE EXCEPTION: ${err.message}`);
         });
+        page.on('dialog', async dialog => {
+            console.log(`Dialog message: ${dialog.message()}`);
+            if (dialog.message().includes('Podaj kod')) {
+                await dialog.accept('NUREK2026');
+            } else {
+                await dialog.dismiss();
+            }
+        });
 
         await page.goto('/');
 
