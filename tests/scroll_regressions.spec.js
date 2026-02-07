@@ -12,7 +12,7 @@ test.describe('Scroll Behavior Regression', () => {
         // Navigate to Gas Planning
         await openMobileMenuIfNeeded(page, isMobile);
         // Use data-tab selector for better stability on Mobile Safari
-        await page.locator('a[data-tab="gas-planning-calculator"]').click();
+        await page.locator('a[data-tab="gas-planning-calculator"]').click({ force: true });
 
         // Wait for potential sub-tab or form
         const form = page.locator('#gasConsumptionForm');
@@ -46,7 +46,7 @@ test.describe('Scroll Behavior Regression', () => {
     test('Rock Bottom should scroll maximally down', async ({ page, isMobile }) => {
         // Navigate to Gas Planning
         await openMobileMenuIfNeeded(page, isMobile);
-        await page.locator('a[data-tab="gas-planning-calculator"]').click();
+        await page.locator('a[data-tab="gas-planning-calculator"]').click({ force: true });
 
         // Scroll to Rock Bottom section (it's lower down usually)
         // Or click sub-tab if it exists? Rock Bottom is usually inline or separate?
