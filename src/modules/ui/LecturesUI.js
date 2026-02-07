@@ -75,6 +75,9 @@ export const LecturesUI = {
                         <source src="${lecture.audioSrc}" type="audio/mp4">
                         Twoja przeglądarka nie obsługuje elementu audio.
                     </audio>
+                    <p style="margin-top: 8px; font-size: 0.75em; color: var(--color-text-muted); font-style: italic;">
+                        Podcast przygotowane z pomoca NotebookLM, moga pojawiac sie błedy językowe AI.
+                    </p>
                 </div>
             `;
         }

@@ -5,6 +5,7 @@ import { barotraumaVsDcsLecture } from './lectures/barotrauma-vs-dcs.js';
 import { rockBottomLecture } from './lectures/rock-bottom.js';
 import { nightDivingLecture } from './lectures/night-diving.js';
 import { navigationLecture } from './lectures/navigation.js';
+import { sciencePhysicsLecture } from './lectures/science-physics.js';
 
 export const lecturesData = [
     barotraumaLecture,
@@ -13,6 +14,7 @@ export const lecturesData = [
     barotraumaVsDcsLecture,
     rockBottomLecture,
     nightDivingLecture,
-    navigationLecture
+    navigationLecture,
+    sciencePhysicsLecture
 ];
 // Updated for v2026.2.4.01
