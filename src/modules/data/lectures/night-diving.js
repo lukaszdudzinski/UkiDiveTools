@@ -9,15 +9,15 @@ export const nightDivingLecture = {
     content: [
         { type: 'paragraph', value: 'Nurkowanie po zachodzie słońca to jedno z najbardziej ekscytujących doświadczeń w karierze płetwonurka. Znane Ci miejsca zmieniają się nie do poznania, a zmysły wyostrzają się, reagując na każdy ruch w snopie światła. W tym przewodniku dowiesz się, jak bezpiecznie wejść w świat mroku – niezależnie od tego, czy jest to noc na rafie, czy głębokie nurkowanie w polskim jeziorze.' },
 
-        { type: 'header', level: 3, value: '1. Wstęp: Dlaczego warto zanurzyć się w mrok?' },
+        { type: 'header', level: 3, value: 'Wstęp: Dlaczego warto zanurzyć się w mrok?' },
         { type: 'paragraph', value: 'Kiedy słońce znika pod horyzontem, pod wodą następuje „zmiana warty”. Ryby dzienne zapadają w letarg, chowając się w szczelinach, a na żer wychodzą drapieżniki: mureny, ośmiornice, skorupiaki i homary, które za dnia są nieuchwytne.' },
         { type: 'paragraph', value: 'Magia nurkowania nocnego polega również na przywracaniu kolorów. Woda działa jak filtr, pochłaniając barwy (czerwony znika już na kilku metrach). W nocy Twoja latarka przywraca pełne spektrum barw na dystansie oświetlenia – rafa, która w dzień wydaje się niebiesko-szara, w nocy eksploduje żywymi kolorami. Dodatkowo, ograniczone pole widzenia (tylko to, co oświetlasz) wywołuje tzw. "efekt tunelowy", który pozwala skupić się na makro-życiu i detalach, które w dzień często umykają naszej uwadze.' },
 
-        { type: 'header', level: 3, value: '2. Specyfika Polska: "Noc w środku dnia"' },
+        { type: 'header', level: 3, value: 'Specyfika Polska: "Noc w środku dnia"' },
         { type: 'paragraph', value: 'Dla nurków w Polsce umiejętność posługiwania się światłem jest kluczowa nie tylko w nocy. Nasze wody (jeziora, Bałtyk) charakteryzują się specyficzną stratyfikacją i zmąceniem. Często już na głębokości 20-30 metrów (a w mniej przejrzystych akwenach znacznie płycej) panują całkowite ciemności, nawet w słoneczny letni dzień.' },
         { type: 'paragraph', value: 'Wniosek jest prosty: W polskich warunkach latarka nie jest wyposażeniem "opcjonalnym" czy "nocnym". Jest to standardowy element ekwipunku każdego nurka schodzącego poniżej strefy światła. Traktuj każde głębsze nurkowanie w polskich wodach jak nurkowanie nocne pod względem procedur bezpieczeństwa i dublowania sprzętu oświetleniowego.' },
 
-        { type: 'header', level: 3, value: '3. Przygotowanie i Procedury (Standardy SSI/CMAS)' },
+        { type: 'header', level: 3, value: 'Przygotowanie i Procedury (Standardy SSI/CMAS)' },
         { type: 'paragraph', value: 'Bezpieczeństwo w nocy opiera się na planowaniu i redundancji (dublowaniu).' },
         { type: 'paragraph', value: '<strong>Przygotowanie miejsca:</strong> Jeśli nurkujesz z brzegu, kluczowe jest ustawienie świateł orientacyjnych. Najlepszą praktyką jest ustawienie dwóch świateł w linii (jedno wyżej, drugie niżej), co pozwala precyzyjnie namierzyć punkt wyjścia z wody. W przypadku nurkowania z łodzi, jednostka powinna być oznaczona światłem pozycyjnym, a lina opustowa światłem chemicznym lub stroboskopowym (błyskaczem).' },
         { type: 'paragraph', value: '<strong>Kluczowa zasada Redundancji:</strong> W nurkowaniu nocnym i w ograniczonej widoczności jeden nurek musi posiadać MINIMUM dwa niezależne źródła światła:' },
@@ -31,7 +31,7 @@ export const nightDivingLecture = {
 
         { type: 'info-box', style: 'warning', title: 'Złota zasada bezpieczeństwa', content: 'Jeśli Twoja latarka główna ulegnie awarii, natychmiast włączasz latarkę zapasową, sygnalizujesz problem partnerowi i kończysz nurkowanie, rozpoczynając bezpieczne wynurzanie. Nie kontynuuj nurkowania na latarce zapasowej!' },
 
-        { type: 'header', level: 3, value: '4. Sprzęt: Ewolucja i Współczesność' },
+        { type: 'header', level: 3, value: 'Sprzęt: Ewolucja i Współczesność' },
         { type: 'paragraph', value: 'Technologia oświetlenia nurkowego przeszła długą drogę, co bezpośrednio przekłada się na nasz komfort i bezpieczeństwo:' },
 
         {
@@ -52,7 +52,7 @@ export const nightDivingLecture = {
             ]
         },
 
-        { type: 'header', level: 3, value: '5. Komunikacja Świetlna' },
+        { type: 'header', level: 3, value: 'Komunikacja Świetlna' },
         { type: 'paragraph', value: 'W nocy nie widzimy gestów rąk, chyba że je oświetlimy. Dlatego latarka staje się Twoim głosem. Pamiętaj o nadrzędnej zasadzie: <strong>Nigdy nie świeć partnerowi w oczy!</strong> To niszczy jego adaptację wzroku do ciemności i oślepia.' },
 
         { type: 'image', src: 'img/lectures/night_signals.jpg', alt: 'Sygnały świetlne w nurkowaniu', caption: 'Kliknij, aby powiększyć: Kluczowe sygnały komunikacji świetlnej.' },

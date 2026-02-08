@@ -6,7 +6,7 @@ export const daltonLecture = {
         { type: 'header', level: 2, value: 'Prawo Daltona w Nurkowaniu: Fundament Nurkowania Nitroxowego' },
         { type: 'paragraph', value: 'Prawo Daltona, zwane też Prawem Ciśnień Parcjalnych, jest obok Prawa Boyle\'a i Prawa Henry\'ego, jednym z czterech podstawowych praw gazowych, które zaawansowany nurek powinien znać. Jest ono absolutnie kluczowe do zrozumienia wpływu poszczególnych gazów na organizm pod wodą, zwłaszcza tlenu i azotu.' },
 
-        { type: 'header', level: 3, value: '1. Definicja i Mechanizm Działania' },
+        { type: 'header', level: 3, value: 'Definicja i Mechanizm Działania' },
         { type: 'paragraph', value: 'Prawo Daltona mówi, że całkowite ciśnienie mieszaniny gazowej jest równe sumie ciśnień parcjalnych wszystkich gazów wchodzących w jej skład.' },
         { type: 'paragraph', value: 'Matematycznie można to zapisać jako: P = Pg1 + Pg2 + Pg3 ...' },
 
@@ -28,10 +28,10 @@ export const daltonLecture = {
 
         { type: 'paragraph', value: 'Podczas zanurzania, gdy ciśnienie absolutne (P) rośnie, indywidualne ciśnienia parcjalne gazów składowych (np. azotu i tlenu) również wzrastają, i to dokładnie tak samo, jak wzrasta ciśnienie absolutne.' },
 
-        { type: 'header', level: 3, value: '2. Zastosowanie Prawa Daltona w Nurkowaniu' },
+        { type: 'header', level: 3, value: 'Zastosowanie Prawa Daltona w Nurkowaniu' },
         { type: 'paragraph', value: 'Ciśnienie parcjalne (a nie procentowa zawartość) gazu jest kluczowe, ponieważ to ono decyduje o fizjologicznym wpływie gazu na organizmy żywe.' },
 
-        { type: 'header', level: 4, value: 'A. Toksyczność Tlenowa (Limit Bezpieczeństwa)' },
+        { type: 'header', level: 4, value: 'Toksyczność Tlenowa (Limit Bezpieczeństwa)' },
         { type: 'paragraph', value: 'W nurkowaniu z powietrzem lub Nitroksem, tlen jest niezbędny do życia, ale jego nadmiar nie jest bezpieczny. Zbyt wysokie ciśnienie parcjalne tlenu (PO2) stwarza ryzyko wystąpienia Toksyczności Tlenowej dla Centralnego Układu Nerwowego (CNS Toxicity).' },
         {
             type: 'list', items: [
@@ -41,7 +41,7 @@ export const daltonLecture = {
         },
         { type: 'paragraph', value: 'Dzięki Prawu Daltona, nurek może obliczyć, jaką głębokość może osiągnąć, zanim przekroczy bezpieczny limit tlenu (MOD).' },
 
-        { type: 'header', level: 4, value: 'B. Obliczanie Maksymalnej Głębokości Operacyjnej (MOD)' },
+        { type: 'header', level: 4, value: 'Obliczanie Maksymalnej Głębokości Operacyjnej (MOD)' },
         { type: 'paragraph', value: 'Maksymalna Głębokość Operacyjna (MOD – Maximum Operating Depth) to największa głębokość, na którą można zanurkować z daną mieszaniną gazową, nie przekraczając ustalonego ciśnienia parcjalnego tlenu (PO2).' },
 
         {
@@ -52,7 +52,7 @@ export const daltonLecture = {
         </div>` },
         { type: 'paragraph', value: 'Następnie, przekształcając ciśnienie (P) na głębokość, otrzymujemy MOD w metrach słupa wody (msw).' },
 
-        { type: 'header', level: 4, value: 'C. Zadłużenie Dekompresyjne i Nitrox' },
+        { type: 'header', level: 4, value: 'Zadłużenie Dekompresyjne i Nitrox' },
         { type: 'paragraph', value: 'Nadrzędnym celem nurkowania Nitroxowego jest oddychanie niższą zawartością azotu. Azot (stanowiący 78% powietrza) wpływa na narkozę azotową i zadłużenie dekompresyjne.' },
         {
             type: 'list', items: [
@@ -63,7 +63,7 @@ export const daltonLecture = {
             ]
         },
 
-        { type: 'header', level: 3, value: '3. Bezpieczeństwo i Technika (Analiza Gazu)' },
+        { type: 'header', level: 3, value: 'Bezpieczeństwo i Technika (Analiza Gazu)' },
         { type: 'paragraph', value: 'Ponieważ frakcja tlenu ma bezpośredni wpływ na obliczenia MOD, nurek Nitroxowy ponosi ryzyko popełnienia błędu obliczeniowego, który może doprowadzić do mózgowego zatrucia tlenowego (CNS).' },
         {
             type: 'list', items: [

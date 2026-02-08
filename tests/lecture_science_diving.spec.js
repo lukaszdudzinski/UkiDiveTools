@@ -33,7 +33,7 @@ test.describe('Science of Diving Lecture (Complete)', () => {
         await expect(title).toHaveText('Nauka w Nurkowaniu: Fizyka, Fizjologia, Środowisko');
 
         // 3. Verify Audio Player & Disclaimer
-        const audioWrapper = page.locator('.lecture-audio-wrapper');
+        const audioWrapper = page.locator('#lecture-body .lecture-audio-wrapper');
         await expect(audioWrapper).toBeVisible();
 
         // Use evaluate to check text content thoroughly including child nodes if needed, 
@@ -44,7 +44,7 @@ test.describe('Science of Diving Lecture (Complete)', () => {
         await expect(audio).toBeVisible();
         // Check source src
         const source = audio.locator('source');
-        await expect(source).toHaveAttribute('src', /science_diving.mp3/);
+        await expect(source).toHaveAttribute('src', /Fizyka_nurkowania_na_głębokim_i_zimnym_wraku.m4a/);
 
         // 4. Verify Content Sections (Headers)
         // Part 1
@@ -57,20 +57,31 @@ test.describe('Science of Diving Lecture (Complete)', () => {
         await expect(page.locator('h2', { hasText: 'Część 4: Środowisko Wodne' })).toBeVisible();
 
         // 5. Verify Highlights & Key Sections
-        // Boyle's Law
-        const boyleBox = page.locator('.highlight-box', { hasText: 'Prawo Boyle’a-Mariotte’a' });
-        await expect(boyleBox).toBeVisible();
+        // Boyle's Law: Now a header
+        await expect(page.locator('#lecture-body h4', { hasText: 'Prawo Boyle’a-Mariotte’a' })).toBeVisible();
 
-        // Henry's Law (Paragraph check)
-        await expect(page.locator('p', { hasText: 'Prawo Henry’ego' })).toBeVisible();
+        // Henry's Law (Header check)
+        await expect(page.locator('#lecture-body h4', { hasText: 'Prawo Henry’ego' })).toBeVisible();
 
         // Archimedes (Header check)
-        await expect(page.locator('h3', { hasText: 'Prawo Archimedesa i Pływalność' })).toBeVisible();
+        await expect(page.locator('#lecture-body h3', { hasText: 'Prawo Archimedesa i Pływalność' })).toBeVisible();
 
-        // Dalton's Law (Warning style)
-        const daltonBox = page.locator('.highlight-box', { hasText: 'Prawo Daltona' });
-        await expect(daltonBox).toBeVisible();
-        // Check warning style border color
-        await expect(daltonBox).toHaveCSS('border-left-color', 'rgb(255, 69, 0)');
+        // Ensure NO "undefined" text is visible (Regression Check)
+        const undefinedText = page.locator('#lecture-body').locator('text=undefined');
+        await expect(undefinedText).toHaveCount(0);
+
+        // Dalton's Law: Now a header
+        await expect(page.locator('#lecture-body h4', { hasText: 'Prawo Daltona' })).toBeVisible();
+
+        // 6. Verify Infographics (Images)
+        // Physics
+        await expect(page.locator('#lecture-body img[src*="Prawa fizyki.png"]')).toBeVisible();
+
+        // Physiology 1 & 2
+        await expect(page.locator('#lecture-body img[src*="Fizjologia i patofizjologia 1.png"]')).toBeVisible();
+        await expect(page.locator('#lecture-body img[src*="Fizjologia i patofizjologia 2.png"]')).toBeVisible();
+
+        // Decompression
+        await expect(page.locator('#lecture-body img[src*="Teoria dekompresji sprzet nurkowy.png"]')).toBeVisible();
     });
 });

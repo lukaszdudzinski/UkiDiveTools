@@ -6,7 +6,7 @@ export const dcsLecture = {
         { type: 'header', level: 2, value: 'Choroba Dekompresyjna (DCS): Cicha Pułapka Azotu' },
         { type: 'paragraph', value: 'Choroba dekompresyjna (ang. Decompression Sickness – DCS), potocznie zwana chorobą kesonową, jest zespołem schorzeń i objawów wywołanych przez azot wydzielający się z tkanek do krwi nurka w sposób niekontrolowany, głównie w formie pęcherzyków gazowych. Jest to jedno z najpoważniejszych schorzeń, zagrażających zdrowiu i życiu płetwonurków.' },
 
-        { type: 'header', level: 3, value: '1. Fizyczne Podstawy DCS: Prawo Henry’ego' },
+        { type: 'header', level: 3, value: 'Fizyczne Podstawy DCS: Prawo Henry’ego' },
         { type: 'paragraph', value: 'DCS jest bezpośrednim wynikiem procesów absorpcji i eliminacji azotu, które są opisywane przez Prawo Henry’ego.' },
 
         { type: 'header', level: 4, value: 'Prawo Henry’ego:' },
@@ -26,7 +26,7 @@ export const dcsLecture = {
             ]
         },
 
-        { type: 'header', level: 3, value: '2. Klasyfikacja i Objawy Choroby Dekompresyjnej' },
+        { type: 'header', level: 3, value: 'Klasyfikacja i Objawy Choroby Dekompresyjnej' },
         { type: 'paragraph', value: 'Najprostsza klasyfikacja dzieli DCS na dwa główne typy:' },
 
         { type: 'header', level: 4, value: 'Typ I – Postać Lekka (DCS I)' },
@@ -51,10 +51,10 @@ export const dcsLecture = {
         { type: 'paragraph', value: '<strong>Występowanie Objawów:</strong> Objawy DCS najczęściej pojawiają się między 15 minutą a 12 godziną po wynurzeniu, ale w ciężkich przypadkach mogą wystąpić szybciej lub, rzadko, nawet do 24–36 godzin po nurkowaniu, szczególnie jeśli po nurkowaniu nastąpił lot samolotem.' },
         { type: 'image', src: 'img/lectures/dcs/DCS_typy.png', alt: 'Klasyfikacja DCS - Typ I i Typ II', caption: 'Infografika: Podział, objawy i mechanizmy DCS.' },
 
-        { type: 'header', level: 3, value: '3. Profilaktyka i Czynniki Ryzyka' },
+        { type: 'header', level: 3, value: 'Profilaktyka i Czynniki Ryzyka' },
         { type: 'paragraph', value: 'Ryzyko wystąpienia DCS istnieje, nawet pomimo przestrzegania wszystkich zasad. Profilaktyka polega na minimalizowaniu czynników ryzyka:' },
 
-        { type: 'header', level: 4, value: 'A. Technika i Planowanie Nurkowania:' },
+        { type: 'header', level: 4, value: 'Technika i Planowanie Nurkowania:' },
         {
             type: 'list', items: [
                 '<strong>Prędkość Wynurzania:</strong> Stosuj prawidłową prędkość wynurzania (nie większą niż 10 m/min). Zbyt duża prędkość jest główną przyczyną DCS.',
@@ -66,7 +66,7 @@ export const dcsLecture = {
             ]
         },
 
-        { type: 'header', level: 4, value: 'B. Czynniki Fizjologiczne Zwiększające Ryzyko:' },
+        { type: 'header', level: 4, value: 'Czynniki Fizjologiczne Zwiększające Ryzyko:' },
         {
             type: 'list', items: [
                 'Odwodnienie (niewłaściwy bilans wodny).',
@@ -81,7 +81,7 @@ export const dcsLecture = {
         },
         { type: 'image', src: 'img/lectures/dcs/DCS_profilaktyka.png', alt: 'Profilaktyka i Czynniki Ryzyka DCS', caption: 'Jak zminimalizować ryzyko choroby dekompresyjnej.' },
 
-        { type: 'header', level: 3, value: '4. Pierwsza Pomoc w Przypadku Podejrzenia DCS' },
+        { type: 'header', level: 3, value: 'Pierwsza Pomoc w Przypadku Podejrzenia DCS' },
         { type: 'paragraph', value: 'Skuteczność leczenia ciężkiej postaci DCS zależy głównie od szybkości podjęcia leczenia w komorze dekompresyjnej.' },
 
         { type: 'header', level: 4, value: 'Kroki Pierwszej Pomocy:' },

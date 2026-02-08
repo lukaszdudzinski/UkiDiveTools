@@ -22,6 +22,7 @@ export async function openMobileMenuIfNeeded(page, isMobile) {
 
 export async function clickSidebarTab(page, tabId) {
     const selector = `.sidebar-nav a[data-tab="${tabId}"]`;
+    await page.waitForSelector(selector, { state: 'attached', timeout: 5000 });
     const el = page.locator(selector);
     // Use evaluate to bypass overlay/viewport issues on mobile
     await el.evaluate(node => node.click());

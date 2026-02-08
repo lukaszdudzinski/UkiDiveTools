@@ -7,7 +7,7 @@ export const navigationLecture = {
     presentationSrc: 'lectures/navigation/Nawigacja_Podwodna_Sztuka_i_Nauka.pdf',
     description: 'Jak ufać przyrządom, gdy zmysły zawodzą – kompas vs. intuicja.',
     content: [
-        { type: 'header', level: 3, value: '1. Wstęp: Dlaczego w ogóle nawigujemy?' },
+        { type: 'header', level: 3, value: 'Wstęp: Dlaczego w ogóle nawigujemy?' },
         { type: 'paragraph', value: 'Główna myśl: Nawigacja to różnica między byciem „prowadzonym” a byciem „odkrywcą” oraz sposób na pokonanie ograniczeń własnego ciała.' },
         { type: 'paragraph', value: 'Nawigacja podwodna to jedna z tych umiejętności, która najszybciej buduje pewność siebie nurka. Wielu początkujących nurków (OWD) polega w 100% na przewodniku (Dive Guide), co nazywamy syndromem „podążania za płetwami”. Nauka nawigacji zmienia ten układ, dając niezależność.' },
         { type: 'paragraph', value: 'Jest ona również fizjologiczną koniecznością. W warunkach ograniczonej widoczności, w toni lub nad jednolitym dnem, gdzie brakuje wizualnych punktów odniesienia, ludzki błędnik traci orientację przestrzenną. Co więcej, z powodu naturalnej asymetrii ciała (jedna noga lub ręka jest zawsze silniejsza, dominująca), bez pomocy przyrządów nurek nieświadomie zaczyna skręcać w jedną stronę. To zjawisko sprawia, że bez nawigacji i punktów odniesienia zawsze kończymy, pływając w kółko.' },
@@ -22,7 +22,7 @@ export const navigationLecture = {
             ]
         },
 
-        { type: 'header', level: 3, value: '2. Wyzwanie: Powierzchnia a Podwodny Świat' },
+        { type: 'header', level: 3, value: 'Wyzwanie: Powierzchnia a Podwodny Świat' },
         { type: 'paragraph', value: 'Na powierzchni nawigacja jest intuicyjna – mamy słońce, budynki, wyraźny horyzont. Pod wodą środowisko działa przeciwko naszym zmysłom.' },
 
         { type: 'header', level: 4, value: 'Dlaczego jest to trudne? (Czynniki środowiskowe):' },
@@ -37,10 +37,10 @@ export const navigationLecture = {
 
         { type: 'info-box', style: 'tip', content: '<strong>Wskazówka Instruktorska:</strong> „Wasz wewnętrzny kompas pod wodą nie działa. Jeśli czujesz, że powinieneś płynąć w lewo, a kompas pokazuje prosto – zaufaj kompasowi. Zawsze.”' },
 
-        { type: 'header', level: 3, value: '3. Rodzaje Nawigacji Podwodnej' },
+        { type: 'header', level: 3, value: 'Rodzaje Nawigacji Podwodnej' },
         { type: 'paragraph', value: 'Wyróżniamy trzy główne metody orientacji, które wzajemnie się uzupełniają.' },
 
-        { type: 'header', level: 4, value: 'A. Nawigacja Naturalna (Obserwacyjna)' },
+        { type: 'header', level: 4, value: 'Nawigacja Naturalna (Obserwacyjna)' },
         { type: 'paragraph', value: 'To sztuka czytania środowiska. Jest to najbardziej podstawowa, ale często niedoceniana forma.' },
         {
             type: 'list', items: [
@@ -51,18 +51,18 @@ export const navigationLecture = {
             ]
         },
 
-        { type: 'header', level: 4, value: 'B. Nawigacja Przyrządowa (Kompas)' },
+        { type: 'header', level: 4, value: 'Nawigacja Przyrządowa (Kompas)' },
         { type: 'paragraph', value: 'Niezbędna, gdy nawigacja naturalna zawodzi (noc, słaba widoczność, toń) lub gdy wymagana jest precyzja (np. poszukiwanie i wydobywanie). Daje nam obiektywny kurs magnetyczny.' },
 
         { type: 'image', src: 'lectures/navigation/nawigacja podwodna z kompasem.png', alt: 'Nawigacja Podwodna z Kompasem - Infografika' },
 
-        { type: 'header', level: 4, value: 'C. Nawigacja Mieszana (Hybrydowa)' },
+        { type: 'header', level: 4, value: 'Nawigacja Mieszana (Hybrydowa)' },
         { type: 'paragraph', value: 'To „Złoty Standard” SSI. Polega na łączeniu wskazań kompasu z obserwacją naturalnych punktów.' },
         { type: 'paragraph', value: '<em>Przykład: Ustawiasz kompas na cel, ale zapamiętujesz, że płyniesz wzdłuż ściany rafy, którą masz po prawej stronie. To podwójna weryfikacja.</em>' },
 
         { type: 'image', src: 'lectures/navigation/Nawigacja hybrydowa.png', alt: 'Nawigacja Hybrydowa - Infografika' },
 
-        { type: 'header', level: 3, value: '4. Kompas: Twoje Główne Narzędzie' },
+        { type: 'header', level: 3, value: 'Kompas: Twoje Główne Narzędzie' },
         { type: 'paragraph', value: 'Kompas to prosty, ale precyzyjny instrument. Musimy znać jego budowę, by unikać błędów.' },
 
         { type: 'header', level: 4, value: 'Budowa Kompasu Klasycznego (Analogowego):' },
@@ -75,7 +75,7 @@ export const navigationLecture = {
             ]
         },
 
-        { type: 'header', level: 3, value: '5. Zasada Działania i Technika – Jak nie zbłądzić?' },
+        { type: 'header', level: 3, value: 'Zasada Działania i Technika – Jak nie zbłądzić?' },
         { type: 'paragraph', value: 'Posiadanie kompasu to nie wszystko. Trzeba go umieć użyć. Większość błędów nawigacyjnych wynika ze złej techniki, a nie awarii sprzętu.' },
 
         { type: 'header', level: 4, value: 'Kluczowe zasady poprawnej nawigacji:' },
@@ -102,7 +102,7 @@ export const navigationLecture = {
         { type: 'header', level: 4, value: 'Kurs Powrotny (Reciprocal Heading):' },
         { type: 'paragraph', value: 'Aby wrócić po tej samej linii (o 180 stopni), obróć się tak, aby igła północy znalazła się dokładnie naprzeciwko widełek (lub na dolnym znaczniku).' },
 
-        { type: 'header', level: 3, value: '6. Szacowanie Odległości (Brakujące Ogniwo)' },
+        { type: 'header', level: 3, value: 'Szacowanie Odległości (Brakujące Ogniwo)' },
         { type: 'paragraph', value: 'Nawigacja to Kierunek + Odległość. Sam kierunek to za mało. Jak mierzymy dystans pod wodą?' },
         {
             type: 'list', items: [
@@ -112,7 +112,7 @@ export const navigationLecture = {
             ]
         },
 
-        { type: 'header', level: 3, value: '7. Podsumowanie' },
+        { type: 'header', level: 3, value: 'Podsumowanie' },
         { type: 'paragraph', value: 'Pamiętaj o dewiacji magnetycznej – wraki, metalowe elementy czy włączone latarki zbyt blisko kompasu mogą zakłócić odczyt. Nawigacja to proces ciągły. Wymaga podzielności uwagi: kontrolujesz pływalność, partnera, głębokość i kompas.' },
         { type: 'paragraph', value: 'Dobra nawigacja to spokój ducha. Kiedy wiesz, gdzie jesteś, nurkowanie staje się czystą przyjemnością.' }
     ],

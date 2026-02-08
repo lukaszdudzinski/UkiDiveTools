@@ -5,7 +5,7 @@ export const rockBottomLecture = {
     content: [
         { type: 'header', level: 2, value: 'Planowanie Gazu – Dlaczego "50 bar" to mit? (Wstęp do Rock Bottom)' },
 
-        { type: 'header', level: 3, value: '1. Przegląd standardowych metod planowania' },
+        { type: 'header', level: 3, value: 'Przegląd standardowych metod planowania' },
         { type: 'paragraph', value: 'Zanim przejdziemy do zaawansowanego planowania, omówmy to, co każdy nurek zna z kursu podstawowego:' },
         {
             type: 'list', items: [
@@ -14,7 +14,7 @@ export const rockBottomLecture = {
             ]
         },
 
-        { type: 'header', level: 3, value: '2. Dlaczego standardowe metody mogą zawieść?' },
+        { type: 'header', level: 3, value: 'Dlaczego standardowe metody mogą zawieść?' },
         { type: 'paragraph', value: 'Wyobraź sobie sytuację awaryjną na głębokości 30 metrów. Twój partner nie ma powietrza ("Out of Gas"). Podajesz mu swój automat. Od teraz:' },
         {
             type: 'list', ordered: true, items: [
@@ -27,7 +27,7 @@ export const rockBottomLecture = {
 
         { type: 'image', src: 'img/lectures/rock_bottom.jpg', alt: 'Infografika Rock Bottom' },
 
-        { type: 'header', level: 3, value: '3. Czym jest Rock Bottom (Minimum Gas)?' },
+        { type: 'header', level: 3, value: 'Czym jest Rock Bottom (Minimum Gas)?' },
         { type: 'paragraph', value: 'Rock Bottom (nazywane też Minimum Gas) to nie jest "sugestia". To matematycznie wyliczona ilość gazu, której NIE WOLNO Ci zużyć podczas fazy dennej. To Twoja "żelazna rezerwa".' },
         { type: 'paragraph', value: '<strong>Definicja:</strong> Rock Bottom to ciśnienie w butli, przy którym musisz rozpocząć wynurzanie, aby w razie awarii partnera, para nurków mogła bezpiecznie dotrzeć na powierzchnię, nawet przy zwiększonym zużyciu gazu (stres).' },
 
@@ -41,7 +41,7 @@ export const rockBottomLecture = {
         },
 
         { type: 'header', level: 3, value: 'Planowanie Gazu Metodą Rock Bottom' },
-        { type: 'header', level: 4, value: '1. Założenia metody' },
+        { type: 'header', level: 4, value: 'Założenia metody' },
         { type: 'paragraph', value: 'Aby obliczyć tę rezerwę, musimy przyjąć „czarny scenariusz”:' },
         {
             type: 'list', ordered: true, items: [
@@ -52,7 +52,7 @@ export const rockBottomLecture = {
             ]
         },
 
-        { type: 'header', level: 4, value: '2. Przykład Obliczeniowy: Krok po Kroku (z infografiki)' },
+        { type: 'header', level: 4, value: 'Przykład Obliczeniowy: Krok po Kroku (z infografiki)' },
         { type: 'paragraph', value: '<strong>Scenariusz:</strong> Głębokość 27m (3,7 bar), Butla 15L, SAC standardowy 20 l/min (w stresie 40 l/min). Dwóch nurków = 80 l/min łącznego zużycia.' },
 
         { type: 'paragraph', value: '<strong>Krok 1: Faza na dnie (2 minuty)</strong><br>2 min * 80 l/min * 3,7 bar = 592 litry' },

@@ -10,18 +10,18 @@ export const barotraumaVsDcsLecture = {
 
         { type: 'html', value: '<hr>' },
 
-        { type: 'header', level: 3, value: 'I. Urazy Ciśnieniowe (Barotrauma)' },
+        { type: 'header', level: 3, value: 'Urazy Ciśnieniowe (Barotrauma)' },
         { type: 'paragraph', value: 'Barotrauma to uraz mechaniczny spowodowany nadmierną różnicą ciśnień między otoczeniem a gazem uwięzionym w przestrzeniach powietrznych ciała. Powstają one, gdy gaz w zamkniętych przestrzeniach kurczy się (podczas zanurzania, tzw. squeeze) lub rozszerza (podczas wynurzania).' },
 
         { type: 'header', level: 4, value: 'Prawa Fizyczne: Prawo Boyle\'a-Mariotte\'a' },
         { type: 'paragraph', value: 'Barotrauma jest rządzona przez <strong>Prawo Boyle\'a-Mariotte\'a</strong>, które mówi, że objętość gazu jest odwrotnie proporcjonalna do ciśnienia, któremu jest poddawana. Największe zmiany objętości gazów na każdy metr głębokości występują na głębokościach 1–10 metrów, co jest najbardziej niebezpieczną strefą zmiany ciśnienia.' },
 
-        { type: 'header', level: 4, value: 'A. Barotrauma podczas Wynurzania (UCP - Urazy Ciśnieniowe Płuc)' },
+        { type: 'header', level: 4, value: 'Barotrauma podczas Wynurzania (UCP - Urazy Ciśnieniowe Płuc)' },
         { type: 'paragraph', value: 'Są to <strong>najpoważniejsze urazy nurkowe</strong>. Występują, gdy rozszerzający się gaz jest uwięziony w płucach, co prowadzi do rozerwania pęcherzyków płucnych, gdy nadciśnienie przekroczy 0,12 bara (50 do 90 mm Hg wyższe od ciśnienia otoczenia).' },
 
         { type: 'image', src: 'img/lectures/UCP_wynurzanie.jpg', alt: 'Infografika: Urazy Ciśnieniowe Płuc - Wynurzanie', caption: 'Kliknij, aby powiększyć: Typy urazów płuc przy wstrzymaniu oddechu.' },
 
-        { type: 'header', level: 4, value: 'B. Inne Barotraumy' },
+        { type: 'header', level: 4, value: 'Inne Barotraumy' },
         { type: 'image', src: 'img/lectures/UCP_barotrauma.jpg', alt: 'Infografika: Inne Barotraumy (Ucho, Zatoki, Zęby)', caption: 'Kliknij, aby powiększyć: Mechanizmy i objawy barotraumy ucha, zatok i zębów.' },
 
         { type: 'info-box', style: 'warning', content: '⚠️ <strong>KLUCZOWA ZASADA (Barotrauma):</strong> <u>CIĄGŁE ODDYCHANIE!</u> NIGDY NIE WSTRZYMUJ ODDECHU podczas wynurzania!' },
@@ -49,7 +49,7 @@ export const barotraumaVsDcsLecture = {
 
         { type: 'html', value: '<hr>' },
 
-        { type: 'header', level: 3, value: 'II. Choroba Dekompresyjna (DCS)' },
+        { type: 'header', level: 3, value: 'Choroba Dekompresyjna (DCS)' },
         { type: 'paragraph', value: 'Choroba dekompresyjna (DCS lub choroba kesonowa) to zespół objawów spowodowanych uwolnieniem nadmiaru gazu obojętnego (np. azotu) w tkankach na skutek nieprawidłowego wynurzania.' },
 
         { type: 'header', level: 4, value: 'Prawa Fizyczne: Prawo Henry\'ego' },

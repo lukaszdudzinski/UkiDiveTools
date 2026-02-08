@@ -8,7 +8,7 @@ export const barotraumaLecture = {
         { type: 'header', level: 2, value: 'BAROTRAUMA (Uraz Ciśnieniowy): Pełny Przewodnik dla Początkujących Nurków' },
         { type: 'paragraph', value: 'Barotrauma to uszkodzenie tkanek, które wynika z nadmiernej różnicy ciśnień między przestrzenią gazową w ciele a ciśnieniem otoczenia. Zrozumienie tego zjawiska jest fundamentalne, ponieważ woda nie jest naturalnym środowiskiem człowieka.' },
 
-        { type: 'header', level: 3, value: '1. Fizyczne Podstawy Barotraumy: Prawo Boyle’a-Mariotte’a' },
+        { type: 'header', level: 3, value: 'Fizyczne Podstawy Barotraumy: Prawo Boyle’a-Mariotte’a' },
         { type: 'paragraph', value: 'Wszystkie urazy ciśnieniowe są ściśle związane z Prawem Boyle’a-Mariotte’a. Prawo to opisuje zachowanie gazu w stałej temperaturze (przemiana izotermiczna).' },
         { type: 'paragraph', value: 'Prawo Boyle’a-Mariotte’a głosi, że objętość danej masy gazu (V) jest odwrotnie proporcjonalna do jego ciśnienia bezwzględnego (p) [p<sub>1</sub>V<sub>1</sub> = p<sub>2</sub>V<sub>2</sub>].' },
 
@@ -30,10 +30,10 @@ export const barotraumaLecture = {
 
         { type: 'html', value: '<hr>' },
 
-        { type: 'header', level: 3, value: '2. Rodzaje Barotraumy i Mechanizmy Uszkodzeń' },
+        { type: 'header', level: 3, value: 'Rodzaje Barotraumy i Mechanizmy Uszkodzeń' },
         { type: 'paragraph', value: 'Barotrauma dotyczy wszystkich przestrzeni wypełnionych gazem, które są zamknięte lub mają ograniczoną drożność.' },
 
-        { type: 'header', level: 4, value: 'A. Urazy Związane głównie z Zanurzaniem (Kompresja)' },
+        { type: 'header', level: 4, value: 'Urazy Związane głównie z Zanurzaniem (Kompresja)' },
         { type: 'paragraph', value: 'Te urazy wynikają z braku dodania powietrza do przestrzeni gazowych, aby zrównoważyć wzrost ciśnienia otoczenia.' },
 
         { type: 'header', level: 5, value: 'Uraz Ciśnieniowy Ucha Środkowego (UCU):' },
@@ -69,7 +69,7 @@ export const barotraumaLecture = {
 
         { type: 'image', src: 'img/lectures/barotrauma/barotrauma_urazy.jpg', alt: 'Infografika: Urazy Nurkowe (Kompresja)', caption: 'Kliknij, aby powiększyć: Urazy wynikające z kompresji (zanurzania).' },
 
-        { type: 'header', level: 4, value: 'B. Urazy Związane głównie z Wynurzaniem (Rozprężanie)' },
+        { type: 'header', level: 4, value: 'Urazy Związane głównie z Wynurzaniem (Rozprężanie)' },
         { type: 'paragraph', value: 'Urazy te są wynikiem rozprężania się gazu zgodnie z Prawem Boyle’a-Mariotte’a, gdy maleje ciśnienie otoczenia.' },
 
         { type: 'header', level: 5, value: 'Uraz Ciśnieniowy Płuc (UCP):' },
@@ -110,7 +110,7 @@ export const barotraumaLecture = {
 
         { type: 'html', value: '<hr>' },
 
-        { type: 'header', level: 3, value: '3. Profilaktyka Barotraumy' },
+        { type: 'header', level: 3, value: 'Profilaktyka Barotraumy' },
         { type: 'paragraph', value: 'Prawidłowa technika i dbałość o sprzęt są kluczowe dla uniknięcia urazów.' },
 
         { type: 'header', level: 4, value: 'Zapobieganie Urazom podczas Zanurzania (Ucho, Zatoki, Maska):' },
@@ -136,7 +136,7 @@ export const barotraumaLecture = {
 
         { type: 'html', value: '<hr>' },
 
-        { type: 'header', level: 3, value: '4. Postępowanie w Sytuacjach Awaryjnych (Pierwsza Pomoc)' },
+        { type: 'header', level: 3, value: 'Postępowanie w Sytuacjach Awaryjnych (Pierwsza Pomoc)' },
         { type: 'paragraph', value: 'W przypadku podejrzenia poważnego urazu ciśnieniowego (UCP, zator gazowy) kluczowa jest szybkość działania, ponieważ skuteczność leczenia zależy głównie od szybkości podjęcia leczenia w komorze dekompresyjnej.' },
 
         {

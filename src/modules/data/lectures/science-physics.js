@@ -3,68 +3,81 @@ export const sciencePhysicsLecture = {
     title: 'Nauka w Nurkowaniu: Fizyka, Fizjologia, Środowisko',
     description: 'Kompleksowy wykład obejmujący fizykę nurkowania (prawa gazowe), fizjologię (urazy ciśnieniowe, toksyczność gazów), teorię dekompresji oraz środowisko wodne.',
     icon: 'fa-microscope',
-    audioSrc: 'assets/lectures/science_diving.mp3', // Placeholder
+    audioSrc: 'audio/Fizyka_nurkowania_na_głębokim_i_zimnym_wraku.m4a',
     duration: '25 min',
     content: [
         {
             type: 'header',
             level: 2,
-            text: 'Część 1: Fizyka Nurkowania'
+            value: 'Część 1: Fizyka Nurkowania'
         },
         {
             type: 'paragraph',
-            text: 'Fizyka jest fundamentem zrozumienia, jak środowisko wodne oddziałuje na organizm nurka i jego sprzęt. Bez tej wiedzy nie sposób bezpiecznie planować głębokich nurkowań czy zrozumieć mechanizmów urazów,.'
+            value: 'Fizyka jest fundamentem zrozumienia, jak środowisko wodne oddziałuje na organizm nurka i jego sprzęt. Bez tej wiedzy nie sposób bezpiecznie planować głębokich nurkowań czy zrozumieć mechanizmów urazów,.'
         },
         {
             type: 'header',
             level: 3,
-            text: '1. Ciśnienie i Prawa Gazowe'
+            value: 'Ciśnienie i Prawa Gazowe'
         },
         {
             type: 'paragraph',
-            text: 'Zrozumienie ciśnienia jest kluczowe. Na powierzchni, na poziomie morza, ciśnienie atmosferyczne wynosi 1 bar (lub 1 atm). W wodzie słonej ciśnienie wzrasta o 1 bar co każde 10 metrów głębokości (w wodzie słodkiej co 10,3 m, ale dla uproszczenia w SSI przyjmuje się 10 m = 1 bar).'
+            value: 'Zrozumienie ciśnienia jest kluczowe. Na powierzchni, na poziomie morza, ciśnienie atmosferyczne wynosi 1 bar (lub 1 atm). W wodzie słonej ciśnienie wzrasta o 1 bar co każde 10 metrów głębokości (w wodzie słodkiej co 10,3 m, ale dla uproszczenia w SSI przyjmuje się 10 m = 1 bar).'
+        },
+        {
+            type: 'paragraph',
+            value: '<strong>Ciśnienie bezwzględne (całkowite):</strong> To suma ciśnienia atmosferycznego i hydrostatycznego (wody).'
         },
         {
             type: 'list',
             items: [
-                '<strong>Ciśnienie bezwzględne (całkowite):</strong> To suma ciśnienia atmosferycznego i hydrostatycznego (wody).',
                 'Na 0 m = 1 bar.',
                 'Na 10 m = 2 bary.',
                 'Na 30 m = 4 bary.'
             ]
         },
         {
-            type: 'info-box',
-            style: 'info',
-            title: 'Prawo Boyle’a-Mariotte’a (Objętość a Ciśnienie)',
-            content: `
-                <p><strong>Definicja:</strong> W stałej temperaturze objętość danej masy gazu jest odwrotnie proporcjonalna do ciśnienia absolutnego.</p>
-                <p><strong>Zastosowanie:</strong> Wyjaśnia, dlaczego powietrze w płucach, BCD czy skafandrze rozpręża się przy wynurzaniu i kurczy przy zanurzaniu. Największe zmiany objętości zachodzą w przedziale 0–10 m (zmiana o 50%), co czyni tę strefę najbardziej krytyczną dla urazów ciśnieniowych płuc i problemów z wyrównywaniem ciśnienia,.</p>
-                <p><strong>Wzór:</strong> P1 × V1 = P2 × V2.</p>
-            `
+            type: 'header',
+            level: 4,
+            value: 'Prawo Boyle’a-Mariotte’a (Objętość a Ciśnienie)'
         },
         {
-            type: 'info-box',
-            style: 'info',
-            title: 'Prawo Charlesa (Temperatura a Ciśnienie/Objętość)',
-            content: `
-                <p><strong>Zastosowanie:</strong> W stałej objętości (butla nurkowa), wzrost temperatury powoduje wzrost ciśnienia, a spadek temperatury – spadek ciśnienia. Dlatego butla nagrzana na słońcu pokaże wyższe ciśnienie niż po wejściu do zimnej wody. Zmiana o 1°C powoduje zmianę ciśnienia o ok. 0,6 bara w pełnej butli.</p>
-            `
+            type: 'list',
+            items: [
+                '<strong>Definicja:</strong> W stałej temperaturze objętość danej masy gazu jest odwrotnie proporcjonalna do ciśnienia absolutnego.',
+                '<strong>Zastosowanie:</strong> Wyjaśnia, dlaczego powietrze w płucach, BCD czy skafandrze rozpręża się przy wynurzaniu i kurczy przy zanurzaniu. Największe zmiany objętości zachodzą w przedziale 0–10 m (zmiana o 50%), co czyni tę strefę najbardziej krytyczną dla urazów ciśnieniowych płuc i problemów z wyrównywaniem ciśnienia,.',
+                '<strong>Wzór:</strong> P1 × V1 = P2 × V2.'
+            ]
         },
         {
-            type: 'info-box',
-            style: 'warning',
-            title: 'Prawo Daltona (Ciśnienia Parcjalne)',
-            content: `
-                <p><strong>Definicja:</strong> Ciśnienie całkowite mieszaniny gazów jest sumą ciśnień parcjalnych poszczególnych składników.</p>
-                <p><strong>Zastosowanie:</strong> Kluczowe dla Nitroksu i Trimiksu. Pozwala obliczyć ryzyko toksyczności tlenowej (ppO2) i narkozy azotowej.</p>
-                <p><strong>Wzór:</strong> P_total = ppGas1 + ppGas2 + …</p>
-                <p><strong>Przykład:</strong> Powietrze na 30 m (4 bary): ppO2 = 0,21 × 4 = 0,84 bar; ppN2 = 0,79 × 4 = 3,16 bar,.</p>
-            `
+            type: 'header',
+            level: 4,
+            value: 'Prawo Charlesa (Temperatura a Ciśnienie/Objętość)'
         },
         {
-            type: 'paragraph',
-            text: '<strong>Prawo Henry’ego (Rozpuszczalność gazów):</strong>'
+            type: 'list',
+            items: [
+                '<strong>Zastosowanie:</strong> W stałej objętości (butla nurkowa), wzrost temperatury powoduje wzrost ciśnienia, a spadek temperatury – spadek ciśnienia. Dlatego butla nagrzana na słońcu pokaże wyższe ciśnienie niż po wejściu do zimnej wody. Zmiana o 1°C powoduje zmianę ciśnienia o ok. 0,6 bara w pełnej butli.'
+            ]
+        },
+        {
+            type: 'header',
+            level: 4,
+            value: 'Prawo Daltona (Ciśnienia Parcjalne)'
+        },
+        {
+            type: 'list',
+            items: [
+                '<strong>Definicja:</strong> Ciśnienie całkowite mieszaniny gazów jest sumą ciśnień parcjalnych poszczególnych składników.',
+                '<strong>Zastosowanie:</strong> Kluczowe dla Nitroksu i Trimiksu. Pozwala obliczyć ryzyko toksyczności tlenowej (ppO2) i narkozy azotowej.',
+                '<strong>Wzór:</strong> P_total = ppGas1 + ppGas2 + …',
+                '<strong>Przykład:</strong> Powietrze na 30 m (4 bary): ppO2 = 0,21 × 4 = 0,84 bar; ppN2 = 0,79 × 4 = 3,16 bar,.'
+            ]
+        },
+        {
+            type: 'header',
+            level: 4,
+            value: 'Prawo Henry’ego (Rozpuszczalność gazów)'
         },
         {
             type: 'list',
@@ -76,15 +89,12 @@ export const sciencePhysicsLecture = {
         {
             type: 'header',
             level: 3,
-            text: '2. Prawo Archimedesa i Pływalność'
-        },
-        {
-            type: 'paragraph',
-            text: '<strong>Definicja:</strong> Na ciało zanurzone w cieczy działa siła wyporu skierowana ku górze, równa ciężarowi wypartej cieczy.'
+            value: 'Prawo Archimedesa i Pływalność'
         },
         {
             type: 'list',
             items: [
+                '<strong>Definicja:</strong> Na ciało zanurzone w cieczy działa siła wyporu skierowana ku górze, równa ciężarowi wypartej cieczy.',
                 '<strong>Rodzaje pływalności:</strong> Dodatnia (obiekt lżejszy od wypartej wody), Ujemna (cięższy), Neutralna (waży tyle samo).',
                 '<strong>Zastosowanie:</strong> Woda słona jest gęstsza od słodkiej (1,03 kg/l vs 1,0 kg/l), dlatego w morzu nurek potrzebuje więcej balastu niż w jeziorze,.'
             ]
@@ -92,7 +102,7 @@ export const sciencePhysicsLecture = {
         {
             type: 'header',
             level: 3,
-            text: '3. Optyka i Akustyka'
+            value: 'Optyka i Akustyka'
         },
         {
             type: 'list',
@@ -101,23 +111,24 @@ export const sciencePhysicsLecture = {
                 '<strong>Dźwięk:</strong> Rozchodzi się w wodzie ok. 4 razy szybciej niż w powietrzu. Ludzki mózg nie potrafi określić kierunku dźwięku pod wodą (brak różnicy czasu dotarcia do uszu).'
             ]
         },
+        { type: 'image', src: 'img/lectures/science/Prawa fizyki.png', alt: 'Infografika: Prawa Fizyki w Nurkowaniu' },
         {
-            type: 'html', // Horizontal Rule logic separator
+            type: 'html',
             value: '<hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 40px 0;">'
         },
         {
             type: 'header',
             level: 2,
-            text: 'Część 2: Fizjologia i Patofizjologia'
+            value: 'Część 2: Fizjologia i Patofizjologia'
         },
         {
             type: 'paragraph',
-            text: 'Zrozumienie reakcji organizmu na ciśnienie pozwala unikać zagrożeń.'
+            value: 'Zrozumienie reakcji organizmu na ciśnienie pozwala unikać zagrożeń.'
         },
         {
             type: 'header',
             level: 3,
-            text: '1. Układ Oddechowy i Krążenia'
+            value: 'Układ Oddechowy i Krążenia'
         },
         {
             type: 'list',
@@ -129,11 +140,11 @@ export const sciencePhysicsLecture = {
         {
             type: 'header',
             level: 3,
-            text: '2. Urazy Ciśnieniowe (Barotraumy)'
+            value: 'Urazy Ciśnieniowe (Barotraumy)'
         },
         {
             type: 'paragraph',
-            text: 'Wynikają z różnicy ciśnień między przestrzeniami gazowymi w ciele a otoczeniem, zgodnie z Prawem Boyle’a.'
+            value: 'Wynikają z różnicy ciśnień między przestrzeniami gazowymi w ciele a otoczeniem, zgodnie z Prawem Boyle’a.'
         },
         {
             type: 'list',
@@ -143,15 +154,16 @@ export const sciencePhysicsLecture = {
             ]
         },
         {
-            type: 'info-box',
-            style: 'warning',
-            title: 'Uraz ciśnieniowy płuc (UCP)',
-            content: 'Najgroźniejszy. Wstrzymanie oddechu przy wynurzaniu powoduje rozerwanie pęcherzyków płucnych. Może prowadzić do Odmy (powietrze w jamie opłucnej), Odmy śródpiersiowej lub Zatoru Gazowego (AGE – pęcherzyki wchodzą do krwiobiegu i blokują przepływ krwi do mózgu). AGE daje objawy natychmiastowe (utrata przytomności, paraliż) i wymaga natychmiastowego podania tlenu i ewakuacji,.'
+            type: 'list',
+            items: [
+                '<strong>Uraz ciśnieniowy płuc (UCP):</strong> Najgroźniejszy. Wstrzymanie oddechu przy wynurzaniu powoduje rozerwanie pęcherzyków płucnych. Może prowadzić do Odmy (powietrze w jamie opłucnej), Odmy śródpiersiowej lub Zatoru Gazowego (AGE – pęcherzyki wchodzą do krwiobiegu i blokują przepływ krwi do mózgu). AGE daje objawy natychmiastowe (utrata przytomności, paraliż) i wymaga natychmiastowego podania tlenu i ewakuacji,.'
+            ]
         },
+        { type: 'image', src: 'img/lectures/science/Fizjologia i patofizjologia 1.png', alt: 'Infografika: Fizjologia i Patofizjologia Nurkowania cz. 1' },
         {
             type: 'header',
             level: 3,
-            text: '3. Toksyczność Gazów'
+            value: 'Toksyczność Gazów'
         },
         {
             type: 'list',
@@ -162,14 +174,15 @@ export const sciencePhysicsLecture = {
                 '<strong>Zatrucie CO (Tlenek węgla):</strong> Gaz z zanieczyszczonej sprężarki. Blokuje hemoglobinę 200 razy mocniej niż tlen. Objawy: jaskrawoczerwone usta/paznokcie (rzadko widoczne pod wodą), ból głowy, utrata przytomności bez ostrzeżenia przy wynurzaniu (spadek ppO2).'
             ]
         },
+        { type: 'image', src: 'img/lectures/science/Fizjologia i patofizjologia 2.png', alt: 'Infografika: Fizjologia i Patofizjologia Nurkowania cz. 2' },
         {
             type: 'header',
             level: 3,
-            text: '4. Choroba Dekompresyjna (DCS)'
+            value: 'Choroba Dekompresyjna (DCS)'
         },
         {
             type: 'paragraph',
-            text: 'Wynika z wydzielania się pęcherzyków gazu obojętnego (azotu/helu) w tkankach (Prawo Henry’ego).'
+            value: 'Wynika z wydzielania się pęcherzyków gazu obojętnego (azotu/helu) w tkankach (Prawo Henry’ego).'
         },
         {
             type: 'list',
@@ -187,12 +200,12 @@ export const sciencePhysicsLecture = {
         {
             type: 'header',
             level: 2,
-            text: 'Część 3: Teoria Dekompresji i Sprzęt'
+            value: 'Część 3: Teoria Dekompresji i Sprzęt'
         },
         {
             type: 'header',
             level: 3,
-            text: '1. Teoria Dekompresji'
+            value: 'Teoria Dekompresji'
         },
         {
             type: 'list',
@@ -206,7 +219,7 @@ export const sciencePhysicsLecture = {
         {
             type: 'header',
             level: 3,
-            text: '2. Sprzęt Nurkowy'
+            value: 'Sprzęt Nurkowy'
         },
         {
             type: 'list',
@@ -217,6 +230,7 @@ export const sciencePhysicsLecture = {
                 '<strong>Butle:</strong> Oznaczenia, legalizacja, testy wizualne (co rok) i hydrostatyczne (co 2-5 lat w zależności od kraju, w Polsce UDT co 2 lub 5 lat dla różnych typów).'
             ]
         },
+        { type: 'image', src: 'img/lectures/science/Teoria dekompresji sprzet nurkowy.png', alt: 'Infografika: Teoria Dekompresji i Sprzęt Nurkowy' },
         {
             type: 'html',
             value: '<hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 40px 0;">'
@@ -224,7 +238,7 @@ export const sciencePhysicsLecture = {
         {
             type: 'header',
             level: 2,
-            text: 'Część 4: Środowisko Wodne'
+            value: 'Część 4: Środowisko Wodne'
         },
         {
             type: 'list',
