@@ -2,298 +2,251 @@ export const daltonLecture = {
     id: 'dalton',
     title: 'Prawo Daltona',
     description: 'Fundament nurkowania Nitroxowego. Definicja, wzory, MOD, EAD i bezpieczeństwo.',
+    presentationSrc: 'lectures/dalton/Dalton_s_Law_Diving_Survival.pdf',
+    audioSrc: 'lectures/dalton/Prawo_Daltona_i_toksyczność_tlenu_pod_wodą.m4a',
     content: [
-        { type: 'header', level: 2, value: 'Prawo Daltona w Nurkowaniu: Fundament Nurkowania Nitroxowego' },
-        { type: 'paragraph', value: 'Prawo Daltona, zwane też Prawem Ciśnień Parcjalnych, jest obok Prawa Boyle\'a i Prawa Henry\'ego, jednym z czterech podstawowych praw gazowych, które zaawansowany nurek powinien znać. Jest ono absolutnie kluczowe do zrozumienia wpływu poszczególnych gazów na organizm pod wodą, zwłaszcza tlenu i azotu.' },
+        { type: 'header', level: 2, value: 'Prawo Daltona – Klucz do Bezpiecznego Nurkowania' },
+        { type: 'paragraph', value: '<strong>Wstęp: Dlaczego to prawo jest tak ważne?</strong><br>Wielu nurków na początku swojej drogi uważa fizykę za „zło konieczne”. Jednak Prawo Daltona to nie tylko sucha teoria – to fundamentalna zasada, która decyduje o tym, jak głęboko możemy bezpiecznie zejść i czym możemy oddychać. Zrozumienie tego prawa pozwala uniknąć dwóch śmiertelnych zagrożeń: toksyczności tlenowej i narkozy azotowej. Traktuj Prawo Daltona jako instrukcję obsługi mieszanin oddechowych pod wodą.' },
 
-        { type: 'header', level: 3, value: 'Definicja i Mechanizm Działania' },
-        { type: 'paragraph', value: 'Prawo Daltona mówi, że całkowite ciśnienie mieszaniny gazowej jest równe sumie ciśnień parcjalnych wszystkich gazów wchodzących w jej skład.' },
-        { type: 'paragraph', value: 'Matematycznie można to zapisać jako: P = Pg1 + Pg2 + Pg3 ...' },
+        { type: 'header', level: 3, value: '1. Definicja Prawa Daltona – "Zasada Sumowania"' },
+        { type: 'paragraph', value: 'Wyobraź sobie, że powietrze to zespół muzyczny. Każdy muzyk (składnik gazu) gra na swoim instrumencie z określoną głośnością (ciśnieniem). Prawo Daltona mówi: <strong>Całkowite ciśnienie mieszaniny gazów jest równe sumie ciśnień parcjalnych (cząstkowych) poszczególnych gazów wchodzących w jej skład.</strong>' },
+        {
+            type: 'html',
+            value: '<div class="formula-box"><p class="formula">P<sub>całkowite</sub> = ppGaz<sub>1</sub> + ppGaz<sub>2</sub> + ppGaz<sub>3</sub> …</p></div>'
+        },
+        { type: 'paragraph', value: 'W nurkowaniu najważniejszy wniosek z tego prawa brzmi: <strong>Fizjologiczne oddziaływanie gazu na organizm nurka (to, czy nas uśpi, otruje, czy podtrzyma przy życiu) zależy od jego ciśnienia parcjalnego (pp), a nie od procentowej zawartości w butli.</strong>' },
 
-        { type: 'header', level: 4, value: 'Pojęcia kluczowe:' },
+        { type: 'header', level: 3, value: '2. Jak to działa w praktyce? "Efekt Lupy"' },
+        { type: 'paragraph', value: 'Na powierzchni (1 bar) oddychamy powietrzem, które ma ok. 21% tlenu i 79% azotu.' },
         {
             type: 'list', items: [
-                '<strong>Ciśnienie Całkowite (Absolutne) (P lub Pt):</strong> Ciśnienie otoczenia na danej głębokości, wyrażone w atmosferach absolutnych [ATA] lub barach [bar]. Stanowi sumę ciśnienia atmosferycznego (1 bar) i ciśnienia hydrostatycznego (ciśnienia słupa wody).',
-                '<strong>Frakcja Gazu (Fg):</strong> Procentowa zawartość danego gazu w mieszaninie, wyrażona jako ułamek dziesiętny (np. 32% tlenu to frakcja 0,32). Frakcja gazu jest stała podczas całego nurkowania.',
-                '<strong>Ciśnienie Parcjalne Gazu (Pg lub Pp):</strong> Ciśnienie, jakie wywiera dany gaz w mieszaninie. Wartość ta zmienia się w zależności od głębokości.'
+                'Ciśnienie parcjalne tlenu (ppO<sub>2</sub>) = 0,21 bara.',
+                'Ciśnienie parcjalne azotu (ppN<sub>2</sub>) = 0,79 bara.'
+            ]
+        },
+        { type: 'paragraph', value: 'Gdy schodzimy pod wodę, ciśnienie otoczenia rośnie. Działa to jak szkło powiększające – procentowy skład gazu w butli się nie zmienia (nadal mamy 21% tlenu), ale "siła" działania (ciśnienie parcjalne) każdego gazu rośnie proporcjonalnie do głębokości.' },
+        { type: 'paragraph', value: '<strong>Przykład na 30 metrach (4 bary ciśnienia absolutnego):</strong><br>Wdychasz 4 razy więcej cząsteczek tlenu i azotu w każdym oddechu niż na powierzchni.' },
+        {
+            type: 'list', items: [
+                'ppO<sub>2</sub> = 0,21 × 4 = 0,84 bara (to tak, jakbyś na powierzchni oddychał gazem o zawartości 84% tlenu!).',
+                'ppN<sub>2</sub> = 0,79 × 4 = 3,16 bara.'
             ]
         },
 
-        {
-            type: 'html', value: `
-        <div class="formula-box">
-            <p class="formula">Pg = P × Fg</p>
-            <p>(Ciśnienie Parcjalne = Ciśnienie Całkowite Absolutne × Frakcja Gazu)</p>
-        </div>` },
+        { type: 'header', level: 3, value: '3. Prawo Daltona a Zagrożenia Medyczne' },
+        { type: 'paragraph', value: 'Prawo Daltona jest „tłumaczem” między ciśnieniem w butli a reakcją Twojego organizmu. Mówi ono wprost: im głębiej jesteś, tym bardziej każdy gaz z osobna próbuje wpłynąć na Twoje tkanki.' },
 
-        { type: 'paragraph', value: 'Podczas zanurzania, gdy ciśnienie absolutne (P) rośnie, indywidualne ciśnienia parcjalne gazów składowych (np. azotu i tlenu) również wzrastają, i to dokładnie tak samo, jak wzrasta ciśnienie absolutne.' },
-
-        { type: 'header', level: 3, value: 'Zastosowanie Prawa Daltona w Nurkowaniu' },
-        { type: 'paragraph', value: 'Ciśnienie parcjalne (a nie procentowa zawartość) gazu jest kluczowe, ponieważ to ono decyduje o fizjologicznym wpływie gazu na organizmy żywe.' },
-
-        { type: 'header', level: 4, value: 'Toksyczność Tlenowa (Limit Bezpieczeństwa)' },
-        { type: 'paragraph', value: 'W nurkowaniu z powietrzem lub Nitroksem, tlen jest niezbędny do życia, ale jego nadmiar nie jest bezpieczny. Zbyt wysokie ciśnienie parcjalne tlenu (PO2) stwarza ryzyko wystąpienia Toksyczności Tlenowej dla Centralnego Układu Nerwowego (CNS Toxicity).' },
+        { type: 'header', level: 4, value: 'A. Toksyczność Tlenowa Ośrodkowego Układu Nerwowego (CNS)' },
+        { type: 'paragraph', value: 'Tlen pod wysokim ciśnieniem parcjalnym (powyżej 1,4–1,6 bara) przestaje być gazem życiodajnym, a staje się neurotoksyną. Działa jak „przeładowanie” układu elektrycznego mózgu, co prowadzi do gwałtownych wyładowań, czyli drgawek (ataku podobnego do padaczki).' },
+        { type: 'paragraph', value: '<strong>Kluczowe objawy – Akronim ConVENTID:</strong> Aby zapamiętać sygnały ostrzegawcze, używamy angielskiego akronimu ConVENTID. Należy pamiętać, że objawy te mogą wystąpić w dowolnej kolejności, ale drgawki często pojawiają się bez żadnego ostrzeżenia.' },
         {
             type: 'list', items: [
-                '<strong>Limit Rekreacyjny:</strong> Maksymalne zalecane ciśnienie parcjalne tlenu (PO2) podczas nurkowań rekreacyjnych (Nitrox do 40% O2) wynosi 1,4 bar (lub ATA).',
-                '<strong>Limit Absolutny:</strong> Absolutnie nieprzekraczalny limit (PO2) to 1,6 bar (lub ATA), stosowany w procedurach dekompresyjnych.'
+                '<strong>Con – Convulsions (Drgawki):</strong> Najgroźniejszy objaw. Mogą wystąpić nagle. Dzielą się na fazę toniczną (sztywność mięśni, zatrzymanie oddechu) i kloniczną (gwałtowne skurcze). Pod wodą grozi to wypluciem automatu i utonięciem.',
+                '<strong>V – Vision (Zaburzenia wzroku):</strong> Widzenie tunelowe (zawężenie pola widzenia), „mroczki” przed oczami, nieostre widzenie lub nadwrażliwość na światło.',
+                '<strong>E – Ears (Zaburzenia słuchu):</strong> Dzwonienie, szum w uszach, dziwne echa lub wrażenie „stukania”.',
+                '<strong>N – Nausea (Nudności):</strong> Nagłe mdłości, które mogą pojawiać się falami (często mylone z chorobą morską, ale pod wodą to sygnał alarmowy).',
+                '<strong>T – Twitching (Drżenie mięśni):</strong> Niekontrolowane drganie drobnych mięśni, najczęściej twarzy (wargi, powieki) lub dłoni. Jest to jeden z najbardziej charakterystycznych i wiarygodnych sygnałów ostrzegawczych.',
+                '<strong>I – Irritability (Drażliwość/Irytacja):</strong> Nagła zmiana nastroju, niepokój, splątanie, agresja lub euforia. Jeśli spokojny nurek nagle staje się nerwowy bez powodu, może to być toksyczność tlenowa.',
+                '<strong>D – Dizziness (Zawroty głowy):</strong> Dezorientacja, problemy z błędnikiem, uczucie wirowania.'
             ]
         },
-        { type: 'paragraph', value: 'Dzięki Prawu Daltona, nurek może obliczyć, jaką głębokość może osiągnąć, zanim przekroczy bezpieczny limit tlenu (MOD).' },
+        { type: 'info-box', style: 'warning', content: '⚠️ <strong>Reakcja:</strong> Jeśli zauważysz u siebie lub partnera jakikolwiek z tych objawów (poza drgawkami), należy natychmiast, ale spokojnie, wynurzyć się na mniejszą głębokość, aby zmniejszyć ciśnienie parcjalne tlenu (ppO<sub>2</sub>).' },
+        { type: 'image', src: 'lectures/dalton/conventid.png', alt: 'Infografika: ConVENTID - Objawy toksyczności tlenowej' },
 
-        { type: 'header', level: 4, value: 'Obliczanie Maksymalnej Głębokości Operacyjnej (MOD)' },
-        { type: 'paragraph', value: 'Maksymalna Głębokość Operacyjna (MOD – Maximum Operating Depth) to największa głębokość, na którą można zanurkować z daną mieszaniną gazową, nie przekraczając ustalonego ciśnienia parcjalnego tlenu (PO2).' },
-
-        {
-            type: 'html', value: `
-        <div class="formula-box">
-            <p class="formula">P = PO2(limit) / FO2</p>
-            <p>(Ciśnienie Całkowite = Maksymalny Limit PO2 / Frakcja Tlenu)</p>
-        </div>` },
-        { type: 'paragraph', value: 'Następnie, przekształcając ciśnienie (P) na głębokość, otrzymujemy MOD w metrach słupa wody (msw).' },
-
-        { type: 'header', level: 4, value: 'Zadłużenie Dekompresyjne i Nitrox' },
-        { type: 'paragraph', value: 'Nadrzędnym celem nurkowania Nitroxowego jest oddychanie niższą zawartością azotu. Azot (stanowiący 78% powietrza) wpływa na narkozę azotową i zadłużenie dekompresyjne.' },
+        { type: 'header', level: 4, value: 'B. Narkoza Azotowa (Ekstaza głębin)' },
+        { type: 'paragraph', value: 'Zgodnie z Prawem Daltona, na głębokości 40 metrów oddychasz azotem pod ciśnieniem parcjalnym prawie 4 barów (0,79 x 5 bar = 3,95 bar).' },
         {
             type: 'list', items: [
-                'Stosując Nitrox (np. EAN32), który zawiera mniejszą frakcję azotu (w EAN40 to 60% azotu) niż powietrze (około 79% azotu), nurek redukuje ilość absorbowanego azotu.',
-                'Redukcja ilości azotu, zgodnie z Prawem Daltona (niższe PN2), powoduje, że organizm akumuluje mniej azotu.',
-                'Prowadzi to do wydłużenia czasu bezdekompresyjnego lub zwiększenia poziomu bezpieczeństwa (mniejsze nasycenie azotem, mniejsze ryzyko DCS).',
-                'Koncepcja ta jest formalizowana przez Równoważną Głębokość Powietrzną (EAD), która pozwala kalkulować nurkowanie Nitroxowe tak, jak gdyby odbywało się na płytszej głębokości z użyciem powietrza.'
+                '<strong>Mechanizm (Teoria Meyera-Overtona):</strong> Azot pod wysokim ciśnieniem rozpuszcza się w tłuszczach (lipidach). Ponieważ osłonki naszych nerwów są zbudowane z lipidów, azot „nasącza” je, co zakłóca i spowalnia przesyłanie sygnałów elektrycznych w mózgu.',
+                '<strong>Objawy:</strong> Prawo Daltona tłumaczy, dlaczego objawy narastają liniowo wraz z głębokością. Zaczyna się od euforii i spowolnienia (jak po alkoholu), a kończy na utracie pamięci krótkotrwałej, halucynacjach, a nawet utracie przytomności („narkoza to anestezja”).',
+                '<strong>Wniosek praktyczny:</strong> Jeśli czujesz się "pijany", wynurz się o kilka metrów. Spadek ciśnienia otoczenia natychmiast obniży ppN<sub>2</sub> (Prawo Daltona) i objawy ustąpią bez śladu.'
+            ]
+        },
+        { type: 'image', src: 'lectures/dalton/narkoza azotowa.png', alt: 'Infografika: Narkoza Azotowa' },
+
+        { type: 'header', level: 4, value: 'C. Hipoksja (Niedotlenienie) – Druga strona Prawa Daltona' },
+        { type: 'paragraph', value: 'Prawo Daltona działa w obie strony. Jeśli ciśnienie otoczenia spada, spada też ciśnienie parcjalne każdego gazu w mieszance.' },
+        {
+            type: 'list', items: [
+                '<strong>Zagrożenie:</strong> Na powierzchni (1 bar) powietrze ma ppO<sub>2</sub> = 0,21 bar. Jest to bezpieczne. Ale jeśli używasz mieszanki trimiksowej (do bardzo głębokich nurkowań), która ma tylko 10% tlenu, na powierzchni jej ppO<sub>2</sub> wyniesie tylko 0,10 bar.',
+                '<strong>Efekt:</strong> Granica utraty przytomności to ppO<sub>2</sub> ok. 0,10–0,16 bara. Zgodnie z Prawem Daltona, taką mieszanką można oddychać tylko na głębokości (gdzie ciśnienie otoczenia podbije ppO<sub>2</sub> do bezpiecznego poziomu), ale na powierzchni (lub przy zbyt szybkim wynurzaniu) nurek straci przytomność z niedotlenienia.'
             ]
         },
 
-        { type: 'header', level: 3, value: 'Bezpieczeństwo i Technika (Analiza Gazu)' },
-        { type: 'paragraph', value: 'Ponieważ frakcja tlenu ma bezpośredni wpływ na obliczenia MOD, nurek Nitroxowy ponosi ryzyko popełnienia błędu obliczeniowego, który może doprowadzić do mózgowego zatrucia tlenowego (CNS).' },
+        { type: 'header', level: 3, value: '4. Praktyczne Zastosowanie: Planowanie Nurkowania' },
+        { type: 'paragraph', value: 'Dzięki Prawu Daltona możemy odpowiedzieć na trzy kluczowe pytania przed wejściem do wody (korzystając z tzw. Diamentu lub Trójkąta Daltona):' },
+
+        { type: 'header', level: 4, value: '1. Jak głęboko mogę zejść? (MOD)' },
         {
-            type: 'list', items: [
-                '<strong>Analiza Mieszanki:</strong> Nurek musi samodzielnie dokonać pomiaru mieszaniny przed każdym nurkowaniem Nitroxowym. Pomiar ten powinien być przeprowadzony dwukrotnie (przez osobę przygotowującą i użytkownika).',
-                '<strong>Oznaczanie Butli:</strong> Butla powinna być odpowiednio opisana, zawierając nazwę mieszaniny (NITROX), procentową zawartość tlenu (FO2), MOD, nazwisko osoby dokonującej pomiaru, jej podpis oraz datę pomiaru.'
-            ]
+            type: 'html',
+            value: '<div class="formula-box"><p class="formula">MOD = (Limit ppO<sub>2</sub> / FO<sub>2</sub> - 1) × 10</p><p>Przykład: Mam Nitrox 32 (FO<sub>2</sub> = 0,32). Limit bezpieczeństwa to 1,4 bara.<br>Ciśnienie max = 1,4 / 0,32 = 4,375 bara.<br>MOD = 33,7 metra. Głębiej tlen stanie się toksyczny!</p></div>'
         },
 
-        { type: 'info-box', style: 'warning', content: '⚠️ <strong>Pamiętaj:</strong> Podczas realizacji nurkowania NIGDY nie przekraczaj MOD.' }
+        { type: 'header', level: 4, value: '2. Jaki gaz jest najlepszy na daną głębokość? (Best Mix)' },
+        {
+            type: 'html',
+            value: '<div class="formula-box"><p class="formula">FO<sub>2</sub> = Limit ppO<sub>2</sub> / Ciśnienie na dnie</p><p>Przykład: Chcę nurkować na 30 metrów (4 bary).<br>FO<sub>2</sub> = 1,4 / 4 = 0,35.<br>Najlepszy będzie Nitrox 35.</p></div>'
+        },
+
+        { type: 'header', level: 4, value: '3. Jakie ciśnienie parcjalne będę miał na dnie?' },
+        {
+            type: 'html',
+            value: '<div class="formula-box"><p class="formula">ppO<sub>2</sub> = Ciśnienie otoczenia × FO<sub>2</sub></p><p>Służy do sprawdzenia, czy wybrany gaz jest bezpieczny na planowanej głębokości.</p></div>'
+        },
+
+        { type: 'header', level: 3, value: 'Podsumowanie' },
+        { type: 'paragraph', value: 'Prawo Daltona to fundament bezpieczeństwa w nurkowaniu, zwłaszcza przy użyciu Nitroxu. Uczy nas, że to ciśnienie parcjalne, a nie procentowa zawartość gazu, decyduje o reakcji naszego organizmu. Dzięki niemu wiemy, że tlen może zabić (toksyczność), a azot odurzyć (narkoza), jeśli zejdziemy zbyt głęboko. Pamiętaj: Planuj nurkowanie, znając swoje limity MOD i przestrzegaj ich bezwzględnie.' }
     ],
     quiz: [
         {
+            question: "Co mówi Prawo Daltona?",
+            options: [
+                "Objętość gazu maleje wraz ze wzrostem ciśnienia.",
+                "Ilość gazu rozpuszczonego w cieczy zależy od temperatury.",
+                "Całkowite ciśnienie mieszaniny gazów jest sumą ciśnień parcjalnych jej składników.",
+                "Na ciało zanurzone w cieczy działa siła wyporu."
+            ],
+            correctAnswer: 2
+        },
+        {
+            question: "Co decyduje o fizjologicznym oddziaływaniu gazu na nurka (np. toksyczności)?",
+            options: [
+                "Tylko procentowa zawartość gazu w butli.",
+                "Ciśnienie parcjalne tego gazu.",
+                "Kolor butli nurkowej.",
+                "Temperatura wody."
+            ],
+            correctAnswer: 1
+        },
+        {
+            question: "Jeśli na powierzchni (1 bar) ppO2 w powietrzu wynosi 0,21 bara, to ile wyniesie na głębokości 10 metrów (2 bary)?",
+            options: [
+                "0,21 bara.",
+                "0,42 bara.",
+                "1,0 bara.",
+                "0,105 bara."
+            ],
+            correctAnswer: 1
+        },
+        {
+            question: "Jaki jest standardowy, bezpieczny limit ciśnienia parcjalnego tlenu (ppO2) dla nurkowań rekreacyjnych (faza denna)?",
+            options: [
+                "1,0 bara.",
+                "1,6 bara.",
+                "1,4 bara.",
+                "2,0 bara."
+            ],
+            correctAnswer: 2
+        },
+        {
+            question: "Czym grozi przekroczenie limitu ciśnienia parcjalnego tlenu?",
+            options: [
+                "Narkozą azotową.",
+                "Hipotermią.",
+                "Toksycznością tlenową układu nerwowego (CNS).",
+                "Chorobą dekompresyjną."
+            ],
+            correctAnswer: 2
+        },
+        {
             question: "Co oznacza skrót MOD?",
             options: [
-                "Minimum Operating Depth (Minimalna Głębokość Operacyjna)",
-                "Maximum Operating Depth (Maksymalna Głębokość Operacyjna)",
-                "Mean Oxygen Density (Średnia Gęstość Tlenu)",
-                "Maximum Oxygen Dose (Maksymalna Dawka Tlenu)"
+                "Minimalna Odległość Dekompresyjna.",
+                "Maksymalna Głębokość Operacyjna.",
+                "Metoda Obliczania Dekompresji.",
+                "Mieszanina Oddechowa Denna."
             ],
-            correctAnswer: 1,
-            explanation: "MOD to głębokość, której nie wolno przekroczyć ze względu na ryzyko toksyczności tlenowej (zbyt wysokie PPO2)."
+            correctAnswer: 1
         },
         {
-            question: "Jaki jest maksymalny limit ciśnienia parcjalnego tlenu (PPO2) dla nurkowań rekreacyjnych?",
+            question: "Który gaz w powietrzu odpowiada za narkozę azotową pod wpływem wysokiego ciśnienia parcjalnego?",
             options: [
-                "1.0 ATA",
-                "1.4 ATA",
-                "1.6 ATA",
-                "2.0 ATA"
+                "Tlen.",
+                "Dwutlenek węgla.",
+                "Azot.",
+                "Hel."
             ],
-            correctAnswer: 1,
-            explanation: "1.4 ATA to standardowy limit bezpieczeństwa dla fazy dennej w nurkowaniu rekreacyjnym. 1.6 ATA jest limitem dla dekompresji."
+            correctAnswer: 2
         },
         {
-            question: "Jak obliczyć ciśnienie parcjalne gazu (Pg) wg Prawa Daltona?",
+            question: "Jakie objawy sugerują zatrucie tlenowe CNS (skrót ConVENTID)?",
             options: [
-                "Pg = Ciśnienie Całkowite / Frakcja Gazu",
-                "Pg = Ciśnienie Całkowite * Frakcja Gazu",
-                "Pg = Frakcja Gazu / Ciśnienie Całkowite",
-                "Pg = Ciśnienie Całkowite + Frakcja Gazu"
+                "Ból stawów i wysypka.",
+                "Drgawki, zaburzenia widzenia, dzwonienie w uszach.",
+                "Krwawienie z nosa.",
+                "Euforia i śmiech."
             ],
-            correctAnswer: 1,
-            explanation: "Ciśnienie parcjalne to iloczyn ciśnienia całkowitego (otoczenia) i frakcji (procentowej zawartości) danego gazu."
+            correctAnswer: 1
         },
         {
-            question: "Dla EAN32 (32% O2) na głębokości 30m, jakie będzie ciśnienie parcjalne tlenu (PPO2)?",
+            question: "Oblicz MOD dla Nitroxu EAN32 przy limicie ppO2 = 1,4 bara.",
             options: [
-                "0.96 ATA",
-                "1.28 ATA",
-                "1.44 ATA",
-                "1.60 ATA"
+                "40 metrów.",
+                "33 metry (dokładnie 33,75 m).",
+                "28 metrów.",
+                "22 metry."
             ],
-            correctAnswer: 1,
-            explanation: "PPO2 = Ciśnienie Całkowite × FO2. Na 30m ciśnienie = 4 ATA. PPO2 = 4 × 0.32 = 1.28 ATA."
+            correctAnswer: 1
         },
         {
-            question: "Jaka jest główna zaleta nurkowania z Nitroksem?",
+            question: "Do czego służy wzór na \"Best Mix\" wynikający z prawa Daltona?",
             options: [
-                "Pozwala nurkować głębiej niż z powietrzem",
-                "Redukuje zadłużenie azotowe i wydłuża limity bezdekompresyjne",
-                "Eliminuje całkowicie ryzyko choroby dekompresyjnej",
-                "Zwiększa zużycie powietrza"
+                "Do obliczenia zużycia powietrza.",
+                "Do dobrania najlepszej mieszanki gazowej na zadaną głębokość.",
+                "Do obliczenia wagi balastu.",
+                "Do sprawdzenia temperatury wody."
             ],
-            correctAnswer: 1,
-            explanation: "Nitrox zawiera więcej tlenu i mniej azotu niż powietrze, co redukuje akumulację azotu i wydłuża bezpieczny czas nurkowania."
+            correctAnswer: 1
         },
         {
-            question: "Co to jest EAN40?",
+            question: "Jaka jest minimalna wartość ppO2 niezbędna do podtrzymania przytomności (granica hipoksji)?",
             options: [
-                "Mieszanka containing 40% azotu",
-                "Mieszanka z 40% tlenu i 60% azotu",
-                "Mieszanka z 40% helu",
-                "Maksymalna głębokość 40 metrów"
+                "0,16 bara.",
+                "0,21 bara.",
+                "0,50 bara.",
+                "1,4 bara."
             ],
-            correctAnswer: 1,
-            explanation: "EAN40 (Enriched Air Nitrox 40) to mieszanka zawierająca 40% tlenu i 60% azotu."
+            correctAnswer: 0
         },
         {
-            question: "Dlaczego analizator tlenu jest niezbędny przed każdym nurkowaniem Nitroxowym?",
+            question: "Jeśli nurkujesz na powietrzu na 40 metrach (5 barów), jakie jest ciśnienie parcjalne azotu (ppN2), zakładając 79% azotu?",
             options: [
-                "Aby sprawdzić ciśnienie w butli",
-                "Aby potwierdzić rzeczywisty skład mieszanki i obliczyć MOD",
-                "Aby wykryć wyciek w butli",
-                "Aby zmierzyć temperaturę gazu"
+                "0,79 bara.",
+                "3,95 bara.",
+                "5,0 bara.",
+                "1,58 bara."
             ],
-            correctAnswer: 1,
-            explanation: "Analiza potwierdza faktyczną zawartość tlenu w butli, co jest kluczowe dla bezpiecznego obliczenia MOD i uniknięcia toksyczności tlenowej."
+            correctAnswer: 1
         },
         {
-            question: "Jakie jest MOD dla EAN36 przy limicie PPO2 = 1.4 ATA?",
+            question: "Dlaczego narkoza azotowa pojawia się dopiero na głębokości, a nie na powierzchni?",
             options: [
-                "28 metrów",
-                "29 metrów",
-                "30 metrów",
-                "33 metrów"
+                "Ponieważ woda jest zimna.",
+                "Ponieważ na głębokości ciśnienie parcjalne azotu wzrasta do poziomu, który wpływa na układ nerwowy.",
+                "Ponieważ na głębokości jest ciemno.",
+                "Ponieważ azot zmienia się w tlen."
             ],
-            correctAnswer: 2,
-            explanation: "MOD = ((1.4 / 0.36) - 1) × 10 = ((3.89) - 1) × 10 ≈ 28.9m, zaokrąglone do 28m dla bezpieczeństwa. Prawidłowa odpowiedź to 30m jako najbliższa zaokrąglona wartość w celach praktycznych."
+            correctAnswer: 1
         },
         {
-            question: "Co należy zrobić, jeśli przekroczysz MOD podczas nurkowania Nitroxowego?",
+            question: "Co się dzieje z ciśnieniami parcjalnymi składników powietrza podczas wynurzania?",
             options: [
-                "Kontynuować nurkowanie, to nie jest niebezpieczne",
-                "Natychmiast spokojnie, ale szybko wynurzyć się na bezpieczną głębokość",
-                "Wstrzymać oddech i czekać",
-                "Zwiększyć prędkość wynurzania"
+                "Rosną.",
+                "Maleją.",
+                "Pozostają bez zmian.",
+                "Zmieniają proporcje procentowe."
             ],
-            correctAnswer: 1,
-            explanation: "Przekroczenie MOD zwiększa ryzyko toksyczności tlenowej. Należy spokojnie, ale niezwłocznie wynurzyć się na bezpieczną głębokość poniżej MOD."
+            correctAnswer: 1
         },
         {
-            question: "Jaka jest rola przystawku bezpieczeństwa w nurkowaniu Nitroxowym?",
+            question: "Którego elementu \"Diamentu Daltona\" używasz, aby obliczyć ppO2?",
             options: [
-                "Nie jest potrzebny przy Nitroksie",
-                "Jest tak samo ważny jak przy powietrzu - redukuje ryzyko DCS",
-                "Tylko dla nurkowań głębszych niż 40m",
-                "Wymagany tylko przy EAN50 i wyższych"
+                "Frakcja gazu podzielona przez ciśnienie otoczenia.",
+                "Ciśnienie otoczenia pomnożone przez frakcję gazu.",
+                "Ciśnienie otoczenia minus frakcja gazu.",
+                "Frakcja gazu plus głębokość."
             ],
-            correctAnswer: 1,
-            explanation: "Przystanek bezpieczeństwa (3-5 min na 5m) jest zawsze zalecany, niezależnie od mieszanki, aby dodatkowo zredukować ryzyko choroby dekompresyjnej."
-        },
-        {
-            question: "Jaki jest główny objaw toksyczności tlenowej CNS?",
-            options: [
-                "Kaszel",
-                "Drgawki (Convulsions)",
-                "Wypieki na twarzy",
-                "Ból stawów"
-            ],
-            correctAnswer: 1,
-            explanation: "Drgawki (ataki padaczkowe) są najpoważniejszym i najgroźniejszym objawem toksyczności tlenowej pod wodą, grożącym utonięciem."
-        },
-        {
-            question: "Czym jest 'Best Mix' (Najlepsza Mieszanka) dla danej głębokości?",
-            options: [
-                "Mieszanka, która ma 21% tlenu",
-                "Mieszanka, która na planowanej głębokości osiąga dokładnie PPO2 = 1.4 ATA",
-                "Mieszanka z helem",
-                "Najtańsza mieszanka"
-            ],
-            correctAnswer: 1,
-            explanation: "Best Mix to taka mieszanka Nitroksowa, która maksymalizuje zawartość tlenu (a tym samym minimalizuje azot) nie przekraczając limitu MOD."
-        },
-        {
-            question: "Dlaczego butla z Nitroksem ma zielono-żółty pasek?",
-            options: [
-                "Dla ozdoby",
-                "Aby odróżnić ją od butli z powietrzem (wymóg bezpieczeństwa)",
-                "Oznacza butlę stalową",
-                "Oznacza butlę aluminiową"
-            ],
-            correctAnswer: 1,
-            explanation: "Standardowe oznaczenie butli Nitroxowych to pas koloru zielonego i żółtego oraz wyraźny napis NITROX lub EANx, aby uniknąć pomyłkowego użycia."
-        },
-        {
-            question: "Jaki jest skład powietrza atmosferycznego?",
-            options: [
-                "100% tlen",
-                "50% tlen, 50% azot",
-                "21% tlen, 78% azot, 1% inne gazy",
-                "100% azot"
-            ],
-            correctAnswer: 2,
-            explanation: "Powietrze to w przybliżeniu 21% tlenu i 79% azotu. Nitrox to każda mieszanka, gdzie tlenu jest >21%."
-        },
-        {
-            question: "Jakie ciśnienie absolutne (całkowite) panuje na głębokości 20 metrów?",
-            options: [
-                "1 ATA",
-                "2 ATA",
-                "3 ATA",
-                "4 ATA"
-            ],
-            correctAnswer: 2,
-            explanation: "Na powierzchni mamy 1 ATA. Co 10m dochodzi 1 ATA. 20m/10 = 2 ATA wody + 1 ATA atmosfery = 3 ATA."
-        },
-        {
-            question: "Czym jest Hipoksja?",
-            options: [
-                "Niedoborem tlenu",
-                "Nadmiarem tlenu",
-                "Zatruciem azotowym",
-                "Stachem przed wodą"
-            ],
-            correctAnswer: 0,
-            explanation: "Hipoksja to stan niedotlenienia. Może wystąpić, gdy oddychamy mieszanką o zbyt niskiej zawartości tlenu na płytkiej głębokości."
-        },
-        {
-            question: "Po co w ogóle stosujemy Nitrox w rekreacji?",
-            options: [
-                "Żeby nurkować głębiej",
-                "Żeby wydłużyć czas bezdekompresyjny (limit NDL)",
-                "Żeby zużywać mniej gazu",
-                "Żeby nie było zimno"
-            ],
-            correctAnswer: 1,
-            explanation: "Główny cel to mniej azotu w mieszance = wolniejsze nasycanie tkanek = dłuższy czas, jaki możemy spędzić na dnie bez dekompresji."
-        },
-        {
-            question: "Co to jest EAD (Equivalent Air Depth)?",
-            options: [
-                "Rzeczywista głębokość nurkowania",
-                "Głębokość, na której oddychając powietrzem wchłonęlibyśmy tyle samo azotu co na Nitroxie",
-                "Głębokość przystanku bezpieczeństwa",
-                "Maksymalna głębokość operacyjna"
-            ],
-            correctAnswer: 1,
-            explanation: "EAD pozwala używać tabel powietrznych do nurkowań na Nitroxie, przeliczając głębokość na 'płytszą' (ekwiwalentną powietrzną)."
-        },
-        {
-            question: "Do czego kalibrujemy analizator tlenu?",
-            options: [
-                "Do czystego tlenu (100%)",
-                "Do powietrza atmosferycznego (20.9% / 21%)",
-                "Do azotu",
-                "Nie trzeba kalibrować"
-            ],
-            correctAnswer: 1,
-            explanation: "Analizator kalibrujemy zazwyczaj na powietrzu atmosferycznym, przyjmując odczyt 20.9% lub 21.0% jako punkt odniesienia."
-        },
-        {
-            question: "Jeśli Twój analizator pokazuje 32.5% O2, jaką wartość przyjmujesz do obliczeń MOD?",
-            options: [
-                "32% (bardziej konserwatywnie dla dekompresji, ale nie dla MOD)",
-                "33% (bardziej konserwatywnie dla toksyczności tlenowej)",
-                "Średnią",
-                "Ignorujesz to"
-            ],
-            correctAnswer: 1,
-            explanation: "Do obliczeń MOD (bezpieczeństwo tlenowe) zawsze przyjmujemy wartość wyższą/bardziej restrykcyjną. Jeśli analizator się waha, bezpieczniej założyć, że tlenu jest więcej."
+            correctAnswer: 1
         }
     ]
 };

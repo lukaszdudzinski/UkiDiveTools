@@ -2,6 +2,7 @@ export const rockBottomLecture = {
     id: 'rock-bottom',
     title: 'Planowanie Gazu (Rock Bottom)',
     description: 'Dlaczego "50 bar" to za mało? Metoda Rock Bottom / Minimum Gas.',
+    presentationSrc: 'lectures/rock-bottom/Rock_Bottom_Minimum_Gas.pdf',
     content: [
         { type: 'header', level: 2, value: 'Planowanie Gazu – Dlaczego "50 bar" to mit? (Wstęp do Rock Bottom)' },
 
@@ -25,7 +26,7 @@ export const rockBottomLecture = {
         },
         { type: 'paragraph', value: 'W takim scenariuszu "sztywne" 50 bar może skończyć się w połowie drogi do powierzchni. Standardowe metody często nie uwzględniają faktu, że im głębiej jesteś, tym większej rezerwy potrzebujesz, aby bezpiecznie wrócić.' },
 
-        { type: 'image', src: 'img/lectures/rock_bottom.jpg', alt: 'Infografika Rock Bottom' },
+        { type: 'image', src: 'lectures/rock-bottom/rock_bottom.jpg', alt: 'Infografika Rock Bottom' },
 
         { type: 'header', level: 3, value: 'Czym jest Rock Bottom (Minimum Gas)?' },
         { type: 'paragraph', value: 'Rock Bottom (nazywane też Minimum Gas) to nie jest "sugestia". To matematycznie wyliczona ilość gazu, której NIE WOLNO Ci zużyć podczas fazy dennej. To Twoja "żelazna rezerwa".' },

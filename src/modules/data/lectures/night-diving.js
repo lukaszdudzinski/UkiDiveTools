@@ -3,7 +3,7 @@ export const nightDivingLecture = {
     title: 'Nurkowanie Nocne i w Ograniczonej Widoczności',
     readTime: '15 min',
     level: 'Advanced',
-    audioSrc: 'audio/Tajemnice_i_bezpieczeństwo_nurkowania_po_zmroku.m4a',
+    audioSrc: 'lectures/night-diving/Tajemnice_i_bezpieczeństwo_nurkowania_po_zmroku.m4a',
     presentationSrc: 'lectures/night-diving/Navigating_Low_Visibility_Diving.pdf',
     description: 'Noc w samo południe. Dlaczego w polskich wodach latarka jest Twoim najważniejszym partnerem?',
     content: [
@@ -42,7 +42,7 @@ export const nightDivingLecture = {
             ]
         },
 
-        { type: 'image', src: 'img/lectures/night_evolution.jpg', alt: 'Ewolucja latarek nurkowych: Halogen, HID, LED', caption: 'Kliknij, aby powiększyć: Porównanie technologii oświetlenia.' },
+        { type: 'image', src: 'lectures/night-diving/night_evolution.jpg', alt: 'Ewolucja latarek nurkowych: Halogen, HID, LED', caption: 'Kliknij, aby powiększyć: Porównanie technologii oświetlenia.' },
 
         { type: 'paragraph', value: 'Konstrukcje latarek:' },
         {
@@ -55,7 +55,7 @@ export const nightDivingLecture = {
         { type: 'header', level: 3, value: 'Komunikacja Świetlna' },
         { type: 'paragraph', value: 'W nocy nie widzimy gestów rąk, chyba że je oświetlimy. Dlatego latarka staje się Twoim głosem. Pamiętaj o nadrzędnej zasadzie: <strong>Nigdy nie świeć partnerowi w oczy!</strong> To niszczy jego adaptację wzroku do ciemności i oślepia.' },
 
-        { type: 'image', src: 'img/lectures/night_signals.jpg', alt: 'Sygnały świetlne w nurkowaniu', caption: 'Kliknij, aby powiększyć: Kluczowe sygnały komunikacji świetlnej.' },
+        { type: 'image', src: 'lectures/night-diving/night_signals.jpg', alt: 'Sygnały świetlne w nurkowaniu', caption: 'Kliknij, aby powiększyć: Kluczowe sygnały komunikacji świetlnej.' },
 
         { type: 'paragraph', value: 'Podstawowe sygnały świetlne:' },
         {

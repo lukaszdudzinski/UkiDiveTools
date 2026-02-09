@@ -3,7 +3,7 @@ export const sciencePhysicsLecture = {
     title: 'Nauka w Nurkowaniu: Fizyka, Fizjologia, Środowisko',
     description: 'Kompleksowy wykład obejmujący fizykę nurkowania (prawa gazowe), fizjologię (urazy ciśnieniowe, toksyczność gazów), teorię dekompresji oraz środowisko wodne.',
     icon: 'fa-microscope',
-    audioSrc: 'audio/Fizyka_nurkowania_na_głębokim_i_zimnym_wraku.m4a',
+    audioSrc: 'lectures/science-physics/Fizyka_nurkowania_na_głębokim_i_zimnym_wraku.m4a',
     duration: '25 min',
     content: [
         {
@@ -111,7 +111,7 @@ export const sciencePhysicsLecture = {
                 '<strong>Dźwięk:</strong> Rozchodzi się w wodzie ok. 4 razy szybciej niż w powietrzu. Ludzki mózg nie potrafi określić kierunku dźwięku pod wodą (brak różnicy czasu dotarcia do uszu).'
             ]
         },
-        { type: 'image', src: 'img/lectures/science/Prawa fizyki.png', alt: 'Infografika: Prawa Fizyki w Nurkowaniu' },
+        { type: 'image', src: 'lectures/science-physics/Prawa fizyki.png', alt: 'Infografika: Prawa Fizyki w Nurkowaniu' },
         {
             type: 'html',
             value: '<hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 40px 0;">'
@@ -159,7 +159,7 @@ export const sciencePhysicsLecture = {
                 '<strong>Uraz ciśnieniowy płuc (UCP):</strong> Najgroźniejszy. Wstrzymanie oddechu przy wynurzaniu powoduje rozerwanie pęcherzyków płucnych. Może prowadzić do Odmy (powietrze w jamie opłucnej), Odmy śródpiersiowej lub Zatoru Gazowego (AGE – pęcherzyki wchodzą do krwiobiegu i blokują przepływ krwi do mózgu). AGE daje objawy natychmiastowe (utrata przytomności, paraliż) i wymaga natychmiastowego podania tlenu i ewakuacji,.'
             ]
         },
-        { type: 'image', src: 'img/lectures/science/Fizjologia i patofizjologia 1.png', alt: 'Infografika: Fizjologia i Patofizjologia Nurkowania cz. 1' },
+        { type: 'image', src: 'lectures/science-physics/Fizjologia i patofizjologia 1.png', alt: 'Infografika: Fizjologia i Patofizjologia Nurkowania cz. 1' },
         {
             type: 'header',
             level: 3,
@@ -174,7 +174,7 @@ export const sciencePhysicsLecture = {
                 '<strong>Zatrucie CO (Tlenek węgla):</strong> Gaz z zanieczyszczonej sprężarki. Blokuje hemoglobinę 200 razy mocniej niż tlen. Objawy: jaskrawoczerwone usta/paznokcie (rzadko widoczne pod wodą), ból głowy, utrata przytomności bez ostrzeżenia przy wynurzaniu (spadek ppO2).'
             ]
         },
-        { type: 'image', src: 'img/lectures/science/Fizjologia i patofizjologia 2.png', alt: 'Infografika: Fizjologia i Patofizjologia Nurkowania cz. 2' },
+        { type: 'image', src: 'lectures/science-physics/Fizjologia i patofizjologia 2.png', alt: 'Infografika: Fizjologia i Patofizjologia Nurkowania cz. 2' },
         {
             type: 'header',
             level: 3,
@@ -230,7 +230,7 @@ export const sciencePhysicsLecture = {
                 '<strong>Butle:</strong> Oznaczenia, legalizacja, testy wizualne (co rok) i hydrostatyczne (co 2-5 lat w zależności od kraju, w Polsce UDT co 2 lub 5 lat dla różnych typów).'
             ]
         },
-        { type: 'image', src: 'img/lectures/science/Teoria dekompresji sprzet nurkowy.png', alt: 'Infografika: Teoria Dekompresji i Sprzęt Nurkowy' },
+        { type: 'image', src: 'lectures/science-physics/Teoria dekompresji sprzet nurkowy.png', alt: 'Infografika: Teoria Dekompresji i Sprzęt Nurkowy' },
         {
             type: 'html',
             value: '<hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 40px 0;">'

@@ -108,7 +108,7 @@ export const barotraumaVsDcsLecture = {
         { type: 'html', value: '<hr>' },
 
         { type: 'header', level: 3, value: 'Podsumowanie Kluczowych Różnic' },
-        { type: 'image', src: 'img/lectures/Barotrauma_vs_DCS.jpg', alt: 'Infografika: Porównanie Barotrauma (UCP) vs DCS', caption: 'Kliknij, aby powiększyć: Kluczowe różnice między Urazami Ciśnieniowymi a DCS.' },
+        { type: 'image', src: 'lectures/barotrauma-vs-dcs/Barotrauma_vs_DCS.jpg', alt: 'Infografika: Porównanie Barotrauma (UCP) vs DCS', caption: 'Kliknij, aby powiększyć: Kluczowe różnice między Urazami Ciśnieniowymi a DCS.' },
 
         { type: 'info-box', style: 'warning', content: '🚨 <strong>PAMIĘTAJ:</strong> W obu przypadkach najważniejsze to:<br>1. Natychmiastowe wezwanie pomocy medycznej<br>2. Podanie 100% tlenu<br>3. Rekompresja w komorze dekompresyjnej<br>4. <em>Nie próbuj rekompresji w wodzie!</em>' }
     ],

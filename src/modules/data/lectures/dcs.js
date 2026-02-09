@@ -49,7 +49,7 @@ export const dcsLecture = {
         },
 
         { type: 'paragraph', value: '<strong>Występowanie Objawów:</strong> Objawy DCS najczęściej pojawiają się między 15 minutą a 12 godziną po wynurzeniu, ale w ciężkich przypadkach mogą wystąpić szybciej lub, rzadko, nawet do 24–36 godzin po nurkowaniu, szczególnie jeśli po nurkowaniu nastąpił lot samolotem.' },
-        { type: 'image', src: 'img/lectures/dcs/DCS_typy.png', alt: 'Klasyfikacja DCS - Typ I i Typ II', caption: 'Infografika: Podział, objawy i mechanizmy DCS.' },
+        { type: 'image', src: 'lectures/dcs/DCS_typy.png', alt: 'Klasyfikacja DCS - Typ I i Typ II', caption: 'Infografika: Podział, objawy i mechanizmy DCS.' },
 
         { type: 'header', level: 3, value: 'Profilaktyka i Czynniki Ryzyka' },
         { type: 'paragraph', value: 'Ryzyko wystąpienia DCS istnieje, nawet pomimo przestrzegania wszystkich zasad. Profilaktyka polega na minimalizowaniu czynników ryzyka:' },
@@ -79,7 +79,7 @@ export const dcsLecture = {
                 'Gorąca kąpiel/sauna po nurkowaniu.'
             ]
         },
-        { type: 'image', src: 'img/lectures/dcs/DCS_profilaktyka.png', alt: 'Profilaktyka i Czynniki Ryzyka DCS', caption: 'Jak zminimalizować ryzyko choroby dekompresyjnej.' },
+        { type: 'image', src: 'lectures/dcs/DCS_profilaktyka.png', alt: 'Profilaktyka i Czynniki Ryzyka DCS', caption: 'Jak zminimalizować ryzyko choroby dekompresyjnej.' },
 
         { type: 'header', level: 3, value: 'Pierwsza Pomoc w Przypadku Podejrzenia DCS' },
         { type: 'paragraph', value: 'Skuteczność leczenia ciężkiej postaci DCS zależy głównie od szybkości podjęcia leczenia w komorze dekompresyjnej.' },
@@ -94,7 +94,7 @@ export const dcsLecture = {
                 '<strong>Transport:</strong> W ciężkim przypadku DCS, transport śmigłowcem jest najszybszym sposobem na dostarczenie nurka do komory dekompresyjnej.'
             ]
         },
-        { type: 'image', src: 'img/lectures/dcs/DCS_pierwsza_pomoc.png', alt: 'Pierwsza Pomoc w DCS', caption: 'Algorytm postępowania przy podejrzeniu choroby dekompresyjnej.' },
+        { type: 'image', src: 'lectures/dcs/DCS_pierwsza_pomoc.png', alt: 'Pierwsza Pomoc w DCS', caption: 'Algorytm postępowania przy podejrzeniu choroby dekompresyjnej.' },
 
         { type: 'info-box', style: 'info', content: '<strong>Podsumowanie:</strong> Choroba dekompresyjna, choć rzadka przy prawidłowym nurkowaniu rekreacyjnym, jest stanem, w którym niekontrolowana eliminacja azotu (zgodnie z Prawem Henry\'ego) prowadzi do powstawania pęcherzyków uszkadzających tkanki. Kluczem jest przestrzeganie limitów, kontrola wynurzania i szybka reakcja w przypadku wystąpienia objawów.' }
     ],

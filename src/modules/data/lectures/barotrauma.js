@@ -2,7 +2,7 @@ export const barotraumaLecture = {
     id: 'barotrauma',
     title: 'Barotrauma',
     description: 'Urazy ciśnieniowe. Fizyka, rodzaje, profilaktyka i pierwsza pomoc.',
-    audioSrc: 'audio/Barotrauma.m4a', // Corrected property name and Case
+    audioSrc: 'lectures/barotrauma/Barotrauma.m4a', // Corrected property name and Case
     presentationSrc: 'lectures/barotrauma/Barotrauma.pdf', // Added PDF presentation path
     content: [
         { type: 'header', level: 2, value: 'BAROTRAUMA (Uraz Ciśnieniowy): Pełny Przewodnik dla Początkujących Nurków' },
@@ -67,7 +67,7 @@ export const barotraumaLecture = {
             ]
         },
 
-        { type: 'image', src: 'img/lectures/barotrauma/barotrauma_urazy.jpg', alt: 'Infografika: Urazy Nurkowe (Kompresja)', caption: 'Kliknij, aby powiększyć: Urazy wynikające z kompresji (zanurzania).' },
+        { type: 'image', src: 'lectures/barotrauma/barotrauma_urazy.jpg', alt: 'Infografika: Urazy Nurkowe (Kompresja)', caption: 'Kliknij, aby powiększyć: Urazy wynikające z kompresji (zanurzania).' },
 
         { type: 'header', level: 4, value: 'Urazy Związane głównie z Wynurzaniem (Rozprężanie)' },
         { type: 'paragraph', value: 'Urazy te są wynikiem rozprężania się gazu zgodnie z Prawem Boyle’a-Mariotte’a, gdy maleje ciśnienie otoczenia.' },
@@ -82,7 +82,7 @@ export const barotraumaLecture = {
             ]
         },
 
-        { type: 'image', src: 'img/lectures/barotrauma/barotrauma_ucp.jpg', alt: 'Infografika: Uraz Ciśnieniowy Płuc (UCP)', caption: 'Kliknij, aby powiększyć: Mechanizm Urazu Ciśnieniowego Płuc.' },
+        { type: 'image', src: 'lectures/barotrauma/barotrauma_ucp.jpg', alt: 'Infografika: Uraz Ciśnieniowy Płuc (UCP)', caption: 'Kliknij, aby powiększyć: Mechanizm Urazu Ciśnieniowego Płuc.' },
 
         { type: 'header', level: 5, value: 'Uraz Ciśnieniowy Zatok (Rozprężny):' },
         {
@@ -150,7 +150,7 @@ export const barotraumaLecture = {
             ]
         },
 
-        { type: 'image', src: 'img/lectures/barotrauma/barotrauma_pomoc.png', alt: 'Infografika: Pierwsza Pomoc (UCP)', caption: 'Kliknij, aby powiększyć: Algorytm pierwszej pomocy przy UCP.' }
+        { type: 'image', src: 'lectures/barotrauma/barotrauma_pomoc.png', alt: 'Infografika: Pierwsza Pomoc (UCP)', caption: 'Kliknij, aby powiększyć: Algorytm pierwszej pomocy przy UCP.' }
     ],
     quiz: [
         {
