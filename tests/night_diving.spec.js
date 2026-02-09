@@ -46,7 +46,7 @@ test.describe('Night Diving Lecture', () => {
         await expect(audioPlayer).toBeVisible();
 
         // 4. Verify Infographic & Lightbox
-        const infraEvolution = page.locator('img[src="img/lectures/night_evolution.jpg"]');
+        const infraEvolution = page.locator('img[src="lectures/night-diving/night_evolution.jpg"]');
         await expect(infraEvolution).toBeVisible();
         await infraEvolution.click();
 
