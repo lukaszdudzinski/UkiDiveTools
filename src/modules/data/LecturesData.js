@@ -6,6 +6,10 @@ import { rockBottomLecture } from './lectures/rock-bottom.js';
 import { nightDivingLecture } from './lectures/night-diving.js';
 import { navigationLecture } from './lectures/navigation.js';
 import { sciencePhysicsLecture } from './lectures/science-physics.js';
+import { boyleLecture } from './lectures/science-boyle.js';
+import { henryLecture } from './lectures/science-henry.js';
+import { archimedesLecture } from './lectures/science-archimedes.js';
+import { jouleThomsonLecture } from './lectures/science-joule-thomson.js';
 
 export const lecturesData = [
     barotraumaLecture,
@@ -15,6 +19,10 @@ export const lecturesData = [
     rockBottomLecture,
     nightDivingLecture,
     navigationLecture,
-    sciencePhysicsLecture
+    sciencePhysicsLecture,
+    boyleLecture,
+    henryLecture,
+    archimedesLecture,
+    jouleThomsonLecture
 ];
 // Updated for v2026.2.4.01
