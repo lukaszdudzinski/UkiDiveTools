@@ -12,17 +12,17 @@ import { archimedesLecture } from './lectures/science-archimedes.js';
 import { jouleThomsonLecture } from './lectures/science-joule-thomson.js';
 
 export const lecturesData = [
+    archimedesLecture,
+    boyleLecture,
+    daltonLecture,
+    henryLecture,
+    jouleThomsonLecture,
+    sciencePhysicsLecture,
     barotraumaLecture,
     dcsLecture,
-    daltonLecture,
     barotraumaVsDcsLecture,
     rockBottomLecture,
     nightDivingLecture,
-    navigationLecture,
-    sciencePhysicsLecture,
-    boyleLecture,
-    henryLecture,
-    archimedesLecture,
-    jouleThomsonLecture
+    navigationLecture
 ];
 // Updated for v2026.2.4.01
