@@ -43,6 +43,22 @@ test.describe('Science of Diving - New Physics Lectures', () => {
             await expect(viewer).toBeVisible();
             await expect(page.locator('#lecture-title')).toContainText(lecture.title);
 
+            // Verify Assets
+            // Infographic
+            const heroImage = page.locator('.lecture-hero-image img');
+            await expect(heroImage).toBeVisible();
+            await expect(heroImage).toHaveAttribute('src', lecture.image);
+
+            // Audio
+            const audioPlayer = page.locator('#lecture-viewer audio');
+            await expect(audioPlayer).toHaveCount(1);
+            const audioSource = audioPlayer.locator('source');
+            await expect(audioSource).toHaveAttribute('src', lecture.audioSrc);
+
+            // Presentation Button
+            const presentationBtn = page.locator('#open-presentation-btn');
+            await expect(presentationBtn).toBeVisible();
+
             // 4. Verify Quiz Button exists
             const quizBtn = page.locator('#lecture-viewer .action-button').filter({ hasText: 'Quiz' });
             await expect(quizBtn).toBeVisible();

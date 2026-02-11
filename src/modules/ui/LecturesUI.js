@@ -100,8 +100,21 @@ export const LecturesUI = {
             lectureToc.hidden = !tocHtml;
         }
 
+        let imageHtml = '';
+        if (lecture.image) {
+            imageHtml = `
+                <div class="lecture-hero-image" style="margin: 0 0 20px 0; text-align: center;">
+                    <img src="${lecture.image}" 
+                         alt="${lecture.title} Infografika" 
+                         class="lecture-infographic new-standard" 
+                         style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); cursor: pointer;"
+                         title="Kliknij, aby powiększyć">
+                </div>
+            `;
+        }
+
         if (lectureBody) {
-            lectureBody.innerHTML = audioHtml + tempDiv.innerHTML;
+            lectureBody.innerHTML = imageHtml + audioHtml + tempDiv.innerHTML;
 
             // Attach Lightbox listeners to NEWLY rendered infographics (from structured data)
             const newInfographics = lectureBody.querySelectorAll('.lecture-infographic.new-standard');

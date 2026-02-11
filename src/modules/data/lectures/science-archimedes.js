@@ -5,6 +5,9 @@ export const archimedesLecture = {
     readTime: '15 min',
     level: 'Basic',
     icon: 'fa-anchor',
+    image: 'lectures/science-archimedes/archimedes_infographic.png',
+    audioSrc: 'lectures/science-archimedes/archimedes_audio.m4a',
+    presentationSrc: 'lectures/science-archimedes/archimedes_presentation.pdf',
     content: [
         { type: 'header', level: 2, value: 'Prawo Archimedesa – Pływalność' },
         { type: 'paragraph', value: '<strong>Wstęp:</strong> Prawo Archimedesa to ulubione prawo nurków. To dzięki niemu możemy czuć się jak w stanie nieważkości, „latać” nad rafą i nie opadać na dno jak kamień. Zrozumienie tego prawa to klucz do idealnego wyważenia (trymu).' },

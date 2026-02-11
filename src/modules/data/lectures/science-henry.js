@@ -5,6 +5,9 @@ export const henryLecture = {
     readTime: '15 min',
     level: 'Advanced',
     icon: 'fa-flask',
+    image: 'lectures/science-henry/henry_infographic.png',
+    audioSrc: 'lectures/science-henry/henry_audio.m4a',
+    presentationSrc: 'lectures/science-henry/henry_presentation.pdf',
     content: [
         { type: 'header', level: 2, value: 'Prawo Henry’ego – Gazy w Twojej Krwi' },
         { type: 'paragraph', value: '<strong>Wstęp:</strong> Prawo Henry’ego to klucz do zrozumienia choroby dekompresyjnej (DCS) i narkozy azotowej. O ile Prawo Boyle’a działa natychmiastowo (mechanicznie), Prawo Henry’ego działa w czasie – to procesy biochemiczne zachodzące w Twojej krwi i tkankach.' },

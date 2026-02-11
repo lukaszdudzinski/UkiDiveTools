@@ -5,6 +5,9 @@ export const boyleLecture = {
     readTime: '15 min',
     level: 'Basic',
     icon: 'fa-compress-arrows-alt',
+    image: 'lectures/science-boyle/boyle_infographic.png',
+    audioSrc: 'lectures/science-boyle/boyle_audio.m4a',
+    presentationSrc: 'lectures/science-boyle/boyle_presentation.pdf',
     content: [
         { type: 'header', level: 2, value: 'Prawo Boyle’a-Mariotte’a – Ciśnienie i Objętość' },
         { type: 'paragraph', value: '<strong>Wstęp: Dlaczego to najważniejsze prawo?</strong><br>Obok Prawa Archimedesa, Prawo Boyle’a-Mariotte’a jest absolutnym fundamentem, z którym każdy nurek styka się w każdej sekundzie pod wodą. To ono decyduje o tym, czy Twoje płuca są bezpieczne, czy maska nie zgniecie Ci twarzy i dlaczego zużywasz więcej powietrza na dnie niż na powierzchni. Zrozumienie tej zasady to granica między bezpiecznym nurkowaniem a ryzykiem poważnego urazu.' },

@@ -5,6 +5,9 @@ export const jouleThomsonLecture = {
     readTime: '15 min',
     level: 'Advanced',
     icon: 'fa-snowflake',
+    image: 'lectures/science-joule-thomson/joule_infographic.png',
+    audioSrc: 'lectures/science-joule-thomson/joule_audio.m4a',
+    presentationSrc: 'lectures/science-joule-thomson/joule_presentation.pdf',
     content: [
         { type: 'header', level: 2, value: 'Prawo Joule’a-Thomsona – Zimno z Ciśnienia' },
         { type: 'paragraph', value: '<strong>Wstęp:</strong> Często słyszy się o zamarzających automatach w zimnych polskich wodach. Za to zjawisko odpowiada termodynamika, a konkretnie efekt Joule’a-Thomsona (często omawiany w parze z Prawami Charlesa/Gay-Lussaca dotyczącymi temperatury).' },
