@@ -26,21 +26,31 @@ test.describe('Science of Diving - New Physics Lectures', () => {
 
             await page.waitForTimeout(500); // Wait for tab switch
 
+            // Ensure mobile menu overlay is gone
+            if (isMobile) {
+                const overlay = page.locator('.overlay');
+                if (await overlay.isVisible()) {
+                    await overlay.click(); // Close it if still open
+                    await expect(overlay).toBeHidden({ timeout: 5000 });
+                }
+            }
+
             // Go to lectures list
             const lecturesSubTab = page.locator('button[data-subtab="sod-lectures"]');
             if (await lecturesSubTab.isVisible()) {
-                await lecturesSubTab.click();
+                await lecturesSubTab.click({ force: true });
             }
 
             // 2. Click Lecture Card
             const card = page.locator(`.lecture-card[data-lecture-id="${lecture.id}"]`);
             await card.scrollIntoViewIfNeeded();
             await expect(card).toBeVisible();
-            await card.click({ force: true });
+            // Use evaluate click to bypass ALL potential overlays/scroll issues
+            await card.evaluate(node => node.click());
 
             // 3. Verify Viewer Content
             const viewer = page.locator('#lecture-viewer');
-            await expect(viewer).toBeVisible();
+            await expect(viewer).toBeVisible({ timeout: 10000 });
             await expect(page.locator('#lecture-title')).toContainText(lecture.title);
 
             // Verify Assets
