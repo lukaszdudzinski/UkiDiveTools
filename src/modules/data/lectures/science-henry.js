@@ -30,7 +30,37 @@ export const henryLecture = {
             ]
         },
 
-        { type: 'info-box', style: 'warning', title: 'Pamiętaj!', content: 'Przestrzegaj limitów bezdekompresyjnych i prędkości wynurzania. Wykonuj przystanek bezpieczeństwa (Safety Stop), aby dać organizmowi czas na "odgazowanie" przed ostatecznym wynurzeniem.' }
+        { type: 'info-box', style: 'warning', title: 'Pamiętaj!', content: 'Przestrzegaj limitów bezdekompresyjnych i prędkości wynurzania. Wykonuj przystanek bezpieczeństwa (Safety Stop), aby dać organizmowi czas na "odgazowanie" przed ostatecznym wynurzeniem.' },
+
+        { type: 'header', level: 2, value: 'Wykład Rozszerzony: Mechanizm Bąbelkowy' },
+        { type: 'paragraph', value: 'Prawo Henry’ego mówi, że rozpuszczalność gazu zależy od ciśnienia parcjalnego. DCS (Decompression Sickness) to efekt zbyt szybkiego uwolnienia gazu (azotu), który zamiast zostać wydalony przez płuca (cicha desaturacja), tworzy pęcherzyki w tkankach.' },
+
+        { type: 'header', level: 3, value: 'Mechanizm powstawania' },
+        { type: 'paragraph', value: 'Podczas nurkowania tkanki nasycają się azotem (saturacja). Tkanki szybkie (krew, mózg) nasycają się i odsycaną szybko. Tkanki wolne (kości, tłuszcz, stawy) kumulują azot powoli, ale też powoli go oddają. DCS występuje, gdy nurek przekroczy limit (wartość M) i ciśnienie otoczenia spadnie zbyt gwałtownie.' },
+
+        { type: 'header', level: 3, value: 'Typy DCS' },
+        {
+            type: 'list', items: [
+                '<strong>Typ I (Łagodny):</strong> Ból stawów i mięśni (bark, łokieć, kolano) – pęcherzyki uciskają zakończenia nerwowe. Skóra: świąd, wysypka, marmurkowatość.',
+                '<strong>Typ II (Ciężki - Neurologiczny/Płucny):</strong>',
+                '— <em>Rdzeniowy:</em> Pęcherzyki w rdzeniu kręgowym. Objawy: drętwienie kończyn, paraliż, utrata kontroli nad zwieraczami.',
+                '— <em>Mózgowy:</em> Zaburzenia widzenia, utrata przytomności.',
+                '— <em>Płucny (Dławica/Chokes):</em> Zablokowanie krążenia płucnego przez masywne pęcherzyki. Objawy: duszność, ból w klatce, suchy kaszel.'
+            ]
+        },
+
+        { type: 'header', level: 3, value: 'Czynniki Ryzyka (Predysponujące)' },
+        { type: 'paragraph', value: 'Odwodnienie (zagęszcza krew, utrudnia eliminację gazu), zimno (gorsze ukrwienie obwodowe), otyłość (azot świetnie rozpuszcza się w tłuszczu), wysiłek fizyczny po nurkowaniu, wiek, PFO (przetrwały otwór owalny w sercu).' },
+
+        { type: 'header', level: 3, value: 'Profilaktyka' },
+        {
+            type: 'list', items: [
+                'Prędkość wynurzania max. 10 m/min.',
+                'Przystanek bezpieczeństwa (3-5 min na 5 m).',
+                'Nawadnianie organizmu.',
+                'Unikanie profili "piłokształtnych" (jo-jo).'
+            ]
+        }
     ],
     quiz: [
         {

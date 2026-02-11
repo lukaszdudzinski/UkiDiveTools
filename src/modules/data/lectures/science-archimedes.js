@@ -30,11 +30,21 @@ export const archimedesLecture = {
             ]
         },
 
-        { type: 'header', level: 3, value: 'Wiązane problemy' },
+        { type: 'header', level: 2, value: 'Wykład Rozszerzony: Balast i Trym' },
+        { type: 'paragraph', value: 'Prawo Archimedesa determinuje, czy toniemy, czy pływamy. Kluczem jest gęstość: woda słona (1,03 kg/l) wypiera mocniej niż słodka (1,00 kg/l), co wymaga dołożenia balastu w morzu.' },
+
+        { type: 'header', level: 3, value: 'Prawidłowe Wyważenie (Procedura)' },
+        { type: 'paragraph', value: 'Nurek jest prawidłowo wyważony, gdy w pełnym sprzęcie, z pustym jacketem i normalnym wdechem, unosi się na powierzchni z linią wody na wysokości oczu. Po zrobieniu wydechu powinien powoli zatonąć.' },
+        { type: 'paragraph', value: '<strong>Korekta na zużycie gazu:</strong> Pod koniec nurkowania butla jest lżejsza o ciężar zużytego powietrza (ok. 2-3 kg dla standardowej butli). Nurek musi być wyważony tak, aby utrzymać przystanek bezpieczeństwa na 5 metrach mając w butli tylko 50 bar (rezerwę). Jeśli na początku jesteś wyważony "na styk", na końcu wyrzuci Cię na powierzchnię.' },
+
+        { type: 'header', level: 3, value: 'Rozmieszczenie Balastu (Trym)' },
+        { type: 'paragraph', value: 'Nie chodzi tylko o ilość, ale o miejsce:' },
         {
             type: 'list', items: [
-                '<strong>Niekontrolowane wynurzenie:</strong> Zrzucenie pasa balastowego powoduje nagły wzrost pływalności (stajesz się lżejszy od wypartej wody) i wystrzelenie na powierzchnię – ryzyko DCS i urazu płuc.',
-                '<strong>Przeważenie:</strong> Zbyt dużo ołowiu zmusza do pompowania BCD, zwiększa opory i zużycie powietrza.'
+                '<strong>Balast zintegrowany:</strong> Wygodny, ale obciąża biodra.',
+                '<strong>V-weight / P-weight (Twinset):</strong> Balast między butlami, poprawia trym, ale jest niezrzucalny.',
+                '<strong>Trym:</strong> Prawidłowy trym to pozycja pozioma. Jeśli nogi opadają – przesuń balast wyżej (w stronę głowy). Jeśli głowa opada – przesuń balast niżej (na pas biodrowy).',
+                '<strong>Skutki przeważenia:</strong> Zwiększone zużycie powietrza (duży opór czołowy, bo nurek płynie "pod górę"), niszczenie dna, ryzyko niekontrolowanego opadania.'
             ]
         }
     ],

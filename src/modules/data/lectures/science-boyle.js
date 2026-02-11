@@ -36,7 +36,41 @@ export const boyleLecture = {
             ]
         },
 
-        { type: 'info-box', style: 'warning', title: 'Złota Zasada', content: 'Nigdy nie wstrzymuj oddechu pod wodą. To bezpośrednie zastosowanie Prawa Boyle’a w praktyce, które chroni Twoje życie.' }
+        { type: 'info-box', style: 'warning', title: 'Złota Zasada', content: 'Nigdy nie wstrzymuj oddechu pod wodą. To bezpośrednie zastosowanie Prawa Boyle’a w praktyce, które chroni Twoje życie.' },
+
+        { type: 'header', level: 2, value: 'Wykład Rozszerzony: Fizyka Urazu' },
+        { type: 'paragraph', value: 'Prawo Boyle’a (P1V1 = P2V2) jest bezpośrednią przyczyną wszystkich urazów ciśnieniowych (barotraum). Uraz powstaje, gdy zamknięta przestrzeń gazowa w organizmie nie może wyrównać ciśnienia z otoczeniem, co prowadzi do jej odkształcenia (ściśnięcia lub rozerwania).' },
+
+        { type: 'header', level: 3, value: '1. Barotraumy Zanurzenia (Efekt Podciśnienia/Squeeze)' },
+        { type: 'paragraph', value: 'Występują, gdy objętość gazu maleje, a nurek nie "dopowietrza" przestrzeni.' },
+        {
+            type: 'list', items: [
+                '<strong>Ucho środkowe:</strong> Najczęstszy uraz. Jeśli trąbka Eustachiusza jest niedrożna (katar, obrzęk), malejąca objętość gazu wciąga błonę bębenkową do wewnątrz. Skutek: ból, pęknięcie błony, zalanie ucha zimną wodą (powoduje zawroty głowy i wymioty).',
+                '<strong>Zatoki:</strong> Zablokowanie ujścia zatok powoduje wciąganie błony śluzowej, co prowadzi do silnego bólu czoła/szczęki i krwawienia z nosa do maski.',
+                '<strong>Maska (Mask Squeeze):</strong> Niewydmuchanie nosa do maski przy zanurzaniu powoduje przyssanie jej do twarzy, pękanie naczynek w oczach i siniaki na twarzy.',
+                '<strong>Ząb:</strong> Powietrze uwięzione pod plombą kurczy się (podciśnienie) lub rozpręża, powodując implozję/eksplozję zęba.'
+            ]
+        },
+
+        { type: 'header', level: 3, value: '2. Barotraumy Wynurzania (Nadmierne Rozprężenie Płuc)' },
+        { type: 'paragraph', value: 'Najgroźniejsze urazy w nurkowaniu, wynikające z zatrzymania oddechu (nawet przy wynurzeniu o 1 metr w płytkiej wodzie) lub zmian patologicznych w płucach.' },
+        {
+            type: 'list', items: [
+                '<strong>Tętniczy Zator Gazowy (AGE - Arterial Gas Embolism):</strong> Pęcherzyki płucne pękają, gaz wchodzi do krwiobiegu i blokuje naczynia w mózgu. Objawy (natychmiastowe): utrata przytomności, paraliż, objawy udarowe, krwista piana z ust.',
+                '<strong>Odma Opłucnowa:</strong> Gaz dostaje się między płuco a ścianę klatki piersiowej, powodując zapadnięcie się płuca. Objawy: silny ból w klatce, duszność, asymetria ruchów klatki piersiowej.',
+                '<strong>Odma Śródpiersiowa:</strong> Gaz gromadzi się wokół serca. Objawy: ból za mostkiem, chrypka, trudności w połykaniu.',
+                '<strong>Odma Podskórna:</strong> Gaz wędruje pod skórę szyi. Objawy: obrzęk szyi, trzeszczenie pod skórą przy dotyku (jak chodzenie po śniegu).'
+            ]
+        },
+
+        { type: 'header', level: 3, value: 'Pierwsza Pomoc (Dla wszystkich urazów płucnych)' },
+        {
+            type: 'list', items: [
+                '<strong>1. Priorytet:</strong> 100% TLEN (przyspiesza wchłanianie pęcherzyków, dotlenia tkanki).',
+                '<strong>2. Pozycja:</strong> Ułożenie w pozycji bezpiecznej/poziomej (nie unosić nóg przy podejrzeniu urazu głowy/płuc, aby nie zwiększać obrzęku).',
+                '<strong>3. Transport:</strong> Wezwanie Zespołu Ratownictwa Medycznego i transport do szpitala (AGE wymaga komory hiperbarycznej).'
+            ]
+        }
     ],
     quiz: [
         {

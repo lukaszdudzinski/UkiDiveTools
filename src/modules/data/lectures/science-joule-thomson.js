@@ -31,6 +31,36 @@ export const jouleThomsonLecture = {
                 'Nie pompuj BCD i nie oddychaj jednocześnie podczas wchodzenia do zimnej wody.',
                 'Używaj automatów przystosowanych do zimnych wód (z tzw. suchą komorą).'
             ]
+        },
+        { type: 'header', level: 2, value: 'Wykład Rozszerzony: Termodynamika Awarii' },
+        { type: 'paragraph', value: 'Spadek ciśnienia gazu powoduje gwałtowny spadek temperatury (nawet o 0,17°C na każdy bar spadku ciśnienia dla powietrza). W I stopniu ciśnienie spada z 200 bar do ok. 10 bar. Wewnątrz automatu temperatura może spaść do -30°C.' },
+
+        { type: 'header', level: 3, value: 'Mechanizm Zamarzania' },
+        {
+            type: 'list', items: [
+                '<strong>I stopień:</strong> Jeśli woda dostanie się do komory sprężyny (w automatach tłokowych lub membranowych bez izolacji), lód zablokuje mechanizm w pozycji otwartej. Skutek: gwałtowny wzrost ciśnienia międzystopniowego i wzbudzenie II stopnia.<br><em>Rozwiązanie:</em> Sucha komora (wypełniona powietrzem lub olejem/glikolem), która izoluje mechanizm od wody.',
+                '<strong>II stopień:</strong> Wilgoć z wydychanego powietrza skrapla się na dźwigni dozownika. Rozprężający się gaz zamraża tę wilgoć, blokując dźwignię w pozycji "wciśniętej" (otwartej). Skutek: Free-flow (stały wydatek).'
+            ]
+        },
+
+        { type: 'header', level: 3, value: 'Czynniki sprzyjające zamarzaniu' },
+        {
+            type: 'list', items: [
+                'Wilgoć w butli (zła jakość powietrza).',
+                'Wysoki przepływ gazu: szybkie oddychanie, używanie inflatora i oddychanie w tym samym czasie, wciśnięcie przycisku by-pass (pucka) na powierzchni.',
+                'Temperatura wody poniżej 10°C (norma EN250 dla automatów zimnowodnych).'
+            ]
+        },
+
+        { type: 'header', level: 3, value: 'Postępowanie przy wzbudzeniu (Free-flow)' },
+        {
+            type: 'list', items: [
+                '1. Nie zamykaj ustnika dłonią (ryzyko rozerwania płuc przez ciśnienie).',
+                '2. Oddychaj z "syczącego" automatu, trzymając go lekko w ustach, pozwalając nadmiarowi gazu uciekać bokiem.',
+                '3. Przejdź na zapasowe źródło powietrza (octopus/partner).',
+                '4. Zakręć zawór zamarzniętej butli (jeśli masz twinset/sidemount lub robi to partner).',
+                '5. Przerwij nurkowanie.'
+            ]
         }
     ],
     quiz: [
