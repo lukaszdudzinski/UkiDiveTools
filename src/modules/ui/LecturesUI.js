@@ -216,6 +216,8 @@ export const LecturesUI = {
             lectureViewer.hidden = false;
             // Scroll to top
             window.scrollTo(0, 0);
+            const wrapper = document.querySelector('.tab-content-wrapper');
+            if (wrapper) wrapper.scrollTop = 0;
             lectureViewer.focus();
         }
     },
