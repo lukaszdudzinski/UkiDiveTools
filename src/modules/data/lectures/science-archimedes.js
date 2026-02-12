@@ -5,7 +5,7 @@ export const archimedesLecture = {
     readTime: '15 min',
     level: 'Basic',
     icon: 'fa-anchor',
-    image: 'lectures/science-archimedes/archimedes_infographic.png',
+    // image removed - moved to content
     audioSrc: 'lectures/science-archimedes/archimedes_audio.m4a',
     presentationSrc: 'lectures/science-archimedes/archimedes_presentation.pdf',
     content: [
@@ -31,6 +31,12 @@ export const archimedesLecture = {
                 '<strong>2. Balast:</strong> Ludzkie ciało i pianka neoprenowa mają zazwyczaj pływalność dodatnią. Ołów (balast) służy do zrównoważenia tej siły, abyś mógł się zanurzyć.',
                 '<strong>3. Woda Słodka vs Słona:</strong> Woda słona jest gęstsza (cięższa) od słodkiej. Litr wody słonej waży ok. 1,03 kg, a słodkiej 1,00 kg. Dlatego w morzu (słona) siła wyporu jest większa i potrzebujesz więcej balastu (ok. 2-3 kg więcej) niż w jeziorze, aby się zanurzyć.'
             ]
+        },
+        {
+            type: 'image',
+            src: 'lectures/science-archimedes/archimedes_infographic.png',
+            alt: 'Infografika - Prawo Archimedesa',
+            caption: 'Praktyczne zastosowanie prawa Archimedesa w nurkowaniu: BCD, balast i różnica zasolenia.'
         },
 
         { type: 'header', level: 2, value: 'Wykład Rozszerzony: Balast i Trym' },

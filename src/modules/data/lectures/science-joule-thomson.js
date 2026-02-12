@@ -5,7 +5,7 @@ export const jouleThomsonLecture = {
     readTime: '15 min',
     level: 'Advanced',
     icon: 'fa-snowflake',
-    image: 'lectures/science-joule-thomson/joule_infographic.png',
+    // image removed - moved to content
     audioSrc: 'lectures/science-joule-thomson/joule_audio.m4a',
     presentationSrc: 'lectures/science-joule-thomson/joule_presentation.pdf',
     content: [
@@ -23,6 +23,12 @@ export const jouleThomsonLecture = {
                 '<strong>2. Mechanizm zamarzania:</strong> Jeśli w powietrzu w butli jest wilgoć, skrapla się ona i natychmiast zamarza, tworząc kryształki lodu. Lód może zablokować tłok lub membranę w pozycji otwartej.',
                 '<strong>3. Efekt:</strong> Automat się "wzbudza" – następuje niekontrolowany wypływ powietrza (free-flow).'
             ]
+        },
+        {
+            type: 'image',
+            src: 'lectures/science-joule-thomson/joule_infographic.png',
+            alt: 'Infografika - Prawo Joule’a-Thomsona',
+            caption: 'Zamarzanie automatu: spadek temperatury przy rozprężaniu gazu.'
         },
 
         { type: 'header', level: 3, value: 'Problemy i Zapobieganie' },

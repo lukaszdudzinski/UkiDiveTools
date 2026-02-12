@@ -5,7 +5,7 @@ export const boyleLecture = {
     readTime: '15 min',
     level: 'Basic',
     icon: 'fa-compress-arrows-alt',
-    image: 'lectures/science-boyle/boyle_infographic.png',
+    // image removed - moved to content
     audioSrc: 'lectures/science-boyle/boyle_audio.m4a',
     presentationSrc: 'lectures/science-boyle/boyle_presentation.pdf',
     content: [
@@ -28,6 +28,12 @@ export const boyleLecture = {
                 '<strong>2. Zużycie powietrza:</strong> To prawo wyjaśnia, dlaczego na głębokości oddychasz „szybciej”. Na 20 metrach (3 bary) każdy Twój oddech pobiera z butli 3 razy więcej cząsteczek powietrza niż na powierzchni, aby wypełnić tę samą objętość płuc. Dlatego butla starcza na krócej.',
                 '<strong>3. Krytyczna strefa 0-10 metrów:</strong> Największa zmiana objętości zachodzi w najpłytszej wodzie. Między powierzchnią a 10 metrami ciśnienie podwaja się (z 1 do 2 barów), co oznacza zmianę objętości o 50%. To tutaj najtrudniej utrzymać pływalność i najłatwiej o uraz.'
             ]
+        },
+        {
+            type: 'image',
+            src: 'lectures/science-boyle/boyle_infographic.png',
+            alt: 'Infografika - Prawo Boyle’a-Mariotte’a',
+            caption: 'Zależność ciśnienia i objętości: balon pod wodą, zużycie powietrza i urazy ciśnieniowe.'
         },
 
         { type: 'header', level: 3, value: 'Związek z Barotraumą (Urazy Ciśnieniowe)' },

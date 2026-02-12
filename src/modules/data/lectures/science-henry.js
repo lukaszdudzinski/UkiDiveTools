@@ -5,7 +5,7 @@ export const henryLecture = {
     readTime: '15 min',
     level: 'Advanced',
     icon: 'fa-flask',
-    image: 'lectures/science-henry/henry_infographic.png',
+    // image removed - moved to content
     audioSrc: 'lectures/science-henry/henry_audio.m4a',
     presentationSrc: 'lectures/science-henry/henry_presentation.pdf',
     content: [
@@ -23,6 +23,12 @@ export const henryLecture = {
                 '<strong>2. Desaturacja (Odsycanie):</strong> Podczas wynurzania ciśnienie spada. Rozpuszczony w tkankach azot chce się wydostać. Jeśli wynurzasz się powoli, azot bezpiecznie wraca krwią do płuc i jest wydychany.',
                 '<strong>3. Choroba Dekompresyjna (Efekt butelki szampana):</strong> Jeśli wynurzysz się zbyt szybko (jak gwałtowne odkręcenie butelki), azot nie zdąży spokojnie opuścić tkanek i wydzieli się w postaci pęcherzyków bezpośrednio we krwi, stawach lub mózgu. To jest istota DCS.'
             ]
+        },
+        {
+            type: 'image',
+            src: 'lectures/science-henry/henry_infographic.png',
+            alt: 'Infografika - Prawo Henry’ego',
+            caption: 'Nasycanie (saturacja) i odsycanie (desaturacja) gazów w organizmie nurka.'
         },
 
         { type: 'header', level: 3, value: 'Wiązane problemy' },

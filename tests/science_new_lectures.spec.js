@@ -12,10 +12,10 @@ test.describe('Science of Diving - New Physics Lectures', () => {
     });
 
     const newLectures = [
-        { id: 'science-boyle', title: 'Prawo Boyle’a-Mariotte’a' },
-        { id: 'science-henry', title: 'Prawo Henry’ego' },
-        { id: 'science-archimedes', title: 'Prawo Archimedesa' },
-        { id: 'science-joule-thomson', title: 'Prawo Joule’a-Thomsona' }
+        { id: 'science-boyle', title: 'Prawo Boyle’a-Mariotte’a', image: 'boyle_infographic.png' },
+        { id: 'science-henry', title: 'Prawo Henry’ego', image: 'henry_infographic.png' },
+        { id: 'science-archimedes', title: 'Prawo Archimedesa', image: 'archimedes_infographic.png' },
+        { id: 'science-joule-thomson', title: 'Prawo Joule’a-Thomsona', image: 'joule_infographic.png' }
     ];
 
     for (const lecture of newLectures) {
@@ -54,10 +54,10 @@ test.describe('Science of Diving - New Physics Lectures', () => {
             await expect(page.locator('#lecture-title')).toContainText(lecture.title);
 
             // Verify Assets
-            // Infographic
-            const heroImage = page.locator('.lecture-hero-image img');
-            await expect(heroImage).toBeVisible();
-            await expect(heroImage).toHaveAttribute('src', lecture.image);
+            // Infographic (Now embeded in content)
+            const embeddedImage = page.locator('.infographic-container img');
+            await expect(embeddedImage).toBeVisible();
+            await expect(embeddedImage).toHaveAttribute('src', new RegExp(lecture.image));
 
             // Audio
             const audioPlayer = page.locator('#lecture-viewer audio');
