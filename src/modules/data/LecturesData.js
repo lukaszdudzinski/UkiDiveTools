@@ -10,6 +10,7 @@ import { boyleLecture } from './lectures/science-boyle.js';
 import { henryLecture } from './lectures/science-henry.js';
 import { archimedesLecture } from './lectures/science-archimedes.js';
 import { jouleThomsonLecture } from './lectures/science-joule-thomson.js';
+import { deepDivingLecture } from './lectures/deep-diving.js?v=2';
 import { stressRescueLecture } from './lectures/stress-rescue.js';
 
 export const lecturesData = [
@@ -25,6 +26,6 @@ export const lecturesData = [
     rockBottomLecture,
     nightDivingLecture,
     navigationLecture,
-    stressRescueLecture
+    deepDivingLecture,
+    stressRescueLecture,
 ];
-

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dive-tools-v2026.2.12.01'; // Release v2026.2.12.01
+const CACHE_NAME = 'dive-tools-v2026.2.13.02'; // Release v2026.2.13.02
 // Core assets that MUST be cached immediately
 const CORE_ASSETS = [
     './',
