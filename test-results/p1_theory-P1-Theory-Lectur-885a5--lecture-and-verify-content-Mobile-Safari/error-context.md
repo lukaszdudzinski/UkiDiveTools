@@ -1,0 +1,125 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3] [cursor=pointer]:
+      - button "Otwórz menu" [ref=e4]
+      - img "Logo" [ref=e8]
+      - heading "Uki's Dive Tools" [level=2] [ref=e9]
+    - navigation [ref=e10]:
+      - generic "Powrót do ekranu startowego" [ref=e11] [cursor=pointer]:
+        - img "Logo" [ref=e12]
+        - heading "Uki's Dive Tools" [level=1] [ref=e13]
+      - list [ref=e14]:
+        - listitem [ref=e15]:
+          - link "Strefa PRO" [ref=e16]:
+            - /url: "#"
+        - listitem [ref=e17]:
+          - link "Kalkulator SAC" [ref=e18]:
+            - /url: "#"
+        - listitem [ref=e19]:
+          - link "Kalkulator Nitrox" [ref=e20]:
+            - /url: "#"
+        - listitem [ref=e21]:
+          - link "Planowanie Gazu (Basic)" [ref=e22]:
+            - /url: "#"
+        - listitem [ref=e23]:
+          - link "Kalkulator Balastu" [ref=e24]:
+            - /url: "#"
+        - listitem [ref=e25]:
+          - link "Narzędzia Divemastera" [ref=e26]:
+            - /url: "#"
+        - listitem [ref=e27]:
+          - link "Wiedza Nurkowa" [ref=e28]:
+            - /url: "#"
+        - listitem [ref=e29]:
+          - link "Uki's River Dive" [ref=e30]:
+            - /url: "#"
+        - listitem [ref=e31]:
+          - link "Ustawienia" [ref=e32]:
+            - /url: "#"
+      - generic [ref=e33]:
+        - link "☕ Podoba Ci się to narzędzie? Postaw mi kawę!" [ref=e35]:
+          - /url: https://suppi.pl/ukidives
+          - text: ☕ Podoba Ci się to narzędzie?
+          - strong [ref=e36]: Postaw mi kawę!
+        - link "🚨 WYPADEK? SOS / KOMORA" [ref=e38]:
+          - /url: "#"
+          - text: 🚨 WYPADEK?
+          - strong [ref=e39]: SOS / KOMORA
+        - generic [ref=e40]: Uki's Dive Tools v2026.2.19.01
+    - main [ref=e41]:
+      - generic [ref=e43]:
+        - heading "Wiedza Nurkowa" [level=3] [ref=e44]
+        - navigation [ref=e45]:
+          - button "Wykłady" [ref=e46] [cursor=pointer]
+          - button "SAC" [ref=e47] [cursor=pointer]
+          - button "Nitrox" [ref=e48] [cursor=pointer]
+          - button "Gazy" [ref=e49] [cursor=pointer]
+          - button "Balast" [ref=e50] [cursor=pointer]
+        - generic [ref=e51]:
+          - text: • • • • • • • • • • • •
+          - list [ref=e55]:
+            - 'button "OWD/P1 (Open Water Diver) Kompendium wiedzy kursu podstawowego: Sprzęt, Fizyka, Fizjologia, Środowisko i Technika." [ref=e56] [cursor=pointer]':
+              - generic [ref=e57]:
+                - heading "OWD/P1 (Open Water Diver)" [level=4] [ref=e58]
+                - paragraph [ref=e59]: "Kompendium wiedzy kursu podstawowego: Sprzęt, Fizyka, Fizjologia, Środowisko i Technika."
+            - button "Prawo Archimedesa Pływalność – Sztuka Latania w Wodzie. Klucz do idealnego wyważenia i trymu." [ref=e60] [cursor=pointer]:
+              - generic [ref=e61]:
+                - heading "Prawo Archimedesa" [level=4] [ref=e62]
+                - paragraph [ref=e63]: Pływalność – Sztuka Latania w Wodzie. Klucz do idealnego wyważenia i trymu.
+            - button "Prawo Boyle’a-Mariotte’a Fundament Bezpieczeństwa – Ciśnienie i Objętość. Dlaczego płuca są bezpieczne, czy maska nie zgniecie Ci twarzy?" [ref=e64] [cursor=pointer]:
+              - generic [ref=e65]:
+                - heading "Prawo Boyle’a-Mariotte’a" [level=4] [ref=e66]
+                - paragraph [ref=e67]: Fundament Bezpieczeństwa – Ciśnienie i Objętość. Dlaczego płuca są bezpieczne, czy maska nie zgniecie Ci twarzy?
+            - button "Prawo Daltona Fundament nurkowania Nitroxowego. Definicja, wzory, MOD, EAD i bezpieczeństwo." [ref=e68] [cursor=pointer]:
+              - generic [ref=e69]:
+                - heading "Prawo Daltona" [level=4] [ref=e70]
+                - paragraph [ref=e71]: Fundament nurkowania Nitroxowego. Definicja, wzory, MOD, EAD i bezpieczeństwo.
+            - button "Prawo Henry’ego Gazy w Twojej Krwi – Nasycanie i Dekompresja. Klucz do zrozumienia choroby dekompresyjnej i narkozy azotowej." [ref=e72] [cursor=pointer]:
+              - generic [ref=e73]:
+                - heading "Prawo Henry’ego" [level=4] [ref=e74]
+                - paragraph [ref=e75]: Gazy w Twojej Krwi – Nasycanie i Dekompresja. Klucz do zrozumienia choroby dekompresyjnej i narkozy azotowej.
+            - button "Prawo Joule’a-Thomsona Zimno z Ciśnienia – Dlaczego Automaty Zamarzają? Termodynamika w służbie sprzętu." [ref=e76] [cursor=pointer]:
+              - generic [ref=e77]:
+                - heading "Prawo Joule’a-Thomsona" [level=4] [ref=e78]
+                - paragraph [ref=e79]: Zimno z Ciśnienia – Dlaczego Automaty Zamarzają? Termodynamika w służbie sprzętu.
+            - 'button "Nauka w Nurkowaniu: Fizyka, Fizjologia, Środowisko Kompleksowy wykład obejmujący fizykę nurkowania (prawa gazowe), fizjologię (urazy ciśnieniowe, toksyczność gazów), teorię dekompresji oraz środowisko wodne." [ref=e80] [cursor=pointer]':
+              - generic [ref=e81]:
+                - 'heading "Nauka w Nurkowaniu: Fizyka, Fizjologia, Środowisko" [level=4] [ref=e82]'
+                - paragraph [ref=e83]: Kompleksowy wykład obejmujący fizykę nurkowania (prawa gazowe), fizjologię (urazy ciśnieniowe, toksyczność gazów), teorię dekompresji oraz środowisko wodne.
+            - button "Barotrauma Urazy ciśnieniowe. Fizyka, rodzaje, profilaktyka i pierwsza pomoc." [ref=e84] [cursor=pointer]:
+              - generic [ref=e85]:
+                - heading "Barotrauma" [level=4] [ref=e86]
+                - paragraph [ref=e87]: Urazy ciśnieniowe. Fizyka, rodzaje, profilaktyka i pierwsza pomoc.
+            - button "Choroba Dekompresyjna Mechanizm DCS, objawy, czynniki ryzyka i pierwsza pomoc w wypadku." [ref=e88] [cursor=pointer]:
+              - generic [ref=e89]:
+                - heading "Choroba Dekompresyjna" [level=4] [ref=e90]
+                - paragraph [ref=e91]: Mechanizm DCS, objawy, czynniki ryzyka i pierwsza pomoc w wypadku.
+            - button "Barotrauma vs DCS Pełne porównanie urazów ciśnieniowych i choroby dekompresyjnej wraz z pierwszą pomocą." [ref=e92] [cursor=pointer]:
+              - generic [ref=e93]:
+                - heading "Barotrauma vs DCS" [level=4] [ref=e94]
+                - paragraph [ref=e95]: Pełne porównanie urazów ciśnieniowych i choroby dekompresyjnej wraz z pierwszą pomocą.
+            - button "Planowanie Gazu (Rock Bottom) Dlaczego \"50 bar\" to za mało? Metoda Rock Bottom / Minimum Gas." [ref=e96] [cursor=pointer]:
+              - generic [ref=e97]:
+                - heading "Planowanie Gazu (Rock Bottom)" [level=4] [ref=e98]
+                - paragraph [ref=e99]: Dlaczego "50 bar" to za mało? Metoda Rock Bottom / Minimum Gas.
+            - button "Nurkowanie Nocne i w Ograniczonej Widoczności Noc w samo południe. Dlaczego w polskich wodach latarka jest Twoim najważniejszym partnerem?" [ref=e100] [cursor=pointer]:
+              - generic [ref=e101]:
+                - heading "Nurkowanie Nocne i w Ograniczonej Widoczności" [level=4] [ref=e102]
+                - paragraph [ref=e103]: Noc w samo południe. Dlaczego w polskich wodach latarka jest Twoim najważniejszym partnerem?
+            - button "Nawigacja w Nurkowaniu – Sztuka Orientacji Podwodnej Jak ufać przyrządom, gdy zmysły zawodzą – kompas vs. intuicja." [ref=e104] [cursor=pointer]:
+              - generic [ref=e105]:
+                - heading "Nawigacja w Nurkowaniu – Sztuka Orientacji Podwodnej" [level=4] [ref=e106]
+                - paragraph [ref=e107]: Jak ufać przyrządom, gdy zmysły zawodzą – kompas vs. intuicja.
+            - button "Nurkowanie Głębokie (Deep Diving) Fizyka, fizjologia i procedury bezpiecznego nurkowania rekreacyjnego poniżej 18 metrów." [ref=e108] [cursor=pointer]:
+              - generic [ref=e109]:
+                - heading "Nurkowanie Głębokie (Deep Diving)" [level=4] [ref=e110]
+                - paragraph [ref=e111]: Fizyka, fizjologia i procedury bezpiecznego nurkowania rekreacyjnego poniżej 18 metrów.
+            - button "Stres i Ratownictwo (Diver Stress & Rescue) Kluczowe umiejętności radzenia sobie ze stresem i sytuacjami awaryjnymi pod wodą. Zapobieganie panice, procedury ratownicze i pierwsza pomoc." [ref=e112] [cursor=pointer]:
+              - generic [ref=e113]:
+                - heading "Stres i Ratownictwo (Diver Stress & Rescue)" [level=4] [ref=e114]
+                - paragraph [ref=e115]: Kluczowe umiejętności radzenia sobie ze stresem i sytuacjami awaryjnymi pod wodą. Zapobieganie panice, procedury ratownicze i pierwsza pomoc.
+  - button "Wróć do menu" [ref=e116] [cursor=pointer]: ✕
+```

@@ -3,6 +3,7 @@ export const rockBottomLecture = {
     title: 'Planowanie Gazu (Rock Bottom)',
     description: 'Dlaczego "50 bar" to za mało? Metoda Rock Bottom / Minimum Gas.',
     presentationSrc: 'lectures/rock-bottom/Rock_Bottom_Minimum_Gas.pdf',
+    audioSrc: 'lectures/rock-bottom/Rock_Bottom_Minimum_Gas.m4a',
     content: [
         { type: 'header', level: 2, value: 'Planowanie Gazu – Dlaczego "50 bar" to mit? (Wstęp do Rock Bottom)' },
 

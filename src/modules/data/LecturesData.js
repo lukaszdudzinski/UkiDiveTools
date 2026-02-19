@@ -12,8 +12,10 @@ import { archimedesLecture } from './lectures/science-archimedes.js';
 import { jouleThomsonLecture } from './lectures/science-joule-thomson.js';
 import { deepDivingLecture } from './lectures/deep-diving.js?v=2';
 import { stressRescueLecture } from './lectures/stress-rescue.js';
+import { p1TheoryLecture } from './lectures/p1-theory.js?v=2';
 
 export const lecturesData = [
+    p1TheoryLecture,
     archimedesLecture,
     boyleLecture,
     daltonLecture,
