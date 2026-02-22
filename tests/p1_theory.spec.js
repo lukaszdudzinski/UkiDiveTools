@@ -4,13 +4,8 @@ test.describe('P1 Theory Lecture Content & Quiz', () => {
     test('User can open P1 lecture and verify content', async ({ page }) => {
         await page.goto('/');
 
-        // Open lectures tab (Mobile: Tile, Desktop: Sidebar)
-        const dashboardTile = page.locator('.dashboard-card[onclick="switchTab(\'science-of-diving\')"]');
-        if (await dashboardTile.isVisible()) {
-            await dashboardTile.click();
-        } else {
-            await page.click('a[data-tab="science-of-diving"]');
-        }
+        // Open lectures tab
+        await page.click('a[data-tab="science-of-diving"]');
 
         // Wait for grid
         const grid = page.locator('.lectures-grid-wrapper');
@@ -19,28 +14,41 @@ test.describe('P1 Theory Lecture Content & Quiz', () => {
         // Click P1 card
         const card = page.locator('.lecture-card[data-lecture-id="p1-theory"]');
         await expect(card).toBeVisible();
-        await card.click({ force: true });
+        await card.click();
 
         // Verify viewer
         const viewer = page.locator('#lecture-viewer');
         await expect(viewer).toBeVisible();
 
-        // Verify Title
-        await expect(viewer.locator('#lecture-title')).toHaveText('OWD/P1 (Open Water Diver)');
-
-        // Verify key Chapters headers (New & Old)
-        await expect(viewer.locator('h2', { hasText: 'ROZDZIAŁ 1: SPRZĘT PODSTAWOWY (ABC)' })).toBeVisible();
-        await expect(viewer.locator('h2', { hasText: 'ROZDZIAŁ 2: FIZYKA NURKOWANIA' })).toBeVisible();
-        await expect(viewer.locator('h2', { hasText: 'ROZDZIAŁ 3: FIZJOLOGIA I PATOFIZJOLOGIA NURKOWANIA' })).toBeVisible();
-        await expect(viewer.locator('h2', { hasText: 'ROZDZIAŁ 4: RYS HISTORYCZNY NURKOWANIA' })).toBeVisible();
+        // Verify key Chapters headers
+        await expect(viewer.locator('h2', { hasText: 'RYS HISTORYCZNY' })).toBeVisible();
+        await expect(viewer.locator('h2', { hasText: 'ŚRODOWISKO WODNE' })).toBeVisible();
+        await expect(viewer.locator('h2', { hasText: 'SPRZĘT SCUBA' })).toBeVisible();
+        await expect(viewer.locator('h2', { hasText: 'TECHNIKA I BEZPIECZEŃSTWO' })).toBeVisible();
 
         // Verify key content snippets
-        await expect(viewer.locator('h3', { hasText: 'Prawo Archimedesa' })).toBeVisible();
-        await expect(viewer.locator('strong', { hasText: 'Szyba (Soczewka)' })).toBeVisible();
+        await expect(viewer.locator('strong', { hasText: 'Jacques-Yves Cousteau' })).toBeVisible();
         await expect(viewer.locator('strong', { hasText: 'Termoklina' })).toBeVisible();
 
+        // Weryfikacja osadzonych multimediów
+        // Audio
+        let audioContainer = viewer.locator('.lecture-audio-container').first();
+        await expect(audioContainer).toBeVisible();
+        await expect(audioContainer.locator('audio')).toHaveAttribute('controls', '');
+        await expect(audioContainer.locator('span', { hasText: 'Odcinek 1' })).toBeVisible();
+
+        // Infographics
+        let image = viewer.locator('img[src*="owd_1.png"]').first();
+        await expect(image).toBeVisible();
+        await expect(image).toHaveAttribute('alt', 'Infografika Sprzętu');
+
+        // PDF link
+        let pdfLink = viewer.locator('a.lecture-pdf-link').first();
+        await expect(pdfLink).toBeVisible();
+        await expect(pdfLink).toHaveAttribute('href', 'assets/docs/Underwater_Operator_Briefing.pdf');
+
         // Check Quiz Button
-        const quizBtn = page.locator('#lecture-body button', { hasText: 'Sprawdź Wiedzę (Quiz)' });
+        const quizBtn = page.locator('button:has-text("Sprawdź Wiedzę (Quiz)")');
         await expect(quizBtn).toBeVisible();
         await quizBtn.click();
 

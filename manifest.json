@@ -1,10 +1,10 @@
 {
-    "name": "Uki's Dive Tools",
+    "name": "Uki's Dive Tools v2026.2.22.01",
     "short_name": "DiveTools",
     "description": "Profesjonalne narzędzia do planowania nurkowań.",
     "start_url": "./index.html",
     "display": "standalone",
-    "version": "v2026.2.19.01",
+    "version": "v2026.2.22.01",
     "background_color": "#121212",
     "theme_color": "#00d1b2",
     "orientation": "any",
