@@ -65,6 +65,11 @@ test.describe('Rock Bottom Lecture & Quiz Flow', () => {
         const viewer = page.locator('#lecture-viewer');
         await expect(viewer).toBeVisible();
 
+        // Verify Audio Presence (User Report Verification)
+        const audioPlayer = page.locator('#lecture-viewer audio');
+        await expect(audioPlayer).toHaveCount(1, { message: 'Audio player should be visible for Rock Bottom lecture' });
+
+
         // Check for Infographic
         const infographic = page.locator('.lecture-infographic');
         await expect(infographic).toBeVisible();
