@@ -2,13 +2,13 @@ export const p1TheoryLecture = {
     id: 'p1-theory',
     title: 'OWD/P1 (Open Water Diver)',
     description: 'Kompendium wiedzy kursu podstawowego: Sprzęt, Fizyka, Fizjologia, Środowisko i Technika.',
+    audioSrc: 'lectures/p1-theory/Odcinek_1.m4a',
+    presentationSrc: 'lectures/p1-theory/Underwater_Operator_Briefing.pdf',
+    courseBadge: 'Kurs Podstawowy',
+    quizBadge: '40 pytań',
     content: [
         // ROZDZIAŁ 1: SPRZĘT PODSTAWOWY (ABC)
         { type: 'header', level: 2, value: 'ROZDZIAŁ 1: SPRZĘT PODSTAWOWY (ABC)' },
-        { type: 'audio', title: 'Odcinek 1: Sprzęt Podstawowy, Fizyka i Fizjologia (Rozdziały 1-3)', src: 'assets/audio/Odcinek_1.m4a' },
-        { type: 'audio', title: 'Odcinek 2: Historia i Środowisko Wodne (Rozdziały 4-5)', src: 'assets/audio/Odcinek_2.m4a' },
-        { type: 'audio', title: 'Odcinek 3: Sprzęt SCUBA, Technika i Bezpieczeństwo (Rozdziały 6-7)', src: 'assets/audio/Odcinek_3.m4a' },
-        { type: 'audio', title: 'Odcinek 4: Planowanie, Procedury Awaryjne i Pierwsza Pomoc', src: 'assets/audio/Odcinek_4.m4a' },
 
         { type: 'paragraph', value: 'Sprzęt podstawowy, znany jako ABC, to fundament wyposażenia każdego płetwonurka. Składa się z maski, fajki i płetw. Choć wydaje się prosty, jego właściwy dobór i zrozumienie budowy są kluczowe dla komfortu i bezpieczeństwa pod wodą.' },
 
@@ -26,7 +26,7 @@ export const p1TheoryLecture = {
         },
 
         { type: 'header', level: 3, value: '1.2 Fajka (Rurka oddechowa)' },
-        { type: 'image', src: 'assets/images/owd_1.png', alt: 'Infografika Sprzętu', caption: 'Przegląd Podstawowego Sprzętu ABC' },
+        { type: 'image', src: 'lectures/p1-theory/owd_1.png', alt: 'Infografika Sprzętu', caption: 'Przegląd Podstawowego Sprzętu ABC' },
         { type: 'paragraph', value: 'Fajka pozwala na oddychanie powietrzem atmosferycznym, gdy twarz nurka jest zanurzona pod powierzchnią wody. Służy do oszczędzania powietrza z butli podczas płynięcia po powierzchni do miejsca zanurzenia lub powrotu na brzeg/łódź.' },
         { type: 'paragraph', value: 'Budowa i rodzaje:' },
         {
@@ -76,7 +76,7 @@ export const p1TheoryLecture = {
         },
 
         { type: 'header', level: 3, value: '2.2 Prawo Boyle’a-Mariotte’a' },
-        { type: 'image', src: 'assets/images/owd_2.png', alt: 'Prawo Boyle\'a', caption: 'Rozprężanie i Kurczenie Gazów' },
+        { type: 'image', src: 'lectures/p1-theory/owd_2.png', alt: 'Prawo Boyle\'a', caption: 'Rozprężanie i Kurczenie Gazów' },
         { type: 'paragraph', value: 'To fundamentalne prawo dla nurków. Mówi ono, że w stałej temperaturze objętość danej masy gazu jest odwrotnie proporcjonalna do ciśnienia.' },
         {
             type: 'list', items: [
@@ -113,7 +113,7 @@ export const p1TheoryLecture = {
         { type: 'header', level: 3, value: '3.1 Urazy Ciśnieniowe (Barotraumy)' },
         { type: 'paragraph', value: 'Są to uszkodzenia tkanek wynikające z różnicy ciśnień między gazem wewnątrz ciała (lub przy ciele) a ciśnieniem otoczenia.' },
         { type: 'paragraph', value: '<strong>A. Barotraumy Ucisku (przy zanurzaniu):</strong> Powstają, gdy nurek nie wyrównuje ciśnienia w przestrzeniach powietrznych w miarę wzrostu ciśnienia otoczenia (zgodnie z prawem Boyle’a objętość gazu maleje, tworząc podciśnienie).' },
-        { type: 'image', src: 'assets/images/owd_3.png', alt: 'Barotrauma Ucha', caption: 'Urazy Ciśnieniowe Ucha Środkowego' },
+        { type: 'image', src: 'lectures/p1-theory/owd_3.png', alt: 'Barotrauma Ucha', caption: 'Urazy Ciśnieniowe Ucha Środkowego' },
         {
             type: 'list', items: [
                 '<strong>Ucho środkowe:</strong> Najczęstszy problem. Błona bębenkowa jest zasysana do wewnątrz, co powoduje ból. Brak wyrównania (przedmuchania) może prowadzić do pęknięcia błony i zalania ucha środkowego zimną wodą, co skutkuje gwałtownymi zawrotami głowy i wymiotami pod wodą.',
@@ -159,6 +159,16 @@ export const p1TheoryLecture = {
 
         { type: 'paragraph', value: '<hr>' },
         // ROZDZIAŁ 4: RYS HISTORYCZNY NURKOWANIA
+        {
+            type: 'html', value: `
+            <div class="lecture-audio-wrapper" style="margin: 20px 0; text-align: center; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                <p style="margin-bottom: 8px; font-weight: bold; color: var(--color-text-primary);">🎧 Część 2: Historia i Środowisko Wodne (Rozdziały 4-5)</p>
+                <audio controls style="width: 100%; max-width: 400px; height: 40px;">
+                    <source src="lectures/p1-theory/Odcinek_2.m4a" type="audio/mp4">
+                    Twoja przeglądarka nie obsługuje elementu audio.
+                </audio>
+            </div>
+        `},
         { type: 'header', level: 2, value: 'ROZDZIAŁ 4: RYS HISTORYCZNY NURKOWANIA' },
         { type: 'paragraph', value: 'Historia podboju głębin to opowieść o dążeniu człowieka do uniezależnienia się od powierzchni i wydłużenia czasu przebywania pod wodą.' },
 
@@ -170,7 +180,7 @@ export const p1TheoryLecture = {
 
         { type: 'header', level: 3, value: '4.3 Rewolucja Cousteau-Gagnana (1943)' },
         { type: 'paragraph', value: 'Kamieniem milowym dla nurkowania rekreacyjnego, jakie znamy dzisiaj, był rok 1943. Wtedy to we Francji, oficer marynarki Jacques-Yves Cousteau oraz inżynier Émile Gagnan skonstruowali pierwszy w pełni automatyczny, bezpieczny automat oddechowy na sprężone powietrze, znany jako "Aqualung".' },
-        { type: 'image', src: 'assets/images/owd_4.png', alt: 'Historia Nurkowania', caption: 'Rozwój Autonomicznego Sprzętu SCUBA' },
+        { type: 'image', src: 'lectures/p1-theory/owd_4.png', alt: 'Historia Nurkowania', caption: 'Rozwój Autonomicznego Sprzętu SCUBA' },
         { type: 'paragraph', value: 'Urządzenie to redukowało wysokie ciśnienie z butli do ciśnienia otoczenia dokładnie w momencie wdechu nurka (stąd nazwa "automat na żądanie"). Wynalazek ten uwolnił człowieka od węży powierzchniowych, dając mu pełną autonomię i możliwość swobodnego poruszania się w trójwymiarowej przestrzeni wodnej (SCUBA – Self Contained Underwater Breathing Apparatus).' },
 
         { type: 'header', level: 3, value: '4.4 Nurkowanie w Polsce' },
@@ -188,7 +198,7 @@ export const p1TheoryLecture = {
 
         { type: 'header', level: 3, value: '5.2 Stratyfikacja termiczna latem (Uwarstwienie)' },
         { type: 'paragraph', value: 'Podczas stagnacji letniej, w głębokich jeziorach woda dzieli się na trzy wyraźne strefy:' },
-        { type: 'image', src: 'assets/images/owd_5.png', alt: 'Profil Termiczny Jeziora', caption: 'Warstwienie Wód w Jeziorze Latem' },
+        { type: 'image', src: 'lectures/p1-theory/owd_5.png', alt: 'Profil Termiczny Jeziora', caption: 'Warstwienie Wód w Jeziorze Latem' },
         {
             type: 'list', ordered: true, items: [
                 '<strong>Epilimnion (Warstwa powierzchniowa):</strong> To górna, najcieplejsza warstwa wody, nagrzewana przez słońce i mieszana przez wiatr. Jest to strefa bogata w życie, światło i roślinność. Temperatura w tej warstwie jest w miarę wyrównana.',
@@ -229,6 +239,16 @@ export const p1TheoryLecture = {
         { type: 'paragraph', value: '<hr>' },
 
         // ROZDZIAŁ 6: SPRZĘT POWIETRZNY I WYPORNOŚCIOWY (SCUBA)
+        {
+            type: 'html', value: `
+            <div class="lecture-audio-wrapper" style="margin: 20px 0; text-align: center; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                <p style="margin-bottom: 8px; font-weight: bold; color: var(--color-text-primary);">🎧 Część 3: Sprzęt SCUBA, Technika i Bezpieczeństwo (Rozdziały 6-7)</p>
+                <audio controls style="width: 100%; max-width: 400px; height: 40px;">
+                    <source src="lectures/p1-theory/Odcinek_3.m4a" type="audio/mp4">
+                    Twoja przeglądarka nie obsługuje elementu audio.
+                </audio>
+            </div>
+        `},
         { type: 'header', level: 2, value: 'ROZDZIAŁ 6: SPRZĘT POWIETRZNY I WYPORNOŚCIOWY (SCUBA)' },
         { type: 'paragraph', value: 'Akronim SCUBA (Self Contained Underwater Breathing Apparatus) oznacza autonomiczny aparat oddechowy. To właśnie ten zestaw uniezależnia nurka od powierzchni. Zrozumienie jego działania jest niezbędne nie tylko do jego obsługi, ale i do radzenia sobie z ewentualnymi awariami.' },
 
@@ -244,7 +264,7 @@ export const p1TheoryLecture = {
 
         { type: 'header', level: 3, value: '6.2 Automat Oddechowy' },
         { type: 'paragraph', value: 'Jego zadaniem jest dostarczenie nurkowi powietrza o ciśnieniu równym ciśnieniu otoczenia, w ilości, jakiej nurek potrzebuje w danym momencie (na żądanie). Współczesne automaty są dwustopniowe.' },
-        { type: 'image', src: 'assets/images/owd_6.png', alt: 'Sprzęt SCUBA', caption: 'Konfiguracja Zestawu SCUBA' },
+        { type: 'image', src: 'lectures/p1-theory/owd_6.png', alt: 'Sprzęt SCUBA', caption: 'Konfiguracja Zestawu SCUBA' },
         {
             type: 'list', items: [
                 '<strong>Pierwszy Stopień:</strong> Przykręcany bezpośrednio do butli. Jego zadaniem jest redukcja wysokiego ciśnienia z butli (np. 200 bar) do tzw. ciśnienia średniego (międzystopniowego), które wynosi zazwyczaj około 9-10 barów powyżej ciśnienia otoczenia. Pierwszy stopień posiada porty wysokiego ciśnienia (HP) – do podłączenia manometru, oraz porty średniego ciśnienia (LP/MP) – do podłączenia drugich stopni i węży inflatora.',
@@ -305,7 +325,7 @@ export const p1TheoryLecture = {
 
         { type: 'header', level: 3, value: '7.3 Procedury Zanurzania i Wynurzania' },
         { type: 'paragraph', value: 'Każde nurkowanie ma swoje krytyczne fazy:' },
-        { type: 'image', src: 'assets/images/owd_7.png', alt: 'Profil Wynurzania', caption: 'Prawidłowy Profil i Prędkość Wynurzenia' },
+        { type: 'image', src: 'lectures/p1-theory/owd_7.png', alt: 'Profil Wynurzania', caption: 'Prawidłowy Profil i Prędkość Wynurzenia' },
         {
             type: 'list', ordered: true, items: [
                 '<strong>Zanurzanie:</strong> Musi być kontrolowane. Wypuść powietrze z BCD, zrób wydech i zanurzaj się powoli (najlepiej przy linie opustowej). Pamiętaj o wyrównywaniu ciśnienia w uszach od samego początku, zanim poczujesz ból.',
@@ -333,12 +353,22 @@ export const p1TheoryLecture = {
         { type: 'paragraph', value: '<hr>' },
 
         // ROZDZIAŁ 8: PLANOWANIE NURKOWANIA (TABELE I KOMPUTERY)
+        {
+            type: 'html', value: `
+            <div class="lecture-audio-wrapper" style="margin: 20px 0; text-align: center; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                <p style="margin-bottom: 8px; font-weight: bold; color: var(--color-text-primary);">🎧 Część 4: Planowanie, Procedury Awaryjne i Pierwsza Pomoc (Rozdziały 8-10)</p>
+                <audio controls style="width: 100%; max-width: 400px; height: 40px;">
+                    <source src="lectures/p1-theory/Odcinek_4.m4a" type="audio/mp4">
+                    Twoja przeglądarka nie obsługuje elementu audio.
+                </audio>
+            </div>
+        `},
         { type: 'header', level: 2, value: 'ROZDZIAŁ 8: PLANOWANIE NURKOWANIA (TABELE I KOMPUTERY)' },
         { type: 'paragraph', value: 'Bezpieczne nurkowanie to nurkowanie zaplanowane. Planowanie pozwala uniknąć choroby dekompresyjnej, braku powietrza i zagubienia pod wodą.' },
 
         { type: 'header', level: 3, value: '8.1 Tabele Dekompresyjne' },
         { type: 'paragraph', value: 'Przed erą komputerów nurkowie używali wyłącznie tabel. Choć dziś są rzadziej stosowane w praktyce, ich zrozumienie jest fundamentem wiedzy o nasycaniu tkanek azotem.' },
-        { type: 'image', src: 'assets/images/owd_8.png', alt: 'Planowanie Nurkowania', caption: 'Krzywa Limitów Bezdekompresyjnych' },
+        { type: 'image', src: 'lectures/p1-theory/owd_8.png', alt: 'Planowanie Nurkowania', caption: 'Krzywa Limitów Bezdekompresyjnych' },
         { type: 'paragraph', value: '<strong>Zasada działania:</strong> Tabele (np. Bühlmanna/Hahna stosowane w KDP/CMAS) pozwalają wyznaczyć limit bezdekompresyjny (NDL) – czyli maksymalny czas, jaki możesz spędzić na danej głębokości, aby móc wynurzyć się bezpośrednio na powierzchnię (z zalecanym przystankiem bezpieczeństwa), bez konieczności wykonywania obowiązkowych przystanków dekompresyjnych.' },
         { type: 'paragraph', value: '<strong>Nurkowanie powtórzeniowe:</strong> Jeśli wykonujesz drugie nurkowanie tego samego dnia, w Twoim organizmie wciąż znajduje się azot z pierwszego zanurzenia (tzw. azot resztkowy). Tabele pozwalają obliczyć:' },
         {
@@ -382,7 +412,7 @@ export const p1TheoryLecture = {
 
         { type: 'header', level: 3, value: '9.2 Brak powietrza' },
         { type: 'paragraph', value: 'Sytuacja krytyczna, której można uniknąć, często sprawdzając manometr. Jeśli jednak do niej dojdzie:' },
-        { type: 'image', src: 'assets/images/owd_9.png', alt: 'Procedura Braku Powietrza', caption: 'Radzenie Sobie z Brakiem Czynnika Oddechowego' },
+        { type: 'image', src: 'lectures/p1-theory/owd_9.png', alt: 'Procedura Braku Powietrza', caption: 'Radzenie Sobie z Brakiem Czynnika Oddechowego' },
         {
             type: 'list', items: [
                 '<strong>Gdy partner jest blisko:</strong> Pokaż znak „Brak powietrza” (podcięcie gardła). Partner podaje Ci swoje alternatywne źródło (octopus). Wkładasz je do ust, przedmuchujesz, chwytacie się za uprzęże (kontakt fizyczny jest kluczowy dla uspokojenia) i wspólnie, powoli wynurzacie się.',
@@ -422,7 +452,7 @@ export const p1TheoryLecture = {
 
         { type: 'header', level: 3, value: '10.2 Podstawowe Zabiegi Resuscytacyjne (BLS)' },
         { type: 'paragraph', value: 'W przypadku utonięcia lub nagłego zatrzymania krążenia, czas jest kluczowy. Algorytm (zgodny z wytycznymi ERC dla topielców):' },
-        { type: 'image', src: 'assets/images/owd_10.png', alt: 'Pierwsza Pomoc BLS', caption: 'Resuscytacja Krążeniowo-Oddechowa' },
+        { type: 'image', src: 'lectures/p1-theory/owd_10.png', alt: 'Pierwsza Pomoc BLS', caption: 'Resuscytacja Krążeniowo-Oddechowa' },
         {
             type: 'list', ordered: true, items: [
                 'Wyciągnij poszkodowanego na brzeg/łódź.',
@@ -437,11 +467,7 @@ export const p1TheoryLecture = {
         },
 
         { type: 'header', level: 3, value: '10.3 Pierwsza pomoc tlenowa' },
-        { type: 'paragraph', value: 'W przypadku podejrzenia choroby dekompresyjnej (DCS) lub urazu ciśnieniowego płuc, jedynym skutecznym działaniem na miejscu zdarzenia jest podanie 100% tlenu. Tlen przyspiesza wypłukiwanie azotu z organizmu i dotlenia uszkodzone tkanki. Jeśli baza nurkowa posiada zestaw tlenowy – należy go użyć niezwłocznie.' },
-
-        { type: 'paragraph', value: '<hr>' },
-        { type: 'header', level: 2, value: 'MATERIAŁY DODATKOWE' },
-        { type: 'link', url: 'assets/docs/Underwater_Operator_Briefing.pdf', label: 'Pobierz Prezentację / Briefing (PDF)' }
+        { type: 'paragraph', value: 'W przypadku podejrzenia choroby dekompresyjnej (DCS) lub urazu ciśnieniowego płuc, jedynym skutecznym działaniem na miejscu zdarzenia jest podanie 100% tlenu. Tlen przyspiesza wypłukiwanie azotu z organizmu i dotlenia uszkodzone tkanki. Jeśli baza nurkowa posiada zestaw tlenowy – należy go użyć niezwłocznie.' }
     ],
     quiz: [
         {
