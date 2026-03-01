@@ -4,7 +4,8 @@
     "test": "playwright test"
   },
   "devDependencies": {
-    "@playwright/test": "^1.57.0",
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.3.3",
     "http-server": "^14.1.1"
   }
 }
