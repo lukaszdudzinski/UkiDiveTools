@@ -1,17 +1,11 @@
+<script setup>
+import SettingsPanel from '../components/settings/SettingsPanel.vue'</script>
+
 <template>
   <div class="view-wrapper">
-    <SettingsPanel @open-pro-modal="isProModalOpen = true" />
-    <BuyCoffeePro :is-open="isProModalOpen" @close="isProModalOpen = false" />
+    <SettingsPanel />
   </div>
 </template>
-
-<script setup>
-import { ref } from 'vue';
-import SettingsPanel from '@/components/settings/SettingsPanel.vue';
-import BuyCoffeePro from '@/components/shared/BuyCoffeePro.vue';
-
-const isProModalOpen = ref(false);
-</script>
 
 <style scoped>
 .view-wrapper {

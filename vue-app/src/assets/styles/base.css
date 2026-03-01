@@ -14,8 +14,8 @@ body {
     color: #f5f5f5;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     transition: background-image 0.5s ease-in-out;
-    background-image: url('../img/bg/background_uki.jpg');
-    /* Adjusted path for styles/ folder */
+    background-image: url('/img/bg/background_uki.jpg');
+    /* Adjusted path for Vite public folder */
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;

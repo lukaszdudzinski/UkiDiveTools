@@ -1,6 +1,6 @@
 
 import { test, expect } from '@playwright/test';
-import { openMobileMenuIfNeeded } from './test-helpers.js';
+import { openMobileMenuIfNeeded, clickSidebarTab } from './test-helpers.js';
 
 test.describe('Science Section Visual Regression', () => {
     test.beforeEach(async ({ page }) => {
@@ -11,7 +11,7 @@ test.describe('Science Section Visual Regression', () => {
     test('should match baseline screenshots for Science tabs', async ({ page, isMobile }) => {
         // 1. Open Wiedza Tab
         await openMobileMenuIfNeeded(page, isMobile);
-        await page.click('[data-tab="science-of-diving"]');
+        await clickSidebarTab(page, 'science-of-diving');
         const scienceContent = page.locator('#science-of-diving');
         await expect(scienceContent).toBeVisible();
 

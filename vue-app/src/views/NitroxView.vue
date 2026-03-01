@@ -1,12 +1,12 @@
+<script setup>
+import NitroxDashboard from '../components/calculators/NitroxDashboard.vue'
+</script>
+
 <template>
   <div class="view-wrapper">
     <NitroxDashboard />
   </div>
 </template>
-
-<script setup>
-import NitroxDashboard from '@/components/calculators/NitroxDashboard.vue';
-</script>
 
 <style scoped>
 .view-wrapper {

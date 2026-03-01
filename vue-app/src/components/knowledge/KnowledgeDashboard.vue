@@ -1,61 +1,21 @@
-<template>
-  <div class="knowledge-dashboard">
-    <!-- View Switcher -->
-    <transition name="fade" mode="out-in">
-      <LecturesDashboard 
-        v-if="!activeLecture" 
-        key="dashboard"
-      />
-      <LectureViewer 
-        v-else 
-        key="viewer"
-        :lecture="activeLecture" 
-        @go-back="clearSelection"
-        @start-quiz="handleStartQuiz"
-      />
-    </transition>
+<script setup>
+// Placeholder logic for Knowledge Dashboard
+</script>
 
-    <!-- Quiz Overlay -->
-    <QuizModal 
-      :is-open="isQuizOpen" 
-      :quiz-manager="quizManager"
-      @close="isQuizOpen = false" 
-    />
+<template>
+  <div class="tool-view" id="knowledge-dashboard">
+    <div class="view-header">
+      <h2>Baza Wiedzy</h2>
+      <p>Wykłady i Quizy (Wkrótce w Vue)</p>
+    </div>
+    
+    <div class="result-box mt-20" style="text-align: center; padding: 40px 20px;">
+      <i class="fas fa-tools" style="font-size: 3em; color: #ff9800; margin-bottom: 20px; display: block;"></i>
+      <h3 style="color: #ccc;">Moduł w trakcie migracji</h3>
+      <p style="color: #888;">Powrócą tu oryginalne wykłady audio oraz interaktywne quizy.</p>
+    </div>
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-import { useLectures } from '@/composables/useLectures';
-import { useQuiz } from '@/composables/useQuiz';
-
-import LecturesDashboard from './LecturesDashboard.vue';
-import LectureViewer from './LectureViewer.vue';
-import QuizModal from './QuizModal.vue';
-
-const { activeLecture, clearSelection } = useLectures();
-
-// Initialize Quiz State Machine
-const quizManager = useQuiz();
-const isQuizOpen = ref(false);
-
-const handleStartQuiz = (quizData, lectureId) => {
-    quizManager.initQuiz(quizData, lectureId);
-    isQuizOpen.value = true;
-};
-</script>
-
 <style scoped>
-.knowledge-dashboard {
-  width: 100%;
-  position: relative;
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
 </style>

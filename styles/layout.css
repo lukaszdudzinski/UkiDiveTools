@@ -21,13 +21,15 @@
     background-color: rgba(30, 30, 30, 0.4);
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
-    <<<<<<< Updated upstream padding: 15px 20px 15px 20px;
-    =======padding: 15px 20px 30px 20px;
-    >>>>>>>Stashed changes box-sizing: border-box;
+    padding: 15px 15px 15px 15px;
     flex-shrink: 0;
     flex-grow: 1;
     /* Stretch to fill container */
     border-right: 1px solid rgba(255, 255, 255, 0.1);
+    height: 100%;
+    max-height: 100%;
+    min-height: 0;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -60,9 +62,9 @@
     justify-content: center;
     /* Center content */
     gap: 15px;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     /* Added more space */
-    padding-bottom: 15px;
+    padding-bottom: 10px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     flex-shrink: 0;
     cursor: pointer;

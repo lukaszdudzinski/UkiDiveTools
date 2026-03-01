@@ -7,11 +7,9 @@ export const DivePlanningCalculator = {
     },
 
     calculateRockBottom: (params) => {
-        const { sac, depth, stopDepth, ascentRate, stressFactor, divers, emergencyTime, volume, safetyMargin, isFreshWater = false } = params;
-
-        // Obliczamy ciśnienia na głębokościach uwzględniając gęstość wody
-        const P_depth = DiveMath.calculateATA(depth, isFreshWater);
-        const P_stop = DiveMath.calculateATA(stopDepth, isFreshWater);
+        const { sac, depth, stopDepth, ascentRate, stressFactor, divers, emergencyTime, volume, safetyMargin } = params;
+        const P_depth = DiveMath.calculateATA(depth); // Default salt
+        const P_stop = DiveMath.calculateATA(stopDepth);
         const P_avg_ascent = (P_depth + P_stop) / 2;
 
         const T_ascent = (depth - stopDepth) / ascentRate;
@@ -36,10 +34,10 @@ export const DivePlanningCalculator = {
     },
 
     calculateGasConsumption: (params) => {
-        const { sac, depth, bottomTime, descentRate, ascentRate, stopDepth, stopTime, tankSize, startPressure, isFreshWater = false } = params;
+        const { sac, depth, bottomTime, descentRate, ascentRate, stopDepth, stopTime, tankSize, startPressure } = params;
         const P_surface = 1.0;
-        const P_bottom = DiveMath.calculateATA(depth, isFreshWater);
-        const P_stop = DiveMath.calculateATA(stopDepth, isFreshWater);
+        const P_bottom = DiveMath.calculateATA(depth); // Default salt
+        const P_stop = DiveMath.calculateATA(stopDepth);
 
         const P_avg_descent = (P_surface + P_bottom) / 2;
         const P_avg_ascent_to_stop = (P_bottom + P_stop) / 2;

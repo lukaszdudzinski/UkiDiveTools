@@ -6,7 +6,7 @@ const bodyType = ref('average')
 const suitType = ref('foam7')
 const vestType = ref('none')
 const warmerType = ref('thin')
-const tankType = ref('steel12') // Defaulting to steel12
+const tankType = ref('steel12') 
 const plateType = ref('steel')
 const waterType = ref('fresh')
 
@@ -38,7 +38,6 @@ const result = computed(() => {
     let w = typeof weight.value === 'string' ? parseFloat(weight.value) || 0 : weight.value;
     let baseBallast = w * 0.10;
 
-    // Body Composition Adjustments
     if (bodyType.value === 'slim') baseBallast -= 1;
     if (bodyType.value === 'athletic') baseBallast -= 3;
     if (bodyType.value === 'overweight') baseBallast += 2;
@@ -46,7 +45,6 @@ const result = computed(() => {
     let suitMod = 0;
     let suitName = "";
 
-    // Base Suits
     switch (suitType.value) {
         case 'foam3': suitMod = 1; suitName = "Pianka 3mm"; break;
         case 'foam5': suitMod = 3; suitName = "Pianka 5mm"; break;
@@ -63,7 +61,6 @@ const result = computed(() => {
             break;
     }
 
-    // Vest
     if (vestType.value === 'vest') {
         suitMod += 2;
         suitName += " + Docieplenie";
@@ -79,7 +76,6 @@ const result = computed(() => {
     tankMod = selTank.v;
     tankName = selTank.n;
 
-    // Plate Mod
     if (isTwin.value) {
         baseBallast = baseBallast * 0.8;
         if (plateType.value === 'steel') {
@@ -89,7 +85,7 @@ const result = computed(() => {
             tankMod -= 0.5;
             tankName += " + Płyta Alu";
         }
-        tankMod -= 1.5; // Heavy Gear heuristics rules
+        tankMod -= 1.5; 
     }
 
     const totalBallast = Math.max(0, Math.round((baseBallast + suitMod + waterMod + tankMod) * 2) / 2);

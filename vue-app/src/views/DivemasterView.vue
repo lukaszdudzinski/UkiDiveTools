@@ -1,12 +1,12 @@
+<script setup>
+import DivemasterDashboard from '../components/divemaster/DivemasterDashboard.vue'
+</script>
+
 <template>
   <div class="view-wrapper">
     <DivemasterDashboard />
   </div>
 </template>
-
-<script setup>
-import DivemasterDashboard from '@/components/divemaster/DivemasterDashboard.vue';
-</script>
 
 <style scoped>
 .view-wrapper {

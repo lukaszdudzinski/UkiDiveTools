@@ -1,68 +1,43 @@
 <script setup>
-import { ref, watchEffect, onMounted } from 'vue';
-import { useSettings } from '@/composables/useSettings';
-import SidebarNav from '@/components/layout/SidebarNav.vue';
-import AppHeader from '@/components/layout/AppHeader.vue';
-
-const { isDarkTheme } = useSettings();
-const isMobileMenuOpen = ref(false);
-
-const toggleMobileMenu = () => {
-    isMobileMenuOpen.value = !isMobileMenuOpen.value;
-};
-
-const closeMobileMenu = () => {
-    isMobileMenuOpen.value = false;
-};
+import { RouterView } from 'vue-router'
+import AppHeader from './components/layout/AppHeader.vue'
+import SidebarNav from './components/layout/SidebarNav.vue'
+import SosModal from './components/layout/SosModal.vue'
+import { onMounted } from 'vue'
 
 onMounted(() => {
-    // Synchronize body class for global Vanilla CSS scoping
-    watchEffect(() => {
-        if (isDarkTheme.value) {
-            document.body.classList.add('dark-theme');
-        } else {
-            document.body.classList.remove('dark-theme');
-        }
-    });
-});
+  document.body.classList.add('dark-theme')
+})
 </script>
 
 <template>
-  <!-- Background Overlay from original app -->
-  <div class="overlay" :class="{ 'dark-theme': isDarkTheme }"></div>
-
-  <div class="app-wrapper" :class="{ 'dark-theme': isDarkTheme }">
-    <!-- Sidebar Navigation -->
-    <SidebarNav 
-      :is-mobile-menu-open="isMobileMenuOpen" 
-      @close-mobile="closeMobileMenu"
-    />
-
-    <!-- Main Content Area -->
+  <div class="overlay" id="blur-overlay"></div>
+  <div class="app-wrapper">
+    <AppHeader />
+    <SidebarNav />
     <main class="app-content">
-      <AppHeader @toggle-mobile-menu="toggleMobileMenu" />
-      
+      <h1 style="display: none;">Uki's Dive Tools</h1>
       <div class="tab-content-wrapper">
-        <router-view v-slot="{ Component }">
+        <RouterView v-slot="{ Component }">
           <transition name="fade" mode="out-in">
             <component :is="Component" />
           </transition>
-        </router-view>
+        </RouterView>
       </div>
     </main>
+    <SosModal />
   </div>
 </template>
 
 <style>
-/* Vue Specific Transitions that overlay on top of original CSS */
+/* Globalne tło i wyrównania dla Vue Router i starych divów */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-  transform: translateY(10px);
 }
 </style>
