@@ -1,7 +1,6 @@
 /* --- GŁÓWNY UKŁAD APLIKACJI --- */
 .app-wrapper {
     display: flex;
-    align-items: stretch;
     max-width: 1200px;
     margin: 5vh auto;
     border-radius: 12px;
@@ -19,16 +18,11 @@
     background-color: rgba(30, 30, 30, 0.4);
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
-<<<<<<< Updated upstream
-    padding: 15px 20px 15px 20px;
-=======
     padding: 15px 20px 30px 20px;
->>>>>>> Stashed changes
     box-sizing: border-box;
     flex-shrink: 0;
-    flex-grow: 1;
-    /* Stretch to fill container */
     border-right: 1px solid rgba(255, 255, 255, 0.1);
+    height: 100%;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -259,6 +253,7 @@
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
     padding: 0;
+    height: 100%;
     overflow: hidden;
     transition: background-color 0.3s, backdrop-filter 0.3s;
     /* Border Radius for Right Side */
