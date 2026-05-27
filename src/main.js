@@ -1,5 +1,6 @@
 import { AppUI } from './modules/ui/AppUI.js';
 import { DivemasterUI } from './modules/ui/DivemasterUI.js';
+import { LogbookUI } from './modules/ui/LogbookUI.js';
 
 // Initialize Application
 // Initialize Application
@@ -7,6 +8,7 @@ const initApp = () => {
     console.log("Starting App Initialization...");
     AppUI.init();
     DivemasterUI.init();
+    LogbookUI.init();
 
     console.log("Uki's Dive Tools Initialized (Module System)");
 };
