@@ -1,26 +1,35 @@
+import { DatabaseManager } from '../db/DatabaseManager.js';
+
 export const LogbookDB = {
     async init() {
-        if (!localStorage.getItem('uki_logbook_db')) {
-            localStorage.setItem('uki_logbook_db', JSON.stringify([]));
-        }
-        console.log("LogbookDB initialized (Local Storage Mode).");
+        await DatabaseManager.init();
+        console.log("LogbookDB initialized (SQLite Wasm Mode).");
     },
     
     async getAllLogs() {
         try {
-            const data = localStorage.getItem('uki_logbook_db');
-            return data ? JSON.parse(data) : [];
+            return await DatabaseManager.getLogs();
         } catch (e) {
-            console.error("Failed to parse logbook data", e);
+            console.error("Failed to fetch logs from SQLite", e);
             return [];
         }
     },
     
     async addLog(logData) {
-        const logs = await this.getAllLogs();
-        logData.id = Date.now(); // Simple unique ID
-        logs.push(logData);
-        localStorage.setItem('uki_logbook_db', JSON.stringify(logs));
-        return logData;
+        try {
+            return await DatabaseManager.addLog(logData);
+        } catch (e) {
+            console.error("Failed to add log to SQLite", e);
+            throw e;
+        }
+    },
+
+    async deleteLog(id) {
+        try {
+            await DatabaseManager.deleteLog(id);
+        } catch (e) {
+            console.error("Failed to delete log from SQLite", e);
+            throw e;
+        }
     }
 };

@@ -52,6 +52,7 @@
                 <li><a href="#" data-tab="ballast-calculator">Kalkulator Balastu</a></li>
                 <li><a href="#" data-tab="divemaster-tools">Narzędzia Divemastera</a></li>
                 <li><a href="#" data-tab="science-of-diving">Wiedza Nurkowa</a></li>
+                <li><a href="https://my.divessi.com" target="_blank">Platforma SSI</a></li>
                 <li class="game-menu-item"><a href="#" data-tab="river-dive-game"
                         style="color: #FFD700; font-weight: bold;">Uki's River Dive</a></li>
                 <li><a href="#" data-tab="settings-panel">Ustawienia</a></li>
@@ -129,6 +130,10 @@
                         <div class="dashboard-card" onclick="switchTab('science-of-diving')">
                             <h4>Wiedza</h4>
                             <p>Teoria i wzory nurkowe.</p>
+                        </div>
+                        <div class="dashboard-card" onclick="window.open('https://my.divessi.com', '_blank')">
+                            <h4>Platforma SSI</h4>
+                            <p>Zaloguj nurkowania na my.divessi.com.</p>
                         </div>
 
                         <!-- GAME TILE (Mobile Only) -->
@@ -947,6 +952,7 @@
                                             <button id="lecture-back-btn" class="secondary">Powrót</button>
                                         </div>
                                     </div>
+                                    <div id="lecture-audio-container"></div>
                                     <nav id="lecture-toc" class="lecture-toc" aria-hidden="true"></nav>
                                     <article id="lecture-body" class="lecture-body">
                                         <p>Brak wybranego wykładu.</p>

@@ -105,7 +105,7 @@ export const LogbookUI = {
                 return;
             }
 
-            let html = '<div class="dashboard-grid">';
+            let html = '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;">';
 
             logs.forEach(log => {
                 const gasColor = log.gasType === 'nitrox' ? '#42b883' : '#a0a0a0';

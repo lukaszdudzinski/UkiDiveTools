@@ -58,6 +58,7 @@ export const LecturesUI = {
         const lectureTitle = document.getElementById('lecture-title');
         const lectureBody = document.getElementById('lecture-body');
         const lectureToc = document.getElementById('lecture-toc');
+        const lectureAudioContainer = document.getElementById('lecture-audio-container');
 
         if (lectureTitle) lectureTitle.textContent = lecture.title;
 
@@ -80,6 +81,10 @@ export const LecturesUI = {
                     </p>
                 </div>
             `;
+        }
+        
+        if (lectureAudioContainer) {
+            lectureAudioContainer.innerHTML = audioHtml;
         }
 
         // Render Content (Supports both HTML string and Structured Data)
@@ -114,7 +119,7 @@ export const LecturesUI = {
         }
 
         if (lectureBody) {
-            lectureBody.innerHTML = imageHtml + audioHtml + tempDiv.innerHTML;
+            lectureBody.innerHTML = imageHtml + tempDiv.innerHTML;
 
             // Attach Lightbox listeners to NEWLY rendered infographics (from structured data)
             const newInfographics = lectureBody.querySelectorAll('.lecture-infographic.new-standard');
