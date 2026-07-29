@@ -93,6 +93,15 @@
                         <h2>Uki's Dive Tools</h2>
                         <p>Wybierz narzędzie z menu</p>
                     </div>
+                    
+                    <!-- LUNAR DIVERS SECTION -->
+                    <div class="lunar-divers-section" style="text-align: center; margin: 10px 0 30px 0;">
+                        <img src="img/lunar_logo.png" alt="Lunar Divers" style="max-height: 60px; margin-bottom: 15px;">
+                        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                            <a href="https://www.lunar-divers.com/" target="_blank" class="pro-calc-btn" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">OFERTA LUNAR DIVERS</a>
+                            <button class="pro-calc-btn" onclick="switchTab('lunar-calendar')">KALENDARZ SZKOLEŃ</button>
+                        </div>
+                    </div>
 
                     <!-- Dashboard Grid (Smart View: Hidden on Desktop, Visible on Mobile via CSS) -->
                     <div class="dashboard-grid">
@@ -159,7 +168,20 @@
                     </div>
                 </div>
 
-                <!-- NEW: LOGBOOK DASHBOARD -->
+                <!-- Lunar Calendar Tab -->
+                <div id="lunar-calendar" class="tab-content" style="display: none;">
+                    <h2>Kalendarz Lunar Divers</h2>
+                    
+                    <div id="calendar-entries" style="margin-top: 20px;">
+                        <!-- Wydarzenia będą ładowane dynamicznie przez CalendarUI -->
+                    </div>
+                    
+                    <div style="margin-top: 30px; text-align: center;">
+                        <button onclick="switchTab('welcome-screen')" class="pro-calc-btn" style="background: rgba(255, 255, 255, 0.1);">Wróć do Głównego Menu</button>
+                    </div>
+                </div>
+
+                <!-- Logbook Module -->
                 <div id="logbook-dashboard" class="tab-content" style="display: none;">
                     <div id="logbook-list-view">
                         <div class="view-header"

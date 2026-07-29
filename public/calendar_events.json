@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "title": "Szkolenie OWD",
+    "date": "2026-08-15",
+    "category": "szkolenie",
+    "description": "Zajęcia na basenie i teorii dla początkujących.",
+    "location": "Kraków - Basen AGH"
+  },
+  {
+    "id": 2,
+    "title": "Wyjazd nurkowy: Chorwacja",
+    "date": "2026-09-01",
+    "category": "wyjazd",
+    "description": "Tygodniowy wyjazd wrakowy dla zaawansowanych.",
+    "location": "Vis, Chorwacja"
+  }
+]
