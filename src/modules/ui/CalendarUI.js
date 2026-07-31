@@ -41,37 +41,37 @@ export const CalendarUI = {
                 // Numer telefonu i mail z zadania
                 const phone = '883929303';
                 const email = 'nurkujniebiegaj@gmail.com';
-                const subject = encodeURIComponent(\`Zapytanie o \${event.title} (\${event.date})\`);
-                const smsBody = encodeURIComponent(\`Cześć, proszę o info dotyczące \${event.title} z dnia \${event.date}.\`);
+                const subject = encodeURIComponent(`Zapytanie o ${event.title} (${event.date})`);
+                const smsBody = encodeURIComponent(`Cześć, proszę o info dotyczące ${event.title} z dnia ${event.date}.`);
 
-                html += \`
+                html += `
                     <div class="dashboard-card" style="text-align: left; position: relative; padding: 20px;">
-                        <div style="position: absolute; top: 15px; right: 15px; font-size: 0.8em; padding: 4px 8px; border-radius: 4px; background: \${badgeColor}; color: #111; font-weight: bold; text-transform: uppercase;">
-                            \${event.category}
+                        <div style="position: absolute; top: 15px; right: 15px; font-size: 0.8em; padding: 4px 8px; border-radius: 4px; background: ${badgeColor}; color: #111; font-weight: bold; text-transform: uppercase;">
+                            ${event.category}
                         </div>
-                        <h3 style="margin-bottom: 5px; color: #fff; padding-right: 70px;">\${event.title}</h3>
+                        <h3 style="margin-bottom: 5px; color: #fff; padding-right: 70px;">${event.title}</h3>
                         <p style="color: #00d1b2; font-size: 0.95em; margin-bottom: 15px;">
-                            <strong>📅 \${event.date}</strong><br>
-                            📍 \${event.location || 'Brak lokalizacji'}
+                            <strong>📅 ${event.date}</strong><br>
+                            📍 ${event.location || 'Brak lokalizacji'}
                         </p>
                         
                         <div style="font-size: 0.9em; color: #ccc; margin-bottom: 20px; min-height: 40px;">
-                            \${event.description || ''}
+                            ${event.description || ''}
                         </div>
                         
                         <div style="display: flex; gap: 5px; margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; justify-content: space-between;">
-                            <a href="tel:+48\${phone}" style="flex:1; text-decoration: none; text-align: center; background: rgba(255,255,255,0.1); color: #fff; padding: 10px 5px; border-radius: 6px; font-size: 0.85em; transition: 0.2s;">
+                            <a href="tel:+48${phone}" style="flex:1; text-decoration: none; text-align: center; background: rgba(255,255,255,0.1); color: #fff; padding: 10px 5px; border-radius: 6px; font-size: 0.85em; transition: 0.2s;">
                                 📞 Zadzwoń
                             </a>
-                            <a href="sms:+48\${phone}?body=\${smsBody}" style="flex:1; text-decoration: none; text-align: center; background: rgba(255,255,255,0.1); color: #fff; padding: 10px 5px; border-radius: 6px; font-size: 0.85em; transition: 0.2s;">
+                            <a href="sms:+48${phone}?body=${smsBody}" style="flex:1; text-decoration: none; text-align: center; background: rgba(255,255,255,0.1); color: #fff; padding: 10px 5px; border-radius: 6px; font-size: 0.85em; transition: 0.2s;">
                                 💬 SMS
                             </a>
-                            <a href="mailto:\${email}?subject=\${subject}" style="flex:1; text-decoration: none; text-align: center; background: rgba(255,255,255,0.1); color: #fff; padding: 10px 5px; border-radius: 6px; font-size: 0.85em; transition: 0.2s;">
+                            <a href="mailto:${email}?subject=${subject}" style="flex:1; text-decoration: none; text-align: center; background: rgba(255,255,255,0.1); color: #fff; padding: 10px 5px; border-radius: 6px; font-size: 0.85em; transition: 0.2s;">
                                 ✉️ Email
                             </a>
                         </div>
                     </div>
-                \`;
+                `;
             });
 
             html += '</div>';
@@ -85,7 +85,7 @@ export const CalendarUI = {
 
         } catch (error) {
             console.error("Error fetching calendar events:", error);
-            listContainer.innerHTML = \`<div class="result-error" style="color:#ff3860;">Nie udało się wczytać kalendarza. Sprawdź połączenie z internetem.</div>\`;
+            listContainer.innerHTML = `<div class="result-error" style="color:#ff3860;">Nie udało się wczytać kalendarza. Sprawdź połączenie z internetem.</div>`;
         }
     }
 };
