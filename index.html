@@ -53,6 +53,8 @@
                 <li><a href="#" data-tab="divemaster-tools">Narzędzia Divemastera</a></li>
                 <li><a href="#" data-tab="science-of-diving">Wiedza Nurkowa</a></li>
                 <li><a href="https://my.divessi.com" target="_blank">Platforma SSI</a></li>
+                <li><a href="https://www.lunar-divers.com/" target="_blank" style="color: #00d1b2; font-weight: bold;">Oferta Lunar Divers</a></li>
+                <li><a href="#" data-tab="lunar-calendar" style="color: #00d1b2; font-weight: bold;">Kalendarz Lunar Divers</a></li>
                 <li class="game-menu-item"><a href="#" data-tab="river-dive-game"
                         style="color: #FFD700; font-weight: bold;">Uki's River Dive</a></li>
                 <li><a href="#" data-tab="settings-panel">Ustawienia</a></li>
@@ -94,19 +96,19 @@
                         <p>Wybierz narzędzie z menu</p>
                     </div>
                     
-                    <!-- LUNAR DIVERS SECTION -->
-                    <div class="lunar-divers-section" style="text-align: center; margin: 10px 0 30px 0;">
-                        <img src="img/lunar_logo.png" alt="Lunar Divers" style="max-height: 60px; margin-bottom: 15px;">
-                        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                            <a href="https://www.lunar-divers.com/" target="_blank" class="pro-calc-btn" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">OFERTA LUNAR DIVERS</a>
-                            <button class="pro-calc-btn" onclick="switchTab('lunar-calendar')">KALENDARZ SZKOLEŃ</button>
-                        </div>
-                    </div>
-
                     <!-- Dashboard Grid (Smart View: Hidden on Desktop, Visible on Mobile via CSS) -->
                     <div class="dashboard-grid">
 
-
+                        <!-- LUNAR DIVERS MOBILE TILES -->
+                        <div class="dashboard-card" onclick="window.open('https://www.lunar-divers.com/', '_blank')" style="border-left: 4px solid #00d1b2;">
+                            <img src="img/lunar_logo.png" alt="Lunar Divers" style="max-height: 40px; margin-bottom: 10px;">
+                            <h4 style="color: #00d1b2;">Oferta Lunar Divers</h4>
+                            <p>Zapoznaj się z naszą aktualną ofertą szkoleniową i wyjazdową.</p>
+                        </div>
+                        <div class="dashboard-card" onclick="switchTab('lunar-calendar')" style="border-left: 4px solid #00d1b2;">
+                            <h4 style="color: #00d1b2;">Kalendarz Szkoleń</h4>
+                            <p>Zaplanuj rozwój, szkolenia, nurkowania i wyjazdy.</p>
+                        </div>
 
                         <div class="dashboard-card" onclick="switchTab('logbook-dashboard')">
                             <h4>Logbook</h4>

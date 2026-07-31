@@ -5,17 +5,13 @@ test.describe('Lunar Divers Integration', () => {
         // Go to app
         await page.goto('/');
 
-        // Wait for the app to load
+        // Wait for the layout to finish rendering
         await page.waitForLoadState('domcontentloaded');
 
-        // Verify we are on the welcome screen
-        const welcomeScreen = page.locator('#welcome-screen');
-        await expect(welcomeScreen).toBeVisible();
-
-        // Click the KALENDARZ SZKOLEŃ button
-        const calendarBtn = page.locator('button', { hasText: 'KALENDARZ SZKOLEŃ' });
-        await expect(calendarBtn).toBeVisible();
-        await calendarBtn.click();
+        // Click the Kalendarz Lunar Divers link in the sidebar
+        const calendarLink = page.locator('.sidebar-nav a', { hasText: 'Kalendarz Lunar Divers' });
+        await expect(calendarLink).toBeVisible();
+        await calendarLink.click();
 
         // Verify the calendar tab is now visible
         const calendarTab = page.locator('#lunar-calendar');
