@@ -1,0 +1,23 @@
+[
+    {
+        "date": "2026-08-15",
+        "title": "Przykładowe Nurkowanie",
+        "category": "nurkowanie",
+        "location": "Koparki, Jaworzno",
+        "description": "Otwarte nurkowanie dla zaawansowanych i początkujących."
+    },
+    {
+        "date": "2026-08-22",
+        "title": "Kurs OWD",
+        "category": "szkolenie",
+        "location": "Zakrzówek, Kraków",
+        "description": "Rozpoczęcie kursu Open Water Diver. Wymagane zapisy."
+    },
+    {
+        "date": "2026-09-05",
+        "title": "Wyjazd do Chorwacji",
+        "category": "wyjazd",
+        "location": "Wyspa Vis, Chorwacja",
+        "description": "Tygodniowy wyjazd nurkowy na wrakach."
+    }
+]
