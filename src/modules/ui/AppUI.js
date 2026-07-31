@@ -9,7 +9,7 @@ import { UkiRiverGameUI } from '../games/uki-river-dive/UkiRiverGameUI.js';
 import { ProAccess } from '../auth/ProAccess.js';
 import { populateTankSelect } from '../data/TankData.js';
 
-export const APP_VERSION = 'v2026.7.31.01'; // <-- TEN NUMER ZMIENIAMY PRZY KAŻDEJ AKTUALIZACJI
+export const APP_VERSION = 'v2026.7.31.02'; // <-- TEN NUMER ZMIENIAMY PRZY KAŻDEJ AKTUALIZACJI
 
 export const AppUI = {
     init: () => {
@@ -353,7 +353,7 @@ export const AppUI = {
     },
 
     initNavigation: () => {
-        const navLinks = document.querySelectorAll('.sidebar-nav ul a');
+        const navLinks = document.querySelectorAll('.sidebar-nav ul a[data-tab]');
         const tabContents = document.querySelectorAll('.app-content > .tab-content-wrapper > .tab-content');
         const homeLinkHeader = document.getElementById('home-link-header');
         const tilesHomeBtn = document.getElementById('tiles-mode-home-btn'); // New Button
