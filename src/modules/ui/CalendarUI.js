@@ -119,38 +119,86 @@ export const CalendarUI = {
         const email = 'nurkujniebiegaj@gmail.com';
 
         let eventsHtml = '';
-        events.forEach(event => {
+        events.forEach((event, index) => {
             let badgeColor = '#42b883';
             if (event.category === 'wyjazd') badgeColor = '#00d1b2';
             if (event.category === 'nurkowanie') badgeColor = '#3273dc';
 
+            let smsTemplate = `Cześć. Poproszę o info dotyczące ${event.title} z dnia ${event.date}.`;
+            if (event.category === 'nurkowanie') {
+                smsTemplate = `Cześć. Poproszę o rezerwację miejsca na nurkowanie w dniu ${event.date}.`;
+            } else if (event.category === 'szkolenie' || event.category === 'kurs') {
+                smsTemplate = `Cześć. Poproszę o rezerwację miejsca na kurs ${event.title} w dniach ${event.date}.`;
+            }
+            const smsBody = encodeURIComponent(smsTemplate);
             const subject = encodeURIComponent(`Zapytanie o ${event.title} (${event.date})`);
-            const smsBody = encodeURIComponent(`Cześć, proszę o info dotyczące ${event.title} z dnia ${event.date}.`);
+            const emailBody = smsBody;
+
+            const mapLink = event.location ? `https://maps.google.com/?q=${encodeURIComponent(event.location)}` : '#';
+            const eventId = `event-${index}`;
+
+            const btnStyle = "flex:1; text-decoration: none; text-align: center; background: rgba(255,255,255,0.1); color: #fff; padding: 10px 2px; border-radius: 6px; font-size: 0.75em; transition: 0.2s; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center;";
 
             eventsHtml += `
                 <div class="dashboard-card" style="text-align: left; position: relative; padding: 20px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.1);">
-                    <div style="position: absolute; top: 15px; right: 15px; font-size: 0.8em; padding: 4px 8px; border-radius: 4px; background: ${badgeColor}; color: #111; font-weight: bold; text-transform: uppercase;">
-                        ${event.category}
+                    
+                    <div style="text-align: center; margin-bottom: 10px;">
+                        <span style="font-size: 0.8em; padding: 4px 8px; border-radius: 4px; background: ${badgeColor}; color: #111; font-weight: bold; text-transform: uppercase;">
+                            ${event.category}
+                        </span>
                     </div>
-                    <h3 style="margin-top: 0; margin-bottom: 5px; color: #fff; padding-right: 70px;">${event.title}</h3>
-                    <p style="color: #00d1b2; font-size: 0.95em; margin-bottom: 15px;">
-                        📍 ${event.location || 'Brak lokalizacji'}
+
+                    <h3 style="margin-top: 0; margin-bottom: 5px; color: #fff; text-align: center;">${event.title}</h3>
+                    
+                    <p style="color: #00d1b2; font-size: 0.95em; margin-bottom: 15px; text-align: center;">
+                        📍 ${event.location ? `<a href="${mapLink}" target="_blank" style="color: #00d1b2; text-decoration: underline;">${event.location}</a>` : 'Brak lokalizacji'}
                     </p>
-                    <div style="font-size: 0.9em; color: #ccc; margin-bottom: 20px;">
+                    
+                    <div style="font-size: 0.9em; color: #ccc; margin-bottom: 20px; text-align: center;">
                         ${event.description || ''}
                     </div>
                     
                     <div style="display: flex; gap: 5px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; justify-content: space-between;">
-                        <a href="tel:+48${phone}" style="flex:1; text-decoration: none; text-align: center; background: rgba(255,255,255,0.1); color: #fff; padding: 10px 5px; border-radius: 6px; font-size: 0.85em; transition: 0.2s;">
-                            📞 Zadzwoń
+                        <a href="tel:+48${phone}" class="modal-action-btn" style="${btnStyle}">
+                            <div style="font-size: 1.4em; margin-bottom: 4px;">📞</div>
+                            Zadzwoń
                         </a>
-                        <a href="sms:+48${phone}?body=${smsBody}" style="flex:1; text-decoration: none; text-align: center; background: rgba(255,255,255,0.1); color: #fff; padding: 10px 5px; border-radius: 6px; font-size: 0.85em; transition: 0.2s;">
-                            💬 SMS
+                        <a href="sms:+48${phone}?body=${smsBody}" class="modal-action-btn" style="${btnStyle}">
+                            <div style="font-size: 1.4em; margin-bottom: 4px;">💬</div>
+                            SMS
                         </a>
-                        <a href="mailto:${email}?subject=${subject}" style="flex:1; text-decoration: none; text-align: center; background: rgba(255,255,255,0.1); color: #fff; padding: 10px 5px; border-radius: 6px; font-size: 0.85em; transition: 0.2s;">
-                            ✉️ Email
+                        <a href="mailto:${email}?subject=${subject}&body=${emailBody}" class="modal-action-btn" style="${btnStyle}">
+                            <div style="font-size: 1.4em; margin-bottom: 4px;">✉️</div>
+                            Email
                         </a>
+                        <button class="modal-action-btn toggle-payment-btn" data-target="payment-${eventId}" style="${btnStyle}">
+                            <div style="font-size: 1.4em; margin-bottom: 4px;">💳</div>
+                            Zaliczka
+                        </button>
                     </div>
+
+                    <div class="payment-details" id="payment-${eventId}">
+                        <div class="payment-row">
+                            <div>Odbiorca:<br><strong>Tomasz Biegaj</strong></div>
+                            <button class="copy-btn" data-copy="Tomasz Biegaj">Kopiuj</button>
+                        </div>
+                        <div class="payment-row">
+                            <div>Konto:<br><strong>12 3456 7890 0000 0000 0000 0000</strong></div>
+                            <button class="copy-btn" data-copy="12345678900000000000000000">Kopiuj</button>
+                        </div>
+                        <div class="payment-row">
+                            <div>Tytuł:<br><strong>Zaliczka na ${event.title}</strong></div>
+                            <button class="copy-btn" data-copy="Zaliczka na ${event.title}">Kopiuj</button>
+                        </div>
+                        <div class="payment-row">
+                            <div>BLIK:<br><strong>883 929 303</strong></div>
+                            <button class="copy-btn" data-copy="883929303">Kopiuj</button>
+                        </div>
+                        <div style="margin-top: 10px; font-size: 0.8em; color: #ffdd57; text-align: center; line-height: 1.2;">
+                            (Uwaga: Numer bankowy tylko do testów, nie wykonuj na niego przelewu!)
+                        </div>
+                    </div>
+
                 </div>
             `;
         });
@@ -160,7 +208,7 @@ export const CalendarUI = {
         overlay.innerHTML = `
             <div class="calendar-modal">
                 <button class="calendar-modal-close">&times;</button>
-                <h2 style="margin-top: 0; color: #00d1b2; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 15px;">
+                <h2 style="margin-top: 0; color: #00d1b2; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 15px; text-align: center;">
                     Wydarzenia z dnia:<br>
                     <small style="color: #fff;">${dateStr}</small>
                 </h2>
@@ -173,9 +221,51 @@ export const CalendarUI = {
         document.body.appendChild(overlay);
 
         // Add hover effects for dynamically created buttons inside modal
-        overlay.querySelectorAll('a').forEach(btn => {
+        overlay.querySelectorAll('.modal-action-btn').forEach(btn => {
             btn.addEventListener('mouseenter', () => btn.style.background = 'rgba(255,255,255,0.2)');
-            btn.addEventListener('mouseleave', () => btn.style.background = 'rgba(255,255,255,0.1)');
+            btn.addEventListener('mouseleave', () => {
+                if (!btn.classList.contains('active-payment-btn')) {
+                    btn.style.background = 'rgba(255,255,255,0.1)';
+                }
+            });
+        });
+
+        // Payment toggle logic
+        overlay.querySelectorAll('.toggle-payment-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const targetId = btn.getAttribute('data-target');
+                const targetEl = document.getElementById(targetId);
+                if (targetEl) {
+                    targetEl.classList.toggle('active');
+                    if (targetEl.classList.contains('active')) {
+                        btn.classList.add('active-payment-btn');
+                        btn.style.background = 'rgba(0, 209, 178, 0.3)';
+                    } else {
+                        btn.classList.remove('active-payment-btn');
+                        btn.style.background = 'rgba(255,255,255,0.2)'; // hovered state since mouse is on it
+                    }
+                }
+            });
+        });
+
+        // Copy logic
+        overlay.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const textToCopy = btn.getAttribute('data-copy');
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        const originalText = btn.innerText;
+                        btn.innerText = 'Skopiowano!';
+                        btn.style.background = '#00d1b2';
+                        btn.style.color = '#111';
+                        setTimeout(() => {
+                            btn.innerText = originalText;
+                            btn.style.background = '';
+                            btn.style.color = '';
+                        }, 2000);
+                    });
+                }
+            });
         });
 
         // Trigger animation
