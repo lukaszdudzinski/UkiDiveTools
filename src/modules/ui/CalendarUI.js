@@ -167,19 +167,19 @@ export const CalendarUI = {
                         </a>
                         <a href="sms:+48${phone}?body=${smsBody}" class="modal-action-btn" style="${btnStyle}">
                             <div style="margin-bottom: 4px; display: flex; align-items: center; justify-content: center; height: 24px;">
-                                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="transform: scale(1.15)"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/></svg>
+                                <svg viewBox="0 0 24 24" width="25" height="25" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/></svg>
                             </div>
                             SMS
                         </a>
                         <a href="mailto:${email}?subject=${subject}&body=${emailBody}" class="modal-action-btn" style="${btnStyle}">
                             <div style="margin-bottom: 4px; display: flex; align-items: center; justify-content: center; height: 24px;">
-                                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="transform: scale(1.3)"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                                <svg viewBox="0 0 24 24" width="29" height="29" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
                             </div>
                             Email
                         </a>
                         <button class="modal-action-btn toggle-payment-btn" data-target="payment-${eventId}" style="${btnStyle}">
                             <div style="margin-bottom: 4px; display: flex; align-items: center; justify-content: center; height: 24px;">
-                                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="transform: scale(1.3)"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                                <svg viewBox="0 0 24 24" width="29" height="29" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
                             </div>
                             Płatność
                         </button>

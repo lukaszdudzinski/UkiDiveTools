@@ -4,20 +4,20 @@
         "title": "Przykładowe Nurkowanie",
         "category": "nurkowanie",
         "location": "Koparki, Jaworzno",
-        "description": "Otwarte nurkowanie dla zaawansowanych i początkujących."
+        "description": "Otwarte nurkowanie dla zaawansowanych i początkujących.<br><br><span style=\"color: #ff3860; font-weight: bold;\">Wpisy testowe - nie wykonuj płatności</span>"
     },
     {
         "date": "2026-08-22",
         "title": "Kurs OWD",
         "category": "szkolenie",
         "location": "Zakrzówek, Kraków",
-        "description": "Rozpoczęcie kursu Open Water Diver. Wymagane zapisy."
+        "description": "Rozpoczęcie kursu Open Water Diver. Wymagane zapisy.<br><br><span style=\"color: #ff3860; font-weight: bold;\">Wpisy testowe - nie wykonuj płatności</span>"
     },
     {
         "date": "2026-09-05",
         "title": "Wyjazd do Chorwacji",
         "category": "wyjazd",
         "location": "Wyspa Vis, Chorwacja",
-        "description": "Tygodniowy wyjazd nurkowy na wrakach."
+        "description": "Tygodniowy wyjazd nurkowy na wrakach.<br><br><span style=\"color: #ff3860; font-weight: bold;\">Wpisy testowe - nie wykonuj płatności</span>"
     }
 ]
