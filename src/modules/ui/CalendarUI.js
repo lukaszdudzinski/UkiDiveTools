@@ -160,19 +160,27 @@ export const CalendarUI = {
                     
                     <div style="display: flex; gap: 5px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; justify-content: space-between;">
                         <a href="tel:+48${phone}" class="modal-action-btn" style="${btnStyle}">
-                            <div style="font-size: 1.4em; margin-bottom: 4px;">📞</div>
+                            <div style="margin-bottom: 4px; display: flex; align-items: center; justify-content: center; height: 24px;">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                            </div>
                             Zadzwoń
                         </a>
                         <a href="sms:+48${phone}?body=${smsBody}" class="modal-action-btn" style="${btnStyle}">
-                            <div style="font-size: 1.4em; margin-bottom: 4px;">💬</div>
+                            <div style="margin-bottom: 4px; display: flex; align-items: center; justify-content: center; height: 24px;">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/></svg>
+                            </div>
                             SMS
                         </a>
                         <a href="mailto:${email}?subject=${subject}&body=${emailBody}" class="modal-action-btn" style="${btnStyle}">
-                            <div style="font-size: 1.4em; margin-bottom: 4px;">✉️</div>
+                            <div style="margin-bottom: 4px; display: flex; align-items: center; justify-content: center; height: 24px;">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            </div>
                             Email
                         </a>
                         <button class="modal-action-btn toggle-payment-btn" data-target="payment-${eventId}" style="${btnStyle}">
-                            <div style="font-size: 1.4em; margin-bottom: 4px;">💳</div>
+                            <div style="margin-bottom: 4px; display: flex; align-items: center; justify-content: center; height: 24px;">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                            </div>
                             Zaliczka
                         </button>
                     </div>
