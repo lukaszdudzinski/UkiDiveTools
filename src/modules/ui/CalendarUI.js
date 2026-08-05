@@ -181,7 +181,7 @@ export const CalendarUI = {
                             <div style="margin-bottom: 4px; display: flex; align-items: center; justify-content: center; height: 24px;">
                                 <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
                             </div>
-                            Zaliczka
+                            Płatność
                         </button>
                     </div>
 
@@ -195,8 +195,8 @@ export const CalendarUI = {
                             <button class="copy-btn" data-copy="12345678900000000000000000">Kopiuj</button>
                         </div>
                         <div class="payment-row">
-                            <div>Tytuł:<br><strong>Zaliczka na ${event.title}</strong></div>
-                            <button class="copy-btn" data-copy="Zaliczka na ${event.title}">Kopiuj</button>
+                            <div>Tytuł:<br><strong>Płatność za ${event.title}</strong></div>
+                            <button class="copy-btn" data-copy="Płatność za ${event.title}">Kopiuj</button>
                         </div>
                         <div class="payment-row">
                             <div>BLIK:<br><strong>883 929 303</strong></div>
