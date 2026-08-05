@@ -158,30 +158,30 @@ export const CalendarUI = {
                         ${event.description || ''}
                     </div>
                     
-                    <div style="display: flex; gap: 5px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; justify-content: space-between;">
-                        <a href="tel:+48${phone}" class="modal-action-btn" style="${btnStyle} flex: 1 1 0px; box-sizing: border-box; height: 64px;">
-                            <div style="margin-bottom: 4px; display: flex; align-items: center; justify-content: center; height: 24px;">
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                        <a href="tel:+48${phone}" class="modal-action-btn" style="${btnStyle} width: 100%; box-sizing: border-box; height: 64px; justify-content: space-evenly; padding: 5px 2px;">
+                            <div style="display: flex; align-items: center; justify-content: center; height: 24px;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                             </div>
-                            Zadzwoń
+                            <span style="font-size: 0.9em;">Zadzwoń</span>
                         </a>
-                        <a href="sms:+48${phone}?body=${smsBody}" class="modal-action-btn" style="${btnStyle} flex: 1 1 0px; box-sizing: border-box; height: 64px;">
-                            <div style="margin-bottom: 4px; display: flex; align-items: center; justify-content: center; height: 24px;">
+                        <a href="sms:+48${phone}?body=${smsBody}" class="modal-action-btn" style="${btnStyle} width: 100%; box-sizing: border-box; height: 64px; justify-content: space-evenly; padding: 5px 2px;">
+                            <div style="display: flex; align-items: center; justify-content: center; height: 24px;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                             </div>
-                            SMS
+                            <span style="font-size: 0.9em;">SMS</span>
                         </a>
-                        <a href="mailto:${email}?subject=${subject}&body=${emailBody}" class="modal-action-btn" style="${btnStyle} flex: 1 1 0px; box-sizing: border-box; height: 64px;">
-                            <div style="margin-bottom: 4px; display: flex; align-items: center; justify-content: center; height: 24px;">
+                        <a href="mailto:${email}?subject=${subject}&body=${emailBody}" class="modal-action-btn" style="${btnStyle} width: 100%; box-sizing: border-box; height: 64px; justify-content: space-evenly; padding: 5px 2px;">
+                            <div style="display: flex; align-items: center; justify-content: center; height: 24px;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
                             </div>
-                            Email
+                            <span style="font-size: 0.9em;">Email</span>
                         </a>
-                        <button class="modal-action-btn toggle-payment-btn" data-target="payment-${eventId}" style="${btnStyle} flex: 1 1 0px; box-sizing: border-box; height: 64px;">
-                            <div style="margin-bottom: 4px; display: flex; align-items: center; justify-content: center; height: 24px;">
+                        <button class="modal-action-btn toggle-payment-btn" data-target="payment-${eventId}" style="${btnStyle} width: 100%; box-sizing: border-box; height: 64px; justify-content: space-evenly; padding: 5px 2px;">
+                            <div style="display: flex; align-items: center; justify-content: center; height: 24px;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg>
                             </div>
-                            Płatność
+                            <span style="font-size: 0.9em;">Płatność</span>
                         </button>
                     </div>
 
