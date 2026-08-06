@@ -263,3 +263,65 @@
         transform: translateY(0);
     }
 }
+
+/* 2. PWA Update Banner (Top fixed) */
+.pwa-update-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #FF9800; /* Orange alert color */
+    color: #000;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    z-index: 10001; /* Above standard overlay */
+    animation: slideDownUpdate 0.5s ease-out;
+    box-sizing: border-box;
+}
+
+@keyframes slideDownUpdate {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+}
+
+.pwa-update-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.pwa-update-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.pwa-update-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.pwa-update-btn.primary {
+    background-color: #000;
+    color: #FF9800;
+}
+
+.pwa-update-btn.primary:active {
+    transform: scale(0.95);
+}
+
+.pwa-update-btn.secondary {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #000;
+    border: 1px solid #000;
+}
+
+.pwa-update-btn.secondary:active {
+    background-color: rgba(0, 0, 0, 0.2);
+}

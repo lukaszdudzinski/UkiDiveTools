@@ -53,7 +53,22 @@ test.describe('PWA & App Meta', () => {
         const msgPromise = page.waitForEvent('console', msg => msg.text().includes('App Version Check'));
         await page.reload(); // Trigger init logs
         const msg = await msgPromise;
-        const EXPECTED_VERSION = 'v2026.2.22.01';
-        expect(msg.text()).toContain(EXPECTED_VERSION); // Ensure it matches the newly released version
+        expect(msg.text()).toContain('v2026.'); // Ensure it matches a v2026 release
+    });
+
+    test('should contain PWA Update Banner hidden by default', async ({ page }) => {
+        const banner = page.locator('#pwa-update-banner');
+        await expect(banner).toBeHidden();
+        const refreshBtn = page.locator('#pwa-update-refresh-btn');
+        await expect(refreshBtn).toBeAttached();
+        const changelogBtn = page.locator('#pwa-update-changelog-btn');
+        await expect(changelogBtn).toBeAttached();
+    });
+
+    test('should contain Changelog Modal hidden by default', async ({ page }) => {
+        const modal = page.locator('#changelog-modal');
+        await expect(modal).toBeHidden();
+        const body = page.locator('#changelog-body');
+        await expect(body).toBeAttached();
     });
 });

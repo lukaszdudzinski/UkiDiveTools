@@ -1,0 +1,19 @@
+[
+  {
+    "version": "v2026.8.05.06",
+    "date": "2026-08-05",
+    "changes": [
+      "Wdrożenie systemu Changeloga i Banera Aktualizacji PWA.",
+      "Poprawka CSS Grid dla przycisków akcji w kalendarzu - idealnie równe szerokości przycisków (Zadzwoń, SMS, Email, Płatność).",
+      "Aktualizacja ikon Lucide na wersje outline dla ujednolicenia designu."
+    ]
+  },
+  {
+    "version": "v2026.8.05.05",
+    "date": "2026-08-05",
+    "changes": [
+      "Poprawa układu paska z danymi do płatności w widoku wydarzenia.",
+      "Dodanie czerwonego ostrzeżenia do testowych wpisów w kalendarzu."
+    ]
+  }
+]

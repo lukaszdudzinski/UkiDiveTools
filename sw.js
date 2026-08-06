@@ -12,7 +12,7 @@ const CORE_ASSETS = [
 ];
 
 self.addEventListener('install', (e) => {
-    self.skipWaiting(); // Activate worker immediately
+    // Usunięto self.skipWaiting(), aby worker czekał na zatwierdzenie przez użytkownika (Baner PWA)
     e.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
             return cache.addAll(CORE_ASSETS);
@@ -62,3 +62,8 @@ self.addEventListener('fetch', (e) => {
     );
 });
 
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+        self.skipWaiting();
+    }
+});

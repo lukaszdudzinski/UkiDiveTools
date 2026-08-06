@@ -1177,18 +1177,94 @@
         </div>
     </div>
 
+    <!-- PWA Update Banner -->
+    <div id="pwa-update-banner" class="pwa-update-banner" style="display: none;">
+        <div class="pwa-update-title">Dostępna nowa aktualizacja! 🚀</div>
+        <div class="pwa-update-actions">
+            <button id="pwa-update-refresh-btn" class="pwa-update-btn primary">Odśwież (Zaktualizuj)</button>
+            <button id="pwa-update-changelog-btn" class="pwa-update-btn secondary">Co nowego?</button>
+        </div>
+    </div>
+
+    <!-- Changelog Modal -->
+    <div id="changelog-modal" class="changelog-modal" style="display: none;">
+        <div class="changelog-content">
+            <div class="changelog-header">
+                <h3>Co nowego?</h3>
+                <button id="changelog-close-btn" class="changelog-close-btn">&times;</button>
+            </div>
+            <div id="changelog-body" class="changelog-body">
+                <!-- Wypełniane dynamicznie -->
+            </div>
+            <div class="changelog-footer">
+                <button id="changelog-footer-refresh-btn" class="pwa-update-btn primary" style="width: 100%;">Zaktualizuj teraz 🚀</button>
+            </div>
+        </div>
+    </div>
 
     <script type="module" src="src/main.js"></script>
     <script type="module" src="src/version_check.js"></script>
     <script>
+        let newWorker;
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js')
-                .then(() => console.log('Service Worker Registered'))
+                .then(reg => {
+                    console.log('Service Worker Registered');
+                    reg.addEventListener('updatefound', () => {
+                        newWorker = reg.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                // Pokaż baner, jeśli to jest nowa wersja, a stara nadal działa
+                                document.getElementById('pwa-update-banner').style.display = 'block';
+                            }
+                        });
+                    });
+                })
                 .catch(err => console.log('SW Registration Failed', err));
-        }
-    </script>
 
-    <!-- PWA Install Banner -->
+            // Nasłuchiwanie na kontroler, żeby odświeżyć po akceptacji SKIP_WAITING
+            let refreshing = false;
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (!refreshing) {
+                    window.location.reload();
+                    refreshing = true;
+                }
+            });
+        }
+
+        // Obsługa kliknięć banera i modala
+        document.getElementById('pwa-update-refresh-btn')?.addEventListener('click', () => {
+            if (newWorker) newWorker.postMessage({ type: 'SKIP_WAITING' });
+        });
+        
+        document.getElementById('changelog-footer-refresh-btn')?.addEventListener('click', () => {
+            if (newWorker) newWorker.postMessage({ type: 'SKIP_WAITING' });
+        });
+
+        document.getElementById('pwa-update-changelog-btn')?.addEventListener('click', async () => {
+            document.getElementById('changelog-modal').style.display = 'flex';
+            const body = document.getElementById('changelog-body');
+            body.innerHTML = '<p>Ładowanie zmian...</p>';
+            try {
+                const res = await fetch('CHANGELOG.json?t=' + Date.now());
+                const data = await res.json();
+                body.innerHTML = data.map(v => `
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="margin: 0 0 10px 0; color: #fff;">Wersja ${v.version}</h4>
+                        <ul style="margin: 0; padding-left: 20px; color: var(--text-muted, #b0b0b0);">
+                            ${v.changes.map(c => `<li style="margin-bottom: 6px;">${c}</li>`).join('')}
+                        </ul>
+                    </div>
+                `).join('');
+            } catch(e) {
+                body.innerHTML = '<p>Błąd ładowania changeloga.</p>';
+            }
+        });
+
+        document.getElementById('changelog-close-btn')?.addEventListener('click', () => {
+            document.getElementById('changelog-modal').style.display = 'none';
+        });
+    </script>
     <div id="pwa-install-banner">
         <div class="pwa-banner-content">
             <div class="pwa-icon-container">
