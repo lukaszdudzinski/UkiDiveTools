@@ -5,7 +5,7 @@ const CORE_ASSETS = [
     './index.html',
     './style.css',
     './src/main.js',
-    './img/logo.jpg',
+    './img/logo.png',
     './img/logo_lunar.svg',
     './img/bg/background_uki.jpg',
     './manifest.json'

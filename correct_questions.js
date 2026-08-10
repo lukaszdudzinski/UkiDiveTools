@@ -145,7 +145,7 @@ function showGameOver() {
 
     quizResultScreen.innerHTML = `
         <div class="game-over-container">
-            <img src="img/logo.jpg" alt="Uki" class="game-over-logo">
+            <img src="img/logo.png" alt="Uki" class="game-over-logo">
             <h2 class="game-over-title">GAME OVER !!!</h2>
             <p class="game-over-subtitle">Trzy błędne odpowiedzi!</p>
             <p class="game-over-warning">Nie wchodź do wody!!!</p>

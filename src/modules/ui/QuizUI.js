@@ -180,7 +180,7 @@ export const QuizUI = {
                 padding: 0;
                 box-sizing: border-box;
             ">
-                <img src="img/logo.jpg" class="game-over-logo" alt="Game Over Logo" style="
+                <img src="img/logo.png" class="game-over-logo" alt="Game Over Logo" style="
                     width: 100px; 
                     height: 100px; 
                     border-radius: 50%; 
