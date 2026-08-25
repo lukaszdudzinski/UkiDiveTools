@@ -1,5 +1,12 @@
 [
   {
+    "version": "v2026.8.25.03",
+    "date": "2026-08-25",
+    "changes": [
+      "🚀 Pełne wdrożenie zautomatyzowanego skryptu wersji chroniącego przed pętlą aktualizacji PWA."
+    ]
+  },
+  {
     "version": "v2026.8.25.2",
     "date": "2026-08-25",
     "changes": [

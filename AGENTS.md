@@ -22,6 +22,12 @@ Podczas wdrażania zmian, podbijania wersji i tworzenia wpisów w `CHANGELOG.jso
 *   **ZAKAZ stawiania kropki bezpośrednio po literze `v`** (niedozwolone: `v.2026...`, poprawne: `v2026...`).
 *   Wersja musi być spójnie podbita w: `CHANGELOG.json`, `index.html` (meta tag), `sw.js` (nazwa cache) oraz głównym pliku UI.
 
+### 4. Zasada Pętli Aktualizacji i Skrypt Wersji (NIGDY nie rób tego ręcznie!):
+Aby uniknąć krytycznej usterki polegającej na ciągłym przeładowywaniu się aplikacji PWA, **NIGDY nie wpisuj nowych wersji ręcznie** do plików `AppUI.js`, `main.js`, `CHANGELOG.json`, `index.html` czy `sw.js`. 
+Po dokonaniu jakiejkolwiek zmiany w kodzie i konieczności wydania aktualizacji dla użytkownika, **ZAWSZE uruchamiaj polecenie w terminalu**: 
+`node scripts/version.mjs "🚀 [Twój opis zmian]"`
+Skrypt ten sam idealnie zsynchronizuje wersje we wszystkich plikach i zapobiegnie "Zasadzie Pętli Aktualizacji".
+
 ---
 **Przykład idealnego wpisu do `CHANGELOG.json`:**
 ```json
