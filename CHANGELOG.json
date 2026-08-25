@@ -1,5 +1,12 @@
 [
   {
+    "version": "v2026.8.25.06",
+    "date": "2026-08-25",
+    "changes": [
+      "🚀 Wymuszenie aktualizacji cache dla urządzeń mobilnych (Force Update)."
+    ]
+  },
+  {
     "version": "v2026.8.25.05",
     "date": "2026-08-25",
     "changes": [
