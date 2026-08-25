@@ -9,7 +9,7 @@ import { UkiRiverGameUI } from '../games/uki-river-dive/UkiRiverGameUI.js';
 import { ProAccess } from '../auth/ProAccess.js';
 import { populateTankSelect } from '../data/TankData.js';
 
-export const APP_VERSION = 'v2026.8.25.04'; // <-- TEN NUMER ZMIENIAMY PRZY KAŻDEJ AKTUALIZACJI
+export const APP_VERSION = 'v2026.8.25.05'; // <-- TEN NUMER ZMIENIAMY PRZY KAŻDEJ AKTUALIZACJI
 
 export const AppUI = {
     init: () => {
@@ -375,6 +375,8 @@ export const AppUI = {
                 if (content.id === tabId) {
                     content.classList.add('active-tab');
                     content.style.display = 'block';
+                    
+                    document.dispatchEvent(new CustomEvent('tabChanged', { detail: { tab: tabId } }));
 
                     // Special case for Game
                     if (tabId === 'river-dive-game' && UkiRiverGameUI.canvas) {
@@ -467,6 +469,7 @@ export const AppUI = {
             if (toolSection) {
                 toolSection.style.display = 'block';
                 toolSection.classList.add('active-tab');
+                document.dispatchEvent(new CustomEvent('tabChanged', { detail: { tab: toolId } }));
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };

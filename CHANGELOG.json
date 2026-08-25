@@ -1,5 +1,12 @@
 [
   {
+    "version": "v2026.8.25.05",
+    "date": "2026-08-25",
+    "changes": [
+      "🛠️ Naprawiono błąd pustej zakładki Diagnostyki (dodano nasłuchiwanie zdarzeń zakładek)."
+    ]
+  },
+  {
     "version": "v2026.8.25.04",
     "date": "2026-08-25",
     "changes": [
