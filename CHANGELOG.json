@@ -1,5 +1,12 @@
 [
   {
+    "version": "v2026.8.25.07",
+    "date": "2026-08-25",
+    "changes": [
+      "🛠️ Krytyczny Bugfix: Przełamanie PWA Deadlock (przywrócono skipWaiting, by przepchnąć nowe pliki na stare urządzenia)."
+    ]
+  },
+  {
     "version": "v2026.8.25.06",
     "date": "2026-08-25",
     "changes": [
