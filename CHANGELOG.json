@@ -1,5 +1,12 @@
 [
   {
+    "version": "v2026.8.25.08",
+    "date": "2026-08-25",
+    "changes": [
+      "📱 Zmiana nazwy przełącznika na 'Rozmycie Tapety' i zwiększenie przezroczystości."
+    ]
+  },
+  {
     "version": "v2026.8.25.07",
     "date": "2026-08-25",
     "changes": [

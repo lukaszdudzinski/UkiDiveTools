@@ -99,14 +99,14 @@ body:not(.dark-theme) .sub-tab-button.active {
 /* --- WYŁĄCZONE SZKŁO (Glass OFF) --- */
 body.glass-off .sidebar-nav,
 body.glass-off .app-content {
-    background-color: rgba(30, 30, 30, 0.6);
+    background-color: rgba(30, 30, 30, 0.3);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
 }
 
 body.glass-off:not(.dark-theme) .sidebar-nav,
 body.glass-off:not(.dark-theme) .app-content {
-    background-color: rgba(244, 244, 244, 0.65);
+    background-color: rgba(244, 244, 244, 0.3);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
 }
