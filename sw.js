@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ukis-dive-tools-v2026.8.25.1'; // Release v2026.8.25.1
+const CACHE_NAME = 'ukis-dive-tools-v2026.8.25.2'; // Release v2026.8.25.2
 // Core assets that MUST be cached immediately
 const CORE_ASSETS = [
     './',
@@ -15,7 +15,13 @@ self.addEventListener('install', (e) => {
     // Usunięto self.skipWaiting(), aby worker czekał na zatwierdzenie przez użytkownika (Baner PWA)
     e.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll(CORE_ASSETS);
+            return Promise.all(CORE_ASSETS.map(url => 
+                fetch(new Request(url + '?_t=' + Date.now(), { cache: 'no-store' }))
+                .then(r => { 
+                    if(!r.ok) throw new Error('Fetch failed for ' + url); 
+                    return cache.put(new Request(url), r); 
+                })
+            ));
         })
     );
 });
