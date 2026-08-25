@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ukis-dive-tools-v2026.8.05.06'; // Release v2026.8.05.06
+const CACHE_NAME = 'ukis-dive-tools-v2026.8.25.1'; // Release v2026.8.25.1
 // Core assets that MUST be cached immediately
 const CORE_ASSETS = [
     './',
@@ -63,7 +63,7 @@ self.addEventListener('fetch', (e) => {
 });
 
 self.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'SKIP_WAITING') {
+    if (event.data === 'SKIP_WAITING' || (event.data && event.data.type === 'SKIP_WAITING')) {
         self.skipWaiting();
     }
 });

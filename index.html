@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#00d1b2">
+    <meta name="app-version" content="v2026.8.25.1">
     <title>Uki's Dive Tools</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="game_styles.css">
@@ -67,6 +69,7 @@
                 <li><a href="#" data-tab="lunar-calendar" style="color: #00d1b2; font-weight: bold;">Kalendarz Lunar Divers</a></li>
                 <li class="game-menu-item"><a href="#" data-tab="river-dive-game"
                         style="color: #FFD700; font-weight: bold;">Uki's River Dive</a></li>
+                <li><a href="#" data-tab="diagnostics-dashboard">Diagnostyka</a></li>
                 <li><a href="#" data-tab="settings-panel">Ustawienia</a></li>
             </ul>
 
@@ -292,6 +295,10 @@
                             </div>
                         </form>
                     </div>
+                </div>
+                
+                <div id="diagnostics-dashboard" class="tab-content" style="display: none;">
+                    <div id="diagnostics-content-wrapper"></div>
                 </div>
 
                 <div id="pro-dashboard" class="tab-content">
@@ -1001,7 +1008,36 @@
                 <div id="river-dive-game" class="tab-content game-mode"></div>
 
                 <div id="settings-panel" class="tab-content">
-                    <h3>Ustawienia</h3>
+                    <h3>Ustawienia i Profil</h3>
+                    
+                    <div class="profile-section" style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 8px; border: 1px solid #00BFFF; margin-bottom: 20px;">
+                        <h4 style="margin-top: 0; color: #00BFFF;">Twój Profil</h4>
+                        
+                        <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px;">
+                            <div id="profile-avatar-preview" style="width: 80px; height: 80px; border-radius: 50%; background: #333; border: 2px solid #00BFFF; overflow: hidden; display: flex; justify-content: center; align-items: center; background-size: cover; background-position: center;">
+                                <span style="color: #666; font-size: 2em;">👤</span>
+                            </div>
+                            <div style="flex: 1;">
+                                <label class="action-button" style="display: inline-block; background-color: #333; border-color: #555; cursor: pointer; padding: 5px 10px; border-radius: 5px; font-size: 0.9em; width: 100%; box-sizing: border-box; text-align: center; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">
+                                    Zmień Awatar
+                                    <input type="file" id="profile-avatar-upload" accept="image/*" style="display: none;">
+                                </label>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; color: #ccc; font-size: 0.9em;">Twoje Imię / Nick:</label>
+                            <input type="text" id="profile-nick-input" placeholder="Jak mamy się do Ciebie zwracać?" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #444; background: #222; color: #fff; box-sizing: border-box;">
+                        </div>
+                        
+                        <div>
+                            <label style="display: block; margin-bottom: 5px; color: #ccc; font-size: 0.9em;">Własna Tapeta:</label>
+                            <label class="action-button" style="display: inline-block; background-color: #333; border-color: #555; cursor: pointer; padding: 10px; border-radius: 5px; font-size: 0.9em; width: 100%; box-sizing: border-box; text-align: center; color: #fff;">
+                                Wgraj Tapetę z pliku
+                                <input type="file" id="profile-wallpaper-upload" accept="image/*" style="display: none;">
+                            </label>
+                            <button id="profile-wallpaper-remove" class="action-button" style="display: none; background-color: #ff4444; border-color: #ff4444; width: 100%; margin-top: 10px; padding: 10px;">Usuń własną tapetę</button>
+                        </div>
+                    </div>
                     <div class="settings-toggle-row"><label for="glass-toggle">Efekt Szklany (Liquid
                             Glass)</label><label class="theme-switch" for="glass-toggle"><input type="checkbox"
                                 id="glass-toggle" /><span class="slider round"></span></label></div>
@@ -1187,94 +1223,6 @@
         </div>
     </div>
 
-    <!-- PWA Update Banner -->
-    <div id="pwa-update-banner" class="pwa-update-banner" style="display: none;">
-        <div class="pwa-update-title">Dostępna nowa aktualizacja! 🚀</div>
-        <div class="pwa-update-actions">
-            <button id="pwa-update-refresh-btn" class="pwa-update-btn primary">Odśwież (Zaktualizuj)</button>
-            <button id="pwa-update-changelog-btn" class="pwa-update-btn secondary">Co nowego?</button>
-        </div>
-    </div>
-
-    <!-- Changelog Modal -->
-    <div id="changelog-modal" class="changelog-modal" style="display: none;">
-        <div class="changelog-content">
-            <div class="changelog-header">
-                <h3>Co nowego?</h3>
-                <button id="changelog-close-btn" class="changelog-close-btn">&times;</button>
-            </div>
-            <div id="changelog-body" class="changelog-body">
-                <!-- Wypełniane dynamicznie -->
-            </div>
-            <div class="changelog-footer">
-                <button id="changelog-footer-refresh-btn" class="pwa-update-btn primary" style="width: 100%;">Zaktualizuj teraz 🚀</button>
-            </div>
-        </div>
-    </div>
-
-    <script type="module" src="src/main.js"></script>
-    <script type="module" src="src/version_check.js"></script>
-    <script>
-        let newWorker;
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
-                .then(reg => {
-                    console.log('Service Worker Registered');
-                    reg.addEventListener('updatefound', () => {
-                        newWorker = reg.installing;
-                        newWorker.addEventListener('statechange', () => {
-                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                // Pokaż baner, jeśli to jest nowa wersja, a stara nadal działa
-                                document.getElementById('pwa-update-banner').style.display = 'block';
-                            }
-                        });
-                    });
-                })
-                .catch(err => console.log('SW Registration Failed', err));
-
-            // Nasłuchiwanie na kontroler, żeby odświeżyć po akceptacji SKIP_WAITING
-            let refreshing = false;
-            navigator.serviceWorker.addEventListener('controllerchange', () => {
-                if (!refreshing) {
-                    window.location.reload();
-                    refreshing = true;
-                }
-            });
-        }
-
-        // Obsługa kliknięć banera i modala
-        document.getElementById('pwa-update-refresh-btn')?.addEventListener('click', () => {
-            if (newWorker) newWorker.postMessage({ type: 'SKIP_WAITING' });
-        });
-        
-        document.getElementById('changelog-footer-refresh-btn')?.addEventListener('click', () => {
-            if (newWorker) newWorker.postMessage({ type: 'SKIP_WAITING' });
-        });
-
-        document.getElementById('pwa-update-changelog-btn')?.addEventListener('click', async () => {
-            document.getElementById('changelog-modal').style.display = 'flex';
-            const body = document.getElementById('changelog-body');
-            body.innerHTML = '<p>Ładowanie zmian...</p>';
-            try {
-                const res = await fetch('CHANGELOG.json?t=' + Date.now());
-                const data = await res.json();
-                body.innerHTML = data.map(v => `
-                    <div style="margin-bottom: 20px;">
-                        <h4 style="margin: 0 0 10px 0; color: #fff;">Wersja ${v.version}</h4>
-                        <ul style="margin: 0; padding-left: 20px; color: var(--text-muted, #b0b0b0);">
-                            ${v.changes.map(c => `<li style="margin-bottom: 6px;">${c}</li>`).join('')}
-                        </ul>
-                    </div>
-                `).join('');
-            } catch(e) {
-                body.innerHTML = '<p>Błąd ładowania changeloga.</p>';
-            }
-        });
-
-        document.getElementById('changelog-close-btn')?.addEventListener('click', () => {
-            document.getElementById('changelog-modal').style.display = 'none';
-        });
-    </script>
     <div id="pwa-install-banner">
         <div class="pwa-banner-content">
             <div class="pwa-icon-container">
@@ -1286,19 +1234,20 @@
             </div>
         </div>
 
-        <!-- Buttons Row -->
         <div class="pwa-banner-actions">
-            <!-- Instruction LEFT, Close RIGHT -->
             <button id="pwa-open-guide-btn" class="pwa-btn primary">Instrukcja</button>
             <button id="pwa-limit-banner-btn" class="pwa-btn secondary">Zamknij</button>
         </div>
 
-        <!-- Checkbox Row at BOTTOM -->
         <div class="pwa-checkbox-row">
             <input type="checkbox" id="pwa-dont-show-again">
             <label for="pwa-dont-show-again">Nie pokazuj więcej</label>
         </div>
     </div>
+
+    <script src="pwa-updater.js"></script>
+    <script type="module" src="src/main.js"></script>
+    <script type="module" src="src/version_check.js"></script>
 </body>
 
 </html>

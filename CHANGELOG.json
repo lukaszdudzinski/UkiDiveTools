@@ -1,5 +1,30 @@
 [
   {
+    "version": "v2026.8.25.1",
+    "date": "2026-08-25",
+    "changes": [
+      "✨ Wdrożono nowy, rozbudowany system Profilu Użytkownika z personalizacją nazwy i awatara.",
+      "🎨 Uspójniono wygląd z aplikacją BodyBuild, dodając dynamiczne powitania w nagłówku.",
+      "📱 Dodano możliwość wgrywania własnych, niestandardowych tapet z plików użytkownika."
+    ]
+  },
+  {
+    "version": "v2026.8.15.02",
+    "date": "2026-08-15",
+    "changes": [
+      "Testowy wpis - weryfikacja działania banera aktualizacji PWA.🚀",
+      "Poprawka nasłuchiwania w sw.js pod kątem kompatybilności z nowym skryptem pwa-updater.js."
+    ]
+  },
+  {
+    "version": "v2026.8.15.01",
+    "date": "2026-08-15",
+    "changes": [
+      "Wdrożenie modułu Diagnostyki z możliwością wykonywania i przywracania pełnych kopii zapasowych Logbooka.",
+      "Poprawa systemu aktualizacji PWA, wprowadzając zoptymalizowany pwa-updater.js z powiadomieniami."
+    ]
+  },
+  {
     "version": "v2026.8.05.06",
     "date": "2026-08-05",
     "changes": [

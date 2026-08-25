@@ -9,7 +9,7 @@ import { UkiRiverGameUI } from '../games/uki-river-dive/UkiRiverGameUI.js';
 import { ProAccess } from '../auth/ProAccess.js';
 import { populateTankSelect } from '../data/TankData.js';
 
-export const APP_VERSION = 'v2026.8.05.06'; // <-- TEN NUMER ZMIENIAMY PRZY KAŻDEJ AKTUALIZACJI
+export const APP_VERSION = 'v2026.8.25.1'; // <-- TEN NUMER ZMIENIAMY PRZY KAŻDEJ AKTUALIZACJI
 
 export const AppUI = {
     init: () => {
@@ -17,6 +17,8 @@ export const AppUI = {
         AppUI.initTheme();
         AppUI.initTooltips();
         AppUI.initGlobalButtons();
+        AppUI.initProfileSettings();
+        AppUI.updateWelcomeMessage();
 
         // Dynamic Version Update
         const versionDisplays = document.querySelectorAll('.version-info, .app-version-display');
@@ -557,6 +559,10 @@ export const AppUI = {
         }
 
         function setWallpaper(url) {
+            localStorage.removeItem('uki-custom-wallpaper');
+            const removeBtn = document.getElementById('profile-wallpaper-remove');
+            if(removeBtn) removeBtn.style.display = 'none';
+
             body.style.backgroundImage = url;
             try {
                 localStorage.setItem('uki-wallpaper', url);
@@ -860,6 +866,138 @@ export const AppUI = {
                     }, 150); // Small delay to allow tab switch and expansion
                 }
             });
+        }
+    },
+
+    // ==========================================
+    // LOGIKA PROFILU I WŁASNEJ TAPETY
+    // ==========================================
+    initProfileSettings: () => {
+        // 1. Inicjalizacja Imienia/Nicku
+        const nickInput = document.getElementById('profile-nick-input');
+        const savedNick = localStorage.getItem('userNick');
+        if (savedNick && nickInput) {
+            nickInput.value = savedNick;
+        }
+        if (nickInput) {
+            nickInput.addEventListener('input', (e) => {
+                const val = e.target.value.trim();
+                localStorage.setItem('userNick', val);
+                AppUI.updateWelcomeMessage();
+            });
+        }
+        // 2. Inicjalizacja Awatara
+        const avatarUpload = document.getElementById('profile-avatar-upload');
+        const avatarPreview = document.getElementById('profile-avatar-preview');
+        const savedAvatar = localStorage.getItem('uki-avatar');
+        
+        if (savedAvatar && avatarPreview) {
+            avatarPreview.style.backgroundImage = `url(${savedAvatar})`;
+            avatarPreview.innerHTML = ''; // Ukryj ikonkę uśmiechu/ludzika
+        }
+        if (avatarUpload) {
+            avatarUpload.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const base64 = event.target.result;
+                        localStorage.setItem('uki-avatar', base64);
+                        if (avatarPreview) {
+                            avatarPreview.style.backgroundImage = `url(${base64})`;
+                            avatarPreview.innerHTML = '';
+                        }
+                        AppUI.updateWelcomeMessage();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+        // 3. Inicjalizacja Własnej Tapety z Pliku
+        const wallpaperUpload = document.getElementById('profile-wallpaper-upload');
+        const wallpaperRemove = document.getElementById('profile-wallpaper-remove');
+        const savedCustomWallpaper = localStorage.getItem('uki-custom-wallpaper');
+        const applyCustomWallpaper = () => {
+            const base64 = localStorage.getItem('uki-custom-wallpaper');
+            if (base64) {
+                document.body.style.backgroundImage = `url(${base64})`;
+                document.body.classList.add('has-custom-wallpaper');
+            } else {
+                document.body.classList.remove('has-custom-wallpaper');
+                // Jeśli usunięto, przywracamy domyślną predefiniowaną tapetę
+                const savedPredef = localStorage.getItem('uki-wallpaper') || "url('img/bg/background_uki.jpg')";
+                document.body.style.backgroundImage = savedPredef;
+            }
+        };
+        if (savedCustomWallpaper && wallpaperRemove) {
+            wallpaperRemove.style.display = 'block';
+            applyCustomWallpaper();
+        }
+        if (wallpaperUpload) {
+            wallpaperUpload.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        localStorage.setItem('uki-custom-wallpaper', event.target.result);
+                        applyCustomWallpaper();
+                        if (wallpaperRemove) wallpaperRemove.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+        if (wallpaperRemove) {
+            wallpaperRemove.addEventListener('click', () => {
+                localStorage.removeItem('uki-custom-wallpaper');
+                applyCustomWallpaper();
+                wallpaperRemove.style.display = 'none';
+            });
+        }
+    },
+    updateWelcomeMessage: () => {
+        const nick = localStorage.getItem('userNick');
+        const avatarBase64 = localStorage.getItem('uki-avatar');
+        
+        // Szukamy nagłówka na stronie głównej
+        const headerTitle = document.querySelector('h1') || document.querySelector('.home-header h2');
+        if (!headerTitle) return;
+        // Powitanie
+        const greetingText = nick ? `Cześć, ${nick}! 🌊` : "Uki's Dive Tools";
+        
+        // Tworzenie lub aktualizacja kontenera na awatar + powitanie
+        let headerContainer = document.getElementById('header-user-container');
+        if (!headerContainer) {
+            headerContainer = document.createElement('div');
+            headerContainer.id = 'header-user-container';
+            headerContainer.style.display = 'flex';
+            headerContainer.style.alignItems = 'center';
+            headerContainer.style.justifyContent = 'center';
+            headerContainer.style.gap = '10px';
+            
+            headerTitle.parentNode.insertBefore(headerContainer, headerTitle);
+            headerContainer.appendChild(headerTitle);
+        }
+        headerTitle.textContent = greetingText;
+        headerTitle.style.margin = '0';
+        // Awatar w nagłówku
+        let avatarEl = document.getElementById('header-user-avatar');
+        if (avatarBase64) {
+            if (!avatarEl) {
+                avatarEl = document.createElement('div');
+                avatarEl.id = 'header-user-avatar';
+                avatarEl.style.width = '40px';
+                avatarEl.style.height = '40px';
+                avatarEl.style.borderRadius = '50%';
+                avatarEl.style.backgroundSize = 'cover';
+                avatarEl.style.backgroundPosition = 'center';
+                avatarEl.style.border = '2px solid #00BFFF';
+                headerContainer.insertBefore(avatarEl, headerTitle);
+            }
+            avatarEl.style.backgroundImage = `url(${avatarBase64})`;
+            avatarEl.style.display = 'block';
+        } else if (avatarEl) {
+            avatarEl.style.display = 'none';
         }
     }
 };

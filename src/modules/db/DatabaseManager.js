@@ -122,5 +122,59 @@ export const DatabaseManager = {
             sql: `DELETE FROM logbook WHERE id = ?`,
             bind: [id]
         });
+    },
+
+    exportDatabase: async () => {
+        await DatabaseManager.init();
+        const logs = await DatabaseManager.getLogs();
+        
+        const settings = {
+            theme: localStorage.getItem("theme") || "",
+            // Ewentualnie inne przyszłe ustawienia specyficzne dla aplikacji
+        };
+
+        return JSON.stringify({
+            app: "Uki's Dive Tools",
+            exportDate: new Date().toISOString(),
+            logbook: logs || [],
+            settings: settings,
+            version: "2.0"
+        }, null, 2);
+    },
+
+    importDatabase: async (jsonString) => {
+        await DatabaseManager.init();
+        try {
+            const data = JSON.parse(jsonString);
+            
+            if (!data.logbook) {
+                throw new Error("Nieprawidłowy format pliku archiwum bazy (brak logbooka).");
+            }
+
+            db.exec(`DELETE FROM logbook`);
+            
+            // Import Logbook
+            (data.logbook || []).forEach(l => {
+                db.exec({
+                    sql: `INSERT INTO logbook (id, date, location, site, rating, notes, maxDepth, avgDepth, bottomTime, gasType, startPressure, endPressure, synced, created_at) 
+                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    bind: [
+                        l.id, l.date, l.location, l.site, l.rating || 0, l.notes || '', 
+                        l.maxDepth || 0, l.avgDepth || 0, l.bottomTime || 0, l.gasType || 'air', 
+                        l.startPressure || 0, l.endPressure || 0, l.synced || 0, l.created_at || new Date().toISOString()
+                    ]
+                });
+            });
+
+            // Import Ustawień
+            if (data.settings) {
+                if (data.settings.theme) localStorage.setItem("theme", data.settings.theme);
+            }
+
+            return true;
+        } catch (e) {
+            console.error("Błąd podczas importu bazy:", e);
+            throw e; 
+        }
     }
 };
