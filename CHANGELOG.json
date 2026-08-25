@@ -1,5 +1,12 @@
 [
   {
+    "version": "v2026.8.25.04",
+    "date": "2026-08-25",
+    "changes": [
+      "🎨 Wprowadzono pełną przezroczystość tła po wyłączeniu Rozmycia w ustawieniach, idealne dopasowanie tapety do ekranu."
+    ]
+  },
+  {
     "version": "v2026.8.25.03",
     "date": "2026-08-25",
     "changes": [
