@@ -1,5 +1,8 @@
 export const OnboardingUI = {
     init: () => {
+        // Pomijamy Onboarding podczas testów E2E (Playwright)
+        if (window.navigator.webdriver) return;
+
         // Pokaż tylko jeśli nie ma jeszcze zapisanego nicku
         if (!localStorage.getItem('userNick')) {
             OnboardingUI.showGlobalWelcome();
