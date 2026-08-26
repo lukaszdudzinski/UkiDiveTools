@@ -9,7 +9,7 @@ import { UkiRiverGameUI } from '../games/uki-river-dive/UkiRiverGameUI.js';
 import { ProAccess } from '../auth/ProAccess.js';
 import { populateTankSelect } from '../data/TankData.js';
 
-export const APP_VERSION = 'v2026.8.26.03'; // <-- TEN NUMER ZMIENIAMY PRZY KAŻDEJ AKTUALIZACJI
+export const APP_VERSION = 'v2026.8.26.04'; // <-- TEN NUMER ZMIENIAMY PRZY KAŻDEJ AKTUALIZACJI
 
 export const AppUI = {
     init: () => {
@@ -971,6 +971,7 @@ export const AppUI = {
                 oldContainer.replaceWith(headerTitle);
             }
         }
-    };
+    }
+};
 
-window.AppUI = AppUI
+window.AppUI = AppUI;

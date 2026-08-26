@@ -1,5 +1,12 @@
 [
   {
+    "version": "v2026.8.26.04",
+    "date": "2026-08-26",
+    "changes": [
+      "🛠️ Krytyczny hotfix: Naprawa błędu składni, który blokował deploy na serwerach."
+    ]
+  },
+  {
     "version": "v2026.8.26.03",
     "date": "2026-08-26",
     "changes": [
