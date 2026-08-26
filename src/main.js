@@ -6,7 +6,7 @@ import { DatabaseManager } from './modules/db/DatabaseManager.js';
 import { DiagnosticsUI } from './modules/ui/DiagnosticsUI.js';
 import { ChangelogUI } from './modules/ui/ChangelogUI.js';
 
-export const APP_VERSION = 'v2026.8.25.08';
+export const APP_VERSION = 'v2026.8.25.09';
 
 window.ukiLogError = (msg, stack) => {
     let logs = [];

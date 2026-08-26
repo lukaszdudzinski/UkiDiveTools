@@ -1,5 +1,12 @@
 [
   {
+    "version": "v2026.8.25.09",
+    "date": "2026-08-25",
+    "changes": [
+      "🎨 Wymuszono 100% przezroczystości (0% krycia) po wyłączeniu rozmycia tapety."
+    ]
+  },
+  {
     "version": "v2026.8.25.08",
     "date": "2026-08-25",
     "changes": [
