@@ -41,3 +41,8 @@ Skrypt ten sam idealnie zsynchronizuje wersje we wszystkich plikach i zapobiegni
   ]
 }
 ```
+
+### 🔥 IMPERATYW: ZARZĄDZANIE AKTUALIZACJAMI PWA I SERVICE WORKEREM
+*   **NIGDY** nie dodawaj wywołania `self.skipWaiting()` bezpośrednio do zdarzenia `install` w pliku `sw.js`. Service Worker musi zawisnąć w stanie waiting i czekać na wiadomość z `pwa-updater.js`, w przeciwnym razie użytkownicy nigdy nie zobaczą banera aktualizacji i changeloga!
+*   **NIGDY** nie edytuj ręcznie zmiennej `APP_VERSION`, pliku `CHANGELOG.json` ani `CACHE_NAME` w `sw.js`.
+*   Każde wdrożenie aktualizacji dla użytkownika wymaga użycia komendy terminala: `node scripts/version.mjs "🚀 [Opis zmian]"`. To jedyny sposób na uniknięcie Pętli Aktualizacji.

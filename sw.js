@@ -1,10 +1,13 @@
-const CACHE_NAME = 'ukis-dive-tools-v2026.8.26.01'; // Release v2026.8.25.2
+const CACHE_NAME = 'ukis-dive-tools-v2026.8.26.02'; // Release v2026.8.25.2
 // Core assets that MUST be cached immediately
 const CORE_ASSETS = [
     './',
     './index.html',
     './style.css',
     './src/main.js',
+    './pwa-updater.js',
+    './src/modules/ui/AppUI.js',
+    './src/modules/ui/ChangelogUI.js',
     './img/logo.png',
     './img/logo_lunar.svg',
     './img/bg/background_uki.jpg',
@@ -12,7 +15,8 @@ const CORE_ASSETS = [
 ];
 
 self.addEventListener('install', (e) => {
-    // Usunięto self.skipWaiting(), aby worker czekał na zatwierdzenie przez użytkownika (Baner PWA)
+    // ABSOLUTNY ZAKAZ UŻYWANIA self.skipWaiting() TUTAJ!
+    // Worker musi grzecznie czekać w stanie 'installed' aż użytkownik kliknie "Zaktualizuj" w banerze.
     e.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
             return Promise.all(CORE_ASSETS.map(url => 
