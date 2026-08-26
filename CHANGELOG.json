@@ -1,5 +1,12 @@
 [
   {
+    "version": "v2026.8.26.01",
+    "date": "2026-08-26",
+    "changes": [
+      "🚀 Usunięcie tymczasowego taranu (skipWaiting). Od teraz baner aktualizacji wraca do normalnego działania!"
+    ]
+  },
+  {
     "version": "v2026.8.25.09",
     "date": "2026-08-25",
     "changes": [
