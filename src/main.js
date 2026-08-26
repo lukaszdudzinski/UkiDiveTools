@@ -1,3 +1,4 @@
+import { OnboardingUI } from './modules/ui/OnboardingUI.js';
 import { AppUI } from './modules/ui/AppUI.js';
 import { DivemasterUI } from './modules/ui/DivemasterUI.js';
 import { LogbookUI } from './modules/ui/LogbookUI.js';
@@ -6,7 +7,7 @@ import { DatabaseManager } from './modules/db/DatabaseManager.js';
 import { DiagnosticsUI } from './modules/ui/DiagnosticsUI.js';
 import { ChangelogUI } from './modules/ui/ChangelogUI.js';
 
-export const APP_VERSION = 'v2026.8.26.02';
+export const APP_VERSION = 'v2026.8.26.03';
 
 window.ukiLogError = (msg, stack) => {
     let logs = [];
@@ -36,6 +37,8 @@ window.APP_VERSION = APP_VERSION;
 const initApp = () => {
     console.log("Starting App Initialization...");
     AppUI.init();
+    OnboardingUI.init();
+
     DivemasterUI.init();
     LogbookUI.init();
     CalendarUI.init();

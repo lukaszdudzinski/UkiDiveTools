@@ -9,7 +9,7 @@ import { UkiRiverGameUI } from '../games/uki-river-dive/UkiRiverGameUI.js';
 import { ProAccess } from '../auth/ProAccess.js';
 import { populateTankSelect } from '../data/TankData.js';
 
-export const APP_VERSION = 'v2026.8.26.02'; // <-- TEN NUMER ZMIENIAMY PRZY KAŻDEJ AKTUALIZACJI
+export const APP_VERSION = 'v2026.8.26.03'; // <-- TEN NUMER ZMIENIAMY PRZY KAŻDEJ AKTUALIZACJI
 
 export const AppUI = {
     init: () => {
@@ -959,50 +959,18 @@ export const AppUI = {
         }
     },
     updateWelcomeMessage: () => {
-        const nick = localStorage.getItem('userNick');
-        const avatarBase64 = localStorage.getItem('uki-avatar');
+        const nick = localStorage.getItem("userNick");
         
-        // Szukamy nagłówka na stronie głównej
-        const headerTitle = document.querySelector('h1') || document.querySelector('.home-header h2');
-        if (!headerTitle) return;
-        // Powitanie
-        const greetingText = nick ? `Cześć, ${nick}! 🌊` : "Uki's Dive Tools";
-        
-        // Tworzenie lub aktualizacja kontenera na awatar + powitanie
-        let headerContainer = document.getElementById('header-user-container');
-        if (!headerContainer) {
-            headerContainer = document.createElement('div');
-            headerContainer.id = 'header-user-container';
-            headerContainer.style.display = 'flex';
-            headerContainer.style.alignItems = 'center';
-            headerContainer.style.justifyContent = 'center';
-            headerContainer.style.gap = '10px';
-            
-            headerTitle.parentNode.insertBefore(headerContainer, headerTitle);
-            headerContainer.appendChild(headerTitle);
-        }
-        headerTitle.textContent = greetingText;
-        headerTitle.style.margin = '0';
-        // Awatar w nagłówku
-        let avatarEl = document.getElementById('header-user-avatar');
-        if (avatarBase64) {
-            if (!avatarEl) {
-                avatarEl = document.createElement('div');
-                avatarEl.id = 'header-user-avatar';
-                avatarEl.style.width = '40px';
-                avatarEl.style.height = '40px';
-                avatarEl.style.borderRadius = '50%';
-                avatarEl.style.backgroundSize = 'cover';
-                avatarEl.style.backgroundPosition = 'center';
-                avatarEl.style.border = '2px solid #00BFFF';
-                headerContainer.insertBefore(avatarEl, headerTitle);
+        // Szukamy głównego nagłówka na ekranie głównym
+        const headerTitle = document.querySelector(".home-header h2");
+        if (headerTitle) {
+            headerTitle.textContent = nick ? `Cześć, ${nick}! 🚀` : "Uki's Dive Tools";
+            // Jeśli element kontenera awatara został wcześniej wstrzyknięty z powodu starego kodu - usuwamy go, by zachować czystość HTML
+            const oldContainer = document.getElementById("header-user-container");
+            if (oldContainer) {
+                oldContainer.replaceWith(headerTitle);
             }
-            avatarEl.style.backgroundImage = `url(${avatarBase64})`;
-            avatarEl.style.display = 'block';
-        } else if (avatarEl) {
-            avatarEl.style.display = 'none';
         }
-    }
-};
+    };
 
 window.AppUI = AppUI
