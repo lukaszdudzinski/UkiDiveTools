@@ -107,14 +107,10 @@ export const DiagnosticsUI = {
                 const confirmed = confirm("Czy na pewno chcesz wykonać Twardy Reset?\n\nWyczyści to ukryty Cache aplikacji i zmusi ją do pobrania czystej wersji. Twoje wpisy w logbooku są bezpieczne.");
                 if (confirmed) {
                     try {
-                        if ('serviceWorker' in navigator) {
-                            const regs = await navigator.serviceWorker.getRegistrations();
-                            for (let r of regs) {
-                                await r.unregister();
-                            }
-                        }
-                        const keys = await caches.keys();
-                        await Promise.all(keys.map(k => caches.delete(k)));
+                        // Tylko własna rejestracja SW i własne cache — inne aplikacje Uki w tej domenie zostają
+                        if (!window.PWAUpdateUI) throw new Error('Moduł aktualizacji niedostępny');
+                        await window.PWAUpdateUI.unregisterOwnRegistration();
+                        await window.PWAUpdateUI.clearOwnCaches();
                         
                         alert("Cache wyczyszczony! Aplikacja zrestartuje się za chwilę...");
                         setTimeout(() => window.location.reload(true), 1000);

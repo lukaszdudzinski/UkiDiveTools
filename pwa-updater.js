@@ -6,27 +6,50 @@
 (function() {
     window.PWAUpdateUI = {
         pwaWorker: null,
-        
+
+        // Ta sama domena (lukaszdudzinski.github.io) hostuje inne aplikacje Uki: działamy tylko na własnym
+        // zakresie SW i własnych cache. Lista identyczna jak OWN_CACHE_PREFIXES w sw.js (pilnuje test jednostkowy).
+        OWN_CACHE_PREFIXES: ['ukis-dive-tools-', 'uki-dive-tools-', 'dive-tools-'],
+
+        // Katalog strony bez zapytania i kotwicy, np. https://lukaszdudzinski.github.io/UkiDiveTools/
+        ownScope: () => new URL('./', window.location.href).href,
+
+        isOwnCacheName: (name) => window.PWAUpdateUI.OWN_CACHE_PREFIXES.some((p) => name.startsWith(p)),
+
+        clearOwnCaches: async () => {
+            const own = (await caches.keys()).filter(window.PWAUpdateUI.isOwnCacheName);
+            await Promise.all(own.map((k) => caches.delete(k)));
+            return own;
+        },
+
+        // getRegistration(url) może zwrócić rejestrację rodzica (szerszy zakres) — własna tylko przy równym zakresie
+        getOwnRegistration: async () => {
+            if (!('serviceWorker' in navigator)) return undefined;
+            const scope = window.PWAUpdateUI.ownScope();
+            const reg = await navigator.serviceWorker.getRegistration(scope);
+            return reg && reg.scope === scope ? reg : undefined;
+        },
+
+        unregisterOwnRegistration: async () => {
+            const reg = await window.PWAUpdateUI.getOwnRegistration();
+            if (!reg) return false;
+            return reg.unregister();
+        },
+
         init: () => {
             if (!('serviceWorker' in navigator)) return;
             // Disable SW in Playwright E2E tests to prevent random reloads
             if (window.navigator.webdriver) return;
             
-            // CLEANUP: Usuń zepsute service workery z poprzednich błędnych rejestracji
-            navigator.serviceWorker.getRegistrations().then(registrations => {
-                let needsReload = false;
-                for (let reg of registrations) {
-                    if (reg.active && reg.active.scriptURL.includes('?update=')) {
-                        reg.unregister();
-                        needsReload = true;
-                    }
-                }
-                if (needsReload) {
+            // CLEANUP: Usuń zepsuty service worker z poprzedniej błędnej rejestracji (tylko własny zakres)
+            window.PWAUpdateUI.getOwnRegistration().then((reg) => {
+                if (reg && reg.active && reg.active.scriptURL.includes('?update=')) {
+                    reg.unregister();
                     // Odczekaj chwilę i odśwież by system załadował czysty stan
                     setTimeout(() => window.location.reload(true), 500);
                 }
             }).catch(e => {
-                console.warn("getRegistrations failed (often due to testing in file://):", e);
+                console.warn("getRegistration failed (often due to testing in file://):", e);
             });
 
             window.PWAUpdateUI.injectBannerHTML();
@@ -54,23 +77,14 @@
         },
 
         doPwaUpdate: async () => {
-            if (window.PWAUpdateUI.pwaWorker) {
-                window.PWAUpdateUI.pwaWorker.postMessage('SKIP_WAITING');
-                setTimeout(async () => {
-                    const keys = await caches.keys();
-                    await Promise.all(keys.map(k => caches.delete(k)));
-                    window.location.reload(true);
-                }, 1000);
+            const ui = window.PWAUpdateUI;
+            if (ui.pwaWorker) {
+                ui.pwaWorker.postMessage('SKIP_WAITING');
+                setTimeout(async () => { await ui.clearOwnCaches(); window.location.reload(true); }, 1000);
             } else {
-                // Twarde czyszczenie jeśli nie złapaliśmy nowego workera
-                if ('serviceWorker' in navigator) {
-                    const regs = await navigator.serviceWorker.getRegistrations();
-                    for (let reg of regs) {
-                        await reg.unregister();
-                    }
-                }
-                const keys = await caches.keys();
-                await Promise.all(keys.map(k => caches.delete(k)));
+                // Twarde czyszczenie jeśli nie złapaliśmy nowego workera — tylko własna rejestracja i własne cache
+                await ui.unregisterOwnRegistration();
+                await ui.clearOwnCaches();
                 window.location.reload(true);
             }
         },
