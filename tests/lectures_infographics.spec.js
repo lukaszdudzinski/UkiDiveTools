@@ -84,7 +84,7 @@ test.describe('Lecture Infographics', () => {
         await expect(page.locator('#lecture-body')).toBeVisible();
 
         // 1. Check Audio
-        const audioWrapper = page.locator('#lecture-body .lecture-audio-wrapper');
+        const audioWrapper = page.locator('#lecture-audio-container .lecture-audio-wrapper');
         await expect(audioWrapper).toBeVisible();
         const audioSource = audioWrapper.locator('audio source');
         await expect(audioSource).toHaveAttribute('src', /Dlaczego_komputer_nie_uchroni_ci/);
@@ -106,6 +106,12 @@ test.describe('Lecture Infographics', () => {
         // Pierwsza Pomoc
         const imgFirstAid = page.locator('#lecture-body img[src*="DCS_pierwsza_pomoc.png"]');
         await expect(imgFirstAid).toBeVisible();
+
+        // toBeVisible() przechodzi też dla zepsutego <img> z alt - sprawdź, że obrazy faktycznie się załadowały
+        for (const img of [imgTypes, imgPrevention, imgFirstAid]) {
+            await img.scrollIntoViewIfNeeded();
+            await expect.poll(() => img.evaluate((el) => el.complete && el.naturalWidth > 0), { timeout: 15000 }).toBe(true);
+        }
 
         // Verify Lightbox on one image
         await imgFirstAid.click();
