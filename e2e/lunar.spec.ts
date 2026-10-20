@@ -1,7 +1,8 @@
 import { test, expect } from '@playwright/test';
+import { openMobileMenuIfNeeded, clickSidebarTab } from '../tests/test-helpers.js';
 
 test.describe('Lunar Divers Integration', () => {
-    test('should open Lunar Calendar from Welcome Screen and display grid', async ({ page }) => {
+    test('should open Lunar Calendar from Welcome Screen and display grid', async ({ page, isMobile }) => {
         // Go to app
         await page.goto('/');
 
@@ -12,10 +13,11 @@ test.describe('Lunar Divers Integration', () => {
         const welcomeScreen = page.locator('#welcome-screen');
         await expect(welcomeScreen).toBeVisible();
 
-        // Click the Kalendarz Lunar Divers link in the sidebar
+        // Click the Kalendarz Lunar Divers link in the sidebar (on iPhone open the menu first)
+        await openMobileMenuIfNeeded(page, isMobile);
         const calendarLink = page.locator('.sidebar-nav a', { hasText: 'Kalendarz Lunar Divers' });
         await expect(calendarLink).toBeVisible();
-        await calendarLink.click();
+        await clickSidebarTab(page, 'lunar-calendar');
 
         // Verify the calendar tab is now visible
         const calendarTab = page.locator('#lunar-calendar');

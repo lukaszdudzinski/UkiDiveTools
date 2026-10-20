@@ -83,7 +83,9 @@ test.describe('Full Calculator Suite', () => {
         await page.fill('#cnsDepth', '30'); // PPO2 = 1.28
         await page.fill('#cnsTime', '20');
 
-        await page.click('#cnsForm button[type="submit"]', { force: true });
+        // No force: on iPhone the sidebar is still sliding out (0.3s transition) and covers the button;
+        // a regular click waits until the button actually receives pointer events.
+        await page.click('#cnsForm button[type="submit"]');
         const result = page.locator('#cnsResult');
         await expect(result).toBeVisible();
         await expect(result).toContainText('%');

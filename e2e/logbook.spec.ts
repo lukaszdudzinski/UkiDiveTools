@@ -1,19 +1,21 @@
 import { test, expect } from '@playwright/test';
+import { openMobileMenuIfNeeded, clickSidebarTab } from '../tests/test-helpers.js';
 
 test.describe('Logbook UI and Database', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('/');
     });
 
-    test('should add a new dive log and display it', async ({ page }) => {
+    test('should add a new dive log and display it', async ({ page, isMobile }) => {
         page.on('console', msg => console.log('BROWSER CONSOLE:', msg.text()));
         page.on('pageerror', error => console.log('PAGE ERROR:', error.message));
         
         // Wait for the app to load
         await page.waitForSelector('.sidebar-nav');
 
-        // Navigate to Logbook via sidebar
-        await page.click('.sidebar-nav a[data-tab="logbook-dashboard"]');
+        // Navigate to Logbook via sidebar (on iPhone the sidebar is hidden behind the menu toggle)
+        await openMobileMenuIfNeeded(page, isMobile);
+        await clickSidebarTab(page, 'logbook-dashboard');
 
         // Check if list view is visible
         await expect(page.locator('#logbook-list-view')).toBeVisible();
