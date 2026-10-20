@@ -4,7 +4,7 @@ test.describe('SOS and UI Fixes', () => {
 
     test.beforeEach(async ({ page }) => {
         // Go to local dev URL
-        await page.goto('http://127.0.0.1:8080'); // Adjust port if needed
+        await page.goto('/');
         // Unlock PRO for full features (optional, but good for testing everything)
         // await page.evaluate(() => window.ProAccess && window.ProAccess.unlock('kawa'));
     });

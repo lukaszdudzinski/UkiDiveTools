@@ -27,7 +27,7 @@ test.describe('PRO Access & Unlock Flow', () => {
     });
 
     test('User can unlock PRO with correct password', async ({ page }) => {
-        await page.goto('http://localhost:8080');
+        await page.goto('/');
 
         // Navigate to PRO
         // Handle Mobile Menu
@@ -74,7 +74,7 @@ test.describe('PRO Access & Unlock Flow', () => {
     });
 
     test('PRO Unlock persists after reload', async ({ page }) => {
-        await page.goto('http://localhost:8080');
+        await page.goto('/');
 
         // Unlock first
         // Handle Mobile Menu
