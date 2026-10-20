@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test';
 import { openMobileMenuIfNeeded, clickSidebarTab } from './test-helpers.js';
 
 test.describe('Science Section Visual Regression', () => {
+    test.skip(process.platform !== 'linux', 'Wzorce zrzutów istnieją tylko dla Linuxa (CI: workflow „Update snapshots”)');
     test.beforeEach(async ({ page }) => {
         await page.goto('/');
         await page.waitForSelector('.app-wrapper', { state: 'visible' });
@@ -17,12 +18,6 @@ test.describe('Science Section Visual Regression', () => {
 
         // Allow animations to settle
         await page.waitForTimeout(1000);
-
-        // SKIP SNAPSHOTS IN CI (GitHub Actions runs on Linux, snapshots are Windows)
-        if (process.env.CI) {
-            console.log('Skipping visual comparison in CI environment');
-            return;
-        }
 
         // 2. Snapshot: Lectures Tab (Default)
         await expect(page).toHaveScreenshot('science-lectures-tab.png', {
