@@ -1,4 +1,5 @@
 import { DatabaseManager } from '../db/DatabaseManager.js';
+import { clearOwnLocalStorage } from '../core/StorageKeys.js';
 
 export const DiagnosticsUI = {
     init: () => {
@@ -33,9 +34,9 @@ export const DiagnosticsUI = {
             
             <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); margin-bottom: 20px;">
                 <h3 style="color: #eee; margin-top: 0;">Pamięć Podręczna</h3>
-                <p style="font-size: 0.9em; color: #ccc;">Użyj tej opcji <b>tylko wtedy, gdy zaciął się interfejs</b>. Zresetuje ona wyłącznie podręczne ustawienia wyglądu. <b>Twoja historia nurkowań jest w pełni bezpieczna!</b></p>
+                <p style="font-size: 0.9em; color: #ccc;">Użyj tej opcji <b>tylko wtedy, gdy zaciął się interfejs</b>. Zresetuje ona ustawienia Uki's Dive Tools (wygląd, domyślną butlę, SAC, typ wody) i postęp quizów. <b>Logbook, status PRO, profil i dane innych aplikacji Uki pozostaną nietknięte.</b></p>
                 <button id="db-clear-local-btn" style="width: 100%; padding: 13px; background: #444; color: #eee; border: 1px solid #666; border-radius: 5px; cursor: pointer; margin-top: 10px; font-size: 1em; font-weight: bold; text-align: center;">
-                    Wyczyść tylko LocalStorage
+                    Wyczyść ustawienia aplikacji
                 </button>
             </div>
             
@@ -169,8 +170,8 @@ export const DiagnosticsUI = {
         const clearLocalBtn = document.getElementById('db-clear-local-btn');
         if (clearLocalBtn) {
             clearLocalBtn.addEventListener('click', () => {
-                if (confirm("Usunąć dane konfiguracyjne z LocalStorage? Twój logbook nie zostanie ruszony.")) {
-                    localStorage.clear();
+                if (confirm("Usunąć ustawienia Uki's Dive Tools (wygląd, domyślna butla, SAC, typ wody) i postęp quizów?\n\nLogbook, status PRO, profil (nick, avatar, własna tapeta), motyw oraz dane innych aplikacji Uki pozostaną nietknięte.")) {
+                    clearOwnLocalStorage();
                     alert("Zrobione. Aplikacja się odświeży.");
                     window.location.reload();
                 }

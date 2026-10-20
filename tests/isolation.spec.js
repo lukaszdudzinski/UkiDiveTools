@@ -18,6 +18,12 @@ async function readState(page) {
     }));
 }
 
+// Klucze localStorage: własne (usuwane przez „Wyczyść ustawienia”) i cudze lub zachowywane (muszą przetrwać).
+const OWN = ['uki-default-tank', 'uki-liquid-glass', 'uki-wallpaper', 'uki-water-type', 'uki-user-sac', 'uki-pwa-banner-dismissed',
+    'quiz_completed_dcs', 'quiz_completed_barotrauma', 'quiz_completed_nitrox'];
+const NEIGHBORS = { ssi_stats_history: '[1,2]', uki_bikes_list: '["rower"]', 'kvvfs-local-sz': '42', uki_kvvfs_migrated: '1' };
+const SHARED_EXCEPT_LOGS = { userNick: 'Uki', 'uki-avatar': 'data:image/png;base64,AAAA', 'uki-custom-wallpaper': 'data:image/png;base64,BBBB', theme: 'light' };
+
 function expectOnlyOwnCachesRemoved(cacheNames) {
     for (const c of FOREIGN) expect(cacheNames).toContain(c);
     for (const c of OWN_OLD) expect(cacheNames).not.toContain(c);
@@ -79,5 +85,43 @@ test.describe('Izolacja od innych aplikacji Uki w tej samej domenie', () => {
 
         const { cacheNames } = await readState(page);
         expectOnlyOwnCachesRemoved(cacheNames);
+    });
+
+    test('Wyczyść ustawienia: usuwa tylko własne klucze Dive Tools', async ({ page, isMobile }) => {
+        // beforeEach już akceptuje każdy dialog (drugie accept() rzuciłoby wyjątek), więc tu tylko zapamiętujemy treść confirm.
+        let confirmMessage = '';
+        page.on('dialog', (d) => {
+            if (d.type() === 'confirm') confirmMessage = d.message();
+        });
+
+        const pro = JSON.stringify({ unlocked: true, timestamp: Date.now() });
+        await page.evaluate(({ own, neighbors, shared, pro }) => {
+            for (const k of own) localStorage.setItem(k, 'x');
+            for (const [k, v] of Object.entries({ ...neighbors, ...shared, 'uki-pro-unlocked': pro })) localStorage.setItem(k, v);
+            localStorage.setItem('uki_error_logs', '[]');
+        }, { own: OWN, neighbors: NEIGHBORS, shared: SHARED_EXCEPT_LOGS, pro });
+
+        // Migawka localStorage z początku następnego dokumentu, zanim ruszy kod aplikacji. AppUI przy każdym starcie
+        // sama zapisuje domyślne uki-liquid-glass/uki-wallpaper/uki-water-type i kasuje uki-custom-wallpaper (AppUI.js:565),
+        // więc odczyt po przeładowaniu nie pokazałby, co zrobiło samo czyszczenie.
+        await page.addInitScript(() => {
+            if (!sessionStorage.getItem('__ls_snapshot')) {
+                sessionStorage.setItem('__ls_snapshot', JSON.stringify(Object.fromEntries(Object.entries(localStorage))));
+            }
+        });
+
+        await openMobileMenuIfNeeded(page, isMobile);
+        await clickSidebarTab(page, 'diagnostics-dashboard');
+        await Promise.all([page.waitForEvent('load'), page.click('#db-clear-local-btn')]);
+
+        const snapshot = await page.evaluate(() => JSON.parse(sessionStorage.getItem('__ls_snapshot')));
+        const absent = Object.fromEntries(OWN.map((k) => [k, null]));
+        const after = { ...absent, ...snapshot };
+
+        expect(confirmMessage).toContain('status PRO');
+        expect(confirmMessage).toContain('innych aplikacji Uki');
+        for (const k of OWN) expect(after[k]).toBeNull();
+        for (const [k, v] of Object.entries({ ...NEIGHBORS, ...SHARED_EXCEPT_LOGS, 'uki-pro-unlocked': pro })) expect(after[k]).toBe(v);
+        expect(after['uki_error_logs']).not.toBeNull(); // zasiany wpis zostaje (a aplikacja może dopisać kolejne)
     });
 });
