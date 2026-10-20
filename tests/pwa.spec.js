@@ -13,8 +13,10 @@ test.describe('PWA & App Meta', () => {
         const response = await page.request.get('manifest.json');
         expect(response.status()).toBe(200);
         const json = await response.json();
-        expect(json.name).toContain("Uki's Dive Tools");
-        expect(json.display).toBe("standalone");
+        expect(json.name).toBe("Uki's Dive Tool");
+        expect(json.short_name).toBe("Uki's Dive Tool");
+        await expect(page.locator('meta[name="apple-mobile-web-app-title"]')).toHaveAttribute('content', json.name);
+        expect(json.display).toBe('standalone');
     });
 
     test('should register service worker', async ({ page }) => {
@@ -57,18 +59,19 @@ test.describe('PWA & App Meta', () => {
     });
 
     test('should contain PWA Update Banner hidden by default', async ({ page }) => {
+        await page.evaluate(() => window.PWAUpdateUI.injectBannerHTML()); // updater wyłączony pod webdriverem (pwa-updater.js:13)
         const banner = page.locator('#pwa-update-banner');
+        await expect(banner).toBeAttached();
         await expect(banner).toBeHidden();
-        const refreshBtn = page.locator('#pwa-update-refresh-btn');
-        await expect(refreshBtn).toBeAttached();
-        const changelogBtn = page.locator('#pwa-update-changelog-btn');
-        await expect(changelogBtn).toBeAttached();
+        await expect(page.locator('#pwa-update-btn-refresh')).toBeAttached();
+        await expect(page.locator('#pwa-update-btn-changelog')).toBeAttached();
     });
 
     test('should contain Changelog Modal hidden by default', async ({ page }) => {
-        const modal = page.locator('#changelog-modal');
+        const modal = page.locator('#changelog-modal-overlay');
+        await expect(modal).toBeAttached();
         await expect(modal).toBeHidden();
-        const body = page.locator('#changelog-body');
-        await expect(body).toBeAttached();
+        await expect(page.locator('#changelog-content')).toBeAttached();
+        await expect(page.locator('#changelog-update-now-btn')).toBeAttached();
     });
 });
