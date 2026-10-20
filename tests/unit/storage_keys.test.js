@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import {
     OWN_STORAGE_KEYS,
     PRESERVED_STORAGE_KEYS,
@@ -47,7 +48,7 @@ test('klucze uprawnień, kvvfs i współdzielone nie są własne', () => {
 
 test('każdy klucz literalny użyty w kodzie jest sklasyfikowany', () => {
     const re = /localStorage\.(?:getItem|setItem|removeItem)\(\s*['"]([^'"]+)['"]/g;
-    const root = new URL('../../src', import.meta.url).pathname;
+    const root = fileURLToPath(new URL('../../src', import.meta.url));
     const unclassified = [];
     for (const file of fs.readdirSync(root, { recursive: true }).filter((f) => f.endsWith('.js'))) {
         const text = fs.readFileSync(`${root}/${file}`, 'utf8');
@@ -63,11 +64,11 @@ test('każdy klucz literalny użyty w kodzie jest sklasyfikowany', () => {
 });
 
 test('brak localStorage.clear w kodzie aplikacji', () => {
-    const root = new URL('../../src', import.meta.url).pathname;
+    const root = fileURLToPath(new URL('../../src', import.meta.url));
     const files = fs.readdirSync(root, { recursive: true })
         .filter((f) => f.endsWith('.js'))
         .map((f) => `${root}/${f}`);
-    files.push(new URL('../../pwa-updater.js', import.meta.url).pathname);
+    files.push(fileURLToPath(new URL('../../pwa-updater.js', import.meta.url)));
     const offenders = files.filter((f) => fs.readFileSync(f, 'utf8').includes('localStorage.clear('));
     assert.deepEqual(offenders, []);
 });
