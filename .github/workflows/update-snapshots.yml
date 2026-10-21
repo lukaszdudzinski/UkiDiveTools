@@ -7,7 +7,7 @@ permissions:
   contents: write
 jobs:
   update-snapshots:
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[update-snapshots]')
+    if: github.ref_name != 'main' && (github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[update-snapshots]'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
