@@ -34,6 +34,12 @@ test.describe('Science Section Visual Regression', () => {
         await page.click('button[data-subtab="sod-nitrox"]');
         await expect(page.locator('#sod-nitrox')).toHaveClass(/active-sub-tab/);
         await page.waitForTimeout(500);
+        // Odtwarzacz <audio controls> rysuje „0:00 / 16:37” dopiero po wczytaniu metadanych (a przed nimi „0:00 / 0:00”),
+        // więc na wolniejszym CI zrzut zależał od tempa ładowania. Czekamy na HAVE_METADATA (readyState >= 1).
+        await expect.poll(
+            () => page.locator('#sod-nitrox audio').evaluateAll(els => els.every(el => el.readyState >= 1)),
+            { timeout: 15000 }
+        ).toBe(true);
         await expect(page).toHaveScreenshot('science-nitrox-tab.png');
 
         // 5. Snapshot: Gas
