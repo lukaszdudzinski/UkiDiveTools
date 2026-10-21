@@ -46,6 +46,17 @@ test('klucze uprawnień, kvvfs i współdzielone nie są własne', () => {
     for (const k of PRESERVED_STORAGE_KEYS) assert.equal(isOwnStorageKey(k), false, k);
 });
 
+test('klucze migracji logbooka są zachowywane i przetrwają czyszczenie', () => {
+    const legacy = ['uki_logbook_db', 'uki-divetools-logbook-legacy-migrated'];
+    for (const k of legacy) {
+        assert.equal(isOwnStorageKey(k), false, k);
+        assert.ok(PRESERVED_STORAGE_KEYS.includes(k), k);
+    }
+    const s = makeStorage(toObject([...legacy, ...OWN_STORAGE_KEYS]));
+    clearOwnLocalStorage(s);
+    assert.deepEqual(s.keys().sort(), [...legacy].sort());
+});
+
 test('każdy klucz literalny użyty w kodzie jest sklasyfikowany', () => {
     const re = /localStorage\.(?:getItem|setItem|removeItem)\(\s*['"]([^'"]+)['"]/g;
     const root = fileURLToPath(new URL('../../src', import.meta.url));

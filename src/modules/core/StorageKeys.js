@@ -24,7 +24,10 @@ export const PRESERVED_STORAGE_KEYS = [
     'uki-avatar',
     'uki-custom-wallpaper',
     'theme',
-    'uki_error_logs'
+    'uki_error_logs',
+    // Stary logbook (sprzed SQLite) i flaga jego migracji; skasowanie flagi uruchomiłoby migrację ponownie i zdublowało wpisy.
+    'uki_logbook_db',
+    'uki-divetools-logbook-legacy-migrated'
 ];
 
 export const PRESERVED_STORAGE_PREFIXES = ['kvvfs-'];
