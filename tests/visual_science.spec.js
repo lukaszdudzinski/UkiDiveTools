@@ -10,6 +10,9 @@ test.describe('Science Section Visual Regression', () => {
     });
 
     test('should match baseline screenshots for Science tabs', async ({ page, isMobile }) => {
+        // Elementy, których piksele zależą od wydania (wersja) lub od sieci (zakres buforowania odtwarzacza audio), więc je maskujemy
+        const volatile = [page.locator('.version-info'), page.locator('#science-of-diving audio')];
+
         // 1. Open Wiedza Tab
         await openMobileMenuIfNeeded(page, isMobile);
         await clickSidebarTab(page, 'science-of-diving');
@@ -20,38 +23,30 @@ test.describe('Science Section Visual Regression', () => {
         await page.waitForTimeout(1000);
 
         // 2. Snapshot: Lectures Tab (Default)
-        await expect(page).toHaveScreenshot('science-lectures-tab.png', {
-            mask: [page.locator('.version-info')] // Mask dynamic version if needed
-        });
+        await expect(page).toHaveScreenshot('science-lectures-tab.png', { mask: volatile });
 
         // 3. Snapshot: SAC
         await page.click('button[data-subtab="sod-sac"]');
         await expect(page.locator('#sod-sac')).toHaveClass(/active-sub-tab/);
         await page.waitForTimeout(500);
-        await expect(page).toHaveScreenshot('science-sac-tab.png');
+        await expect(page).toHaveScreenshot('science-sac-tab.png', { mask: volatile });
 
         // 4. Snapshot: Nitrox
         await page.click('button[data-subtab="sod-nitrox"]');
         await expect(page.locator('#sod-nitrox')).toHaveClass(/active-sub-tab/);
         await page.waitForTimeout(500);
-        // Odtwarzacz <audio controls> rysuje „0:00 / 16:37” dopiero po wczytaniu metadanych (a przed nimi „0:00 / 0:00”),
-        // więc na wolniejszym CI zrzut zależał od tempa ładowania. Czekamy na HAVE_METADATA (readyState >= 1).
-        await expect.poll(
-            () => page.locator('#sod-nitrox audio').evaluateAll(els => els.every(el => el.readyState >= 1)),
-            { timeout: 15000 }
-        ).toBe(true);
-        await expect(page).toHaveScreenshot('science-nitrox-tab.png');
+        await expect(page).toHaveScreenshot('science-nitrox-tab.png', { mask: volatile });
 
         // 5. Snapshot: Gas
         await page.click('button[data-subtab="sod-gas"]');
         await expect(page.locator('#sod-gas')).toHaveClass(/active-sub-tab/);
         await page.waitForTimeout(500);
-        await expect(page).toHaveScreenshot('science-gas-tab.png');
+        await expect(page).toHaveScreenshot('science-gas-tab.png', { mask: volatile });
 
         // 6. Snapshot: Ballast
         await page.click('button[data-subtab="sod-ballast"]');
         await expect(page.locator('#sod-ballast')).toHaveClass(/active-sub-tab/);
         await page.waitForTimeout(500);
-        await expect(page).toHaveScreenshot('science-ballast-tab.png');
+        await expect(page).toHaveScreenshot('science-ballast-tab.png', { mask: volatile });
     });
 });
