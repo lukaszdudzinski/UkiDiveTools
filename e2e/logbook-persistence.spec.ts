@@ -16,8 +16,14 @@ const test = base.extend<{ persistentContext: BrowserContext; page: Page }>({
         await context.close();
         fs.rmSync(dir, { recursive: true, force: true });
     },
-    page: async ({ persistentContext }, use) => {
-        await use(persistentContext.pages()[0] ?? await persistentContext.newPage());
+    page: async ({ persistentContext, browserName }, use) => {
+        const page = persistentContext.pages()[0] ?? await persistentContext.newPage();
+        // Ostrzeżenia, błędy i alerty aplikacji trafiają do logu testu (diagnostyka w CI).
+        page.on('console', msg => {
+            if ((msg.type() === 'error' || msg.type() === 'warning') && !msg.text().includes('cookie')) console.log(`[${browserName}] ${msg.type()}: ${msg.text()}`);
+        });
+        page.on('dialog', d => console.log(`[${browserName}] dialog: ${d.message()}`));
+        await use(page);
     },
 });
 
@@ -46,12 +52,33 @@ const entry = (page: Page, site: string) =>
     page.locator('#logbook-entries .dashboard-card', { hasText: site });
 
 test.describe('Trwałość logbooka', () => {
+    test('diagnostyka OPFS w kontekście trwałym', async ({ page, browserName }) => {
+        await page.goto('/');
+        const report = await page.evaluate(async () => {
+            const out: Record<string, string> = { ua: navigator.userAgent, secure: String(window.isSecureContext) };
+            try { await navigator.storage.getDirectory(); out.mainGetDirectory = 'ok'; } catch (e) { out.mainGetDirectory = String(e); }
+            const src = `self.onmessage = async () => { const o = {}; try {
+                const root = await navigator.storage.getDirectory(); o.getDirectory = 'ok';
+                const h = await root.getFileHandle('diag-probe.bin', { create: true }); o.getFileHandle = 'ok';
+                o.hasSyncAccessHandle = String(typeof h.createSyncAccessHandle);
+                const a = await h.createSyncAccessHandle(); o.createSyncAccessHandle = 'ok';
+                a.truncate(0); a.write(new Uint8Array([1, 2, 3]), { at: 0 }); a.flush(); o.size = String(a.getSize()); a.close();
+                await root.removeEntry('diag-probe.bin');
+            } catch (e) { o.error = String(e); } postMessage(o); };`;
+            const w = new Worker(URL.createObjectURL(new Blob([src], { type: 'text/javascript' })));
+            out.worker = JSON.stringify(await new Promise(res => { w.onmessage = e => res(e.data); w.postMessage(1); }));
+            return out;
+        });
+        console.log(`[OPFS-DIAG ${browserName}] ${JSON.stringify(report)}`);
+    });
+
     test('wpis logbooka przetrwa przeładowanie', async ({ page }) => {
         const site = uniqueSite('Koparki Jaworzno');
         await page.goto('/');
         await openLogbook(page);
         await addLogViaForm(page, site);
         await expect(entry(page, site)).toHaveCount(1);
+        await expect(page.locator('#logbook-storage-warning'), 'aplikacja nie dostała pamięci trwałej (OPFS)').toHaveCount(0);
 
         await page.reload();
         await openLogbook(page);
