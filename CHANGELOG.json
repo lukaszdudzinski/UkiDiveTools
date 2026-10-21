@@ -1,5 +1,14 @@
 [
   {
+    "version": "v2026.10.21.01",
+    "date": "2026-10-21",
+    "changes": [
+      "🔒 Aktualizacja i Twardy Reset nie usuwają już danych offline ani ustawień innych aplikacji Uki na tym samym urządzeniu.",
+      "🛠️ „Wyczyść ustawienia” w Diagnostyce resetuje wyłącznie ustawienia Dive Tools, a status PRO, profil i motyw zostają nietknięte.",
+      "🩹 Przywrócono brakującą infografikę „Pierwsza pomoc w DCS” w wykładzie o chorobie dekompresyjnej."
+    ]
+  },
+  {
     "version": "v2026.10.20.01",
     "date": "2026-10-20",
     "changes": [
