@@ -51,7 +51,7 @@ async function addLogViaForm(page: Page, site: string) {
 const entry = (page: Page, site: string) =>
     page.locator('#logbook-entries .dashboard-card', { hasText: site });
 
-test.describe('Trwałość logbooka', () => {
+test.describe('Diagnostyka OPFS', () => {
     test('diagnostyka OPFS w kontekście trwałym', async ({ page, browserName }) => {
         await page.goto('/');
         const report = await page.evaluate(async () => {
@@ -70,6 +70,18 @@ test.describe('Trwałość logbooka', () => {
             return out;
         });
         console.log(`[OPFS-DIAG ${browserName}] ${JSON.stringify(report)}`);
+    });
+});
+
+test.describe('Trwałość logbooka', () => {
+    test.beforeEach(async ({ page, browserName }) => {
+        await page.goto('/');
+        const hasStorageManager = await page.evaluate(() => typeof navigator.storage?.getDirectory === 'function');
+        // WebKit z Playwrighta na Linuksie (CI) nie ma w ogóle StorageManager: navigator.storage === undefined
+        // w oknie i w Workerze, mimo isSecureContext. Safari na iOS/macOS go ma (macOS WebKit przechodzi te testy).
+        // Pomijamy wyłącznie ten przypadek – w każdym innym brak OPFS ma oblać test.
+        test.skip(!hasStorageManager && browserName === 'webkit' && process.platform === 'linux',
+            'Linuxowy WebKit Playwrighta nie udostępnia navigator.storage (ograniczenie buildu, nie Safari)');
     });
 
     test('wpis logbooka przetrwa przeładowanie', async ({ page }) => {
