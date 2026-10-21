@@ -12,7 +12,8 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : 2,
-  reporter: process.env.CI ? [['list'], ['html', { open: 'never' }]] : 'html',
+  // Reporter `github` zapisuje błędy jako adnotacje GitHub Actions, które są widoczne publicznie bez logowania (logi i artefakty wymagają logowania).
+  reporter: process.env.CI ? [['list'], ['github'], ['html', { open: 'never' }]] : 'html',
   use: { baseURL: BASE_URL, trace: 'on-first-retry' },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
