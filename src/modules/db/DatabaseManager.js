@@ -1,8 +1,40 @@
-import sqlite3InitModule from '../../../libs/sqlite/sqlite3.js';
-
-let db = null;
+let worker = null;
 let isReady = false;
+let isPersistent = false;
 let initPromise = null;
+let msgId = 0;
+const resolvers = {};
+
+// Wpisy z wersji 2026-05-27 – 2026-07-01 (przed SQLite) leżą w localStorage pod tym kluczem.
+// Klucza nie usuwamy – zostaje jako kopia bezpieczeństwa.
+const LEGACY_LOGBOOK_KEY = 'uki_logbook_db';
+const LEGACY_MIGRATED_FLAG = 'uki-divetools-logbook-legacy-migrated';
+
+const INSERT_LOG_SQL = `INSERT INTO logbook (date, location, site, rating, notes, maxDepth, avgDepth, bottomTime, gasType, startPressure, endPressure, synced) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+const insertLogBind = (logData) => [
+    logData.date, 
+    logData.location, 
+    logData.site, 
+    logData.rating || 0, 
+    logData.notes || '', 
+    logData.maxDepth || 0, 
+    logData.avgDepth || 0, 
+    logData.bottomTime || 0, 
+    logData.gasType || 'air', 
+    logData.startPressure || 0, 
+    logData.endPressure || 0,
+    logData.synced || 0
+];
+
+function sendMessage(action, payload = {}) {
+    return new Promise((resolve, reject) => {
+        const id = ++msgId;
+        resolvers[id] = { resolve, reject };
+        worker.postMessage({ id, action, payload });
+    });
+}
 
 export const DatabaseManager = {
     init: async () => {
@@ -11,31 +43,33 @@ export const DatabaseManager = {
 
         initPromise = new Promise(async (resolve, reject) => {
             try {
-                // Initialize the sqlite3 module
-                const sqlite3 = await sqlite3InitModule({
-                    print: console.log,
-                    printErr: console.error,
-                });
-
-                console.log('SQLite3 version', sqlite3.version.libVersion);
-
-                // Check for OPFS availability
-                if (sqlite3.opfs) {
-                    db = new sqlite3.oo1.OpfsDb('/ukis_dive_tools.sqlite3');
-                    console.log('The OPFS is available. Opened OPFS database.');
-                } else {
-                    console.warn('OPFS is not available. Falling back to kvvfs or memory.');
-                    try {
-                        db = new sqlite3.oo1.DB('/ukis_dive_tools.sqlite3', 'c', 'kvvfs');
-                        console.log('Opened kvvfs (localStorage-backed) database.');
-                    } catch (e) {
-                         db = new sqlite3.oo1.DB(':memory:');
-                         console.warn('Fell back to in-memory database.', e);
-                    }
+                if (!worker) {
+                    worker = new Worker(new URL('./dbWorker.js', import.meta.url), { type: 'module' });
+                    worker.onmessage = (e) => {
+                        const { id, success, result, lastInsertId, error } = e.data;
+                        if (resolvers[id]) {
+                            if (success) {
+                                resolvers[id].resolve({ result, lastInsertId });
+                            } else {
+                                resolvers[id].reject(new Error(error));
+                            }
+                            delete resolvers[id];
+                        }
+                    };
+                    worker.onerror = (e) => {
+                        Object.keys(resolvers).forEach(id => {
+                            resolvers[id].reject(new Error(e.message || 'SQLite worker failed to load'));
+                            delete resolvers[id];
+                        });
+                    };
                 }
 
-                // Initialize tables
-                DatabaseManager.createTables();
+                const { result } = await sendMessage('init');
+                isPersistent = result.persistent;
+                if (!isPersistent) console.warn('OPFS is not available. Logbook is kept in memory only.');
+
+                await DatabaseManager.createTables();
+                await DatabaseManager.migrateLegacyLocalStorage();
                 isReady = true;
                 resolve(true);
             } catch (err) {
@@ -46,9 +80,10 @@ export const DatabaseManager = {
         return initPromise;
     },
 
-    createTables: () => {
-        if (!db) return;
-        db.exec(`
+    isPersistent: () => isPersistent,
+
+    createTables: async () => {
+        await sendMessage('exec', { sql: `
             CREATE TABLE IF NOT EXISTS logbook (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 date TEXT NOT NULL,
@@ -65,60 +100,53 @@ export const DatabaseManager = {
                 synced INTEGER DEFAULT 0,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             );
-        `);
+        ` });
+    },
+
+    migrateLegacyLocalStorage: async () => {
+        if (localStorage.getItem(LEGACY_MIGRATED_FLAG)) return;
+        let legacyLogs;
+        try {
+            legacyLogs = JSON.parse(localStorage.getItem(LEGACY_LOGBOOK_KEY) || '[]');
+        } catch (e) {
+            console.error('Legacy logbook in localStorage is not valid JSON, skipping migration.', e);
+            return;
+        }
+        if (Array.isArray(legacyLogs) && legacyLogs.length > 0) {
+            await sendMessage('exec_multiple', {
+                queries: legacyLogs.map(l => ({
+                    sql: INSERT_LOG_SQL,
+                    bind: insertLogBind({ ...l, date: l.date || '', location: l.location || '', site: l.site || '' })
+                }))
+            });
+            console.log(`Migrated ${legacyLogs.length} legacy logbook entries from localStorage.`);
+        }
+        // Bez pamięci trwałej migrujemy przy każdym starcie, żeby stare wpisy były zawsze widoczne.
+        if (isPersistent) localStorage.setItem(LEGACY_MIGRATED_FLAG, new Date().toISOString());
     },
 
     addLog: async (logData) => {
         await DatabaseManager.init();
-        
-        db.exec({
-            sql: `INSERT INTO logbook (date, location, site, rating, notes, maxDepth, avgDepth, bottomTime, gasType, startPressure, endPressure, synced) 
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-            bind: [
-                logData.date, 
-                logData.location, 
-                logData.site, 
-                logData.rating || 0, 
-                logData.notes || '', 
-                logData.maxDepth || 0, 
-                logData.avgDepth || 0, 
-                logData.bottomTime || 0, 
-                logData.gasType || 'air', 
-                logData.startPressure || 0, 
-                logData.endPressure || 0,
-                logData.synced || 0
-            ]
+        const { lastInsertId } = await sendMessage('exec', {
+            sql: INSERT_LOG_SQL,
+            bind: insertLogBind(logData),
+            needLastInsertId: true
         });
-        
-        // Return the last inserted id
-        let newId = null;
-        db.exec({
-            sql: `SELECT last_insert_rowid() as id`,
-            rowMode: 'object',
-            callback: function (row) {
-                newId = row.id;
-            }
-        });
-        
-        return { ...logData, id: newId };
+        return { ...logData, id: lastInsertId };
     },
 
     getLogs: async () => {
         await DatabaseManager.init();
-        const logs = [];
-        db.exec({
+        const { result } = await sendMessage('exec', {
             sql: `SELECT * FROM logbook ORDER BY date DESC, created_at DESC`,
-            rowMode: 'object',
-            callback: function (row) {
-                logs.push(row);
-            }
+            rowMode: 'object'
         });
-        return logs;
+        return result;
     },
 
     deleteLog: async (id) => {
         await DatabaseManager.init();
-        db.exec({
+        await sendMessage('exec', {
             sql: `DELETE FROM logbook WHERE id = ?`,
             bind: [id]
         });
@@ -151,11 +179,10 @@ export const DatabaseManager = {
                 throw new Error("Nieprawidłowy format pliku archiwum bazy (brak logbooka).");
             }
 
-            db.exec(`DELETE FROM logbook`);
-            
-            // Import Logbook
+            // Import Logbook – jedna transakcja w Workerze, potem zapis do OPFS
+            const queries = [{ sql: `DELETE FROM logbook` }];
             (data.logbook || []).forEach(l => {
-                db.exec({
+                queries.push({
                     sql: `INSERT INTO logbook (id, date, location, site, rating, notes, maxDepth, avgDepth, bottomTime, gasType, startPressure, endPressure, synced, created_at) 
                           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                     bind: [
@@ -165,6 +192,7 @@ export const DatabaseManager = {
                     ]
                 });
             });
+            await sendMessage('exec_multiple', { queries });
 
             // Import Ustawień
             if (data.settings) {

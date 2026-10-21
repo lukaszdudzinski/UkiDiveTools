@@ -48,6 +48,7 @@ export const LogbookUI = {
         // Initialize DB and Render
         try {
             await LogbookDB.init();
+            if (!LogbookDB.isPersistent()) this.showStorageWarning();
             await this.renderLogs();
         } catch (error) {
             console.error("Failed to initialize LogbookDB:", error);
@@ -56,6 +57,17 @@ export const LogbookUI = {
                 listContainer.innerHTML = `<div class="result-error" style="color:#ff3860;">Błąd ładowania bazy danych logów. Upewnnij się, że przeglądarka wspiera IndexedDB.</div>`;
             }
         }
+    },
+
+    showStorageWarning() {
+        const listContainer = document.getElementById('logbook-entries');
+        if (!listContainer || document.getElementById('logbook-storage-warning')) return;
+        const warning = document.createElement('div');
+        warning.id = 'logbook-storage-warning';
+        warning.className = 'result-error';
+        warning.style.cssText = 'color:#ffb84d; margin-bottom: 15px;';
+        warning.textContent = '⚠️ Ta przeglądarka nie udostępnia pamięci trwałej (np. tryb prywatny). Wpisy znikną po zamknięciu aplikacji – zapisz kopię przez Eksport w Diagnostyce.';
+        listContainer.before(warning);
     },
 
     async handleFormSubmit() {

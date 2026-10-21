@@ -1,5 +1,14 @@
 [
   {
+    "version": "v2026.10.20.01",
+    "date": "2026-10-20",
+    "changes": [
+      "🛠️ Naprawiono zapis logbooka: wpisy nurkowań są teraz trwale przechowywane w pamięci urządzenia i nie znikają po ponownym uruchomieniu aplikacji.",
+      "📦 Wpisy dodane w wersjach z maja i czerwca 2026 zostaną automatycznie przywrócone do logbooka.",
+      "🔒 Import kopii zapasowej z Diagnostyki zapisuje teraz dane trwale."
+    ]
+  },
+  {
     "version": "v2026.8.26.05",
     "date": "2026-08-26",
     "changes": [

@@ -5,6 +5,10 @@ export const LogbookDB = {
         await DatabaseManager.init();
         console.log("LogbookDB initialized (SQLite Wasm Mode).");
     },
+
+    isPersistent() {
+        return DatabaseManager.isPersistent();
+    },
     
     async getAllLogs() {
         try {
