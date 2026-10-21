@@ -91,11 +91,18 @@ test.describe('UI Components & Settings', () => {
         // SOS is in sidebar footer
         if (isMobile) {
             await page.click('#mobile-menu-toggle');
-            await page.waitForTimeout(300);
+            // Panel boczny wsuwa się przez 0.3 s (transition: left) - czekamy na stan, nie na stały czas
+            await expect(page.locator('.sidebar-nav')).toHaveClass(/active/);
         }
 
         const sosBtn = page.locator('#emergency-btn'); // The wrapper
-        await sosBtn.click({ force: true }); // Force click to bypass 'element is not stable' check due to CSS pulse animation
+        // Przycisk pulsuje (transform: scale), więc Playwright nigdy nie uzna go za „stable”;
+        // scrollIntoViewIfNeeded() też czeka na stabilność, dlatego przewijamy ręcznie.
+        await sosBtn.evaluate(el => el.scrollIntoView({ block: 'center' }));
+        // Poll aż panel się wsunie - bez tego wymuszony klik może trafić poza viewport (Mobile Safari)
+        await expect(sosBtn).toBeInViewport();
+        // force tylko z powodu animacji pulse; o trafieniu klika decyduje powyższe czekanie na viewport
+        await sosBtn.click({ force: true });
         // Wrapper has click listener in AppUI.js?
         // AppUI.js: document.getElementById('emergency-btn').addEventListener...
 
