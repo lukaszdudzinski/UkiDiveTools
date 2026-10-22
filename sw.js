@@ -1,4 +1,7 @@
-const CACHE_NAME = 'ukis-dive-tools-v2026.10.20.01'; // Release v2026.8.25.2
+const CACHE_NAME = 'ukis-dive-tools-v2026.10.21.01'; // Release v2026.8.25.2
+// wszystkie historyczne prefiksy Dive Tools; cache innych aplikacji Uki w tej samej domenie zostają
+const OWN_CACHE_PREFIXES = ['ukis-dive-tools-', 'uki-dive-tools-', 'dive-tools-'];
+const isOwnCacheName = (name) => OWN_CACHE_PREFIXES.some((p) => name.startsWith(p));
 // Core assets that MUST be cached immediately
 const CORE_ASSETS = [
     './',
@@ -34,7 +37,7 @@ self.addEventListener('activate', (e) => {
     e.waitUntil(
         caches.keys().then((keyList) => {
             return Promise.all(keyList.map((key) => {
-                if (key !== CACHE_NAME) {
+                if (key !== CACHE_NAME && isOwnCacheName(key)) {
                     return caches.delete(key);
                 }
             }));

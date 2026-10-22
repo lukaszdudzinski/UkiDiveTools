@@ -33,7 +33,7 @@ test.describe('Science of Diving Lecture (Complete)', () => {
         await expect(title).toHaveText('Nauka w Nurkowaniu: Fizyka, Fizjologia, Środowisko');
 
         // 3. Verify Audio Player & Disclaimer
-        const audioWrapper = page.locator('#lecture-body .lecture-audio-wrapper');
+        const audioWrapper = page.locator('#lecture-audio-container .lecture-audio-wrapper');
         await expect(audioWrapper).toBeVisible();
 
         // Use evaluate to check text content thoroughly including child nodes if needed, 

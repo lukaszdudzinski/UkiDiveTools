@@ -2,16 +2,21 @@ import { test as base, expect, type Page, type BrowserContext } from '@playwrigh
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+import { openMobileMenuIfNeeded, clickSidebarTab } from '../tests/test-helpers.js';
 
 // WebKit w efemerycznym kontekście Playwrighta nie udostępnia OPFS
 // (navigator.storage.getDirectory() → UnknownError), więc testy trwałości
 // uruchamiamy w kontekście trwałym, jak w zainstalowanej PWA.
 // WebKit współdzieli OPFS między kontekstami trwałymi, dlatego testy w tym
 // pliku idą szeregowo i operują na unikalnych wpisach zamiast liczyć rekordy.
+// Kontekst trwały nie dziedziczy ustawień urządzenia z projektu, więc przekazujemy je jawnie
+// (w projekcie Mobile Safari: emulacja iPhone 12).
 const test = base.extend<{ persistentContext: BrowserContext; page: Page }>({
-    persistentContext: async ({ playwright, browserName, baseURL }, use) => {
+    persistentContext: async ({ playwright, browserName, baseURL, viewport, userAgent, deviceScaleFactor, isMobile, hasTouch }, use) => {
         const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'dive-tools-pw-'));
-        const context = await playwright[browserName].launchPersistentContext(dir, { baseURL });
+        const context = await playwright[browserName].launchPersistentContext(dir, {
+            baseURL, viewport, userAgent, deviceScaleFactor, isMobile, hasTouch,
+        });
         await use(context);
         await context.close();
         fs.rmSync(dir, { recursive: true, force: true });
@@ -31,9 +36,15 @@ test.describe.configure({ mode: 'serial' });
 
 const uniqueSite = (label: string) => `${label} ${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 
-async function openLogbook(page: Page) {
-    await page.waitForSelector('.sidebar-nav');
-    await page.click('.sidebar-nav a[data-tab="logbook-dashboard"]');
+// Na iPhonie panel boczny jest schowany za przyciskiem menu.
+async function openTab(page: Page, isMobile: boolean, tabId: string) {
+    await page.waitForSelector('.sidebar-nav', { state: 'attached' });
+    await openMobileMenuIfNeeded(page, isMobile);
+    await clickSidebarTab(page, tabId);
+}
+
+async function openLogbook(page: Page, isMobile: boolean) {
+    await openTab(page, isMobile, 'logbook-dashboard');
     await expect(page.locator('#logbook-list-view')).toBeVisible();
 }
 
@@ -84,28 +95,28 @@ test.describe('Trwałość logbooka', () => {
             'Linuxowy WebKit Playwrighta nie udostępnia navigator.storage (ograniczenie buildu, nie Safari)');
     });
 
-    test('wpis logbooka przetrwa przeładowanie', async ({ page }) => {
+    test('wpis logbooka przetrwa przeładowanie', async ({ page, isMobile }) => {
         const site = uniqueSite('Koparki Jaworzno');
         await page.goto('/');
-        await openLogbook(page);
+        await openLogbook(page, isMobile);
         await addLogViaForm(page, site);
         await expect(entry(page, site)).toHaveCount(1);
         await expect(page.locator('#logbook-storage-warning'), 'aplikacja nie dostała pamięci trwałej (OPFS)').toHaveCount(0);
 
         await page.reload();
-        await openLogbook(page);
+        await openLogbook(page, isMobile);
         await expect(entry(page, site)).toHaveCount(1);
     });
 
-    test('eksport i import logbooka zachowuje wpisy po przeładowaniu', async ({ page }) => {
+    test('eksport i import logbooka zachowuje wpisy po przeładowaniu', async ({ page, isMobile }) => {
         const exportedSite = uniqueSite('Hańcza');
         const importedSite = uniqueSite('Zakrzówek');
         await page.goto('/');
-        await openLogbook(page);
+        await openLogbook(page, isMobile);
         await addLogViaForm(page, exportedSite);
 
         // Eksport przez Diagnostykę
-        await page.click('.sidebar-nav a[data-tab="diagnostics-dashboard"]');
+        await openTab(page, isMobile, 'diagnostics-dashboard');
         const downloadPromise = page.waitForEvent('download');
         await page.click('#db-export-btn');
         const download = await downloadPromise;
@@ -126,16 +137,16 @@ test.describe('Trwałość logbooka', () => {
         });
         await reloaded;
 
-        await openLogbook(page);
+        await openLogbook(page, isMobile);
         await expect(entry(page, importedSite)).toHaveCount(1);
         await expect(entry(page, exportedSite)).toHaveCount(0);
 
         await page.reload();
-        await openLogbook(page);
+        await openLogbook(page, isMobile);
         await expect(entry(page, importedSite)).toHaveCount(1);
     });
 
-    test('wpisy ze starej wersji (localStorage uki_logbook_db) wracają do logbooka', async ({ page }) => {
+    test('wpisy ze starej wersji (localStorage uki_logbook_db) wracają do logbooka', async ({ page, isMobile }) => {
         const legacySite = uniqueSite('Stary wpis Dahab');
         const runId = legacySite;
         await page.addInitScript(([site, id]) => {
@@ -150,22 +161,22 @@ test.describe('Trwałość logbooka', () => {
         }, [legacySite, runId]);
 
         await page.goto('/');
-        await openLogbook(page);
+        await openLogbook(page, isMobile);
         await expect(entry(page, legacySite)).toHaveCount(1);
         await expect(entry(page, legacySite)).toContainText('Blue Hole');
 
         await page.reload();
-        await openLogbook(page);
+        await openLogbook(page, isMobile);
         await expect(entry(page, legacySite)).toHaveCount(1);
         expect(await page.evaluate(() => localStorage.getItem('uki_logbook_db'))).toContain(legacySite);
     });
 });
 
 base.describe('Brak pamięci trwałej', () => {
-    base('logbook ostrzega, gdy przeglądarka nie udostępnia OPFS', async ({ page, browserName }) => {
+    base('logbook ostrzega, gdy przeglądarka nie udostępnia OPFS', async ({ page, browserName, isMobile }) => {
         base.skip(browserName !== 'webkit', 'Tylko efemeryczny WebKit nie ma OPFS');
         await page.goto('/');
-        await openLogbook(page);
+        await openLogbook(page, isMobile);
         await expect(page.locator('#logbook-storage-warning')).toBeVisible();
     });
 });
