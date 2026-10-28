@@ -1,0 +1,146 @@
+[
+  {
+    "version": "v2026.10.21.01",
+    "date": "2026-10-21",
+    "changes": [
+      "🔒 Aktualizacja i Twardy Reset nie usuwają już danych offline ani ustawień innych aplikacji Uki na tym samym urządzeniu.",
+      "🛠️ „Wyczyść ustawienia” w Diagnostyce resetuje wyłącznie ustawienia Dive Tools, a status PRO, profil i motyw zostają nietknięte.",
+      "🩹 Przywrócono brakującą infografikę „Pierwsza pomoc w DCS” w wykładzie o chorobie dekompresyjnej."
+    ]
+  },
+  {
+    "version": "v2026.10.20.01",
+    "date": "2026-10-20",
+    "changes": [
+      "🛠️ Naprawiono zapis logbooka: wpisy nurkowań są teraz trwale przechowywane w pamięci urządzenia i nie znikają po ponownym uruchomieniu aplikacji.",
+      "📦 Wpisy dodane w wersjach z maja i czerwca 2026 zostaną automatycznie przywrócone do logbooka.",
+      "🔒 Import kopii zapasowej z Diagnostyki zapisuje teraz dane trwale."
+    ]
+  },
+  {
+    "version": "v2026.8.26.05",
+    "date": "2026-08-26",
+    "changes": [
+      "🚀 Krytyczna naprawa pętli aktualizacji PWA i stabilności"
+    ]
+  },
+  {
+    "version": "v2026.8.26.04",
+    "date": "2026-08-26",
+    "changes": [
+      "🛠️ Krytyczny hotfix: Naprawa błędu składni, który blokował deploy na serwerach."
+    ]
+  },
+  {
+    "version": "v2026.8.26.03",
+    "date": "2026-08-26",
+    "changes": [
+      "✨ Uwspólnienie z BodyBuild: Dodano powitanie 'Glow' oraz nowy ekran startowy (Onboarding)."
+    ]
+  },
+  {
+    "version": "v2026.8.26.02",
+    "date": "2026-08-26",
+    "changes": [
+      "🚀 Poprawki PWA"
+    ]
+  },
+  {
+    "version": "v2026.8.26.01",
+    "date": "2026-08-26",
+    "changes": [
+      "🚀 Usunięcie tymczasowego taranu (skipWaiting). Od teraz baner aktualizacji wraca do normalnego działania!"
+    ]
+  },
+  {
+    "version": "v2026.8.25.09",
+    "date": "2026-08-25",
+    "changes": [
+      "🎨 Wymuszono 100% przezroczystości (0% krycia) po wyłączeniu rozmycia tapety."
+    ]
+  },
+  {
+    "version": "v2026.8.25.08",
+    "date": "2026-08-25",
+    "changes": [
+      "📱 Zmiana nazwy przełącznika na 'Rozmycie Tapety' i zwiększenie przezroczystości."
+    ]
+  },
+  {
+    "version": "v2026.8.25.07",
+    "date": "2026-08-25",
+    "changes": [
+      "🛠️ Krytyczny Bugfix: Przełamanie PWA Deadlock (przywrócono skipWaiting, by przepchnąć nowe pliki na stare urządzenia)."
+    ]
+  },
+  {
+    "version": "v2026.8.25.06",
+    "date": "2026-08-25",
+    "changes": [
+      "🚀 Wymuszenie aktualizacji cache dla urządzeń mobilnych (Force Update)."
+    ]
+  },
+  {
+    "version": "v2026.8.25.05",
+    "date": "2026-08-25",
+    "changes": [
+      "🛠️ Naprawiono błąd pustej zakładki Diagnostyki (dodano nasłuchiwanie zdarzeń zakładek)."
+    ]
+  },
+  {
+    "version": "v2026.8.25.04",
+    "date": "2026-08-25",
+    "changes": [
+      "🎨 Wprowadzono pełną przezroczystość tła po wyłączeniu Rozmycia w ustawieniach, idealne dopasowanie tapety do ekranu."
+    ]
+  },
+  {
+    "version": "v2026.8.25.03",
+    "date": "2026-08-25",
+    "changes": [
+      "🚀 Pełne wdrożenie zautomatyzowanego skryptu wersji chroniącego przed pętlą aktualizacji PWA."
+    ]
+  },
+  {
+    "version": "v2026.8.25.2",
+    "date": "2026-08-25",
+    "changes": [
+      "✨ Wdrożono nowy, rozbudowany system Profilu Użytkownika z personalizacją nazwy i awatara.",
+      "🎨 Uspójniono wygląd z aplikacją BodyBuild, dodając dynamiczne powitania w nagłówku.",
+      "📱 Dodano możliwość wgrywania własnych, niestandardowych tapet z plików użytkownika."
+    ]
+  },
+  {
+    "version": "v2026.8.15.02",
+    "date": "2026-08-15",
+    "changes": [
+      "Testowy wpis - weryfikacja działania banera aktualizacji PWA.🚀",
+      "Poprawka nasłuchiwania w sw.js pod kątem kompatybilności z nowym skryptem pwa-updater.js."
+    ]
+  },
+  {
+    "version": "v2026.8.15.01",
+    "date": "2026-08-15",
+    "changes": [
+      "Wdrożenie modułu Diagnostyki z możliwością wykonywania i przywracania pełnych kopii zapasowych Logbooka.",
+      "Poprawa systemu aktualizacji PWA, wprowadzając zoptymalizowany pwa-updater.js z powiadomieniami."
+    ]
+  },
+  {
+    "version": "v2026.8.05.06",
+    "date": "2026-08-05",
+    "changes": [
+      "Wdrożenie systemu Changeloga i Banera Aktualizacji PWA.",
+      "Poprawka CSS Grid dla przycisków akcji w kalendarzu - idealnie równe szerokości przycisków (Zadzwoń, SMS, Email, Płatność).",
+      "Aktualizacja ikon Lucide na wersje outline dla ujednolicenia designu."
+    ]
+  },
+  {
+    "version": "v2026.8.05.05",
+    "date": "2026-08-05",
+    "changes": [
+      "Poprawa układu paska z danymi do płatności w widoku wydarzenia.",
+      "Dodanie czerwonego ostrzeżenia do testowych wpisów w kalendarzu."
+    ]
+  }
+]
