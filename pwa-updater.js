@@ -76,8 +76,16 @@
             document.body.insertAdjacentHTML('beforeend', html);
         },
 
+        // Klucz zgodny z UPDATED_FROM_KEY w src/modules/ui/ChangelogUI.js (pilnuje test jednostkowy)
+        UPDATED_FROM_KEY: 'ukis.dive-tools.updated-from',
+
         doPwaUpdate: async () => {
             const ui = window.PWAUpdateUI;
+            // Zapamiętaj wersję sprzed aktualizacji: po przeładowaniu aplikacja pokaże zmiany od niej
+            try {
+                const from = document.querySelector('meta[name="app-version"]')?.content;
+                if (from) localStorage.setItem(ui.UPDATED_FROM_KEY, from);
+            } catch (e) { /* pamięć niedostępna: lista zmian pojawi się dzięki last-version */ }
             if (ui.pwaWorker) {
                 ui.pwaWorker.postMessage('SKIP_WAITING');
                 setTimeout(async () => { await ui.clearOwnCaches(); window.location.reload(true); }, 1000);

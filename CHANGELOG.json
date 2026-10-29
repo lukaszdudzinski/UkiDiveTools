@@ -1,5 +1,12 @@
 [
   {
+    "version": "v2026.10.29.01",
+    "date": "2026-10-29",
+    "changes": [
+      "✨ Po aktualizacji Dive Tools od razu pokazuje listę zmian, więc wiesz, co nowego w aplikacji."
+    ]
+  },
+  {
     "version": "v2026.10.21.01",
     "date": "2026-10-21",
     "changes": [

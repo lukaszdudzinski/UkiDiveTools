@@ -1,3 +1,25 @@
+// „Co nowego” po aktualizacji (jak BodyBuild i Bike Log). Klucz UPDATED_FROM_KEY zapisuje pwa-updater.js
+// przy kliknięciu „Zaktualizuj” (ten sam ciąg, pilnuje go test jednostkowy).
+export const LAST_VERSION_KEY = 'ukis.dive-tools.last-version';
+export const UPDATED_FROM_KEY = 'ukis.dive-tools.updated-from';
+// Ostatnia wersja z produkcji sprzed zapamiętywania wersji: pierwsze uruchomienie pokazuje zmiany od niej.
+export const FIRST_TRACKED_SINCE = 'v2026.10.21.01';
+
+// Zwraca wersję, od której pokazać zmiany (albo null), i zapamiętuje bieżącą jako obejrzaną.
+export function changelogSinceAfterUpdate(storage, current) {
+    if (!current) return null;
+    try {
+        const from = storage.getItem(UPDATED_FROM_KEY);
+        const last = storage.getItem(LAST_VERSION_KEY);
+        storage.removeItem(UPDATED_FROM_KEY);
+        storage.setItem(LAST_VERSION_KEY, current);
+        const since = from || last || FIRST_TRACKED_SINCE;
+        return since !== current ? since : null;
+    } catch (e) {
+        return null; // pamięć niedostępna: bez okna, aplikacja działa normalnie
+    }
+}
+
 export const ChangelogUI = {
     init: () => {
         ChangelogUI.injectModalHTML();
@@ -5,6 +27,33 @@ export const ChangelogUI = {
         
         // Expose globally for PWA Update calls
         window.showChangelogModal = ChangelogUI.showChangelogModal;
+
+        let storage = null;
+        try { storage = window.localStorage; } catch (e) { /* pamięć zablokowana */ }
+        const current = document.querySelector('meta[name="app-version"]')?.content || window.APP_VERSION || null;
+        if (storage) ChangelogUI.autoShowAfterUpdate({ storage, current });
+    },
+
+    // Po aktualizacji sama lista zmian od wersji, której użytkownik używał. Nie działa pod Playwrightem
+    // (navigator.webdriver), tak jak pwa-updater.js, żeby okno nie wchodziło w testy e2e i zrzuty ekranu.
+    autoShowAfterUpdate: ({
+        storage,
+        current,
+        webdriver = globalThis.navigator?.webdriver,
+        show = (since) => window.showChangelogModal(since),
+        setTimeoutFn = (fn, ms) => setTimeout(fn, ms),
+        hideUpdateButton = () => {
+            const btn = globalThis.document?.getElementById('changelog-update-now-btn');
+            if (btn) btn.style.display = 'none';
+        }
+    }) => {
+        if (webdriver) return;
+        const since = changelogSinceAfterUpdate(storage, current);
+        if (!since) return;
+        setTimeoutFn(() => {
+            hideUpdateButton();
+            show(since);
+        }, 800);
     },
 
     injectModalHTML: () => {
